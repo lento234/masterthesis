@@ -1,0 +1,117 @@
+%%
+%% This is file `german.apc',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% apacite.dtx  (with options: `german')
+%% 
+%% This is a generated file.
+%% 
+%% Copyright (C) 1994-2007 Erik Meijer and any individual authors listed
+%% elsewhere in this file.
+%% 
+%% This file is part of the `apacite' package.
+%% -------------------------------------------
+%% 
+%% It may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either
+%% version 1.3 of this license or (at your option) any later
+%% version.  The latest version of this license is in:
+%% 
+%%    http://www.latex-project.org/lppl.txt
+%% 
+%% and version 1.3 or later is part of all distributions of
+%% LaTeX version 2005/12/01 or later.
+%% 
+%% The `apacite' package consists of the files apacite.dtx and
+%% apacite.ins, and the following generated files:
+%% apacite.sty, apacite.bst, apacitex.bst, apa5ex.bib,
+%% apacite.drv, apacdoc.sty,
+%% english.apc, dutch.apc,   finnish.apc,  german.apc, ngerman.apc,
+%% greek.apc,   norsk.apc,   spanish.apc,  swedish.apc.
+%% 
+%% This work has the LPPL maintenance status `maintained'
+%% 
+%% The Current Maintainer of this work is Erik Meijer
+%% 
+%% This file may only be distributed together with a copy of the
+%% source files of the apacite package, i.e., apacite.dtx and
+%% apacite.ins. You may however distribute the apacite package without
+%% the generated files.
+%% 
+\ProvidesFile{german.apc}
+   [2007/09/03 v4.00 apacite language file]
+
+%%
+%% german.apc - Deutsche Uebersetzung der Apacite-Elemente
+%% Written by Andreas Poege.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Deutsche Anpassung der Interpunktion und Formatierung
+                                   % \citeNP)
+\renewcommand{\BBAB}{und}%         % Zwischen Autoren im Text
+\renewcommand{\BBAY}{, }%          % Zwischen Autoren und Jahr(en) (default ",")
+\renewcommand{\BCBT}{}%            % Zwischen 2 Autoren (zus. zu "&", default ",")
+\renewcommand{\BCBL}{}%            % Zwischen 3 o. mehr Autoren (zus. zu "&", default ",")
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Formatierung des Literaturverzeichnisses
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Befehle für die speziellen @misc-Einträge.
+%%% Diese Befehle werden von apacite.bst berücksichtigt.
+\renewcommand{\bibmessage}{Msg.\hbox{}}% Für misc-Literaturtyp bei type, Newsgroup-, Internet-Messages
+\renewcommand{\bibcomputerprogram}{Computerprogramm}%
+\renewcommand{\bibcomputerprogrammanual}{Programm-Handbuch}%
+\renewcommand{\bibcomputerprogramandmanual}{Computerprogramm und Handbuch}%
+\renewcommand{\bibcomputersoftware}{Software}%
+\renewcommand{\bibcomputersoftwaremanual}{Software-Handbuch}%
+\renewcommand{\bibcomputersoftwareandmanual}{Software und Handbuch}%
+\renewcommand{\bibprogramminglanguage}{Programmiersprache}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Weitere Labels
+\renewcommand{\BOthers}[1]{et al.\hbox{}}%
+\renewcommand{\BOthersPeriod}[1]{et al.\hbox{}}%
+\renewcommand{\BIP}{in Druck}%          % Jahresangabe bei im Druck bef. Werken
+\renewcommand{\BIn}{In}%                % fuer "`In"' Herausgeber...
+\renewcommand{\BCHAP}{Kap.\hbox{}}%     % Kapitel
+\renewcommand{\BCHAPS}{Kap.\hbox{}}%    % Kapitel
+\renewcommand{\BED}{Hg.\hbox{}}%        % Herausgeber(in)
+\renewcommand{\BEDS}{Hg.\hbox{}}%       % Herausgeber(innen)
+\renewcommand{\BTRANS}{\"Ubers.\hbox{}}%% Uebersetzer(in)
+\renewcommand{\BTRANSS}{\"Ubers.\hbox{}}% Uebersetzer(innen)
+\renewcommand{\BTRANSL}{\"Ubers.\hbox{}}% Uebersetzung (bei der Jahresangabe)
+\renewcommand{\BCHAIR}{Chair}%          % Chair (bei Konferenzen)
+\renewcommand{\BCHAIRS}{Chairs}%        % Chairs (bei Konferenzen)
+\renewcommand{\BVOL}{Bd.\hbox{}}%       % Band
+\renewcommand{\BVOLS}{Bde.\hbox{}}%     % Baende
+\renewcommand{\BNUM}{Nr.\hbox{}}%       % Nummer
+\renewcommand{\BNUMS}{Nr.\hbox{}}%      % Nummern
+\renewcommand{\BEd}{Aufl.\hbox{}}%      % Auflage
+\renewcommand{\BPG}{S.\hbox{}}%         % Seite
+\renewcommand{\BPGS}{S.\hbox{}}%        % Seiten
+\renewcommand{\BTR}{Bericht}%           % (default) Bezeichnung fuer "`technical report"'
+\renewcommand{\BPhD}{Dissertation}%     % (default) Bezeichnung fuer Dissertation
+\renewcommand{\BUPhD}{Unver\"offentlichte Dissertation}%
+\renewcommand{\BMTh}{Diplomarbeit}%
+\renewcommand{\BUMTh}{Unver\"offentlichte Diplomarbeit}%
+\renewcommand{\BOWP}{Originalausgabe}%  % Originalausgabe
+\renewcommand{\BREPR}{Nachdruck von}%   % Nachdruck von
+\renewcommand{\bibnodate}{o.\,J.\hbox{}}% "`ohne Jahresangabe"'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Bezeichnung (heading) des Literaturverzeichnisses
+\renewcommand{\refname}{Literatur}%
+\renewcommand{\bibname}{Literaturverzeichnis}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Kommando zwischen "Literaturverzeichnis" und den Eintraegen direkt
+%%% nach \bibliographytypesize
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Bemerkung vor Literaturangeaben, falls eine Metaanalyse angegeben wurde
+\renewcommand{\APACmetaprenote}{Literaturangaben mit Stern kennzeichnen
+  Studien der Metaanalyse.}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Bezeichnung (heading) des Autorenverzeichnisses
+\renewcommand{\authorindexname}{Autorenregister}%
+%%
+
+\endinput
+%%
+%% End of file `german.apc'.

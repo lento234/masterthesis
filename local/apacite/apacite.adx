@@ -1,0 +1,995 @@
+\indexentry{lamport l @Lamport, L.}{3}
+\indexentry{meijer e @Meijer, E.}{4}
+\indexentry{bandura aj @Bandura, A\BPBI  J.}{12}
+\indexentry{minor @Minor}{12}
+\indexentry{adams @Adams}{12}
+\indexentry{storandt @Storandt}{12}
+\indexentry{kopka h @Kopka, H.}{13}
+\indexentry{daly pw @Daly, P\BPBI  W.}{13}
+\indexentry{mittelbach f @Mittelbach, F.}{13}
+\indexentry{goossens m @Goossens, M.}{13}
+\indexentry{mittelbach f @Mittelbach, F.}{13}
+\indexentry{goossens m @Goossens, M.}{13}
+\indexentry{mittelbach f @Mittelbach, F.}{14}
+\indexentry{goossens m @Goossens, M.}{14}
+\indexentry{lamport l @Lamport, L.}{14}
+\indexentry{kopka h @Kopka, H.}{14}
+\indexentry{daly pw @Daly, P\BPBI  W.}{14}
+\indexentry{mittelbach f @Mittelbach, F.}{14}
+\indexentry{goossens m @Goossens, M.}{14}
+\indexentry{gottfredson gd @Gottfredson, G\BPBI  D.}{17}
+\indexentry{kopka h @Kopka, H.}{18}
+\indexentry{daly pw @Daly, P\BPBI  W.}{18}
+\indexentry{freud s @Freud, S.}{23}
+\indexentry{wansbeek t @Wansbeek, T.}{24}
+\indexentry{meijer e @Meijer, E.}{24}
+\indexentry{aristotle @Aristotle}{26}
+\indexentry{lamport l @Lamport, L.}{30}
+\indexentry{kopka h @Kopka, H.}{30}
+\indexentry{daly pw @Daly, P\BPBI  W.}{30}
+\indexentry{wansbeek t @Wansbeek, T.}{30}
+\indexentry{meijer e @Meijer, E.}{30}
+\indexentry{meijer e @Meijer, E.}{47}
+\indexentry{wansbeek t @Wansbeek, T.}{47}
+\indexentry{meijer e @Meijer, E.}{47}
+\indexentry{walker @Walker}{55}
+\indexentry{walker @Walker}{55}
+\indexentry{walker @Walker}{55}
+\indexentry{walker @Walker}{55}
+\indexentry{walker @Walker}{55}
+\indexentry{wasserstein @Wasserstein}{55}
+\indexentry{zappulla @Zappulla}{55}
+\indexentry{rosen @Rosen}{55}
+\indexentry{gerstman @Gerstman}{55}
+\indexentry{rock @Rock}{55}
+\indexentry{wasserstein @Wasserstein}{55}
+\indexentry{wasserstein @Wasserstein}{55}
+\indexentry{bradley @Bradley}{55}
+\indexentry{ramirez @Ramirez}{55}
+\indexentry{soo @Soo}{55}
+\indexentry{bradley @Bradley}{55}
+\indexentry{soo @Soo}{55}
+\indexentry{ramirez @Ramirez}{55}
+\indexentry{brown @Brown}{55}
+\indexentry{bradley @Bradley}{55}
+\indexentry{ramirez @Ramirez}{55}
+\indexentry{soo @Soo}{55}
+\indexentry{bradley @Bradley}{55}
+\indexentry{soo @Soo}{55}
+\indexentry{kosslyn @Kosslyn}{55}
+\indexentry{koenig @Koenig}{55}
+\indexentry{barrett @Barrett}{55}
+\indexentry{kosslyn @Kosslyn}{55}
+\indexentry{koenig @Koenig}{55}
+\indexentry{gabrieli @Gabrieli}{55}
+\indexentry{nightlinger @Nightlinger}{55}
+\indexentry{littlewood @Littlewood}{55}
+\indexentry{joreskog kg @J{\"{o}}reskog, K\BPBI  G.}{55}
+\indexentry{sorbom d @S{\"{o}}rbom, D.}{55}
+\indexentry{anonymous @Anonymous}{56}
+\indexentry{luce rd @Luce, R\BPBI  D.}{56}
+\indexentry{luce pa @Luce, P\BPBI  A.}{56}
+\indexentry{goldberg jm @Goldberg, J\BPBI  M.}{56}
+\indexentry{neff @Neff}{56}
+\indexentry{goldberg me @Goldberg, M\BPBI  E.}{56}
+\indexentry{wurtz @Wurtz}{56}
+\indexentry{edeline @Edeline}{56}
+\indexentry{weinberger @Weinberger}{56}
+\indexentry{gogel @Gogel}{56}
+\indexentry{johnson @Johnson}{56}
+\indexentry{singh @Singh}{56}
+\indexentry{balda @Balda}{56}
+\indexentry{kamil @Kamil}{56}
+\indexentry{pepperberg @Pepperberg}{56}
+\indexentry{funk @Funk}{56}
+\indexentry{minor @Minor}{56}
+\indexentry{adams @Adams}{56}
+\indexentry{storandt @Storandt}{56}
+\indexentry{author @Author}{56}
+\indexentry{author @Author}{56}
+\indexentry{author @Author}{56}
+\indexentry{author @Author}{56}
+\indexentry{aristotle @Aristotle}{56}
+\indexentry{james @James}{56}
+\indexentry{cheek @Cheek}{57}
+\indexentry{buss @Buss}{57}
+\indexentry{shimamura @Shimamura}{57}
+\indexentry{myers @Myers}{57}
+\indexentry{beutler @Beutler}{57}
+\indexentry{hashtroudi @Hashtroudi}{57}
+\indexentry{chrosniak @Chrosniak}{57}
+\indexentry{schwartz @Schwartz}{57}
+\indexentry{brown jr @Brown, J\BPBI  R.}{57}
+\indexentry{browning ar @Browning, A\BPBI  R.}{57}
+\indexentry{macarthur @MacArthur}{57}
+\indexentry{mcallister @McAllister}{57}
+\indexentry{macneil @MacNeil}{57}
+\indexentry{mcarthy @M'Carthy}{57}
+\indexentry{debase @DeBase}{57}
+\indexentry{devries j @De\nobreakspace  {}Vries, J.}{57}
+\indexentry{helmholtz hlf von @Helmholtz, H\BPBI  L\BPBI  F. von}{57}
+\indexentry{hewlett ls @Hewlett, L\BPBI  S.}{58}
+\indexentry{hewlett ls @Hewlett, L\BPBI  S.}{58}
+\indexentry{alleyne rl @Alleyne, R\BPBI  L.}{58}
+\indexentry{alleyne rl @Alleyne, R\BPBI  L.}{58}
+\indexentry{evans aj @Evans, A\BPBI  J.}{58}
+\indexentry{gosling jr @Gosling, J\BPBI  R.}{58}
+\indexentry{jerald k @Jerald, K.}{58}
+\indexentry{belfar sf @Belfar, S\BPBI  F.}{58}
+\indexentry{gosling jr @Gosling, J\BPBI  R.}{58}
+\indexentry{tevlin df @Tevlin, D\BPBI  F.}{58}
+\indexentry{hayward d @Hayward, D.}{58}
+\indexentry{firsching a @Firsching, A.}{58}
+\indexentry{brown j @Brown, J.}{58}
+\indexentry{hayward d @Hayward, D.}{58}
+\indexentry{firsching a @Firsching, A.}{58}
+\indexentry{smigel j @Smigel, J.}{58}
+\indexentry{cabading jr @Cabading, J\BPBI  R.}{58}
+\indexentry{wright k @Wright, K.}{58}
+\indexentry{cabading jr @Cabading, J\BPBI  R.}{58}
+\indexentry{wright k @Wright, K.}{58}
+\indexentry{baheti jr @Baheti, J\BPBI  R.}{58}
+\indexentry{baheti jr @Baheti, J\BPBI  R.}{58}
+\indexentry{mathur al @Mathur, A\BPBI  L.}{58}
+\indexentry{wallston j @Wallston, J.}{58}
+\indexentry{mathur se @Mathur, S\BPBI  E.}{58}
+\indexentry{ahlers rj @Ahlers, R\BPBI  J.}{58}
+\indexentry{bandura aj @Bandura, A\BPBI  J.}{58}
+\indexentry{bretschneider jg @Bretschneider, J\BPBI  G.}{58}
+\indexentry{mccoy nl @McCoy, N\BPBI  L.}{58}
+\indexentry{kernis mh @Kernis, M\BPBI  H.}{58}
+\indexentry{cornell dp @Cornell, D\BPBI  P.}{58}
+\indexentry{sun cr @Sun, C\BHBI  R.}{58}
+\indexentry{berry a @Berry, A.}{58}
+\indexentry{harlow t @Harlow, T.}{58}
+\indexentry{robinson dn @Robinson, D\BPBI  N.}{58}
+\indexentry{bulatao ewithwinfordca @Bulatao, E\BPBI  {\bibliteral {(with Winford, C.\nobreakspace  {}A.)}\indexskipbracenodot }.}{58}
+\indexentry{fowers bj @Fowers, B\BPBI  J.}{59}
+\indexentry{olson dh @Olson, D\BPBI  H.}{59}
+\indexentry{deutsch fm @Deutsch, F\BPBI  M.}{59}
+\indexentry{lussier jb @Lussier, J\BPBI  B.}{59}
+\indexentry{servis lj @Servis, L\BPBI  J.}{59}
+\indexentry{oneil jm @O'Neil, J\BPBI  M.}{59}
+\indexentry{egan j @Egan, J.}{59}
+\indexentry{buss dm @Buss, D\BPBI  M.}{59}
+\indexentry{schmitt dp @Schmitt, D\BPBI  P.}{59}
+\indexentry{henry wa iii @Henry, W\BPBI  A., III}{59}
+\indexentry{saxe gb @Saxe, G\BPBI  B.}{59}
+\indexentry{baker fm @Baker, F\BPBI  M.}{59}
+\indexentry{lightfoot ob @Lightfoot, O\BPBI  B.}{59}
+\indexentry{merikle pm @Merikle, P\BPBI  M.}{59}
+\indexentry{eid m @Eid, M.}{59}
+\indexentry{langeheine r @Langeheine, R.}{59}
+\indexentry{herman lm @Herman, L\BPBI  M.}{59}
+\indexentry{kuczaj sa iii @Kuczaj, S\BPBI  A., III}{59}
+\indexentry{holder md @Holder, M\BPBI  D.}{59}
+\indexentry{herman lm @Herman, L\BPBI  M.}{59}
+\indexentry{herman lm @Herman, L\BPBI  M.}{59}
+\indexentry{kuczaj sa iii @Kuczaj, S\BPBI  A., III}{59}
+\indexentry{holder md @Holder, M\BPBI  D.}{59}
+\indexentry{herman lm @Herman, L\BPBI  M.}{59}
+\indexentry{mellers ba @Mellers, B\BPBI  A.}{59}
+\indexentry{mellers ba @Mellers, B\BPBI  A.}{59}
+\indexentry{mellers ba @Mellers, B\BPBI  A.}{59}
+\indexentry{mellers ba @Mellers, B\BPBI  A.}{59}
+\indexentry{klimoski r @Klimoski, R.}{59}
+\indexentry{palmer s @Palmer, S.}{59}
+\indexentry{klimoski r @Klimoski, R.}{59}
+\indexentry{palmer s @Palmer, S.}{59}
+\indexentry{klimoski r @Klimoski, R.}{59}
+\indexentry{palmer s @Palmer, S.}{59}
+\indexentry{klimoski r @Klimoski, R.}{59}
+\indexentry{palmer s @Palmer, S.}{59}
+\indexentry{saywitz kj @Saywitz, K\BPBI  J.}{60}
+\indexentry{mannarino ap @Mannarino, A\BPBI  P.}{60}
+\indexentry{berliner l @Berliner, L.}{60}
+\indexentry{cohen ja @Cohen, J\BPBI  A.}{60}
+\indexentry{saywitz kj @Saywitz, K\BPBI  J.}{60}
+\indexentry{saywitz kj @Saywitz, K\BPBI  J.}{60}
+\indexentry{mannarino ap @Mannarino, A\BPBI  P.}{60}
+\indexentry{berliner l @Berliner, L.}{60}
+\indexentry{cohen ja @Cohen, J\BPBI  A.}{60}
+\indexentry{saywitz kj @Saywitz, K\BPBI  J.}{60}
+\indexentry{wolchik sa @Wolchik, S\BPBI  A.}{60}
+\indexentry{wolchik sa @Wolchik, S\BPBI  A.}{60}
+\indexentry{wolchik sa @Wolchik, S\BPBI  A.}{60}
+\indexentry{wolchik sa @Wolchik, S\BPBI  A.}{60}
+\indexentry{swait j @Swait, J.}{60}
+\indexentry{swait j @Swait, J.}{60}
+\indexentry{swait j @Swait, J.}{60}
+\indexentry{swait j @Swait, J.}{60}
+\indexentry{zuckerman m @Zuckerman, M.}{60}
+\indexentry{kieffer sc @Kieffer, S\BPBI  C.}{60}
+\indexentry{zuckerman m @Zuckerman, M.}{60}
+\indexentry{kieffer sc @Kieffer, S\BPBI  C.}{60}
+\indexentry{zuckerman m @Zuckerman, M.}{60}
+\indexentry{kieffer sc @Kieffer, S\BPBI  C.}{60}
+\indexentry{zuckerman m @Zuckerman, M.}{60}
+\indexentry{kieffer sc @Kieffer, S\BPBI  C.}{60}
+\indexentry{kandel er @Kandel, E\BPBI  R.}{60}
+\indexentry{squire lr @Squire, L\BPBI  R.}{60}
+\indexentry{kandel er @Kandel, E\BPBI  R.}{60}
+\indexentry{squire lr @Squire, L\BPBI  R.}{60}
+\indexentry{kandel er @Kandel, E\BPBI  R.}{60}
+\indexentry{squire lr @Squire, L\BPBI  R.}{60}
+\indexentry{kandel er @Kandel, E\BPBI  R.}{60}
+\indexentry{squire lr @Squire, L\BPBI  R.}{60}
+\indexentry{brown ls @Brown, L\BPBI  S.}{60}
+\indexentry{brown ls @Brown, L\BPBI  S.}{60}
+\indexentry{brown ls @Brown, L\BPBI  S.}{60}
+\indexentry{brown ls @Brown, L\BPBI  S.}{60}
+\indexentry{schwartz j @Schwartz, J.}{61}
+\indexentry{schwartz j @Schwartz, J.}{61}
+\indexentry{schwartz j @Schwartz, J.}{61}
+\indexentry{schwartz j @Schwartz, J.}{61}
+\indexentry{berkowitz ad @Berkowitz, A\BPBI  D.}{61}
+\indexentry{berkowitz ad @Berkowitz, A\BPBI  D.}{61}
+\indexentry{berkowitz ad @Berkowitz, A\BPBI  D.}{61}
+\indexentry{berkowitz ad @Berkowitz, A\BPBI  D.}{61}
+\indexentry{barlow dh @Barlow, D\BPBI  H.}{61}
+\indexentry{barlow dh @Barlow, D\BPBI  H.}{61}
+\indexentry{barlow dh @Barlow, D\BPBI  H.}{61}
+\indexentry{barlow dh @Barlow, D\BPBI  H.}{61}
+\indexentry{harris pl @Harris, P\BPBI  L.}{61}
+\indexentry{kavanaugh rd @Kavanaugh, R\BPBI  D.}{61}
+\indexentry{harris pl @Harris, P\BPBI  L.}{61}
+\indexentry{kavanaugh rd @Kavanaugh, R\BPBI  D.}{61}
+\indexentry{harris pl @Harris, P\BPBI  L.}{61}
+\indexentry{kavanaugh rd @Kavanaugh, R\BPBI  D.}{61}
+\indexentry{harris pl @Harris, P\BPBI  L.}{61}
+\indexentry{kavanaugh rd @Kavanaugh, R\BPBI  D.}{61}
+\indexentry{battig wf @Battig, W\BPBI  F.}{61}
+\indexentry{montague we @Montague, W\BPBI  E.}{61}
+\indexentry{battig wf @Battig, W\BPBI  F.}{61}
+\indexentry{montague we @Montague, W\BPBI  E.}{61}
+\indexentry{battig wf @Battig, W\BPBI  F.}{61}
+\indexentry{montague we @Montague, W\BPBI  E.}{61}
+\indexentry{battig wf @Battig, W\BPBI  F.}{61}
+\indexentry{montague we @Montague, W\BPBI  E.}{61}
+\indexentry{ganster dc @Ganster, D\BPBI  C.}{61}
+\indexentry{schaubroeck j @Schaubroeck, J.}{61}
+\indexentry{sime we @Sime, W\BPBI  E.}{61}
+\indexentry{mayes bt @Mayes, B\BPBI  T.}{61}
+\indexentry{ganster dc @Ganster, D\BPBI  C.}{61}
+\indexentry{ganster dc @Ganster, D\BPBI  C.}{61}
+\indexentry{schaubroeck j @Schaubroeck, J.}{61}
+\indexentry{sime we @Sime, W\BPBI  E.}{61}
+\indexentry{mayes bt @Mayes, B\BPBI  T.}{61}
+\indexentry{ganster dc @Ganster, D\BPBI  C.}{61}
+\indexentry{woolf nj @Woolf, N\BPBI  J.}{61}
+\indexentry{young sl @Young, S\BPBI  L.}{61}
+\indexentry{fanselow ms @Fanselow, M\BPBI  S.}{61}
+\indexentry{butcher ll @Butcher, L\BPBI  L.}{61}
+\indexentry{woolf nj @Woolf, N\BPBI  J.}{61}
+\indexentry{woolf nj @Woolf, N\BPBI  J.}{61}
+\indexentry{young sl @Young, S\BPBI  L.}{61}
+\indexentry{fanselow ms @Fanselow, M\BPBI  S.}{61}
+\indexentry{butcher ll @Butcher, L\BPBI  L.}{61}
+\indexentry{woolf nj @Woolf, N\BPBI  J.}{61}
+\indexentry{nakazato k @Nakazato, K.}{62}
+\indexentry{shimonaka y @Shimonaka, Y.}{62}
+\indexentry{homma a @Homma, A.}{62}
+\indexentry{nakazato k @Nakazato, K.}{62}
+\indexentry{nakazato k @Nakazato, K.}{62}
+\indexentry{shimonaka y @Shimonaka, Y.}{62}
+\indexentry{homma a @Homma, A.}{62}
+\indexentry{nakazato k @Nakazato, K.}{62}
+\indexentry{regier aa @Regier, A\BPBI  A.}{62}
+\indexentry{narrow we @Narrow, W\BPBI  E.}{62}
+\indexentry{rae ds @Rae, D\BPBI  S.}{62}
+\indexentry{regier aa @Regier, A\BPBI  A.}{62}
+\indexentry{regier aa @Regier, A\BPBI  A.}{62}
+\indexentry{narrow we @Narrow, W\BPBI  E.}{62}
+\indexentry{rae ds @Rae, D\BPBI  S.}{62}
+\indexentry{regier aa @Regier, A\BPBI  A.}{62}
+\indexentry{fiske st @Fiske, S\BPBI  T.}{62}
+\indexentry{fiske st @Fiske, S\BPBI  T.}{62}
+\indexentry{fiske st @Fiske, S\BPBI  T.}{62}
+\indexentry{fiske st @Fiske, S\BPBI  T.}{62}
+\indexentry{ising m @Ising, M.}{62}
+\indexentry{ising m @Ising, M.}{62}
+\indexentry{ising m @Ising, M.}{62}
+\indexentry{ising m @Ising, M.}{62}
+\indexentry{stutte h @Stutte, H.}{62}
+\indexentry{stutte h @Stutte, H.}{62}
+\indexentry{stutte h @Stutte, H.}{63}
+\indexentry{stutte h @Stutte, H.}{63}
+\indexentry{coltheart m @Coltheart, M.}{63}
+\indexentry{curtis b @Curtis, B.}{63}
+\indexentry{atkins p @Atkins, P.}{63}
+\indexentry{haller m @Haller, M.}{63}
+\indexentry{beck caj @Beck, C\BPBI  A\BPBI  J.}{63}
+\indexentry{sales bd @Sales, B\BPBI  D.}{63}
+\indexentry{beck caj @Beck, C\BPBI  A\BPBI  J.}{63}
+\indexentry{sales bd @Sales, B\BPBI  D.}{63}
+\indexentry{beck caj @Beck, C\BPBI  A\BPBI  J.}{63}
+\indexentry{sales bd @Sales, B\BPBI  D.}{63}
+\indexentry{beck caj @Beck, C\BPBI  A\BPBI  J.}{63}
+\indexentry{sales bd @Sales, B\BPBI  D.}{63}
+\indexentry{mitchell tr @Mitchell, T\BPBI  R.}{63}
+\indexentry{larson jr jrhbox @Larson, J\BPBI  R., Jr.\hbox {}}{63}
+\indexentry{mitchell tr @Mitchell, T\BPBI  R.}{63}
+\indexentry{larson jr jrhbox @Larson, J\BPBI  R., Jr.\hbox {}}{63}
+\indexentry{mitchell tr @Mitchell, T\BPBI  R.}{63}
+\indexentry{larson jr jrhbox @Larson, J\BPBI  R., Jr.\hbox {}}{63}
+\indexentry{mitchell tr @Mitchell, T\BPBI  R.}{63}
+\indexentry{larson jr jrhbox @Larson, J\BPBI  R., Jr.\hbox {}}{63}
+\indexentry{gibbs jt @Gibbs, J\BPBI  T.}{63}
+\indexentry{huang ln @Huang, L\BPBI  N.}{63}
+\indexentry{gibbs jt @Gibbs, J\BPBI  T.}{63}
+\indexentry{huang ln @Huang, L\BPBI  N.}{63}
+\indexentry{gibbs jt @Gibbs, J\BPBI  T.}{63}
+\indexentry{huang ln @Huang, L\BPBI  N.}{63}
+\indexentry{gibbs jt @Gibbs, J\BPBI  T.}{63}
+\indexentry{huang ln @Huang, L\BPBI  N.}{63}
+\indexentry{vygotsky ls @Vygotsky, L\BPBI  S.}{63}
+\indexentry{joreskog kg @J{\"{o}}reskog, K\BPBI  G.}{64}
+\indexentry{sorbom d @S{\"{o}}rbom, D.}{64}
+\indexentry{rosenthal r @Rosenthal, R.}{64}
+\indexentry{rosenthal r @Rosenthal, R.}{64}
+\indexentry{rosenthal r @Rosenthal, R.}{64}
+\indexentry{rosenthal r @Rosenthal, R.}{64}
+\indexentry{koch s @Koch, S.}{64}
+\indexentry{koch s @Koch, S.}{64}
+\indexentry{koch s @Koch, S.}{64}
+\indexentry{koch s @Koch, S.}{64}
+\indexentry{sadie s @Sadie, S.}{65}
+\indexentry{sadie s @Sadie, S.}{65}
+\indexentry{sadie s @Sadie, S.}{65}
+\indexentry{sadie s @Sadie, S.}{65}
+\indexentry{kazdin ae @Kazdin, A\BPBI  E.}{65}
+\indexentry{piaget j @Piaget, J.}{66}
+\indexentry{inhelder b @Inhelder, B.}{66}
+\indexentry{piaget j @Piaget, J.}{66}
+\indexentry{inhelder b @Inhelder, B.}{66}
+\indexentry{piaget j @Piaget, J.}{66}
+\indexentry{inhelder b @Inhelder, B.}{66}
+\indexentry{piaget j @Piaget, J.}{66}
+\indexentry{inhelder b @Inhelder, B.}{66}
+\indexentry{laplace ps @Laplace, P\BHBI  S.}{66}
+\indexentry{laplace ps @Laplace, P\BHBI  S.}{66}
+\indexentry{laplace ps @Laplace, P\BHBI  S.}{66}
+\indexentry{laplace ps @Laplace, P\BHBI  S.}{66}
+\indexentry{massaro d @Massaro, D.}{66}
+\indexentry{massaro d @Massaro, D.}{66}
+\indexentry{massaro d @Massaro, D.}{66}
+\indexentry{massaro d @Massaro, D.}{66}
+\indexentry{bjork ra @Bjork, R\BPBI  A.}{67}
+\indexentry{bjork ra @Bjork, R\BPBI  A.}{67}
+\indexentry{bjork ra @Bjork, R\BPBI  A.}{67}
+\indexentry{bjork ra @Bjork, R\BPBI  A.}{67}
+\indexentry{auerbach js @Auerbach, J\BPBI  S.}{67}
+\indexentry{auerbach js @Auerbach, J\BPBI  S.}{67}
+\indexentry{auerbach js @Auerbach, J\BPBI  S.}{67}
+\indexentry{auerbach js @Auerbach, J\BPBI  S.}{67}
+\indexentry{maccoby ee @Maccoby, E\BPBI  E.}{67}
+\indexentry{martin j @Martin, J.}{67}
+\indexentry{maccoby ee @Maccoby, E\BPBI  E.}{67}
+\indexentry{martin j @Martin, J.}{67}
+\indexentry{maccoby ee @Maccoby, E\BPBI  E.}{67}
+\indexentry{martin j @Martin, J.}{67}
+\indexentry{maccoby ee @Maccoby, E\BPBI  E.}{67}
+\indexentry{martin j @Martin, J.}{67}
+\indexentry{davydov vv @Davydov, V\BPBI  V.}{67}
+\indexentry{davydov vv @Davydov, V\BPBI  V.}{67}
+\indexentry{davydov vv @Davydov, V\BPBI  V.}{67}
+\indexentry{davydov vv @Davydov, V\BPBI  V.}{67}
+\indexentry{bergmann pg @Bergmann, P\BPBI  G.}{68}
+\indexentry{bergmann pg @Bergmann, P\BPBI  G.}{68}
+\indexentry{bergmann pg @Bergmann, P\BPBI  G.}{68}
+\indexentry{bergmann pg @Bergmann, P\BPBI  G.}{68}
+\indexentry{freud s @Freud, S.}{68}
+\indexentry{freud s @Freud, S.}{68}
+\indexentry{freud s @Freud, S.}{68}
+\indexentry{freud s @Freud, S.}{68}
+\indexentry{piaget j @Piaget, J.}{68}
+\indexentry{piaget j @Piaget, J.}{68}
+\indexentry{piaget j @Piaget, J.}{68}
+\indexentry{piaget j @Piaget, J.}{68}
+\indexentry{browne mw @Browne, M\BPBI  W.}{68}
+\indexentry{mazzeo j @Mazzeo, J.}{68}
+\indexentry{druesne b @Druesne, B.}{68}
+\indexentry{raffeld pc @Raffeld, P\BPBI  C.}{68}
+\indexentry{checketts kt @Checketts, K\BPBI  T.}{68}
+\indexentry{muhlstein a @Muhlstein, A.}{68}
+\indexentry{mazzeo j @Mazzeo, J.}{68}
+\indexentry{mazzeo j @Mazzeo, J.}{68}
+\indexentry{druesne b @Druesne, B.}{68}
+\indexentry{raffeld pc @Raffeld, P\BPBI  C.}{68}
+\indexentry{checketts kt @Checketts, K\BPBI  T.}{68}
+\indexentry{muhlstein a @Muhlstein, A.}{68}
+\indexentry{mazzeo j @Mazzeo, J.}{68}
+\indexentry{osgood dw @Osgood, D\BPBI  W.}{68}
+\indexentry{wilson jk @Wilson, J\BPBI  K.}{68}
+\indexentry{osgood dw @Osgood, D\BPBI  W.}{68}
+\indexentry{wilson jk @Wilson, J\BPBI  K.}{68}
+\indexentry{osgood dw @Osgood, D\BPBI  W.}{68}
+\indexentry{wilson jk @Wilson, J\BPBI  K.}{68}
+\indexentry{osgood dw @Osgood, D\BPBI  W.}{68}
+\indexentry{wilson jk @Wilson, J\BPBI  K.}{68}
+\indexentry{mead jv @Mead, J\BPBI  V.}{69}
+\indexentry{mead jv @Mead, J\BPBI  V.}{69}
+\indexentry{mead jv @Mead, J\BPBI  V.}{69}
+\indexentry{mead jv @Mead, J\BPBI  V.}{69}
+\indexentry{matthews ka @Matthews, K\BPBI  A.}{69}
+\indexentry{matthews ka @Matthews, K\BPBI  A.}{69}
+\indexentry{matthews ka @Matthews, K\BPBI  A.}{69}
+\indexentry{matthews ka @Matthews, K\BPBI  A.}{69}
+\indexentry{broadhurst rg @Broadhurst, R\BPBI  G.}{69}
+\indexentry{maller ra @Maller, R\BPBI  A.}{69}
+\indexentry{broadhurst rg @Broadhurst, R\BPBI  G.}{69}
+\indexentry{maller ra @Maller, R\BPBI  A.}{69}
+\indexentry{broadhurst rg @Broadhurst, R\BPBI  G.}{69}
+\indexentry{maller ra @Maller, R\BPBI  A.}{69}
+\indexentry{broadhurst rg @Broadhurst, R\BPBI  G.}{69}
+\indexentry{maller ra @Maller, R\BPBI  A.}{69}
+\indexentry{shuker r @Shuker, R.}{69}
+\indexentry{openshaw r @Openshaw, R.}{69}
+\indexentry{soler j @Soler, J.}{69}
+\indexentry{shuker r @Shuker, R.}{69}
+\indexentry{shuker r @Shuker, R.}{69}
+\indexentry{openshaw r @Openshaw, R.}{69}
+\indexentry{soler j @Soler, J.}{69}
+\indexentry{shuker r @Shuker, R.}{69}
+\indexentry{deci el @Deci, E\BPBI  L.}{69}
+\indexentry{ryan rm @Ryan, R\BPBI  M.}{69}
+\indexentry{deci el @Deci, E\BPBI  L.}{69}
+\indexentry{ryan rm @Ryan, R\BPBI  M.}{69}
+\indexentry{deci el @Deci, E\BPBI  L.}{69}
+\indexentry{ryan rm @Ryan, R\BPBI  M.}{69}
+\indexentry{deci el @Deci, E\BPBI  L.}{69}
+\indexentry{ryan rm @Ryan, R\BPBI  M.}{69}
+\indexentry{cynx j @Cynx, J.}{70}
+\indexentry{williams h @Williams, H.}{70}
+\indexentry{nottebohm f @Nottebohm, F.}{70}
+\indexentry{cynx j @Cynx, J.}{70}
+\indexentry{cynx j @Cynx, J.}{70}
+\indexentry{williams h @Williams, H.}{70}
+\indexentry{nottebohm f @Nottebohm, F.}{70}
+\indexentry{cynx j @Cynx, J.}{70}
+\indexentry{lichstein kl @Lichstein, K\BPBI  L.}{70}
+\indexentry{johnson rs @Johnson, R\BPBI  S.}{70}
+\indexentry{womack td @Womack, T\BPBI  D.}{70}
+\indexentry{dean je @Dean, J\BPBI  E.}{70}
+\indexentry{childers ck @Childers, C\BPBI  K.}{70}
+\indexentry{lichstein kl @Lichstein, K\BPBI  L.}{70}
+\indexentry{lichstein kl @Lichstein, K\BPBI  L.}{70}
+\indexentry{johnson rs @Johnson, R\BPBI  S.}{70}
+\indexentry{womack td @Womack, T\BPBI  D.}{70}
+\indexentry{dean je @Dean, J\BPBI  E.}{70}
+\indexentry{childers ck @Childers, C\BPBI  K.}{70}
+\indexentry{lichstein kl @Lichstein, K\BPBI  L.}{70}
+\indexentry{lanktree c @Lanktree, C.}{70}
+\indexentry{briere j @Briere, J.}{70}
+\indexentry{lanktree c @Lanktree, C.}{70}
+\indexentry{briere j @Briere, J.}{70}
+\indexentry{lanktree c @Lanktree, C.}{70}
+\indexentry{briere j @Briere, J.}{70}
+\indexentry{lanktree c @Lanktree, C.}{70}
+\indexentry{briere j @Briere, J.}{70}
+\indexentry{ruby j @Ruby, J.}{70}
+\indexentry{fulton c @Fulton, C.}{70}
+\indexentry{ruby j @Ruby, J.}{70}
+\indexentry{fulton c @Fulton, C.}{70}
+\indexentry{ruby j @Ruby, J.}{70}
+\indexentry{fulton c @Fulton, C.}{70}
+\indexentry{ruby j @Ruby, J.}{70}
+\indexentry{fulton c @Fulton, C.}{70}
+\indexentry{bower dl @Bower, D\BPBI  L.}{70}
+\indexentry{bower dl @Bower, D\BPBI  L.}{70}
+\indexentry{bower dl @Bower, D\BPBI  L.}{70}
+\indexentry{bower dl @Bower, D\BPBI  L.}{70}
+\indexentry{ross df @Ross, D\BPBI  F.}{70}
+\indexentry{ross df @Ross, D\BPBI  F.}{70}
+\indexentry{ross df @Ross, D\BPBI  F.}{70}
+\indexentry{ross df @Ross, D\BPBI  F.}{70}
+\indexentry{wilfley de @Wilfley, D\BPBI  E.}{70}
+\indexentry{wilfley de @Wilfley, D\BPBI  E.}{70}
+\indexentry{wilfley de @Wilfley, D\BPBI  E.}{70}
+\indexentry{wilfley de @Wilfley, D\BPBI  E.}{70}
+\indexentry{almeida dm @Almeida, D\BPBI  M.}{70}
+\indexentry{almeida dm @Almeida, D\BPBI  M.}{70}
+\indexentry{almeida dm @Almeida, D\BPBI  M.}{70}
+\indexentry{almeida dm @Almeida, D\BPBI  M.}{70}
+\indexentry{stinson c @Stinson, C.}{71}
+\indexentry{milbrath c @Milbrath, C.}{71}
+\indexentry{reidbord s @Reidbord, S.}{71}
+\indexentry{bucci w @Bucci, W.}{71}
+\indexentry{stinson c @Stinson, C.}{71}
+\indexentry{stinson c @Stinson, C.}{71}
+\indexentry{milbrath c @Milbrath, C.}{71}
+\indexentry{reidbord s @Reidbord, S.}{71}
+\indexentry{bucci w @Bucci, W.}{71}
+\indexentry{stinson c @Stinson, C.}{71}
+\indexentry{depret ef @D{\'{e}}pret, E\BPBI  F.}{71}
+\indexentry{fiske st @Fiske, S\BPBI  T.}{71}
+\indexentry{depret ef @D{\'{e}}pret, E\BPBI  F.}{71}
+\indexentry{fiske st @Fiske, S\BPBI  T.}{71}
+\indexentry{depret ef @D{\'{e}}pret, E\BPBI  F.}{71}
+\indexentry{fiske st @Fiske, S\BPBI  T.}{71}
+\indexentry{depret ef @D{\'{e}}pret, E\BPBI  F.}{71}
+\indexentry{fiske st @Fiske, S\BPBI  T.}{71}
+\indexentry{mcintosh dn @McIntosh, D\BPBI  N.}{71}
+\indexentry{mcintosh dn @McIntosh, D\BPBI  N.}{71}
+\indexentry{mcintosh dn @McIntosh, D\BPBI  N.}{71}
+\indexentry{mcintosh dn @McIntosh, D\BPBI  N.}{71}
+\indexentry{bordi f @Bordi, F.}{71}
+\indexentry{ledoux je @LeDoux, J\BPBI  E.}{71}
+\indexentry{bordi f @Bordi, F.}{71}
+\indexentry{ledoux je @LeDoux, J\BPBI  E.}{71}
+\indexentry{bordi f @Bordi, F.}{71}
+\indexentry{ledoux je @LeDoux, J\BPBI  E.}{71}
+\indexentry{bordi f @Bordi, F.}{71}
+\indexentry{ledoux je @LeDoux, J\BPBI  E.}{71}
+\indexentry{klombers n @Klombers, N.}{71}
+\indexentry{klombers n @Klombers, N.}{71}
+\indexentry{klombers n @Klombers, N.}{71}
+\indexentry{klombers n @Klombers, N.}{71}
+\indexentry{mroczek dk @Mroczek, D\BPBI  K.}{71}
+\indexentry{mroczek dk @Mroczek, D\BPBI  K.}{71}
+\indexentry{mroczek dk @Mroczek, D\BPBI  K.}{71}
+\indexentry{mroczek dk @Mroczek, D\BPBI  K.}{71}
+\indexentry{schatz br @Schatz, B\BPBI  R.}{71}
+\indexentry{schatz br @Schatz, B\BPBI  R.}{71}
+\indexentry{schatz br @Schatz, B\BPBI  R.}{71}
+\indexentry{schatz br @Schatz, B\BPBI  R.}{71}
+\indexentry{kraus sj @Kraus, S\BPBI  J.}{72}
+\indexentry{kraus sj @Kraus, S\BPBI  J.}{72}
+\indexentry{kraus sj @Kraus, S\BPBI  J.}{72}
+\indexentry{kraus sj @Kraus, S\BPBI  J.}{72}
+\indexentry{scorsese mproducer @Scorsese, M\BPBI  {\bibliteral {(Producer)}\bibskipbracenodot }.}{72}
+\indexentry{lonergan kwriterdirector @Lonergan, K\BPBI  {\bibliteral {(Writer/Director)}\indexskipbracenodot }.}{72}
+\indexentry{scorsese mproducer @Scorsese, M\BPBI  {\bibliteral {(Producer)}\bibskipbracenodot }.}{72}
+\indexentry{lonergan kwriterdirector @Lonergan, K\BPBI  {\bibliteral {(Writer/Director)}\indexskipbracenodot }.}{72}
+\indexentry{scorsese mproducer @Scorsese, M\BPBI  {\bibliteral {(Producer)}\bibskipbracenodot }.}{72}
+\indexentry{lonergan kwriterdirector @Lonergan, K\BPBI  {\bibliteral {(Writer/Director)}\indexskipbracenodot }.}{72}
+\indexentry{scorsese mproducer @Scorsese, M\BPBI  {\bibliteral {(Producer)}\bibskipbracenodot }.}{72}
+\indexentry{lonergan kwriterdirector @Lonergan, K\BPBI  {\bibliteral {(Writer/Director)}\indexskipbracenodot }.}{72}
+\indexentry{harrison jproducer @Harrison, J\BPBI  {\bibliteral {(Producer)}\bibskipbracenodot }.}{72}
+\indexentry{schmiechen rdirector @Schmiechen, R\BPBI  {\bibliteral {(Director)}\indexskipbracenodot }.}{72}
+\indexentry{harrison jproducer @Harrison, J\BPBI  {\bibliteral {(Producer)}\bibskipbracenodot }.}{72}
+\indexentry{schmiechen rdirector @Schmiechen, R\BPBI  {\bibliteral {(Director)}\indexskipbracenodot }.}{72}
+\indexentry{harrison jproducer @Harrison, J\BPBI  {\bibliteral {(Producer)}\bibskipbracenodot }.}{72}
+\indexentry{schmiechen rdirector @Schmiechen, R\BPBI  {\bibliteral {(Director)}\indexskipbracenodot }.}{72}
+\indexentry{harrison jproducer @Harrison, J\BPBI  {\bibliteral {(Producer)}\bibskipbracenodot }.}{72}
+\indexentry{schmiechen rdirector @Schmiechen, R\BPBI  {\bibliteral {(Director)}\indexskipbracenodot }.}{72}
+\indexentry{crystal lexecutiveproducer @Crystal, L\BPBI  {\bibliteral {(Executive Producer)}\indexskipbracenodot }.}{72}
+\indexentry{crystal lexecutiveproducer @Crystal, L\BPBI  {\bibliteral {(Executive Producer)}\indexskipbracenodot }.}{72}
+\indexentry{crystal lexecutiveproducer @Crystal, L\BPBI  {\bibliteral {(Executive Producer)}\indexskipbracenodot }.}{72}
+\indexentry{crystal lexecutiveproducer @Crystal, L\BPBI  {\bibliteral {(Executive Producer)}\indexskipbracenodot }.}{73}
+\indexentry{miller rproducer @Miller, {R\bibeditortype  {Producer}}.}{73}
+\indexentry{miller rproducer @Miller, {R\bibeditortype  {Producer}}.}{73}
+\indexentry{miller rproducer @Miller, {R\bibeditortype  {Producer}}.}{73}
+\indexentry{miller rproducer @Miller, {R\bibeditortype  {Producer}}.}{73}
+\indexentry{hall bwriter @Hall, B\BPBI  {\bibliteral {(Writer)}\bibskipbracenodot }.}{73}
+\indexentry{bender jdirector @Bender, J\BPBI  {\bibliteral {(Director)}\indexskipbracenodot }.}{73}
+\indexentry{hall bwriter @Hall, B\BPBI  {\bibliteral {(Writer)}\bibskipbracenodot }.}{73}
+\indexentry{bender jdirector @Bender, J\BPBI  {\bibliteral {(Director)}\indexskipbracenodot }.}{73}
+\indexentry{hall bwriter @Hall, B\BPBI  {\bibliteral {(Writer)}\bibskipbracenodot }.}{73}
+\indexentry{bender jdirector @Bender, J\BPBI  {\bibliteral {(Director)}\indexskipbracenodot }.}{73}
+\indexentry{hall bwriter @Hall, B\BPBI  {\bibliteral {(Writer)}\bibskipbracenodot }.}{73}
+\indexentry{bender jdirector @Bender, J\BPBI  {\bibliteral {(Director)}\indexskipbracenodot }.}{73}
+\indexentry{costa pt jrhboxspeaker @Costa, P\BPBI  T., Jr.\hbox {}\nobreakspace  {}{\bibliteral {(Speaker)}}}{75}
+\indexentry{costa pt jrhboxspeaker @Costa, P\BPBI  T., Jr.\hbox {}\nobreakspace  {}{\bibliteral {(Speaker)}}}{75}
+\indexentry{costa pt jrhboxspeaker @Costa, P\BPBI  T., Jr.\hbox {}\nobreakspace  {}{\bibliteral {(Speaker)}}}{75}
+\indexentry{costa pt jrhboxspeaker @Costa, P\BPBI  T., Jr.\hbox {}\nobreakspace  {}{\bibliteral {(Speaker)}}}{75}
+\indexentry{vandenbos g @VandenBos, G.}{75}
+\indexentry{knapp s @Knapp, S.}{75}
+\indexentry{doe j @Doe, J.}{75}
+\indexentry{vandenbos g @VandenBos, G.}{75}
+\indexentry{vandenbos g @VandenBos, G.}{75}
+\indexentry{knapp s @Knapp, S.}{75}
+\indexentry{doe j @Doe, J.}{75}
+\indexentry{vandenbos g @VandenBos, G.}{75}
+\indexentry{vandenbos g @VandenBos, G.}{75}
+\indexentry{knapp s @Knapp, S.}{75}
+\indexentry{doe j @Doe, J.}{75}
+\indexentry{vandenbos g @VandenBos, G.}{75}
+\indexentry{vandenbos g @VandenBos, G.}{75}
+\indexentry{knapp s @Knapp, S.}{75}
+\indexentry{doe j @Doe, J.}{75}
+\indexentry{vandenbos g @VandenBos, G.}{75}
+\indexentry{fredrickson bl @Fredrickson, B\BPBI  L.}{75}
+\indexentry{fredrickson bl @Fredrickson, B\BPBI  L.}{75}
+\indexentry{fredrickson bl @Fredrickson, B\BPBI  L.}{75}
+\indexentry{fredrickson bl @Fredrickson, B\BPBI  L.}{75}
+\indexentry{crow tj @Crow, T\BPBI  J.}{75}
+\indexentry{crow tj @Crow, T\BPBI  J.}{75}
+\indexentry{crow tj @Crow, T\BPBI  J.}{75}
+\indexentry{crow tj @Crow, T\BPBI  J.}{75}
+\indexentry{glueckauf rl @Glueckauf, R\BPBI  L.}{75}
+\indexentry{glueckauf rl @Glueckauf, R\BPBI  L.}{75}
+\indexentry{glueckauf rl @Glueckauf, R\BPBI  L.}{75}
+\indexentry{glueckauf rl @Glueckauf, R\BPBI  L.}{75}
+\indexentry{chou l @Chou, L.}{76}
+\indexentry{mcclintock r @McClintock, R.}{76}
+\indexentry{moretti f @Moretti, F.}{76}
+\indexentry{nix dh @Nix, D\BPBI  H.}{76}
+\indexentry{chou l @Chou, L.}{76}
+\indexentry{chou l @Chou, L.}{76}
+\indexentry{mcclintock r @McClintock, R.}{76}
+\indexentry{moretti f @Moretti, F.}{76}
+\indexentry{nix dh @Nix, D\BPBI  H.}{76}
+\indexentry{chou l @Chou, L.}{76}
+\indexentry{kruschke jk @Kruschke, J\BPBI  K.}{76}
+\indexentry{bradley al @Bradley, A\BPBI  L.}{76}
+\indexentry{kruschke jk @Kruschke, J\BPBI  K.}{76}
+\indexentry{bradley al @Bradley, A\BPBI  L.}{76}
+\indexentry{kruschke jk @Kruschke, J\BPBI  K.}{77}
+\indexentry{bradley al @Bradley, A\BPBI  L.}{77}
+\indexentry{kruschke jk @Kruschke, J\BPBI  K.}{77}
+\indexentry{bradley al @Bradley, A\BPBI  L.}{77}
+\indexentry{cutler ld @Cutler, L\BPBI  D.}{77}
+\indexentry{frolich b @Fr{\"{o}}lich, B.}{77}
+\indexentry{hanrahan p @Hanrahan, P.}{77}
+\indexentry{cutler ld @Cutler, L\BPBI  D.}{77}
+\indexentry{cutler ld @Cutler, L\BPBI  D.}{77}
+\indexentry{frolich b @Fr{\"{o}}lich, B.}{77}
+\indexentry{hanrahan p @Hanrahan, P.}{77}
+\indexentry{cutler ld @Cutler, L\BPBI  D.}{77}
+\indexentry{tan g @Tan, G.}{77}
+\indexentry{lewandowsky s @Lewandowsky, S.}{77}
+\indexentry{tan g @Tan, G.}{77}
+\indexentry{lewandowsky s @Lewandowsky, S.}{77}
+\indexentry{tan g @Tan, G.}{77}
+\indexentry{lewandowsky s @Lewandowsky, S.}{77}
+\indexentry{tan g @Tan, G.}{77}
+\indexentry{lewandowsky s @Lewandowsky, S.}{77}
+\indexentry{chalmers d @Chalmers, D.}{77}
+\indexentry{chalmers d @Chalmers, D.}{77}
+\indexentry{chalmers d @Chalmers, D.}{77}
+\indexentry{chalmers d @Chalmers, D.}{77}
+\indexentry{simons dj @Simons, D\BPBI  J.}{77}
+\indexentry{simons dj @Simons, D\BPBI  J.}{77}
+\indexentry{simons dj @Simons, D\BPBI  J.}{77}
+\indexentry{simons dj @Simons, D\BPBI  J.}{77}
+\indexentry{hammond t @Hammond, T.}{77}
+\indexentry{hammond t @Hammond, T.}{77}
+\indexentry{hammond t @Hammond, T.}{77}
+\indexentry{hammond t @Hammond, T.}{77}
+\indexentry{borman wc @Borman, W\BPBI  C.}{77}
+\indexentry{hanson ma @Hanson, M\BPBI  A.}{77}
+\indexentry{oppler sh @Oppler, S\BPBI  H.}{77}
+\indexentry{pulakos ed @Pulakos, E\BPBI  D.}{77}
+\indexentry{white la @White, L\BPBI  A.}{77}
+\indexentry{borman wc @Borman, W\BPBI  C.}{77}
+\indexentry{borman wc @Borman, W\BPBI  C.}{77}
+\indexentry{hanson ma @Hanson, M\BPBI  A.}{77}
+\indexentry{oppler sh @Oppler, S\BPBI  H.}{77}
+\indexentry{pulakos ed @Pulakos, E\BPBI  D.}{77}
+\indexentry{white la @White, L\BPBI  A.}{77}
+\indexentry{borman wc @Borman, W\BPBI  C.}{77}
+\indexentry{hilts pj @Hilts, P\BPBI  J.}{77}
+\indexentry{hilts pj @Hilts, P\BPBI  J.}{77}
+\indexentry{hilts pj @Hilts, P\BPBI  J.}{77}
+\indexentry{hilts pj @Hilts, P\BPBI  J.}{77}
+\indexentry{fournier m @Fournier, M.}{78}
+\indexentry{deridder d @{\lowercase {D}}e\nobreakspace  {}Ridder, D.}{78}
+\indexentry{bensing j @Bensing, J.}{78}
+\indexentry{fournier m @Fournier, M.}{78}
+\indexentry{fournier m @Fournier, M.}{78}
+\indexentry{deridder d @{\lowercase {D}}e\nobreakspace  {}Ridder, D.}{78}
+\indexentry{bensing j @Bensing, J.}{78}
+\indexentry{fournier m @Fournier, M.}{78}
+\indexentry{miller me @Miller, M\BPBI  E.}{78}
+\indexentry{miller me @Miller, M\BPBI  E.}{78}
+\indexentry{miller me @Miller, M\BPBI  E.}{78}
+\indexentry{miller me @Miller, M\BPBI  E.}{78}
+\indexentry{schwarzer r @Schwarzer, R.}{78}
+\indexentry{schwarzer r @Schwarzer, R.}{78}
+\indexentry{schwarzer r @Schwarzer, R.}{78}
+\indexentry{schwarzer r @Schwarzer, R.}{78}
+\indexentry{adams @Adams}{80}
+\indexentry{alleyne rl @Alleyne, R\BPBI  L.}{80}
+\indexentry{alleyne rl @Alleyne, R\BPBI  L.}{80}
+\indexentry{evans aj @Evans, A\BPBI  J.}{80}
+\indexentry{almeida dm @Almeida, D\BPBI  M.}{80}
+\indexentry{anonymous @Anonymous}{80}
+\indexentry{aristotle @Aristotle}{80}
+\indexentry{auerbach js @Auerbach, J\BPBI  S.}{80}
+\indexentry{author @Author}{80}
+\indexentry{author @Author}{80}
+\indexentry{baheti jr @Baheti, J\BPBI  R.}{80}
+\indexentry{baheti jr @Baheti, J\BPBI  R.}{80}
+\indexentry{baker fm @Baker, F\BPBI  M.}{80}
+\indexentry{lightfoot ob @Lightfoot, O\BPBI  B.}{80}
+\indexentry{balda @Balda}{80}
+\indexentry{bandura aj @Bandura, A\BPBI  J.}{80}
+\indexentry{barlow dh @Barlow, D\BPBI  H.}{80}
+\indexentry{battig wf @Battig, W\BPBI  F.}{80}
+\indexentry{montague we @Montague, W\BPBI  E.}{80}
+\indexentry{beck caj @Beck, C\BPBI  A\BPBI  J.}{80}
+\indexentry{sales bd @Sales, B\BPBI  D.}{80}
+\indexentry{bergmann pg @Bergmann, P\BPBI  G.}{81}
+\indexentry{berkowitz ad @Berkowitz, A\BPBI  D.}{81}
+\indexentry{beutler @Beutler}{81}
+\indexentry{bjork ra @Bjork, R\BPBI  A.}{81}
+\indexentry{bordi f @Bordi, F.}{81}
+\indexentry{ledoux je @LeDoux, J\BPBI  E.}{81}
+\indexentry{borman wc @Borman, W\BPBI  C.}{81}
+\indexentry{hanson ma @Hanson, M\BPBI  A.}{81}
+\indexentry{oppler sh @Oppler, S\BPBI  H.}{81}
+\indexentry{pulakos ed @Pulakos, E\BPBI  D.}{81}
+\indexentry{white la @White, L\BPBI  A.}{81}
+\indexentry{bower dl @Bower, D\BPBI  L.}{81}
+\indexentry{bradley @Bradley}{81}
+\indexentry{ramirez @Ramirez}{81}
+\indexentry{soo @Soo}{81}
+\indexentry{bradley @Bradley}{81}
+\indexentry{soo @Soo}{81}
+\indexentry{ramirez @Ramirez}{81}
+\indexentry{brown @Brown}{81}
+\indexentry{bretschneider jg @Bretschneider, J\BPBI  G.}{81}
+\indexentry{mccoy nl @McCoy, N\BPBI  L.}{81}
+\indexentry{broadhurst rg @Broadhurst, R\BPBI  G.}{81}
+\indexentry{maller ra @Maller, R\BPBI  A.}{81}
+\indexentry{brown jr @Brown, J\BPBI  R.}{81}
+\indexentry{brown ls @Brown, L\BPBI  S.}{81}
+\indexentry{browne mw @Browne, M\BPBI  W.}{81}
+\indexentry{browning ar @Browning, A\BPBI  R.}{81}
+\indexentry{bulatao ewithwinfordca @Bulatao, E\BPBI  {\bibliteral {(with Winford, C.\nobreakspace  {}A.)}\indexskipbracenodot }.}{81}
+\indexentry{buss dm @Buss, D\BPBI  M.}{81}
+\indexentry{schmitt dp @Schmitt, D\BPBI  P.}{81}
+\indexentry{cabading jr @Cabading, J\BPBI  R.}{81}
+\indexentry{wright k @Wright, K.}{81}
+\indexentry{cabading jr @Cabading, J\BPBI  R.}{81}
+\indexentry{wright k @Wright, K.}{81}
+\indexentry{chalmers d @Chalmers, D.}{81}
+\indexentry{cheek @Cheek}{81}
+\indexentry{buss @Buss}{81}
+\indexentry{chou l @Chou, L.}{81}
+\indexentry{mcclintock r @McClintock, R.}{81}
+\indexentry{moretti f @Moretti, F.}{81}
+\indexentry{nix dh @Nix, D\BPBI  H.}{81}
+\indexentry{coltheart m @Coltheart, M.}{82}
+\indexentry{curtis b @Curtis, B.}{82}
+\indexentry{atkins p @Atkins, P.}{82}
+\indexentry{haller m @Haller, M.}{82}
+\indexentry{costa pt jrhboxspeaker @Costa, P\BPBI  T., Jr.\hbox {}\nobreakspace  {}{\bibliteral {(Speaker)}}}{82}
+\indexentry{crow tj @Crow, T\BPBI  J.}{82}
+\indexentry{crystal lexecutiveproducer @Crystal, L\BPBI  {\bibliteral {(Executive Producer)}\indexskipbracenodot }.}{82}
+\indexentry{cutler ld @Cutler, L\BPBI  D.}{82}
+\indexentry{frolich b @Fr{\"{o}}lich, B.}{82}
+\indexentry{hanrahan p @Hanrahan, P.}{82}
+\indexentry{cynx j @Cynx, J.}{82}
+\indexentry{williams h @Williams, H.}{82}
+\indexentry{nottebohm f @Nottebohm, F.}{82}
+\indexentry{davydov vv @Davydov, V\BPBI  V.}{82}
+\indexentry{debase @DeBase}{82}
+\indexentry{deci el @Deci, E\BPBI  L.}{82}
+\indexentry{ryan rm @Ryan, R\BPBI  M.}{82}
+\indexentry{depret ef @D{\'{e}}pret, E\BPBI  F.}{82}
+\indexentry{fiske st @Fiske, S\BPBI  T.}{82}
+\indexentry{deutsch fm @Deutsch, F\BPBI  M.}{82}
+\indexentry{lussier jb @Lussier, J\BPBI  B.}{82}
+\indexentry{servis lj @Servis, L\BPBI  J.}{82}
+\indexentry{devries j @De\nobreakspace  {}Vries, J.}{82}
+\indexentry{edeline @Edeline}{82}
+\indexentry{weinberger @Weinberger}{82}
+\indexentry{edeline @Edeline}{82}
+\indexentry{weinberger @Weinberger}{82}
+\indexentry{eid m @Eid, M.}{82}
+\indexentry{langeheine r @Langeheine, R.}{82}
+\indexentry{fiske st @Fiske, S\BPBI  T.}{83}
+\indexentry{fournier m @Fournier, M.}{83}
+\indexentry{deridder d @{\lowercase {D}}e\nobreakspace  {}Ridder, D.}{83}
+\indexentry{bensing j @Bensing, J.}{83}
+\indexentry{fowers bj @Fowers, B\BPBI  J.}{83}
+\indexentry{olson dh @Olson, D\BPBI  H.}{83}
+\indexentry{fredrickson bl @Fredrickson, B\BPBI  L.}{83}
+\indexentry{freud s @Freud, S.}{83}
+\indexentry{ganster dc @Ganster, D\BPBI  C.}{83}
+\indexentry{schaubroeck j @Schaubroeck, J.}{83}
+\indexentry{sime we @Sime, W\BPBI  E.}{83}
+\indexentry{mayes bt @Mayes, B\BPBI  T.}{83}
+\indexentry{gibbs jt @Gibbs, J\BPBI  T.}{83}
+\indexentry{huang ln @Huang, L\BPBI  N.}{83}
+\indexentry{glueckauf rl @Glueckauf, R\BPBI  L.}{83}
+\indexentry{whitton j @Whitton, J.}{83}
+\indexentry{baxter j @Baxter, J.}{83}
+\indexentry{kain j @Kain, J.}{83}
+\indexentry{vogelgesang s @Vogelgesang, S.}{83}
+\indexentry{hudson m @Hudson, M.}{83}
+\indexentry{gogel @Gogel}{83}
+\indexentry{gogel @Gogel}{83}
+\indexentry{gogel @Gogel}{83}
+\indexentry{goldberg jm @Goldberg, J\BPBI  M.}{83}
+\indexentry{neff @Neff}{83}
+\indexentry{goldberg me @Goldberg, M\BPBI  E.}{83}
+\indexentry{wurtz @Wurtz}{83}
+\indexentry{goodenough jb @Goodenough, J\BPBI  B.}{83}
+\indexentry{gosling jr @Gosling, J\BPBI  R.}{83}
+\indexentry{jerald k @Jerald, K.}{83}
+\indexentry{belfar sf @Belfar, S\BPBI  F.}{83}
+\indexentry{gosling jr @Gosling, J\BPBI  R.}{83}
+\indexentry{tevlin df @Tevlin, D\BPBI  F.}{83}
+\indexentry{gottfredson gd @Gottfredson, G\BPBI  D.}{83}
+\indexentry{hall bwriter @Hall, B\BPBI  {\bibliteral {(Writer)}\bibskipbracenodot }.}{83}
+\indexentry{bender jdirector @Bender, J\BPBI  {\bibliteral {(Director)}\indexskipbracenodot }.}{83}
+\indexentry{hammond t @Hammond, T.}{83}
+\indexentry{harris pl @Harris, P\BPBI  L.}{84}
+\indexentry{kavanaugh rd @Kavanaugh, R\BPBI  D.}{84}
+\indexentry{harrison jproducer @Harrison, J\BPBI  {\bibliteral {(Producer)}\bibskipbracenodot }.}{84}
+\indexentry{schmiechen rdirector @Schmiechen, R\BPBI  {\bibliteral {(Director)}\indexskipbracenodot }.}{84}
+\indexentry{hashtroudi @Hashtroudi}{84}
+\indexentry{chrosniak @Chrosniak}{84}
+\indexentry{schwartz @Schwartz}{84}
+\indexentry{hayward d @Hayward, D.}{84}
+\indexentry{firsching a @Firsching, A.}{84}
+\indexentry{brown j @Brown, J.}{84}
+\indexentry{hayward d @Hayward, D.}{84}
+\indexentry{firsching a @Firsching, A.}{84}
+\indexentry{smigel j @Smigel, J.}{84}
+\indexentry{helmholtz hlf von @Helmholtz, H\BPBI  L\BPBI  F. von}{84}
+\indexentry{henry wa iii @Henry, W\BPBI  A., III}{84}
+\indexentry{herman lm @Herman, L\BPBI  M.}{84}
+\indexentry{kuczaj sa iii @Kuczaj, S\BPBI  A., III}{84}
+\indexentry{holder md @Holder, M\BPBI  D.}{84}
+\indexentry{hewlett ls @Hewlett, L\BPBI  S.}{84}
+\indexentry{hewlett ls @Hewlett, L\BPBI  S.}{84}
+\indexentry{hilts pj @Hilts, P\BPBI  J.}{84}
+\indexentry{ising m @Ising, M.}{84}
+\indexentry{james @James}{84}
+\indexentry{johnson @Johnson}{84}
+\indexentry{johnson @Johnson}{84}
+\indexentry{johnson @Johnson}{84}
+\indexentry{joreskog kg @J{\"{o}}reskog, K\BPBI  G.}{84}
+\indexentry{sorbom d @S{\"{o}}rbom, D.}{84}
+\indexentry{joreskog kg @J{\"{o}}reskog, K\BPBI  G.}{84}
+\indexentry{sorbom d @S{\"{o}}rbom, D.}{84}
+\indexentry{kamil @Kamil}{84}
+\indexentry{kandel er @Kandel, E\BPBI  R.}{84}
+\indexentry{squire lr @Squire, L\BPBI  R.}{84}
+\indexentry{kazdin ae @Kazdin, A\BPBI  E.}{84}
+\indexentry{kernis mh @Kernis, M\BPBI  H.}{84}
+\indexentry{cornell dp @Cornell, D\BPBI  P.}{84}
+\indexentry{sun cr @Sun, C\BHBI  R.}{84}
+\indexentry{berry a @Berry, A.}{84}
+\indexentry{harlow t @Harlow, T.}{84}
+\indexentry{klimoski r @Klimoski, R.}{84}
+\indexentry{palmer s @Palmer, S.}{84}
+\indexentry{klombers n @Klombers, N.}{84}
+\indexentry{koch s @Koch, S.}{84}
+\indexentry{kopka h @Kopka, H.}{85}
+\indexentry{daly pw @Daly, P\BPBI  W.}{85}
+\indexentry{kosslyn @Kosslyn}{85}
+\indexentry{koenig @Koenig}{85}
+\indexentry{barrett @Barrett}{85}
+\indexentry{cave @Cave}{85}
+\indexentry{tang @Tang}{85}
+\indexentry{gabrieli @Gabrieli}{85}
+\indexentry{kosslyn @Kosslyn}{85}
+\indexentry{koenig @Koenig}{85}
+\indexentry{gabrieli @Gabrieli}{85}
+\indexentry{tang @Tang}{85}
+\indexentry{marsolek @Marsolek}{85}
+\indexentry{daly @Daly}{85}
+\indexentry{kraus sj @Kraus, S\BPBI  J.}{85}
+\indexentry{kruschke jk @Kruschke, J\BPBI  K.}{85}
+\indexentry{bradley al @Bradley, A\BPBI  L.}{85}
+\indexentry{lamport l @Lamport, L.}{85}
+\indexentry{lanktree c @Lanktree, C.}{85}
+\indexentry{briere j @Briere, J.}{85}
+\indexentry{laplace ps @Laplace, P\BHBI  S.}{85}
+\indexentry{lichstein kl @Lichstein, K\BPBI  L.}{85}
+\indexentry{johnson rs @Johnson, R\BPBI  S.}{85}
+\indexentry{womack td @Womack, T\BPBI  D.}{85}
+\indexentry{dean je @Dean, J\BPBI  E.}{85}
+\indexentry{childers ck @Childers, C\BPBI  K.}{85}
+\indexentry{luce pa @Luce, P\BPBI  A.}{85}
+\indexentry{luce rd @Luce, R\BPBI  D.}{85}
+\indexentry{macarthur @MacArthur}{85}
+\indexentry{maccoby ee @Maccoby, E\BPBI  E.}{85}
+\indexentry{martin j @Martin, J.}{85}
+\indexentry{macneil @MacNeil}{85}
+\indexentry{massaro d @Massaro, D.}{85}
+\indexentry{mathur al @Mathur, A\BPBI  L.}{85}
+\indexentry{wallston j @Wallston, J.}{85}
+\indexentry{mathur se @Mathur, S\BPBI  E.}{85}
+\indexentry{ahlers rj @Ahlers, R\BPBI  J.}{85}
+\indexentry{matthews ka @Matthews, K\BPBI  A.}{85}
+\indexentry{mazzeo j @Mazzeo, J.}{85}
+\indexentry{druesne b @Druesne, B.}{85}
+\indexentry{raffeld pc @Raffeld, P\BPBI  C.}{85}
+\indexentry{checketts kt @Checketts, K\BPBI  T.}{85}
+\indexentry{muhlstein a @Muhlstein, A.}{85}
+\indexentry{mcallister @McAllister}{86}
+\indexentry{mcarthy @M'Carthy}{86}
+\indexentry{mcintosh dn @McIntosh, D\BPBI  N.}{86}
+\indexentry{mead jv @Mead, J\BPBI  V.}{86}
+\indexentry{meijer e @Meijer, E.}{86}
+\indexentry{mellers ba @Mellers, B\BPBI  A.}{86}
+\indexentry{merikle pm @Merikle, P\BPBI  M.}{86}
+\indexentry{miller me @Miller, M\BPBI  E.}{86}
+\indexentry{miller rproducer @Miller, {R\bibeditortype  {Producer}}.}{86}
+\indexentry{minor @Minor}{86}
+\indexentry{mitchell tr @Mitchell, T\BPBI  R.}{86}
+\indexentry{larson jr jrhbox @Larson, J\BPBI  R., Jr.\hbox {}}{86}
+\indexentry{mittelbach f @Mittelbach, F.}{86}
+\indexentry{goossens m @Goossens, M.}{86}
+\indexentry{mroczek dk @Mroczek, D\BPBI  K.}{86}
+\indexentry{myers @Myers}{86}
+\indexentry{nakazato k @Nakazato, K.}{86}
+\indexentry{shimonaka y @Shimonaka, Y.}{86}
+\indexentry{homma a @Homma, A.}{86}
+\indexentry{nightlinger @Nightlinger}{86}
+\indexentry{littlewood @Littlewood}{86}
+\indexentry{oneil jm @O'Neil, J\BPBI  M.}{86}
+\indexentry{egan j @Egan, J.}{86}
+\indexentry{osgood dw @Osgood, D\BPBI  W.}{86}
+\indexentry{wilson jk @Wilson, J\BPBI  K.}{86}
+\indexentry{pepperberg @Pepperberg}{86}
+\indexentry{funk @Funk}{86}
+\indexentry{piaget j @Piaget, J.}{86}
+\indexentry{piaget j @Piaget, J.}{87}
+\indexentry{inhelder b @Inhelder, B.}{87}
+\indexentry{regier aa @Regier, A\BPBI  A.}{87}
+\indexentry{narrow we @Narrow, W\BPBI  E.}{87}
+\indexentry{rae ds @Rae, D\BPBI  S.}{87}
+\indexentry{robinson dn @Robinson, D\BPBI  N.}{87}
+\indexentry{rosenthal r @Rosenthal, R.}{87}
+\indexentry{ross df @Ross, D\BPBI  F.}{87}
+\indexentry{ruby j @Ruby, J.}{87}
+\indexentry{fulton c @Fulton, C.}{87}
+\indexentry{sadie s @Sadie, S.}{87}
+\indexentry{saxe gb @Saxe, G\BPBI  B.}{87}
+\indexentry{saywitz kj @Saywitz, K\BPBI  J.}{87}
+\indexentry{mannarino ap @Mannarino, A\BPBI  P.}{87}
+\indexentry{berliner l @Berliner, L.}{87}
+\indexentry{cohen ja @Cohen, J\BPBI  A.}{87}
+\indexentry{schatz br @Schatz, B\BPBI  R.}{87}
+\indexentry{schwartz j @Schwartz, J.}{87}
+\indexentry{schwarzer r @Schwarzer, R.}{87}
+\indexentry{scorsese mproducer @Scorsese, M\BPBI  {\bibliteral {(Producer)}\bibskipbracenodot }.}{87}
+\indexentry{lonergan kwriterdirector @Lonergan, K\BPBI  {\bibliteral {(Writer/Director)}\indexskipbracenodot }.}{87}
+\indexentry{shimamura @Shimamura}{87}
+\indexentry{shocked m @Shocked, M.}{87}
+\indexentry{shuker r @Shuker, R.}{87}
+\indexentry{openshaw r @Openshaw, R.}{87}
+\indexentry{soler j @Soler, J.}{87}
+\indexentry{simons dj @Simons, D\BPBI  J.}{87}
+\indexentry{singh @Singh}{87}
+\indexentry{singh @Singh}{87}
+\indexentry{singh @Singh}{87}
+\indexentry{stinson c @Stinson, C.}{88}
+\indexentry{milbrath c @Milbrath, C.}{88}
+\indexentry{reidbord s @Reidbord, S.}{88}
+\indexentry{bucci w @Bucci, W.}{88}
+\indexentry{storandt @Storandt}{88}
+\indexentry{stutte h @Stutte, H.}{88}
+\indexentry{swait j @Swait, J.}{88}
+\indexentry{adamowicz w @Adamowicz, W.}{88}
+\indexentry{hanemann m @Hanemann, M.}{88}
+\indexentry{diederich a @Diederich, A.}{88}
+\indexentry{krosnick j @Krosnick, J.}{88}
+\indexentry{layton d @Layton, D.}{88}
+\indexentry{tan g @Tan, G.}{88}
+\indexentry{lewandowsky s @Lewandowsky, S.}{88}
+\indexentry{vandenbos g @VandenBos, G.}{88}
+\indexentry{knapp s @Knapp, S.}{88}
+\indexentry{doe j @Doe, J.}{88}
+\indexentry{vandenbos g @VandenBos, G.}{88}
+\indexentry{knapp s @Knapp, S.}{88}
+\indexentry{doe j @Doe, J.}{88}
+\indexentry{vygotsky ls @Vygotsky, L\BPBI  S.}{88}
+\indexentry{walker @Walker}{88}
+\indexentry{wansbeek t @Wansbeek, T.}{88}
+\indexentry{meijer e @Meijer, E.}{88}
+\indexentry{wasserstein @Wasserstein}{88}
+\indexentry{zappulla @Zappulla}{88}
+\indexentry{rosen @Rosen}{88}
+\indexentry{gerstman @Gerstman}{88}
+\indexentry{rock @Rock}{88}
+\indexentry{wilfley de @Wilfley, D\BPBI  E.}{88}
+\indexentry{wolchik sa @Wolchik, S\BPBI  A.}{88}
+\indexentry{west sg @West, S\BPBI  G.}{88}
+\indexentry{sandler in @Sandler, I\BPBI  N.}{88}
+\indexentry{tein j @Tein, J.}{88}
+\indexentry{coatsworth d @Coatsworth, D.}{88}
+\indexentry{lengua l @Lengua, L.}{88}
+\indexentry{woolf nj @Woolf, N\BPBI  J.}{88}
+\indexentry{young sl @Young, S\BPBI  L.}{88}
+\indexentry{fanselow ms @Fanselow, M\BPBI  S.}{88}
+\indexentry{butcher ll @Butcher, L\BPBI  L.}{88}
+\indexentry{zuckerman m @Zuckerman, M.}{89}
+\indexentry{kieffer sc @Kieffer, S\BPBI  C.}{89}

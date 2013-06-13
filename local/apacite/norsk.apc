@@ -1,0 +1,163 @@
+%%
+%% This is file `norsk.apc',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% apacite.dtx  (with options: `norsk')
+%% 
+%% This is a generated file.
+%% 
+%% Copyright (C) 1994-2007 Erik Meijer and any individual authors listed
+%% elsewhere in this file.
+%% 
+%% This file is part of the `apacite' package.
+%% -------------------------------------------
+%% 
+%% It may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either
+%% version 1.3 of this license or (at your option) any later
+%% version.  The latest version of this license is in:
+%% 
+%%    http://www.latex-project.org/lppl.txt
+%% 
+%% and version 1.3 or later is part of all distributions of
+%% LaTeX version 2005/12/01 or later.
+%% 
+%% The `apacite' package consists of the files apacite.dtx and
+%% apacite.ins, and the following generated files:
+%% apacite.sty, apacite.bst, apacitex.bst, apa5ex.bib,
+%% apacite.drv, apacdoc.sty,
+%% english.apc, dutch.apc,   finnish.apc,  german.apc, ngerman.apc,
+%% greek.apc,   norsk.apc,   spanish.apc,  swedish.apc.
+%% 
+%% This work has the LPPL maintenance status `maintained'
+%% 
+%% The Current Maintainer of this work is Erik Meijer
+%% 
+%% This file may only be distributed together with a copy of the
+%% source files of the apacite package, i.e., apacite.dtx and
+%% apacite.ins. You may however distribute the apacite package without
+%% the generated files.
+%% 
+\ProvidesFile{norsk.apc}
+   [2007/09/03 v4.00 apacite language file]
+
+%%
+%% norsk.apc - Norwegian Bokmal & Nynorsk versions of apacite elements.
+%% Version 1.0.
+%% Written by Karl Ove Hufthammer.
+%%
+%% Note: To be in line with Norwegian rules of punctuation
+%%       a comma is never used before '&' or 'and', and there
+%%       is no space between initials. The macro for these
+%%       modifications can be found at the end of this file.
+%%       Remove them to use a more 'APA-like' style.
+%%
+%% There are no official Norwegian translations of APA.
+%% Some ideas for this translation have been taken from the following sources:
+%%
+%%   http://www.ub.uib.no/felles/IK/APA.pdf
+%%   http://www.uio.no/studier/emner/medisin/isv/SYKVIT4400/v07/REV_normer_skriftl_arb.pdf
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Commands for specific types of @misc entries.
+%%% These commands are recognized by apacite.bst.
+\renewcommand{\bibmessage}{innlegg}
+\renewcommand{\bibcomputerprogram}{dataprogram}
+\renewcommand{\bibcomputerprogrammanual}{dataprogramh\aa{}ndbok}
+\renewcommand{\bibcomputerprogramandmanual}{dataprogram og brukerh\aa{}ndbok}
+\renewcommand{\bibcomputersoftware}{programvare}
+\renewcommand{\bibcomputersoftwaremanual}{programvareh\aa{}ndbok}
+\renewcommand{\bibcomputersoftwareandmanual}{programvare og brukerh\aa{}ndbok}
+\renewcommand{\bibprogramminglanguage}{programmeringsspråk}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Other labels
+\renewcommand{\bibnodate}{u.d.\hbox{}}    % ``no date''
+\renewcommand{\BBAB}{og}            % between authors in text
+\renewcommand{\BOthers}[1]{et al.\hbox{}} % ``others'', the argument contains a
+                                      % dot to suppress an additional one
+                                      % in the reference list
+\renewcommand{\BOthersPeriod}[1]{et al.\hbox{}}% ``others'', the argument contains
+                                      % a dot to suppress an additional one
+                                      % in the reference list. The difference
+                                      % with \BOthers is that, if another
+                                      % string is used to define \BOthers,
+                                      % this one should always finish with a
+                                      % period and the previous one not
+                                      % necessarily (e.g., if explicit
+                                      % ``others'' is used).
+\renewcommand{\BIP}{under publisering}        % used as year for in-press citations
+\renewcommand{\BIn}{I}              % for ``In '' editor...
+\renewcommand{\BCHAP}{kap.\hbox{}}       % chapter
+\renewcommand{\BCHAPS}{kap.\hbox{}}      % chapters
+\renewcommand{\BED}{red.\hbox{}}           % editor
+\renewcommand{\BEDS}{red.\hbox{}}         % editors
+\renewcommand{\BTRANS}{oms.\hbox{}}     % translator
+\renewcommand{\BTRANSS}{oms.\hbox{}}    % translators
+\renewcommand{\BTRANSL}{oms.\hbox{}}    % translation, for the year field
+\renewcommand{\BCHAIR}{ordstyrer}        % chair of symposium
+\renewcommand{\BCHAIRS}{ordstyrere}      % chairs
+\renewcommand{\BVOL}{vol.\hbox{}}         % volume
+\renewcommand{\BVOLS}{vol.\hbox{}}       % volumes
+\renewcommand{\BNUM}{nr.\hbox{}}          % number
+\renewcommand{\BNUMS}{nr.\hbox{}}        % numbers
+\renewcommand{\BEd}{utg.\hbox{}}           % edition
+\renewcommand{\BPG}{s.\hbox{}}            % page
+\renewcommand{\BPGS}{s.\hbox{}}          % pages
+\renewcommand{\BTR}{Teknisk rapport}   % (default) technical report type name
+\renewcommand{\BPhD}{Akademisk avhandling}
+                                      % (default) PhD thesis type name
+\renewcommand{\BUPhD}{Upublisert akademisk avhandling}
+                                      % (default) unpublished PhD thesis
+                                      % type name
+\renewcommand{\BMTh}{Masteroppgave}% (default) master's thesis type name
+\renewcommand{\BUMTh}{Upublisert masteroppgave}%
+                                      % (default) unpublished
+                                      % master's thesis type name
+\renewcommand{\BOWP}{Original publisert}
+\renewcommand{\BREPR}{Opptrykk fra}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% The name (heading) of the Reference List
+\renewcommand{\refname}{Referanser}% Name of ref. list if it's a section.
+\renewcommand{\bibname}{Referanser}% Name of ref. list if it's a chapter.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\APACmetaprenote}{%
+Referanser merket med en stjerne viser til studier som er med i metaanalysen.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% The name (heading) of the Author Index
+\renewcommand{\authorindexname}{Forfatterregister}
+
+%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\BCBT}{} % No comma before & when we have two authors.
+\renewcommand{\BCBL}{} % No comma before & when we have three or more authors.
+\renewcommand{\BPBI}{.} % Period between initials. No space.
+
+\edef\APACnynorsk{\string nynorsk}
+\ifx\languagename\APACnynorsk
+  \renewcommand{\bibcomputerprogrammanual}{dataprogramhandbok}
+  \renewcommand{\bibcomputerprogramandmanual}{dataprogram og brukarhandbok}
+  \renewcommand{\bibcomputersoftwaremanual}{programvarehandbok}
+  \renewcommand{\bibcomputersoftwareandmanual}{programvare og brukarhandbok}
+  \renewcommand{\BCHAIR}{ordstyrar}        % chair of symposium
+  \renewcommand{\BCHAIRS}{ordstyrarar}      % chairs
+  \renewcommand{\BMTh}{Masteroppg\aa{}ve}% (default) master's thesis type name
+  \renewcommand{\BUMTh}{Upublisert masteroppg\aa{}ve}%
+  \renewcommand{\BREPR}{Opptrykk fr\aa{}}
+  \renewcommand{\refname}{Referansar}% Name of ref. list if it's a section.
+  \renewcommand{\bibname}{Referansar}% Name of ref. list if it's a chapter.
+  \renewcommand{\APACmetaprenote}{%
+    Referansar merkte med ei stjerne viser til studiar som er med i metaanalysen.}
+  \renewcommand{\authorindexname}{Forfattarregister}
+\fi
+\let\APACnynorsk\undefined
+%%
+
+\endinput
+%%
+%% End of file `norsk.apc'.

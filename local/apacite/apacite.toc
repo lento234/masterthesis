@@ -1,0 +1,24 @@
+\contentsline {section}{\numberline {1}Introduction}{3}
+\contentsline {section}{\numberline {2}Installation, package loading, and running {\rmfamily B\kern -.05em\textsc {i\kern -.025em b}\kern -.08emT\kern -.1667em\lower .7ex\hbox {E}\kern -.125emX}{}}{7}
+\contentsline {section}{\numberline {3}Package options}{8}
+\contentsline {section}{\numberline {4}The citation commands}{10}
+\contentsline {section}{\numberline {5}Contents of the bibliography database file}{13}
+\contentsline {subsection}{\numberline {5.1}Types of references}{14}
+\contentsline {subsection}{\numberline {5.2}Fields}{18}
+\contentsline {subsection}{\numberline {5.3}Overriding the default sorting orders}{26}
+\contentsline {section}{\numberline {6}Customization}{27}
+\contentsline {subsection}{\numberline {6.1}Punctuation and small formatting issues}{27}
+\contentsline {subsection}{\numberline {6.2}Labels}{30}
+\contentsline {subsection}{\numberline {6.3}More drastic formatting changes to the reference list}{34}
+\contentsline {section}{\numberline {7}Language support}{36}
+\contentsline {section}{\numberline {8}Compatibility}{37}
+\contentsline {subsection}{\numberline {8.1}\textsf {natbib}}{39}
+\contentsline {subsection}{\numberline {8.2}\textsf {hyperref}, \textsf {backref}, and \textsf {url}}{41}
+\contentsline {subsection}{\numberline {8.3}Multiple bibliographies}{42}
+\contentsline {subsection}{\numberline {8.4}Programs for conversion to html, rtf, etc.}{43}
+\contentsline {section}{\numberline {9}Generating an author index}{45}
+\contentsline {section}{\numberline {10}\texttt {apacdoc.sty}}{48}
+\contentsline {section}{\numberline {11}Known problems and todo-list}{53}
+\contentsline {section}{\numberline {12}Examples of the APA manual}{55}
+\contentsline {section}{References}{80}
+\contentsline {section}{Author Index}{90}

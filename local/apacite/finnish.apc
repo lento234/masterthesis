@@ -1,0 +1,132 @@
+%%
+%% This is file `finnish.apc',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% apacite.dtx  (with options: `finnish')
+%% 
+%% This is a generated file.
+%% 
+%% Copyright (C) 1994-2007 Erik Meijer and any individual authors listed
+%% elsewhere in this file.
+%% 
+%% This file is part of the `apacite' package.
+%% -------------------------------------------
+%% 
+%% It may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either
+%% version 1.3 of this license or (at your option) any later
+%% version.  The latest version of this license is in:
+%% 
+%%    http://www.latex-project.org/lppl.txt
+%% 
+%% and version 1.3 or later is part of all distributions of
+%% LaTeX version 2005/12/01 or later.
+%% 
+%% The `apacite' package consists of the files apacite.dtx and
+%% apacite.ins, and the following generated files:
+%% apacite.sty, apacite.bst, apacitex.bst, apa5ex.bib,
+%% apacite.drv, apacdoc.sty,
+%% english.apc, dutch.apc,   finnish.apc,  german.apc, ngerman.apc,
+%% greek.apc,   norsk.apc,   spanish.apc,  swedish.apc.
+%% 
+%% This work has the LPPL maintenance status `maintained'
+%% 
+%% The Current Maintainer of this work is Erik Meijer
+%% 
+%% This file may only be distributed together with a copy of the
+%% source files of the apacite package, i.e., apacite.dtx and
+%% apacite.ins. You may however distribute the apacite package without
+%% the generated files.
+%% 
+\ProvidesFile{finnish.apc}
+   [2007/09/03 v4.00 apacite language file]
+
+%%
+%% finnish.apc - finnish version of apacite elements
+%%
+%% Reference: Appendix E from book
+%%
+%% --------------------------------------------------------------------
+%% Kansallinen luetteloinnin ohjausryhm\"a. (2006). Monografioiden
+%% kuvailu, Suomalaiset luettelointis\"a\"ann\"ot. Helsinki: BTJ
+%% Kirjastopalvelu.
+%% --------------------------------------------------------------------
+%%
+%% Written by Kari Pyykk\"o
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Commands for specific types of @misc entries.
+%%% These commands are recognized by apacite.bst.
+\renewcommand{\bibmessage}{Sanoma}%
+\renewcommand{\bibcomputerprogram}{Tietokoneohjelma}%
+\renewcommand{\bibcomputerprogrammanual}{Tietokoneohjelman k\"asikirja}%
+\renewcommand{\bibcomputerprogramandmanual}{Tietokoneohjelma ja k\"asikirja}%
+\renewcommand{\bibcomputersoftware}{Ohjelmisto}%
+\renewcommand{\bibcomputersoftwaremanual}{Ohjelmiston k\"asikirja}%
+\renewcommand{\bibcomputersoftwareandmanual}{Ohjelmisto ja k\"asikirja}%
+\renewcommand{\bibprogramminglanguage}{Ohjelmointikieli}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Other labels
+\renewcommand{\bibnodate}{s.a.\hbox{}}%  % ``no date'', ``sine anno''
+\renewcommand{\BBAB}{ja}%                % between authors in text
+\renewcommand{\BOthers}[1]{et al.\hbox{}}% ``others'', the argument contains a
+                                         % dot to suppress an additional one
+                                         % in the reference list
+\renewcommand{\BOthersPeriod}[1]{et al.\hbox{}}%
+                                      % ``others'', the argument contains
+                                      % a dot to suppress an additional one
+                                      % in the reference list. The difference
+                                      % with \BOthers is that, if another
+                                      % string is used to define \BOthers,
+                                      % this one should always finish with a
+                                      % period and the previous one not
+                                      % necessarily (e.g., if explicit
+                                      % ``others'' is used).
+\renewcommand{\BIP}{painossa}%        % used as year for in-press citations
+\renewcommand{\BIn}{Teoksessa}%       % for ``In '' editor...
+\renewcommand{\BCHAP}{luku{}}%        % chapter
+\renewcommand{\BCHAPS}{luvut{}}%      % chapters
+\renewcommand{\BED}{toim.\hbox{}}%    % editor
+\renewcommand{\BEDS}{toim.\hbox{}}%   % editors
+\renewcommand{\BTRANS}{k\"a\"ant.\hbox{}}% translator
+\renewcommand{\BTRANSS}{k\"a\"ant.\hbox{}}% translators
+\renewcommand{\BTRANSL}{k\"a\"an.\hbox{}}% translation, for the year field
+\renewcommand{\BCHAIR}{pj.\hbox{}}%      % chair of symposium
+\renewcommand{\BCHAIRS}{pj.\hbox{}}%     % chairs
+\renewcommand{\BVOL}{osa}%           % volume
+\renewcommand{\BVOLS}{osat}%         % volumes
+\renewcommand{\BNUM}{nro}%           % number
+\renewcommand{\BNUMS}{nro}%          % numbers
+\renewcommand{\BEd}{p.\hbox{}}%      % edition
+\renewcommand{\BPG}{s.\hbox{}}%      % page
+\renewcommand{\BPGS}{s.\hbox{}}%     % pages
+\renewcommand{\BTR}{Tekn.\ rap.\hbox{}}% (default) technical report type name
+\renewcommand{\BPhD}{V\"ait\"oskirja}% (default) PhD thesis type name
+\renewcommand{\BUPhD}{Julkaisematon v\"ait\"oskirja}%
+                                     % (default) unpublished PhD thesis
+                                     % type name
+\renewcommand{\BMTh}{Pro gradu -tutkielma}%
+                                     % (default) master's thesis type name
+\renewcommand{\BUMTh}{Julkaisematon pro gradu -tutkielma}%
+                                     % (default) unpublished
+                                     % master's thesis type name
+\renewcommand{\BOWP}{Alkuaan julk.\hbox{}}%
+\renewcommand{\BREPR}{Uudelleen julk.\hbox{}}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% The name (heading) of the Reference List
+\renewcommand{\refname}{Viitteet}% Name of ref. list if it's a section.
+\renewcommand{\bibname}{Viitteet}% Name of ref. list if it's a chapter.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\APACmetaprenote}{%
+  \refname merkitty t\"ahtimerkeill\"a osoittaen opintojen
+  sis\"altymist\"a meta-analyysiin.}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% The name (heading) of the Author Index
+\renewcommand{\authorindexname}{Tekij\"ahakemisto}%
+%%
+
+\endinput
+%%
+%% End of file `finnish.apc'.

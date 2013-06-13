@@ -1,0 +1,62 @@
+This is BibTeX, Version 0.99c (Web2C 7.5.4)
+The top-level auxiliary file: apacite.aux
+The style file: apacitex.bst
+Reallocated wiz_functions (elt_size=4) to 6000 items from 140733193391032.
+Reallocated wiz_functions (elt_size=4) to 9000 items from 6000.
+Reallocated field_info (elt_size=4) to 13944 items from 5000.
+Database file #1: apa5ex.bib
+apacitex.bst [2007/09/03 v4.00 APA bibl. style with author index info]
+Warning--No publisher in 3.100-2
+Warning--No address in 3.100-2
+Warning--No journal in 4.04-11
+Warning--No journal in 4.04-12
+Warning--No publisher in ex76
+Warning--No address in ex76
+Warning--No publisher in 3.100-3
+Warning--No address in 3.100-3
+Warning--No institution in ex82
+Warning--No address in ex82
+Warning--No institution in ex91
+Warning--No address in ex91
+You've used 208 entries,
+            6345 wiz_defined-function locations,
+            2153 strings with 36142 characters,
+and the built_in function-call counts, 517773 in all, are:
+= -- 65478
+> -- 2653
+< -- 23656
++ -- 32685
+- -- 1054
+* -- 30935
+:= -- 92062
+add.period$ -- 879
+call.type$ -- 208
+change.case$ -- 2103
+chr.to.int$ -- 0
+cite$ -- 428
+duplicate$ -- 19705
+empty$ -- 18163
+format.name$ -- 8364
+if$ -- 93175
+int.to.chr$ -- 0
+int.to.str$ -- 438
+missing$ -- 0
+newline$ -- 6291
+num.names$ -- 1498
+pop$ -- 11498
+preamble$ -- 1
+purify$ -- 1923
+quote$ -- 0
+skip$ -- 24791
+stack$ -- 0
+substring$ -- 41120
+swap$ -- 8157
+text.length$ -- 1195
+text.prefix$ -- 0
+top$ -- 1
+type$ -- 16832
+warning$ -- 12
+while$ -- 3499
+width$ -- 0
+write$ -- 8969
+(There were 12 warnings)

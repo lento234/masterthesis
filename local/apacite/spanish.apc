@@ -1,0 +1,110 @@
+%%
+%% This is file `spanish.apc',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% apacite.dtx  (with options: `spanish')
+%% 
+%% This is a generated file.
+%% 
+%% Copyright (C) 1994-2007 Erik Meijer and any individual authors listed
+%% elsewhere in this file.
+%% 
+%% This file is part of the `apacite' package.
+%% -------------------------------------------
+%% 
+%% It may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either
+%% version 1.3 of this license or (at your option) any later
+%% version.  The latest version of this license is in:
+%% 
+%%    http://www.latex-project.org/lppl.txt
+%% 
+%% and version 1.3 or later is part of all distributions of
+%% LaTeX version 2005/12/01 or later.
+%% 
+%% The `apacite' package consists of the files apacite.dtx and
+%% apacite.ins, and the following generated files:
+%% apacite.sty, apacite.bst, apacitex.bst, apa5ex.bib,
+%% apacite.drv, apacdoc.sty,
+%% english.apc, dutch.apc,   finnish.apc,  german.apc, ngerman.apc,
+%% greek.apc,   norsk.apc,   spanish.apc,  swedish.apc.
+%% 
+%% This work has the LPPL maintenance status `maintained'
+%% 
+%% The Current Maintainer of this work is Erik Meijer
+%% 
+%% This file may only be distributed together with a copy of the
+%% source files of the apacite package, i.e., apacite.dtx and
+%% apacite.ins. You may however distribute the apacite package without
+%% the generated files.
+%% 
+\ProvidesFile{spanish.apc}
+   [2007/09/03 v4.00 apacite language file]
+
+
+%%
+%% spanish.apc - Versión española de elementos en apacite
+%% Escrito por Jorge López Puga
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Comandos para tipos específicos de entradas @misc.
+%%% Estos comandos son reconocidos por apacite.bst.
+\renewcommand{\bibcomputerprogram}{Programa informático}
+\renewcommand{\bibcomputerprogrammanual}{Manual de programa informático}
+\renewcommand{\bibcomputerprogramandmanual}{Programa informático y manual}
+\renewcommand{\bibcomputersoftware}{Software informático}
+\renewcommand{\bibcomputersoftwaremanual}{Manual de software informático}
+\renewcommand{\bibcomputersoftwareandmanual}{Manual y software informático}
+\renewcommand{\bibprogramminglanguage}{Lenguaje de programación}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Otras etiquetas
+\renewcommand{\BBAB}{y}                 % Entre autores en el texto
+\renewcommand{\BOthers}[1]{y cols.\hbox{}}  % ``y colaboradores'', El argumento contiene un punto, por tanto,                                                                                       %evita poner uno adicional en la lista de referencias. No obstante                                                                                      %algunas revistas aceptan "et al." que es lo que aparece por defecto
+                                            % a dot to suppress an additional one
+                                        % in the reference list. The difference
+                                          % with \BOthers is that, if another
+                                        % string is used to define \BOthers,
+                                        % this one should always finish with a
+                                        % period and the previous one not
+                                        % necessarily (e.g., if explicit
+                                          % ``others'' is used).
+\renewcommand{\BBAA}{y}                 % Letra que va entre los autores en las referencias (por defecto "\&")
+\renewcommand{\BIP}{en prensa}            % Usado como año para citas "en prensa"
+\renewcommand{\BIn}{En}                   % Para ``En '' editor...
+\renewcommand{\BCHAP}{cap.\hbox{}}              % capítulo
+\renewcommand{\BCHAPS}{caps.\hbox{}}            % capítulos
+\renewcommand{\BTRANS}{Traduc.\hbox{}}        % traductor
+\renewcommand{\BTRANSS}{Traducs.\hbox{}}      % traductores
+\renewcommand{\BTRANSL}{traduc.\hbox{}}       % traducción, para el campo año
+\renewcommand{\BPhD}{Tesis Doctoral}
+                                          % (por defecto) PhD thesis type name
+\renewcommand{\BUPhD}{Tesis doctoral no publicada}
+                                      % (por defecto) unpublished PhD thesis
+                                      % type name
+\renewcommand{\BMTh}{Tesis de master}% (por defecto) master's thesis type name
+\renewcommand{\BUMTh}{Tesis de master no publicada}%
+                                      % (por defecto) unpublished
+                                      % master's thesis type name
+\renewcommand{\BOWP}{Trabajo original publicado en}
+\renewcommand{\BREPR}{Reimpresión de}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% El nombre (del encabezado) de la Lista Referencias
+\renewcommand{\refname}{Referencias}% Nombbre de la lista de ref. si es una sección.
+\renewcommand{\bibname}{Referencias}% Nomber de la lista de refs. si es un capítulo.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %Nota previa usada justo antes de la lista de referencias si un meta-análisis es usado.
+\renewcommand{\APACmetaprenote}{%
+  Las referencias marcadas con un asterisco indican estudios incluidos en el meta-análisis.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% El nombre (del encabezado) del Índice de Autores.
+\renewcommand{\authorindexname}{Índice de Autores}
+%%
+\endinput
+%%
+%% End of file `spanish.apc'.
