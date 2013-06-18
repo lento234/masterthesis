@@ -1,5 +1,5 @@
 \documentclass{dutmsc}%
-% \documentclass[draft]{dutmsc}%
+%\documentclass[draft]{dutmsc}%
 %
 % STARTING FROM VERSION 1.0.8, DIRECT PDF OUTPUT FROM THE LATEX SOURCE IS SUPPORTED.
 % IF YOU WANT TO USE THIS FEATURE, MAKE SURE ALL YOUR OWN FIGURES ARE IN A FORMAT
@@ -50,9 +50,9 @@
 % use package breakurl to break url in sensible places (such as in www references)
 % if it is not available in your latex distribution, use the local one
 %\usepackage[preserveurlmacro]{./local/breakurl/breakurl}
-\usepackage[preserveurlmacro]{breakurl}%
+\usepackage[preserveurlmacro]{breakurl}% %% Uncommented due to warning
 %\usepackage{./local/breakurl/breakurl}%
-% \usepackage{breakurl}%
+%\usepackage{breakurl}% 
 %
 %=================%
 % custom commands %
@@ -112,12 +112,28 @@
     %
     % parts are not necessary for a thesis
     %
-    % first chapter
+    % Example Chapter
+    %\include{help_chap_introduction}
+    % Chapter 1: Introduction
     \include{chap_introduction}%
+	%
+    % Chapter 2 : Literature Review
+    \include{chap_literatureReview}
     %
-    % add more chapters here
-    %\include{chap_theory}
+    % Chapter 3: Literature review/Theory of Hybrid vortex methods
+   	\include{chap_overviewHybridVortexMethods}
+   	%
+   	% Chapter 4: Methodology of developing the hybrid vortex method
+    \include{chap_developmentHybridVortex}
+   	%
+   	% Chapter 5: Validation of Hybrid Vortex Method
+   	\include{chap_validation}
+	%
+	% Chapter 6: Applications of Hybrid vortex method
+	\include{chap_application}
     %
+    % Chapter 7: 
+	\include{chap_conclusionRecommandation}    
     %
     % Bibliography
     \printbib{biblio}%
