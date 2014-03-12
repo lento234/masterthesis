@@ -1,0 +1,147 @@
+%\documentclass{article}
+%
+%\usepackage{hyperref}
+%
+%\title{Literature Review}
+%\author{Lento Manickathan, 1544101\\
+%Aerodynamics and Wind Energy}
+%
+%\begin{document}
+%\maketitle
+%
+%\begin{abstract}
+%
+%%Say very briefly 1) what the paper is about, 2) what the main content is, 3) what the main aim or objectives were, and 4) what the main findings are. It is nice to end with a strong sentence that highlights the significance of the work presented in the paper and any long-standing contribution to the body of knowledge.
+%
+%
+%
+%\end{abstract}
+
+\chapter{Literature review}
+\label{sec:intro}
+
+The literature review is dividing into two sections. The first section covers a small summary of the current Initially, we investigate the state-of-the-art or current approaches that are being utilized to investigate the aerodynamic performance of a VAWT.
+
+\begin{itemize}
+\item Actuator Disk Theory
+\item Blade Element Momentum Theory
+\item Vortex Particle Methods
+\end{itemize}
+
+This paper summarizes the literature review done for the development of the coupled hybrid vortex particle method to simulate the flow around a Vertical-Axis Wind Turbine (VAWT). The main aim of the project was to develop the numerical method, verify its functionality, validate its results and finally model the complex flow phenomenons of the VAWT numerically. This numerical method should not only be able to capture the small scale phenomenons such as the vortex shedding and the dynamic stall, but should also be efficient at modelling the far wake of the VAWT. To achieve this, the objective of the project is to couple an accurate Finite Element grid solver and an efficient parallelized vortex particle method to simulate the flow near the body and away from the body region respectively. Once this is possible, this numerical method will be ideal for evaluation large scale problems and can given insight into complex flow problems such as wake-body interaction of multiple moving bodies.
+
+%Introduce the general area of interest that the contents of the paper deal with, setting out any advancements and challenges of interest. Then introduce more fully the specific topic addressed in the paper and you can then to go on to state any main aim or objectives to be met. Say very briefly what is then to come in the layout of the paper. Note: the intro should include general references to back up the points made.
+
+%Vertical-Axis Wind Turbines or VAWTs are unlike the typical wind turbines (Horizontal-Axis Wind Turbine). The turbine not only spins in a different axis but aerodynamically, the flow structure around the wind turbine is highly unsteady, and complex flow phenomenons such as vortex shedding and dynamic stall occurs around the aerofoil. Futhermore, far behind the VAWT, the wake evolution is still key topic of research \cite{SimaoFerreira2008} and therefore an efficient and accurate numerical tool is sought out.\\
+%
+%The key interest of this project to develop an efficient, accurate and reliable numerical solver that can model the full flow problem of a VAWT. This numerical approach should not only excel at capturing the small scale structures near the body like dynamic stall but should also be efficient at modelling the far wake behind the turbine. To tackle this challenge, it has been decided that a hybrid vortex particle method should be used.\\
+%
+%The hybrid vortex particle method is a coupled Navier-Stokes grid solver and a vortex particle method where they solve the flow near the body and away from the body respectively. However, before stumbling into the development of the tool, several choices have to be made in regard to the ideal techniques that should be employed. Therefore, this paper will start of with the general introduction to all the approaches, compare them and finally try to reach a conclusion on what might be the ideal choices for further research.\\
+
+
+\section{State of the art / Literature review}
+\label{sec:litreview}
+
+%This is a detailed part of the paper that rigorously reviews what work has been already carried out by other academics (typically), in order to establish 1) what research areas are relevant, and 2) what is the current understanding and any opposing views. It is nice to ending with some sort of synthesis of the presented State-of-the-art according to the Reviewer/author so that the link to the work in the paper is made more explicit.
+
+This section deals with rigorous review of all the current approaches that have been carried out for modelling the flow around a VAWT. Furthermore, a detailed comparison of all the hybrid approaches will performed where various advantages and the disadvantages of all the techniques will be discussed. Finally, this section will conclude with reasonings of the final choice that should be used for the project.
+
+\subsection{Current Approaches}
+
+To model the flow around a VAWT, several approaches can be taken, Vermeer at al. (2003) \cite{Vermeer2003} have also summarized in their paper. The two main approaches of investigating the flow is either employing a numerical method to simulate the flow or through experimental simulations.\\
+
+
+Leishman (2006) \cite{leishman2006principles} has shown that there are several simplified, efficient numerical tools that can be used to model the performance of a VAWT. Methods such as actuator disk theory and blade element momentum theory and deals with simplified Navier-Stokes equations and is very useful to evaluate the trend of certain design parameter. However, as they are highly simplified, complex flow phenomenons that has severe impact of the performance characteristics of the VAWT such as flow separation during dynamic stall, vortex shedding during the rotation and blade-wake interaction cannot be simulated. In order to understand them, either experimental investigation such as in wind tunnel or full Navier-Stokes simulations have to undertaken. So to understand the flow behaviour of a VAWT, several numerical research have been performed \cite{Almohammadi2013} \cite{Ferreira2007} \cite{Islam2008} \cite{Merz2012} and experimental researches by Ferreira \cite{SimaoFerreira2008} \cite{Ferreira} and others \cite{Howell2010} \cite{Mertens2003}.\\
+
+To understand the unsteady aerodynamic behaviour, the dynamic stall, experimental tools such as Particle Image Velocimetry (PIV) have been a popular choice and Ferreira et al. (2007) \cite{Ferreira2007}. In order to evaluate the flow numerically in an accurate fashion, they have used various grid-solvers with turbulence models such as such as URANS, LES and DES. Similar numerical investigation has also been done by Almohammadi et al. (2013) \cite{Almohammadi2013} for a straight blade VAWT in 2D. However, the downside is that these models are computationally very expensive.\\
+
+%Researches have also been done in less expensive, simple tools such as blade momentum models by Islam et al. \cite{Islam2008}, a more accurate tools such as multi-streamtube model and is also possible to model using vortex methods. These methods are the simplification of the Navier-Stokes models using assumptions such as inviscid flow (valid for large Reynolds number). However, the downside to such models is that they capture accurately capture the near-body phenomenons such as vortex shedding, which has considerable impact on the performance characteristics of the VAWTs.\\
+
+All the numerical method that was grid-based struggled with dealing with large number of mesh cells for high Reynolds numbers and the numerical method that employed simplified Navier-Stokes methods had to sacrifices some accuracies.The experimental investigation also come with drawbacks as they are require more financial resources and usually only feasible to model the scaled VAWTs.\\
+
+This is the main relevance of the hybrid vortex particle method for the VAWT investigations. By utilizing the two methods together, the vortex particle method away from body, and Navier-Stokes solver with turbulence model in the near-body region, one will be able to tackle the challenges in an efficient manner.\\ 
+
+\subsection{Overview of hybrid vortex particle methods}
+
+There are two main types of the hybrid vortex particle methods. The Vortex-In-Cell (VIC) method couples the vortex particle method and the Finite Element Method (FEM) in the same domain and was first shown by Birdshall and Fuss (1969) \cite{Birdsall1969}. The second strategy is the domain decomposition method where the methods is primarily used in different fluid domains and is coupled together at the interface. Cottet and Koumoutsakos (2000a) \cite{Cottet2000a} have extensively shown its capabilities.
+
+\subsubsection*{Vortex in Cell (VIC)}
+The vortex is cell was first demonstrated by Birshall and Fuss (1969) \cite{Birdsall1969} and since then several further research have been done, Coubt and Buneman (1981) \cite{Couet1981} for simulating the 3D incompressible flow, Winckelmans et al. (2005a) \cite{Winckelmans2005a} for capturing the shedding of the vortices, Kosier and Kudela (2012) \cite{Kosior2012} using parallelized VIC method, \cite{Kosior2012}. The advantage of this approach is that the Navier-Stokes solver is simplified thanks to the vortex method and the grid-solver only need to solve the streamfunction and the diffusion term. To solve the poisson problem, highly efficient algorithms can be employed such as Fast-Fourier Transform (FFT) and similarly the vortex calculations can done in parallel in GPUs.\\
+
+However, the main drawback is the both the solver as used in the same domain and does not scale well will large unbound domains such as for VAWT. This is the reason why domain decomposition strategy is found to be ideal for the VAWT problem.\\
+
+\subsubsection*{Domain decomposition method}
+The domain decomposition method is simply splitting the domain of interest and using the appropriate methods in each domain. For the problem of VAWT, as the boundary is non-trivial and is the source of vorticity, the full Navier-Stokes model will be used here, and away from the body where only the convection of the vorticity field is interested, the fast and efficient vortex particle method will be used.\\
+
+Several researches have already been done: Cottet and Koumoutsakos (2000a)\cite{Cottet2000a}, Guermond and Lu (2000) \cite{Guermond2000} simulating the advection dominated flows, Ould-Salhi et al. (2001) \cite{Ould-Salihi2001} blending finite difference and vortex method together, Winckelmans et al. (2005a) \cite{Winckelmans2005a} investigating the trailing vorticies, Daeninck (2006) \cite{Daeninck2006} implementing RANS and LES to the simulation, Stock (2010) \cite{Stock} using GPU clusters for efficiency and Speck (2011) \cite{Speck2011a} implementing researching on multipole expansion and modified interpolation kernels.\\
+
+As seen above, not all domain decomposition methods are the same. The main difference differencing between the methods is their coupling strategies. Most works employ the Schwartz alternating method to couple the vortex particle method and the grid solver. The Schwartz alternating method solve the grid solver initially and couples it with the vortex method by iteratively trying to satisfy the boundary conditions. However, for this project the coupling techniques that will be used is similar to Daeninck (2006) \cite{Daeninck2006} and Stock (2010) \cite{Stock}. This new approach is much simpler and only a single iteration is needed for the coupling. The procedure is as follows: Solve the vortex method in the whole domain using relatively coarse evaluation, then use the grid solver in the near wall region to capture the detailed features of the boundary layer and translate the vorticity field at this region to the vortex particles. The functionality of this strategy has been demonstrated by Daeninck and was found to be significantly faster than the Schwartz coupling strategy.\\
+
+\subsection{Vortex diffusion methods}
+
+There are numerous types of vortex methods and diffusion models. The main strategy is the discretization of the vorticity field using gaussian vortex kernel or also known as vortex blobs. The vortex particle method is then dealt with the advection and the diffusion of these blobs. The advection of the blobs is evaluated by calculating the induction field of the blobs on each other and as this is a linear problem, it can be parallelized using GPU clusters. Furthermore, the calculation for large domains can be further accelerated using Fast Multi-Pole Method (FMM) or Tree-code method which reduces the calculation using reduced order of computation, explained by Stock (2010) \cite{Stock}.\\
+
+After this process, the diffusion of the kernels needs to be implemented and there are several strategies of deal with this.\\
+
+\subsubsection*{Particle Strength Exchange}
+
+The random walk method was first demonstrated by Chorin (1973) \cite{Chorin1973}. It diffuses the vorticity using semi-random number for the motion of the particles and in turn this simulates the diffusion process. However, since then, better strategies have been used such as the Vortex Redistribution Method.
+
+\subsubsection*{Vortex Redistribution Method}
+This is the strategy that will be used for the project. The diffusion of the vortex kernels is directly implemented to the interpolation kernel by modifying the interpolation kernel to take in account of the vorticity transfer of the diffusion process. This was first investigated by Shankar and Dommelen (1996) \cite{Shankar1996} and have since then verified by Wee et al. (2006) \cite{Wee2006} and Speck (2011a) \cite{Speck2011a}.\\
+
+The reason for the popularity of this technique is that during the vorticity calculation and interpolation kernel is already used and therefore, the use of this strategy is straight forward and simpler to implement.\\
+
+\subsection{Validation techniques}
+
+The verification and the validation will be first done for methods separately to ensure that the each algorithm is sound, only then will be coupled together. Once the methods are coupled, they will be then again validated to ensure the functionality before continuing to simulate the full problem of a 2D VAWT. Therefore, a thorough investigation of the potential benchmark cases was done for the literature review.\\
+
+\subsubsection*{Vortex particle method}
+
+To validate the vortex particle method, the Lamb-Oseen test case will be used. The vortex particle used blobs that carry the approximate the vorticity field. These blobs are then convected and diffused using the Biot-Savart Law  \cite{Cottet2000a}, and are diffused using appropriate diffusion models \cite{Wee2006}. The Lamb-Oseen test case is a standard benchmark case for validating the vortex method and it deals with the diffusion of the viscous vorticity field \cite{Shankar1996} \cite{Speck2011a} \cite{Barba2004a}.\\
+
+\subsubsection*{Grid solver}
+The grid solver will be written using the FEniCS open source libraries for Finite Element computation. Their libraries is accessible to python scripting and can therefore be easily be used to couple to the vortex method. To validate the FEM solution, a collision of dipole to a no-slip boundary will be investigated. This not only is helpful in validating the FEM but also can later be used to validate the coupled model as problem case uses very simple geometry. Such investigations have been recommended for vortex method by Clercx and Bruneau (2006) \cite{Clercx2006} and Renac et al. (2013 )\cite{Renac2013}. These literature will be used to validate the results of the FEM simulations.\\
+
+\subsubsection*{Fully coupled model}
+The experimental set-up for coupled case is impulsively started cylinder. The cylinder is submerged into unpertubated flow and the vorticity evolution is investigated to validate the numerical method. Similar investigations have been done by Cheng et al. (1997) \cite{Cheng1997}, Guermond and Lu (2000) \cite{Guermond2000}, Issam and Ghoniem (2009) \cite{Lakkis2009} and Rossinelli et al. (2010a) \cite{Rossinelli2010a}. Again, these results will be used to validate the results of the coupled model.\\
+
+\subsubsection*{Final problem case}
+In the end, the flow of a VAWT will be simulated and the experimental data from Ferreira \cite{Ferreira} \cite{Ferreira2007} \cite{SimaoFerreira2008}, will be basis of the final investigation.\\
+
+\section{Results and Analysis}
+\label{sec:objective}
+
+%What is the main research question to be solved in reaching the project goal? There can be more than one but be focused. These research questions should be very precise and almost like a requirement, be unambiguous, unique, measurable, and answerable in a meaningful way. 
+
+%The objective then is basically the project goal, again clearly stated in terms of what the researcher wants to achieve, and by which means you will achieve this. This is then followed by tangible sub-goals that will be necessary to make this happen. These sub goals can then be developed into task blocks in the project plan/Gantt chart.
+
+%Make the novelty and innovation clear!
+
+%Again, remember that this is a proposal of work to be done and so you might also say something about the motivation and feasibility.
+
+The main research question is that is it possible to develop an efficient and accurate numerical method by hybrid approach where vortex particle method is used in the wake, and Navier-Stokes grid solver is used at the near-body
+region? Will it be able to simulate real life performance characteristics of a vertical axis wind turbine? Will it be able to predict similar performance characteristics and flow phenomena as observed from an wind tunnel experimental setup such as blade-wake interaction and dynamic stall? Where are the errors and what are their sources?\\
+
+In order to answer this research questions, the goal of the project is the develop an efficient and accurate numerical method that is not only capable of capture the small scale flow phenomena such as dynamic stall and vortex shedding, but is also efficient at modelling the wake evolution of VAWT.\\
+
+The innovativeness of this project is that such hybrid modelling has not be applied for the wind energy problem case. Furthermore, with the parallelization of the vortex particle method in GPU clusters and employing solver acceleration techniques such as Fast Multi-pole Method (FMM), this simulation could give an edge in the understanding the flow behaviour of a VAWT. 
+
+\section{Discussions and Conclusions}	
+\label{sec:conclusions}
+
+%Some authors like to then present a brief discussion that leads up to their specific conclusions (if the discussion is large it might even become a separate Section just before the Conclusion Section). The conclusions should be written in a precise, unique, clear and accurate manner. Always check if they are well supported by the work you presented in the paper and check them against the main literature so that you can make a statement about the longer-term impact of your work on the body of knowledge? Lift the most important conclusions into the Abstract and check that both are consistent, also with the Introduction as the Abstract, Introduction and Conclusion form the key points of entry and exit into the work and make a big impact on accessibility and getting across the relevance!
+Throughout this paper a thorough investigation of the current approaches and the ideal approaches for simulating the VAWT was investigated.\\
+
+From the literature study ,it was found that the ideal modelling techniques for the VAWT simulation is coupled finite element and vortex particle method for simulating the flow near-body and far-body respectively. The coupling techniques that was found to be ideal was the one employed by Daeninck (2006) \cite{Daeninck2006} and the vortex diffusion method was most efficient was the one described by Wee et al. (2006) \cite{Wee2006}.\\
+
+%\newpage
+%
+%\bibliographystyle{plain}
+%\bibliography{../library}
+%
+%%List all references consistently, using one of the preferred approaches. The key thing is that the referred to author is given credit through their earlier work, that this is dated to show the chronological order of developments, and that the reader has enough information to go and find that specific reference. Relative to the latter point: where was the conference and did the proceedings have an ISBN number; or if a book what is the ISBN number and publisher, or if a journal paper what was the volume or edition number and certainly page number. The strongest references are ones that have been reviewed prior to publication (journals for example) and the weakest are web sites and popular publications. Only reputable websites (from a society or major industry player) should be included and the date of access should be noted. If at all possible stay away from web references as they are so uncontrolled as sources of information.
+%
+%\LaTeX {} template based on \cite{template}.
+
+%\end{document}

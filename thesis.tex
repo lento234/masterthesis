@@ -1,0 +1,173 @@
+\documentclass{src/dutmsc}%
+%\documentclass[draft]{src/dutmsc}%
+%
+% STARTING FROM VERSION 1.0.8, DIRECT PDF OUTPUT FROM THE LATEX SOURCE IS SUPPORTED.
+% IF YOU WANT TO USE THIS FEATURE, MAKE SURE ALL YOUR OWN FIGURES ARE IN A FORMAT
+% SUPPORTED BY PDFLATEX, SO no EPS FILES, BUT PDF OR JPEG OR SO.
+% THIS HAS CONSEQUENCES FOR THE PACKAGES USED AS WELL, pstricks CANNOT BE USED WITH PDFLATEX
+%
+% fill the following with relevant information
+\mscDepartment{Aerodynamics and Wind Energy}%
+\mscFaculty{Aerospace Engineering}%
+\mscName{L. Manickathan B.Sc.}%
+\mscDate{Date TBD}%
+\mscTitle{Hybrid Vortex Method for 2D Vertical-Axis Wind Turbine}%
+\mscSubTitle{A fast and accurate Eulerian-Lagrangian numerical method in python}% can be left empty
+\mscKeyWords{Hybrid Vortex Method, Python}%
+%
+% background picture for the first page, make sure it is in the correct format (eps or something else)
+%%\ifpdfma
+%  \mscBackPicture{./figs/merlin_landing_3_pdf}    % eps of 21 * 29.7 cm
+%\else
+%  \mscBackPicture{./figs/merlin_landing_3}    % pdf version of the cover background
+%\fi
+%
+% readers page (un)comment as necessary
+\mscReaderOne{prof.dr.ir. G.J.W. van Bussel}
+\mscReaderTwo{dr.ir. C.J. Simao Ferreira}
+\mscReaderThree{dr.ir. A. Palha da Silva Clerigo}
+\mscReaderFour{prof.dr.ir. I. Bennett}
+% \mscReaderFive{ir. Reader Five}
+% \mscReaderSix{ir. Reader Six}
+%
+% if defined here with a non-zero (e.g. 1) argument, an entry will be added to 
+% the table of contents for the list of figures and the list of tables,
+% else they will not appear in the toc.
+\loflotintoc{1}
+%
+% default install of latex on linux (tetex) does not include the apacite package, so using a local version
+% if your latex distribution does provide it, you can uncomment the next two lines (and comment
+% the two lines after that)
+% \usepackage{apacite}%
+% \bibliographystyle{apacite}%
+% \usepackage{./local/apacite/apacite}%
+%
+% If you prefer references as numbers, comment the following line and uncomment the one thereafter
+% \bibliographystyle{./local/apacite/apacite}%
+\bibliographystyle{plain}
+%
+%
+% use package breakurl to break url in sensible places (such as in www references)
+% if it is not available in your latex distribution, use the local one
+%\usepackage[preserveurlmacro]{./local/breakurl/breakurl}
+\usepackage[preserveurlmacro]{breakurl}% %% Uncommented due to warning
+%\usepackage{./local/breakurl/breakurl}%
+%\usepackage{breakurl}% 
+%
+%=================%
+% custom commands %
+%=================%
+%
+% short-hand notations for cosine, sine and tangent with calligraphic C, S and T
+\newcommand{\cc}[1]{\:\mathcal{C}_{#1}}%
+\newcommand{\cs}[1]{\:\mathcal{S}_{#1}}%
+\newcommand{\ct}[1]{\:\mathcal{T}_{#1}}%
+%
+% matlab in small caps
+\newcommand{\matlab}{\textsc{Matlab} }
+\newcommand{\python}{\textsc{Python} }
+%
+%\newcommand{\printAbbreviation}[3]{#1 (\textcolor{darkblue}{#2}) \nomenclature[#3]{#2}{#1}}
+
+\makenomenclature
+%
+% setup of hyperlinks in the pdf output (modify as needed)
+\hypersetup{colorlinks=true,
+            citecolor=darkblue,
+            urlcolor=darkred,
+            linkcolor=darkblue,
+            menucolor=darkblue,
+            anchorcolor=red,
+            pagecolor=cyan,
+            pdfborder={0 0 0},
+            bookmarksnumbered=true,
+            breaklinks=true,
+            pdfauthor={\mscname},           % value of \mscName
+            pdftitle={\msctitle},           % value of \mscTitle
+            pdfkeywords={\msckeywords}}     % value of \mscKeywords
+%
+\renewcommand{\bibname}{References}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{python}
+
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{color}
+
+
+\newcommand{\printAcron}[2]{#1 ({\color{darkblue}{#2}}) \acron[f]{#2}{#1}}
+\begin{document}%
+
+
+%============================= Front matter ========================================
+\frontmatter%
+    %
+    \maketitle%
+    %
+    % Abstract/summary
+    \include{chapters/summary}%
+    \cleardoublepage%
+    %
+    % thank people in this file
+    \include{chapters/acknowledgements}%
+    \cleardoublepage%
+    % 
+    % table of contents, list of figures and list of tables
+    \tocloflot%
+    %
+    % Nomenclature
+    \printnomencl%      
+    \cleardoublepage%
+        
+    %
+    %
+\mainmatter%
+    %
+    % parts are not necessary for a thesis
+    %
+    % Example Chapter
+    %\include{help_chap_introduction}
+    % Chapter 1: Introduction
+    \include{chapters/introduction}%
+	
+	%\include{chapters/projectPlan}
+	
+    % Chapter 2 : Literature Review
+    %\include{chap_literatureReview}
+    \include{chapters/theory}
+    %
+    % Chapter 3: Literature review/Theory of Hybrid vortex methods
+   	\include{chapters/overviewHybridVortexMethods}
+   	%
+   	% Chapter 4: Methodology of developing the hybrid vortex method
+    %\include{chap_developmentHybridVortex}
+    %\include{chapters/diffusion}
+   	%
+   	% Chapter 5: Validation of Hybrid Vortex Method
+   	%\include{chapters/validation}
+	%
+	% Chapter 6: Applications of Hybrid vortex method
+	%\include{chapters/application}
+    
+    % Chapter 7: 
+	\include{chapters/conclusionRecommendation}    
+    %
+    % Bibliography
+    \printbib{/home/lento/Documents/Bibliography/library.bib}%
+    %
+    \appendix%
+    %
+    % and some appendices here
+    \include{appendix/mathModel}%
+    %
+    %
+\backmatter%
+    %
+    % index file here (not needed for a MSc thesis)
+    %
+\end{document}

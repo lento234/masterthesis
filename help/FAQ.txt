@@ -1,0 +1,48 @@
+This is a small list with FAQs and not-so-FAQs.
+
+Q: Where can I find Latex packages on the internet?
+A: http://www.ctan.org/search.html
+
+Q: When running the example, Latex cannot find certain packages, what do I do 
+now?
+A: Use Miktex to install the missing packages.
+
+Q: Long captions of figures and tables do not break over multiple lines, they 
+only do that if hyperlinks are completely disabled (as in 'draft' mode), what 
+can I do about this?
+A: Add the option 'breaklinks=true', to the list of options of 'hypersetup', 
+either in dutmsc.cls or in the preamble of the main latex file.
+
+Q: I prefer to indent paragraphs instead of separating them by a small amount, 
+can I change that and then, how?
+A: In dutmsc.cls (around line 220), comment the following lines:
+
+% separate paragraphs instead of indenting them
+\setlength{\parskip}{\medskipamount}
+\setlength{\parindent}{0pt}
+
+This will give the default behaviour again.
+
+Q: The pdf output from the postscript to pdf converter has papersize 'letter',
+how do I change that to 'a4'?
+A: Add the option '-sPAPERSIZE=a4' to the command line of ps2pdf.
+- In TeXnicCenter, modify the 'LaTeX => PS => PDF' profile as follows:
+  "-sPAPERSIZE=a4" "%bm.ps" "%bm.pdf"
+- In Kile:
+  Settings -> Configure Kile -> Tools -> Build -> PStoPDF
+  Options field: '-sPAPERSIZE=a4' '%S.ps' '%S.pdf'
+
+Q: I have a chapter/appendix with more than 100 figures. In the list of
+figures, the figure number overlaps the name of the title, i.e. the margin for
+the figure number is too small. How can I correct this?
+A: Either split the chapter/appendix in some more parts, or, if that's not an
+option, do as follows:
+Open dutmsc.cls and just before the line with
+"\renewcommand\tableofcontents{%'
+(somewhere in the beginning), add:
+
+\renewcommand*\l@figure{\@dottedtocline{1}{1.5em}{2.3}}
+
+Change "2.3em" into something somewhat bigger (3.0em or 3.3em). You will have
+to experiment a little until it looks ok.
+

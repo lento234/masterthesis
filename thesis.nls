@@ -1,0 +1,36 @@
+\begin{thenomenclature} 
+
+ \nomgroup{A}
+
+  \item [{$p$}]\begingroup Pressure\nomunit {$[\mathrm {Pa}]$}\nomeqref {2.1}
+		\nompageref{4}
+  \item [{$\mathbf {u}$}]\begingroup Velocity vector\nomunit {$[m/s]$}\nomeqref {2.1}
+		\nompageref{4}
+  \item [{$\mathbf {u}_{\infty }$}]\begingroup Free-stream velocity\nomunit {$[m/s]$}\nomeqref {2.11}
+		\nompageref{6}
+  \item [{$\mathbf {x}_p$}]\begingroup Position vector\nomunit {[-]}\nomeqref {2.7}
+		\nompageref{5}
+
+ \nomgroup{G}
+
+  \item [{$\Gamma $}]\begingroup Circulation\nomunit {$[m^2/s]$}\nomeqref {2.7}
+		\nompageref{5}
+  \item [{$\zeta $}]\begingroup Smooth cutoff function\nomunit {[-]}\nomeqref {2.14}
+		\nompageref{6}
+  \item [{$\nu $}]\begingroup Kinematic viscosity\nomunit {$[m^2/s]$}\nomeqref {2.1}
+		\nompageref{4}
+  \item [{$\rho $}]\begingroup Density\nomunit {$[kg/m^3]$}\nomeqref {2.1}
+		\nompageref{4}
+  \item [{$\sigma $}]\begingroup Core size\nomunit {[$m$]}\nomeqref {2.7}
+		\nompageref{5}
+  \item [{$\omega $}]\begingroup Vorticity\nomunit {$[1/s]$}\nomeqref {2.2}
+		\nompageref{4}
+
+ \nomgroup{Y}
+
+  \item [{\textbf {VAWT}}]\begingroup Vertical-Axis Wind Turbine\nomeqref {1.0}
+		\nompageref{1}
+  \item [{\textbf {VPM}}]\begingroup Vortex Particle Method\nomeqref {2.0}
+		\nompageref{4}
+
+\end{thenomenclature}
