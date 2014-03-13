@@ -127,50 +127,44 @@
     %
     %
 \mainmatter%
-    %
-    % parts are not necessary for a thesis
-    %
+
     % Example Chapter
     %\include{help_chap_introduction}
 	%\include{chapters/projectPlan}
     %\include{chap_literatureReview}
+    %\include{chap_developmentHybridVortex}
+    %\include{chapters/diffusion}
+   	%\include{chapters/validation}
+	%\include{chapters/application}
 
     % Chapter 1: Introduction
     \include{chapters/introduction}%
-	
+
     % Chapter 2 : Lagrangian Domain: Vortex Particle Method
     \include{chapters/lagrangian}
 
 	% Chapter 3: Eulerian Domain: Finite Element Method
 	\include{chapters/eulerian}
 
-    % Chapter 3: Literature review/Theory of Hybrid vortex methods
-   	\include{chapters/overviewHybridVortexMethods}
-   	%
-   	% Chapter 4: Methodology of developing the hybrid vortex method
-    %\include{chap_developmentHybridVortex}
-    %\include{chapters/diffusion}
-   	%
-   	% Chapter 5: Validation of Hybrid Vortex Method
-   	%\include{chapters/validation}
-	%
-	% Chapter 6: Applications of Hybrid vortex method
-	%\include{chapters/application}
+    % Chapter 4: Hybrid Eulerian-Lagrangian Vortex Particle Method
+   	\include{chapters/hybrid}
+
+   	% Chapter 5: Validation of Hybrid Method
+	\include{chapters/validation}   
+
+   	% Chapter 6: Conclusion and Recommendations
+   	\include{chapters/conclusion}
     
-    % Chapter 7: 
-	\include{chapters/conclusionRecommendation}    
-    %
     % Bibliography
     \printbib{/home/lento/Documents/Bibliography/library.bib}%
-    \appendix%
-    %
+
     % and some appendices here
-    \include{appendix/mathModel}%
-    %
-    %
+    \appendix%
+    %\include{appendix/mathModel}%
+
 \backmatter%
-    %
+
     % index file here (not needed for a MSc thesis)
 	%\printindex
-    %
+
 \end{document}
