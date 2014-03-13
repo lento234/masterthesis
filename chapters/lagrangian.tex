@@ -14,7 +14,14 @@ Therefore, this chapter is dedicated to given an overview on the theory of the V
 
 \textcolor{red}{!! Add chapter outline here !!}
 
-\section{Governing Equation of Vortex Method}
+%------------------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------------------
+\section{Introduction to Vortex Method}
+
+\subsection{Vorticity}
+
+\subsection{Velocity-vorticity formulation of navier-stokes equations}
 
 Vortex methods deals with the evolution of the vorticity field in the fluid domain \cite{Cottet2000a}. So to derive the governing equations of 2-D \printAcron{Vortex Particle Method}{VPM}, we must examine the 2-D incompressible Navier-Stokes equations of a viscous fluid flow. The momentum equation is given as
 \index{Vortex Method! Vortex Particle Method}
@@ -48,6 +55,8 @@ and so by taking the curl of the momentum equation, we derive the vorticity tran
 \frac{\partial \omega}{\partial t} + \mathbf{u}\cdot\nabla\omega = \nu \nabla^2 \omega.
 \end{equation}
 
+\subsection{Viscous splitting algorithm}
+
 The VPM deals with the evolution of the vorticity feild using the viscous splitting (or Fractional step) method \cite{Cottet2000a}. The time stepping of the vorticity is done by dealing the viscous and the inviscid part of the transport equation separately,
 
 \index{VPM}
@@ -71,13 +80,20 @@ The first substep of the evolution deals which the convection of the vorticity. 
 %There are several advantage to this type of evolution. As the convection and diffusion are handled separately, there is minimum dispertion during the convection and furthermore, the is no restriction of the advection CFL number \cite{Wee2006}.
 
 
-\section{Spatial discretization: Generation of vortex blobs}
+%------------------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------------------
+\section{Spatial Discretization: Generation of Vortex Blobs}
 
+
+\subsection{Discrete form of vorticity field}
 The spatial discretization of the fluid domain is done by representing the vorticity field in $N$ Lagrangian vortex particles. This is done by dividing the fluid domains into cells where the circulation of the region is assigned to the particle. This gives 
 
 \begin{equation}
 \omega\left(\mathbf{x},t\right) \simeq \omega^h\left(\mathbf{x},t\right) = \sum_{p}\Gamma_p\left(t\right)\zeta_{\sigma}\left[\mathbf{x}-\mathbf{x}_p\left(t\right)\right],
 \end{equation}
+
+\subsection{Mollified vortex kernels}
 
 where $\Gamma_p$ \gsymb[f]{$\Gamma$}{Circulation}{$[m^2/s]$}{c} is the estimate of the circulation around the particle $\mathbf{x}_p$ \lsymb[f]{$\mathbf{x}_p$}{Position vector}{[-]}{x} with core size \gsymb[t]{$\sigma$}{Core size}{[$m$]}{rr}. We must not that $\omega^h$ is an approximation to $\omega$ of the fluid.
 
@@ -98,8 +114,16 @@ where $k$ is 1, 2 or 4 and determines the width of the kernel.
 \end{figure}
 
 
+\subsection{Beale's correction: Iterative circulation processing scheme}
+
+
+%------------------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------------------
 \section{Convection of vortex blobs}
 
+
+\subsection{Biot-savart law}
 The vortex transport equation evaluated using the viscous splitting algorithm. For vortex methods, it is ideal to express the equation \ref{eq:convectionEulerian} in Lagrangian form,
 
 \begin{equation}
@@ -138,15 +162,29 @@ The advantage of discretizing and evaluting the vorticity field in this form is 
 \mathbf{K}_{\epsilon} = \mathbf{K} \star \zeta_{\epsilon}.
 \end{equation}
 
-	\subsection{Remeshing to treat lagrangian grid distortion}
+\subsection{Remeshing scheme: Treat lagrangian grid distortion}
 
+
+%------------------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------------------
 \section{Diffusion of Vortex Methods}
 
-	\subsection{Modified interpolation kernel}
+\subsection{Vorticity diffusion techniques}
+
+\subsection{Modified remeshing for treating diffusion}
 
 
+%------------------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------------------
 \section{Boundary conditions at solid boundary}
 
+\subsection{Boundary integral equations}
+
+\subsubsection{Linked boundary conditions}
+
+\subsection{Simplified scheme: Panel method}
 
 \section{Simulation acceleration techniques}
 
