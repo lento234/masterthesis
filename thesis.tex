@@ -13,7 +13,7 @@
 \mscDate{Date TBD}%
 \mscTitle{Hybrid Vortex Method for 2D Vertical-Axis Wind Turbine}%
 \mscSubTitle{A fast and accurate Eulerian-Lagrangian numerical method in python}% can be left empty
-\mscKeyWords{Hybrid Vortex Method, Python}%
+\mscKeyWords{Hybrid Vortex Method, Python, Finite Element, Vortex Method}%
 %
 % background picture for the first page, make sure it is in the correct format (eps or something else)
 %%\ifpdfma
@@ -53,6 +53,7 @@
 \usepackage[preserveurlmacro]{breakurl}% %% Uncommented due to warning
 %\usepackage{./local/breakurl/breakurl}%
 %\usepackage{breakurl}% 
+\usepackage{makeidx}
 %
 %=================%
 % custom commands %
@@ -93,12 +94,11 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{hyperref}
-\usepackage{python}
 
 \usepackage{graphicx}
 \usepackage{caption}
 \usepackage{color}
-
+%\usepackage{python}
 
 \newcommand{\printAcron}[2]{#1 ({\color{darkblue}{#2}}) \acron[f]{#2}{#1}}
 \begin{document}%
@@ -132,15 +132,18 @@
     %
     % Example Chapter
     %\include{help_chap_introduction}
+	%\include{chapters/projectPlan}
+    %\include{chap_literatureReview}
+
     % Chapter 1: Introduction
     \include{chapters/introduction}%
 	
-	%\include{chapters/projectPlan}
-	
-    % Chapter 2 : Literature Review
-    %\include{chap_literatureReview}
-    \include{chapters/theory}
-    %
+    % Chapter 2 : Lagrangian Domain: Vortex Particle Method
+    \include{chapters/lagrangian}
+
+	% Chapter 3: Eulerian Domain: Finite Element Method
+	\include{chapters/eulerian}
+
     % Chapter 3: Literature review/Theory of Hybrid vortex methods
    	\include{chapters/overviewHybridVortexMethods}
    	%
@@ -159,7 +162,6 @@
     %
     % Bibliography
     \printbib{/home/lento/Documents/Bibliography/library.bib}%
-    %
     \appendix%
     %
     % and some appendices here
@@ -169,5 +171,6 @@
 \backmatter%
     %
     % index file here (not needed for a MSc thesis)
+	%\printindex
     %
 \end{document}

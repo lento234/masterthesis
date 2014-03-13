@@ -1,9 +1,10 @@
-\chapter{Theory on Vortex Particle Method}
+\chapter{Lagrangian Domain: Theory on Vortex Particle Method}
 \label{ch:theory}
 
 To model the flow around a VAWT, several approaches can be taken, Vermeer at al. (2003) \cite{Vermeer2003} have also summarized in their paper. The two main approaches of investigating the flow is either employing a numerical method to simulate the flow or through experimental simulations.
 
 Leishman (2006) \cite{leishman2006principles} has shown that there are several simplified, efficient numerical tools that can be used to model the performance of a VAWT. Methods such as actuator disk theory and blade element momentum theory and deals with simplified Navier-Stokes equations and is very useful to evaluate the trend of certain design parameter. However, as they are highly simplified, complex flow phenomenons that has severe impact of the performance characteristics of the VAWT such as flow separation during dynamic stall, vortex shedding during the rotation and blade-wake interaction cannot be simulated. In order to understand them, either experimental investigation such as in wind tunnel or full Navier-Stokes simulations have to undertaken. So to understand the flow behaviour of a VAWT, several numerical research have been performed \cite{Almohammadi2013} \cite{Ferreira2007} \cite{Islam2008} \cite{Merz2012} and experimental researches by Ferreira \cite{SimaoFerreira2008} \cite{Ferreira} and others \cite{Howell2010} \cite{Mertens2003}.
+\index{Actuator disk}
 
 All the numerical method that was grid-based struggled with dealing with large number of mesh cells for high Reynolds numbers and the numerical method that employed simplified Navier-Stokes methods had to sacrifices some accuracies.The experimental investigation also come with drawbacks as they are require more financial resources and usually only feasible to model the scaled VAWTs.
 
@@ -16,6 +17,7 @@ Therefore, this chapter is dedicated to given an overview on the theory of the V
 \section{Governing Equation of Vortex Method}
 
 Vortex methods deals with the evolution of the vorticity field in the fluid domain \cite{Cottet2000a}. So to derive the governing equations of 2-D \printAcron{Vortex Particle Method}{VPM}, we must examine the 2-D incompressible Navier-Stokes equations of a viscous fluid flow. The momentum equation is given as
+\index{Vortex Method! Vortex Particle Method}
 
 %(\textcolor{darkblue}{VPM})
 %\newcommand{\printAbbreviation}[3]{#1 (#2) \nomenclature[#3]{#2}{#1}}
@@ -47,6 +49,8 @@ and so by taking the curl of the momentum equation, we derive the vorticity tran
 \end{equation}
 
 The VPM deals with the evolution of the vorticity feild using the viscous splitting (or Fractional step) method \cite{Cottet2000a}. The time stepping of the vorticity is done by dealing the viscous and the inviscid part of the transport equation separately,
+
+\index{VPM}
 
 \begin{itemize}
 \item convection:

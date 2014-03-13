@@ -624,8 +624,7 @@ requirements for the degree of \textbf{Master of Science}.
 %
 \newpage\clearemptydoublepage
 }
-
-
+\makeindex
 %\sloppy
 \endinput
 %%
