@@ -1,4 +1,4 @@
-\chapter{Lagrangian Domain: Theory on Vortex Particle Method}
+\chapter{Lagrangian Domain: Vortex Particle Method}
 \label{ch:theory}
 
 To model the flow around a VAWT, several approaches can be taken, Vermeer at al. (2003) \cite{Vermeer2003} have also summarized in their paper. The two main approaches of investigating the flow is either employing a numerical method to simulate the flow or through experimental simulations.
@@ -117,6 +117,8 @@ where $k$ is 1, 2 or 4 and determines the width of the kernel.
 \subsection{Beale's correction: Iterative circulation processing scheme}
 
 
+\subsection{Error in blob initialization}
+
 %------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------
@@ -164,7 +166,6 @@ The advantage of discretizing and evaluting the vorticity field in this form is 
 
 \subsection{Remeshing scheme: Treat lagrangian grid distortion}
 
-
 %------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------
@@ -174,7 +175,7 @@ The advantage of discretizing and evaluting the vorticity field in this form is 
 
 \subsection{Modified remeshing for treating diffusion}
 
-
+%\subsection{Convergence of the viscous vortex method}
 %------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------
@@ -184,7 +185,9 @@ The advantage of discretizing and evaluting the vorticity field in this form is 
 
 \subsubsection{Linked boundary conditions}
 
-\subsection{Simplified scheme: Panel method}
+\subsection{Panel method for treating no-slip boundary condition}
+
+\subsection{Convergence study of panel method}
 
 \section{Simulation acceleration techniques}
 
@@ -192,6 +195,9 @@ The advantage of discretizing and evaluting the vorticity field in this form is 
 
 \subsection{Parallel computation in GPU}
 
+\section{Validation of lagrangian domain}
+
+\section{Summary}
 
 
 
