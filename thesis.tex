@@ -11,9 +11,9 @@
 \mscFaculty{Aerospace Engineering}%
 \mscName{L. Manickathan B.Sc.}%
 \mscDate{Date TBD}%
-\mscTitle{Hybrid Vortex Method for 2D Vertical-Axis Wind Turbine}%
-\mscSubTitle{A fast and accurate Eulerian-Lagrangian numerical method in python}% can be left empty
-\mscKeyWords{Hybrid Vortex Method, Python, Finite Element, Vortex Method}%
+\mscTitle{Hybrid Eulerian-Lagrangian Vortex Particle Method}%
+\mscSubTitle{A fast and accurate numerical method for 2D Vertical-Axis Wind Turbine}% can be left empty
+\mscKeyWords{Hybrid Vortex Method, Eulerian, Lagrangian, Python, FEniCS, GMSH, Navier-Stokes, CFD, Coupling, Finite Element, Vortex Blobs}%
 %
 % background picture for the first page, make sure it is in the correct format (eps or something else)
 %%\ifpdfma
@@ -94,12 +94,13 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{hyperref}
-
 \usepackage{graphicx}
 \usepackage{caption}
 \usepackage{color}
 %\usepackage{python}
 
+% Custom commands
+\newcommand{\todo}[1]{\textcolor{red}{\centerline{!!! #1 !!!}}}
 \newcommand{\printAcron}[2]{#1 ({\color{darkblue}{#2}}) \acron[f]{#2}{#1}}
 \begin{document}%
 
@@ -141,7 +142,7 @@
     \include{chapters/introduction}%
 
     % Chapter 2 : Lagrangian Domain: Vortex Particle Method
-    \include{chapters/lagrangian}
+  	\include{chapters/lagrangian}
 
 	% Chapter 3: Eulerian Domain: Finite Element Method
 	\include{chapters/eulerian}
@@ -156,16 +157,16 @@
    	\include{chapters/conclusion}
     
     % Bibliography
-    \printbib{/home/lento/Documents/Bibliography/library.bib}%
+    \printbib{bibliography/library}%
 
     % and some appendices here
     \appendix%
     %\include{appendix/mathModel}%
-    \include{appendix/cascade}
+    %\include{appendix/cascade}
 
 \backmatter%
 
     % index file here (not needed for a MSc thesis)
 	%\printindex
-
+	
 \end{document}
