@@ -70,24 +70,26 @@ which only relates the vorticity to the velocity enabling us to neglect the pres
 
 
 \subsection{Viscous splitting algorithm}
-Vortex method is initiality used to model the evolution of incompressible, invcid flows. However, in order to simulate a real flow, we must also deal with the viscous component of the fluid. Chorin \cite{Chorin1973} has shown that using the viscous spilliting algorithm, it is possible to model a viscous flow using vortex method. 
+Vortex method is initiality used to model the evolution of incompressible, inviscid flows. However, in order to simulate a real flow, we must also deal with the viscous component of the fluid. Chorin \cite{Chorin1973} has shown that using the viscous splitting algorithm, it is possible to simulate a viscous flow using vortex method. 
 
-The viscous splitting algorithm is a fractional step method, where the viscous and the inviscid part of the transport equation is dealth in two subsquent steps, 
+The viscous splitting algorithm is basically a fractional step method, where the viscous and the inviscid part of the transport equation is dealth in two subsquent steps, 
 
 \begin{itemize}
-\item convection:
+\item Sub-step 1: convection
 \begin{equation}
 \frac{\partial\omega}{\partial t} + \mathbf{u}\cdot\nabla\omega=0;
 \label{eq:convectionEulerian}
 \end{equation}
-\item diffusion:
+\item Sub-step 2: diffusion
 \begin{equation}
 \frac{\partial\omega}{\partial t} = \nu\nabla^2\omega.
 \end{equation}
 
 \end{itemize}
 
-Therefore, the evolution of the vorticity is split into two sub-steps. The first substep of the evolution deals with the convection of the vorticity and the second deals with the diffusion of the vorticity field. There are several ways of dealing with the diffusion of the vorticity field and Chorin initially employed a random walk method. This method suffers some limitations in accuracy and since then there are several methods that can be used to simulate the diffusion such as the \printAcron{Particle Strength Exchange}{PSE} method, redistribution method and core spreading method. 
+The first sub-step of the evolution deals with the convection of the vorticity. The second sub-step deals with the diffusion of the vorticity field. 
+
+There are several ways of dealing with the diffusion of the vorticity field. Chorin initially employed a random walk method, however this method suffers some limitations in accuracy and since then there are several methods that can be used to simulate the diffusion. \printAcron{Particle Strength Exchange}{PSE} method \cite{Degond1989}, is an algorithm to treat diffusion by exchange of vortex element strengths. \printAcron{Vortex Redistribution Method}{VRM} \cite{Shankar1996} models diffusion by distributing the fraction of circulation of the vortex elements to the neighbouring vortices. However, we use a modified interpolation \cite{Wee2006} to simultaniously treat diffusion and remeshing through modified interpolation kernel. 
 
 %This equation is known as the vorticity transport equation \cite{LEONARD1995}. To solve this equation, we employ a viscous splitting algorithm, where the evolution of the vorticity field is convection and the diffusion of the vorticity field is handled i
 
@@ -125,7 +127,7 @@ where $k$ is 1, 2 or 4 and determines the width of the kernel.
 \begin{figure}
 	\centering
 	\includegraphics[width=0.7\textwidth]{figures/lagrangian/gaussianKernel.pdf}
-	\caption{Vortex blob with Gaussian distribution: [$k=2$,$\sigma=1.0$]}
+	\caption{Vortex blob with Gaussian distribution: [$k=2$, $\sigma=1.0$]}
 \end{figure}
 
 
