@@ -2,6 +2,12 @@
 
  \nomgroup{A}
 
+  \item [{$\mathbf {K}$}]\begingroup Biot-Savart kernel\nomunit {[$-$]}\nomeqref {2.0}
+		\nompageref{3}
+  \item [{$\mathbf {K_{\sigma }}$}]\begingroup Vortex blob kernel\nomunit {[$-$]}\nomeqref {2.0}
+		\nompageref{3}
+  \item [{$N_p$}]\begingroup Number of particles\nomunit {$[-]$}\nomeqref {2.0}
+		\nompageref{3}
   \item [{$p$}]\begingroup Pressure\nomunit {$[\mathrm {Pa}]$}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$t$}]\begingroup Time\nomunit {$[s]$}\nomeqref {2.0}
@@ -14,6 +20,8 @@
 		\nompageref{3}
   \item [{$\mathbf {u}_{\omega }$}]\begingroup Vortical velocity\nomunit {$[m\cdot s^{-1}]$}\nomeqref {2.0}
 		\nompageref{3}
+  \item [{$\mathbf {u}_{\phi }$}]\begingroup Solenoidal velocity\nomunit {$[m\cdot s^{-1}]$}\nomeqref {2.0}
+		\nompageref{3}
   \item [{$\mathbf {x}$}]\begingroup Position vector\nomunit {$[m]$}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$\mathbf {x}_p$}]\begingroup Position vector of the particle\nomunit {$[m]$}\nomeqref {2.0}
@@ -21,7 +29,7 @@
 
  \nomgroup{G}
 
-  \item [{$\zeta $}]\begingroup Smooth cutoff function\nomunit {[-]}\nomeqref {2.0}
+  \item [{$\zeta _{\sigma }$}]\begingroup Smooth cut-off function of the blob\nomunit {[$-$]}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$\Gamma $}]\begingroup Circulation\nomunit {$[m^2\cdot s^{-1}]$}\nomeqref {2.0}
 		\nompageref{3}
@@ -42,13 +50,13 @@
 		\nompageref{3}
   \item [{\textbf {GPU}}]\begingroup Graphics Processing Units\nomeqref {2.0}
 		\nompageref{3}
-  \item [{\textbf {PSE}}]\begingroup Particle Strength Exchange\nomeqref {2.7}
-		\nompageref{5}
+  \item [{\textbf {PSE}}]\begingroup Particle Strength Exchange\nomeqref {2.15}
+		\nompageref{7}
   \item [{\textbf {VAWT}}]\begingroup Vertical-Axis Wind Turbine\nomeqref {1.0}
 		\nompageref{1}
-  \item [{\textbf {VM}}]\begingroup Vortex Method\nomeqref {2.0}
+  \item [{\textbf {VPM}}]\begingroup Vortex Particle Method\nomeqref {2.0}
 		\nompageref{3}
-  \item [{\textbf {VRM}}]\begingroup Vortex Redistribution Method\nomeqref {2.7}
-		\nompageref{5}
+  \item [{\textbf {VRM}}]\begingroup Vortex Redistribution Method\nomeqref {2.15}
+		\nompageref{7}
 
 \end{thenomenclature}
