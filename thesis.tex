@@ -1,4 +1,4 @@
-\documentclass{src/dutmsc}%
+\documentclass{dutmsc}%
 %\documentclass[draft]{src/dutmsc}%
 %
 % STARTING FROM VERSION 1.0.8, DIRECT PDF OUTPUT FROM THE LATEX SOURCE IS SUPPORTED.
@@ -40,10 +40,10 @@
 % the two lines after that)
 % \usepackage{apacite}%
 % \bibliographystyle{apacite}%
-% \usepackage{./local/apacite/apacite}%
+%\usepackage{./local/apacite/apacite}%
 %
 % If you prefer references as numbers, comment the following line and uncomment the one thereafter
-% \bibliographystyle{./local/apacite/apacite}%
+%\bibliographystyle{./local/apacite/apacite}%
 \bibliographystyle{plain}
 %
 %
@@ -53,12 +53,27 @@
 \usepackage[preserveurlmacro]{breakurl}% %% Uncommented due to warning
 %\usepackage{./local/breakurl/breakurl}%
 %\usepackage{breakurl}% 
-\usepackage{makeidx}
+%\usepackage{makeidx}
 %
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+%\usepackage{hyperref}
+%\usepackage{graphicx}
+%\usepackage{caption}
+%\usepackage{color}
+%\usepackage{python}
+
 %=================%
 % custom commands %
 %=================%
 %
+% Custom commands
+\newcommand{\todo}[1]{\textcolor{red}{\centerline{!!! #1 !!!}}}
+\newcommand{\printAcron}[2]{#1 ({\color{darkblue}{#2}}) \acron[f]{#2}{#1}}
+
 % short-hand notations for cosine, sine and tangent with calligraphic C, S and T
 \newcommand{\cc}[1]{\:\mathcal{C}_{#1}}%
 \newcommand{\cs}[1]{\:\mathcal{S}_{#1}}%
@@ -69,9 +84,8 @@
 \newcommand{\python}{\textsc{Python} }
 %
 %\newcommand{\printAbbreviation}[3]{#1 (\textcolor{darkblue}{#2}) \nomenclature[#3]{#2}{#1}}
-
 \makenomenclature
-%
+
 % setup of hyperlinks in the pdf output (modify as needed)
 \hypersetup{colorlinks=true,
             citecolor=darkblue,
@@ -89,22 +103,7 @@
 %
 \renewcommand{\bibname}{References}
 
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{graphicx}
-\usepackage{hyperref}
-\usepackage{graphicx}
-\usepackage{caption}
-\usepackage{color}
-%\usepackage{python}
-
-% Custom commands
-\newcommand{\todo}[1]{\textcolor{red}{\centerline{!!! #1 !!!}}}
-\newcommand{\printAcron}[2]{#1 ({\color{darkblue}{#2}}) \acron[f]{#2}{#1}}
 \begin{document}%
-
-
 %============================= Front matter ========================================
 \frontmatter%
     %
@@ -145,20 +144,20 @@
   	\include{chapters/lagrangian}
 
 	% Chapter 3: Eulerian Domain: Finite Element Method
-	\include{chapters/eulerian}
+	%\include{chapters/eulerian}
 
     % Chapter 4: Hybrid Eulerian-Lagrangian Vortex Particle Method
-   	\include{chapters/hybrid}
+   	%\include{chapters/hybrid}
 
    	% Chapter 5: Validation of Hybrid Method
-	\include{chapters/validation}   
+	%\include{chapters/validation}   
 
    	% Chapter 6: Conclusion and Recommendations
    	\include{chapters/conclusion}
     
     % Bibliography
     \printbib{bibliography/library}%
-
+    
     % and some appendices here
     \appendix%
     %\include{appendix/mathModel}%
