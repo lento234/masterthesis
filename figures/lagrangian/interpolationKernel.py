@@ -23,19 +23,27 @@ py.rcParams.update(params)
 
 #-----------------------------------------------------------------------
 # Gaussian kernel
-sigma = 1.0
-k = 2.0
-x = np.linspace(-5,5,100)
-z = (1/(k*np.pi*sigma**2))*np.exp(-(x**2)/(k*sigma**2))
+
+xi = np.linspace(-3,3,1000)
+
+m1 = 1 - 5*xi**2*0.5 + 3*np.abs(xi)**3*0.5
+m2 = 0.5*(2- np.abs(xi))**2*(1-np.abs(xi))
+m3 = xi*0.
+
+m1[~ (np.abs(xi)<1)] = np.nan
+m2[~ ((np.abs(xi)>=1) & (np.abs(xi)<2))] = np.nan
+m3[~ (np.abs(xi)>=2)] = np.nan
 
 py.figure(1)
 py.axes([0.125,0.15,0.95-0.175,0.95-0.125])
-py.plot(x,z,'k')
-py.axis([-5,5,0,0.2])
-py.xlabel(r'$\left|\mathbf{x}\right|$')
-py.ylabel(r'$\zeta_{\sigma}$')
+py.plot(xi,m1,'k-')
+py.plot(xi,m2,'k-.')
+py.plot(xi,m3,'k--')
+py.plot([-2,-1,1,2],[0.,0.,0.,0.],'k.')
+py.axis([-3,3,-0.2,1.2])
+py.xlabel(r'$\xi$')
+#py.ylabel(r'$\zeta_{\sigma}$')
 py.grid(True)
-#py.savefig('figureTest.pdf')
-py.savefig('gaussianKernel.pdf')
+#py.savefig('interpolationKernel.pdf')
 
 #-----------------------------------------------------------------------
