@@ -36,6 +36,10 @@ py.xlabel(r'$\left|\mathbf{x}\right|$')
 py.ylabel(r'$\zeta_{\sigma}$')
 py.grid(True)
 #py.savefig('figureTest.pdf')
-py.savefig('gaussianKernel.pdf')
-
+figName = 'gaussianKernel'
+py.savefig('%s.eps' % figName)
+import os
+os.system('epstopdf %s.eps' % figName)
+#os.system('pdfcrop %s.pdf' % figName)
+os.system('rm %s.eps' % figName)
 #-----------------------------------------------------------------------

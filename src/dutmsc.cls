@@ -177,6 +177,9 @@
 \definecolor{darkblue}{rgb}{0,0,0.5}
 \definecolor{darkbrown}{rgb}{0.28,0.07,0.07}
 \definecolor{black}{rgb}{0,0,0}
+\definecolor{plotGreen}{rgb}{0,0.5,0}
+\definecolor{plotRed}{rgb}{1.0,0,0}
+\definecolor{plotBlue}{rgb}{0,0,1.0}
 %
 % \hypersetup{colorlinks=true,
 %             citecolor=darkblue,

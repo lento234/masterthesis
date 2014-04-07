@@ -46,4 +46,11 @@ py.xlabel(r'$\xi$')
 py.grid(True)
 #py.savefig('interpolationKernel.pdf')
 
+figName = 'interpolationKernel'
+py.savefig('%s.eps' % figName)
+import os
+os.system('epstopdf %s.eps' % figName)
+#os.system('pdfcrop %s.pdf' % figName)
+os.system('rm %s.eps' % figName)
+
 #-----------------------------------------------------------------------

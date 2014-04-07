@@ -3,201 +3,201 @@
     xmlns:latexdraw="http://latexdraw.sourceforge.net/namespaces/latexdraw"
     version="1.1" baseProfile="full">
     <defs>
-        <marker overflow="visible" orient="auto" id="arrow2-896">
+        <marker overflow="visible" orient="auto" id="arrow2-34">
             <path
                 d="M 0.0 0.0 L 4.652083333333334 1.6614583333333335 L 2.79125 0.0 L 4.652083333333334 -1.6614583333333335 z "
                 latexdraw:arrSizeNum="2.0" fill="#010101"/>
         </marker>
-        <marker overflow="visible" orient="auto" id="arrow1-900">
+        <marker overflow="visible" orient="auto" id="arrow1-38">
             <path
                 d="M 0.0 0.0 L 4.652083333333334 1.6614583333333335 L 2.79125 0.0 L 4.652083333333334 -1.6614583333333335 z "
                 latexdraw:arrSizeNum="2.0" fill="#010101"/>
         </marker>
-        <marker overflow="visible" orient="auto" id="arrow1-904">
+        <marker overflow="visible" orient="auto" id="arrow1-42">
             <path
                 d="M 0.0 0.0 L 4.652083333333334 1.6614583333333335 L 2.79125 0.0 L 4.652083333333334 -1.6614583333333335 z "
                 latexdraw:arrSizeNum="2.0" fill="#010101"/>
         </marker>
     </defs>
     <g>
-        <g latexdraw:type="line" id="id869">
+        <g latexdraw:type="line" id="id7">
             <line x1="210.0" x2="210.0" y1="200.45623724319543"
                 y2="379.50029218119175" stroke-width="1.0"
                 stroke="black" latexdraw:rotationAngle="0.0"/>
         </g>
-        <g latexdraw:type="line" id="id870">
+        <g latexdraw:type="line" id="id8">
             <line x1="250.0" x2="250.0" y1="200.45623724319543"
                 y2="379.50029218119175" stroke-width="1.0"
                 stroke="black" latexdraw:rotationAngle="0.0"/>
         </g>
-        <g latexdraw:type="line" id="id871">
+        <g latexdraw:type="line" id="id9">
             <line x1="290.0" x2="290.0" y1="200.45623724319543"
                 y2="379.50029218119175" stroke-width="1.0"
                 stroke="black" latexdraw:rotationAngle="0.0"/>
         </g>
-        <g latexdraw:type="line" id="id872">
+        <g latexdraw:type="line" id="id10">
             <line x1="330.0" x2="330.0" y1="200.45623724319543"
                 y2="379.50029218119175" stroke-width="1.0"
                 stroke="black" latexdraw:rotationAngle="0.0"/>
         </g>
-        <g latexdraw:type="line" id="id873">
+        <g latexdraw:type="line" id="id11">
             <line x1="370.0" x2="370.0" y1="200.45623724319543"
                 y2="379.50029218119175" stroke-width="1.0"
                 stroke="black" latexdraw:rotationAngle="0.0"/>
         </g>
-        <g latexdraw:type="dot" id="id874" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id12" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="320.0 320.0">
-            <circle r="4.0" fill="#14a801" cx="320.0" cy="320.0"/>
+            <circle r="4.0" fill="#007f00" cx="320.0" cy="320.0"/>
         </g>
-        <g latexdraw:type="line" id="id875">
+        <g latexdraw:type="line" id="id13">
             <line x1="200.45626658283197" x2="379.5528697314042"
                 y1="210.0" y2="210.0" stroke-width="1.0" stroke="black" latexdraw:rotationAngle="0.0"/>
         </g>
-        <g latexdraw:type="line" id="id876">
+        <g latexdraw:type="line" id="id14">
             <line x1="200.45626658283197" x2="379.5528697314042"
                 y1="250.0" y2="250.0" stroke-width="1.0" stroke="black" latexdraw:rotationAngle="0.0"/>
         </g>
-        <g latexdraw:type="line" id="id877">
+        <g latexdraw:type="line" id="id15">
             <line x1="379.5528697314042" x2="200.45626658283197"
                 y1="290.0" y2="290.0" stroke-width="1.0" stroke="black" latexdraw:rotationAngle="0.0"/>
         </g>
-        <g latexdraw:type="line" id="id878">
+        <g latexdraw:type="line" id="id16">
             <line x1="200.45626658283197" x2="379.5528697314042"
                 y1="330.0" y2="330.0" stroke-width="1.0" stroke="black" latexdraw:rotationAngle="0.0"/>
         </g>
-        <g latexdraw:type="line" id="id879">
+        <g latexdraw:type="line" id="id17">
             <line x1="379.5528697314042" x2="200.45626658283197"
                 y1="370.0" y2="370.0" stroke-width="1.0" stroke="black" latexdraw:rotationAngle="0.0"/>
         </g>
-        <g latexdraw:type="dot" id="id880" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id18" latexdraw:size="8.0"
             latexdraw:dotShape="x" latexdraw:position="270.0 270.0">
-            <g stroke-linecap="square" stroke="#777777" stroke-width="0.8">
+            <g stroke-linecap="square" stroke="black" stroke-width="0.8">
                 <line x1="266.8" x2="273.2" y1="266.8" y2="273.2"/>
                 <line x1="273.2" x2="266.8" y1="266.8" y2="273.2"/>
             </g>
         </g>
-        <g latexdraw:type="dot" id="id881" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id19" latexdraw:size="8.0"
             latexdraw:dotShape="x" latexdraw:position="270.0 230.0">
-            <g stroke-linecap="square" stroke="#777777" stroke-width="0.8">
+            <g stroke-linecap="square" stroke="black" stroke-width="0.8">
                 <line x1="266.8" x2="273.2" y1="226.8" y2="233.2"/>
                 <line x1="273.2" x2="266.8" y1="226.8" y2="233.2"/>
             </g>
         </g>
-        <g latexdraw:type="dot" id="id882" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id20" latexdraw:size="8.0"
             latexdraw:dotShape="x" latexdraw:position="270.0 310.0">
-            <g stroke-linecap="square" stroke="#777777" stroke-width="0.8">
+            <g stroke-linecap="square" stroke="black" stroke-width="0.8">
                 <line x1="266.8" x2="273.2" y1="306.8" y2="313.2"/>
                 <line x1="273.2" x2="266.8" y1="306.8" y2="313.2"/>
             </g>
         </g>
-        <g latexdraw:type="dot" id="id883" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id21" latexdraw:size="8.0"
             latexdraw:dotShape="x" latexdraw:position="270.0 350.0">
-            <g stroke-linecap="square" stroke="#777777" stroke-width="0.8">
+            <g stroke-linecap="square" stroke="black" stroke-width="0.8">
                 <line x1="266.8" x2="273.2" y1="346.8" y2="353.2"/>
                 <line x1="273.2" x2="266.8" y1="346.8" y2="353.2"/>
             </g>
         </g>
-        <g latexdraw:type="dot" id="id884" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id22" latexdraw:size="8.0"
             latexdraw:dotShape="x" latexdraw:position="230.0 270.0">
-            <g stroke-linecap="square" stroke="#777777" stroke-width="0.8">
+            <g stroke-linecap="square" stroke="black" stroke-width="0.8">
                 <line x1="226.8" x2="233.2" y1="266.8" y2="273.2"/>
                 <line x1="233.2" x2="226.8" y1="266.8" y2="273.2"/>
             </g>
         </g>
-        <g latexdraw:type="dot" id="id885" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id23" latexdraw:size="8.0"
             latexdraw:dotShape="x" latexdraw:position="230.0 230.0">
-            <g stroke-linecap="square" stroke="#777777" stroke-width="0.8">
+            <g stroke-linecap="square" stroke="black" stroke-width="0.8">
                 <line x1="226.8" x2="233.2" y1="226.8" y2="233.2"/>
                 <line x1="233.2" x2="226.8" y1="226.8" y2="233.2"/>
             </g>
         </g>
-        <g latexdraw:type="dot" id="id886" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id24" latexdraw:size="8.0"
             latexdraw:dotShape="x" latexdraw:position="230.0 310.0">
-            <g stroke-linecap="square" stroke="#777777" stroke-width="0.8">
+            <g stroke-linecap="square" stroke="black" stroke-width="0.8">
                 <line x1="226.8" x2="233.2" y1="306.8" y2="313.2"/>
                 <line x1="233.2" x2="226.8" y1="306.8" y2="313.2"/>
             </g>
         </g>
-        <g latexdraw:type="dot" id="id887" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id25" latexdraw:size="8.0"
             latexdraw:dotShape="x" latexdraw:position="230.0 350.0">
-            <g stroke-linecap="square" stroke="#777777" stroke-width="0.8">
+            <g stroke-linecap="square" stroke="black" stroke-width="0.8">
                 <line x1="226.8" x2="233.2" y1="346.8" y2="353.2"/>
                 <line x1="233.2" x2="226.8" y1="346.8" y2="353.2"/>
             </g>
         </g>
-        <g latexdraw:type="dot" id="id888" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id26" latexdraw:size="8.0"
             latexdraw:dotShape="x" latexdraw:position="350.0 270.0">
-            <g stroke-linecap="square" stroke="#777777" stroke-width="0.8">
+            <g stroke-linecap="square" stroke="black" stroke-width="0.8">
                 <line x1="346.8" x2="353.2" y1="266.8" y2="273.2"/>
                 <line x1="353.2" x2="346.8" y1="266.8" y2="273.2"/>
             </g>
         </g>
-        <g latexdraw:type="dot" id="id889" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id27" latexdraw:size="8.0"
             latexdraw:dotShape="x" latexdraw:position="350.0 230.0">
-            <g stroke-linecap="square" stroke="#777777" stroke-width="0.8">
+            <g stroke-linecap="square" stroke="black" stroke-width="0.8">
                 <line x1="346.8" x2="353.2" y1="226.8" y2="233.2"/>
                 <line x1="353.2" x2="346.8" y1="226.8" y2="233.2"/>
             </g>
         </g>
-        <g latexdraw:type="dot" id="id890" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id28" latexdraw:size="8.0"
             latexdraw:dotShape="x" latexdraw:position="350.0 310.0">
-            <g stroke-linecap="square" stroke="#777777" stroke-width="0.8">
+            <g stroke-linecap="square" stroke="black" stroke-width="0.8">
                 <line x1="346.8" x2="353.2" y1="306.8" y2="313.2"/>
                 <line x1="353.2" x2="346.8" y1="306.8" y2="313.2"/>
             </g>
         </g>
-        <g latexdraw:type="dot" id="id891" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id29" latexdraw:size="8.0"
             latexdraw:dotShape="x" latexdraw:position="350.0 350.0">
-            <g stroke-linecap="square" stroke="#777777" stroke-width="0.8">
+            <g stroke-linecap="square" stroke="black" stroke-width="0.8">
                 <line x1="346.8" x2="353.2" y1="346.8" y2="353.2"/>
                 <line x1="353.2" x2="346.8" y1="346.8" y2="353.2"/>
             </g>
         </g>
-        <g latexdraw:type="dot" id="id892" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id30" latexdraw:size="8.0"
             latexdraw:dotShape="x" latexdraw:position="310.0 270.0">
-            <g stroke-linecap="square" stroke="#777777" stroke-width="0.8">
+            <g stroke-linecap="square" stroke="black" stroke-width="0.8">
                 <line x1="306.8" x2="313.2" y1="266.8" y2="273.2"/>
                 <line x1="313.2" x2="306.8" y1="266.8" y2="273.2"/>
             </g>
         </g>
-        <g latexdraw:type="dot" id="id893" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id31" latexdraw:size="8.0"
             latexdraw:dotShape="x" latexdraw:position="310.0 230.0">
-            <g stroke-linecap="square" stroke="#777777" stroke-width="0.8">
+            <g stroke-linecap="square" stroke="black" stroke-width="0.8">
                 <line x1="306.8" x2="313.2" y1="226.8" y2="233.2"/>
                 <line x1="313.2" x2="306.8" y1="226.8" y2="233.2"/>
             </g>
         </g>
-        <g latexdraw:type="dot" id="id894" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id32" latexdraw:size="8.0"
             latexdraw:dotShape="x" latexdraw:position="310.0 310.0">
-            <g stroke-linecap="square" stroke="#777777" stroke-width="0.8">
+            <g stroke-linecap="square" stroke="black" stroke-width="0.8">
                 <line x1="306.8" x2="313.2" y1="306.8" y2="313.2"/>
                 <line x1="313.2" x2="306.8" y1="306.8" y2="313.2"/>
             </g>
         </g>
-        <g latexdraw:type="dot" id="id895" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id33" latexdraw:size="8.0"
             latexdraw:dotShape="x" latexdraw:position="310.0 350.0">
-            <g stroke-linecap="square" stroke="#777777" stroke-width="0.8">
+            <g stroke-linecap="square" stroke="black" stroke-width="0.8">
                 <line x1="306.8" x2="313.2" y1="346.8" y2="353.2"/>
                 <line x1="313.2" x2="306.8" y1="346.8" y2="353.2"/>
             </g>
         </g>
-        <g latexdraw:type="arc" id="id896">
+        <g latexdraw:type="arc" id="id34">
             <path
                 d="M 315.81155550916424 315.5024336609711 A 35.0 35.0 0.0 0 0 271.5 307.6891108675446 "
                 stroke-width="2.0" stroke="#010101" fill="none"
-                latexdraw:rotationAngle="0.0" marker-end="url(#arrow2-896)"/>
+                latexdraw:rotationAngle="0.0" marker-end="url(#arrow2-34)"/>
         </g>
-        <g latexdraw:type="arc" id="id900">
+        <g latexdraw:type="arc" id="id38">
             <path
                 d="M 274.0 350.98076211353316 A 30.0 30.0 0.0 0 0 319.0 325.0 "
                 stroke-width="2.0" stroke="#010101" fill="none"
-                latexdraw:rotationAngle="0.0" marker-start="url(#arrow1-900)"/>
+                latexdraw:rotationAngle="0.0" marker-start="url(#arrow1-38)"/>
         </g>
-        <g latexdraw:type="arc" id="id904">
+        <g latexdraw:type="arc" id="id42">
             <path
-                d="M 345.0 269.69872981077805 A 50.0 50.0 0.0 0 0 320.0 313.0 "
+                d="M 345.0 269.69872981077805 A 50.0 50.0 0.0 0 0 320.0 313.00000000000006 "
                 stroke-width="2.0" stroke="#010101" fill="none"
-                latexdraw:rotationAngle="0.0" marker-start="url(#arrow1-904)"/>
+                latexdraw:rotationAngle="0.0" marker-start="url(#arrow1-42)"/>
         </g>
     </g>
     <metadata>

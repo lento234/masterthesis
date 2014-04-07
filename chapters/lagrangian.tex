@@ -69,7 +69,7 @@ by the stokes theorem, as represents the integral vorticity of the domain, figur
 
 	\begin{figure}[t]
 	\centering
-	\includegraphics[width=0.3\linewidth]{./figures/lagrangian/vorticityCirculation2-crop.pdf}
+	\includegraphics[width=0.3\linewidth]{./figures/lagrangian/vorticityCirculation.pdf}
 	\caption{Circulation of the fluid}
 	\label{fig:vorticityCirculation}
 	\end{figure}
@@ -257,7 +257,7 @@ This might seem like a valid assumption as the circulation of a given area is th
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.7\textwidth]{figures/lagrangian/particleInitialization.pdf}
-	\caption{Mollified vorticity field of an arbitrary vorticity function with $\mathrm{overlap}=1.0$, $\sigma=0.19$, $h=0.19$. Vortex blob strength has been assigned by equation \ref{eq:particleCirculationAssignment}, sampling at exact vorticity [{\color{red}{$\bullet$}}, red dot]. Figure depicts exact vorticity distribution $\omega$ [---, solid], vorticity field of each blob $\omega_i$ [{\color{darkgreen}{---}}, green dashed], the mollified vorticity field $\omega^h$ [- -, dashed].  }
+	\caption{Mollified vorticity field of an arbitrary vorticity function with $\mathrm{overlap}=1.0$, $\sigma=0.19$, $h=0.19$. Vortex blob strength has been assigned by equation \ref{eq:particleCirculationAssignment}, sampling at exact vorticity [{\color{plotRed}{$\bullet$}}, red dot]. Figure depicts exact vorticity distribution $\omega$ [---, solid], vorticity field of each blob $\omega_i$ [{\color{darkgreen}{---}}, green dashed], the mollified vorticity field $\omega^h$ [- -, dashed].  }
 	\label{fig:particleInitialization}
 	\end{figure}
 
@@ -298,7 +298,7 @@ During the hybrid coupling algorithm, we see that this is the central source of 
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.7\textwidth]{figures/lagrangian/bealesCorrection.pdf}
-	\caption{Mollified vorticity field after two Beale's iteration, $\mathrm{overlap}=1.0$, $\sigma=0.19$, $h=0.19$. Figure depicts exact vorticity distribution $\omega$ [---, solid], vorticity field of each blob $\omega_i$ [{\color{darkgreen}{---}}, green dashed], the mollified vorticity field $\omega^h$ [- -, dashed].  }
+	\caption{Mollified vorticity field after two Beale's iteration, $\mathrm{overlap}=1.0$, $\sigma=0.19$, $h=0.19$. Figure depicts exact vorticity distribution $\omega$ [---, solid], vorticity field of each blob $\omega_i$ [{\color{plotGreen}{---}}, green dashed], the mollified vorticity field $\omega^h$ [- -, dashed].  }
 	\label{fig:bealesCorrection}
 	\end{figure}
 
@@ -341,23 +341,31 @@ Therefore, for the hybrid coupling, we set $\mathrm{overlap} = 1.0$ and maximize
 
 During the convection step, we see that another source of error in the vorticity field is the lagrangian grid distortion. As we have seen before, when the vortex blobs fails to overlap, we are no longer able to reconstruct the correct the vorticity field, figure \ref{fig:convergenceOfBlobsOverlap}. During the convection, due to the high strains in the fluid, the vortex blobs tent to clump together and creates regions where no vortex blobs are found, reducing the overlap of the blobs, figure \ref{fig:distortion}. 
 
-\begin{figure}[t]
-        \centering
-        \begin{subfigure}[b]{0.45\textwidth}
-                \includegraphics[width=\textwidth]{figures/lagrangian/distortion_a-crop.pdf}
-                \caption{$t = 0$}
-                \label{fig:distortion_a}
-        \end{subfigure}%
-        \qquad %add desired spacing between images, e. g. ~, \quad, \qquad etc.
-          %(or a blank line to force the subfigure onto a new line)
-        \begin{subfigure}[b]{0.45\textwidth}
-                \includegraphics[width=\textwidth]{figures/lagrangian/distortion_b-crop.pdf}
-                \caption{$t = 10$}
-                \label{fig:distortion_b}
-        \end{subfigure}
-        \caption{Lagrangian distortion of the vortex blobs after 100 steps. The initial vorticity field $\omega\left(\mathbf{x},0\right) = \exp\left(-12\left|\mathbf{x}\right|\right)$ with $\Delta t = 0.1$, $\sigma=0.02$ and $\mathrm{overlap} = 1.0$. Figure depicts the initial and the final distribution of the vortex blobs.}
-        \label{fig:distortion}
-\end{figure}
+%\begin{figure}[t]
+%        \centering
+%        \begin{subfigure}[b]{0.45\textwidth}
+%                \includegraphics[width=\textwidth]{figures/lagrangian/distortion_a-crop.pdf}
+%                \caption{$t = 0$}
+%                \label{fig:distortion_a}
+%        \end{subfigure}%
+%        \qquad %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+%          %(or a blank line to force the subfigure onto a new line)
+%        \begin{subfigure}[b]{0.45\textwidth}
+%                \includegraphics[width=\textwidth]{figures/lagrangian/distortion_b-crop.pdf}
+%                \caption{$t = 10$}
+%                \label{fig:distortion_b}
+%        \end{subfigure}
+%        \caption{Lagrangian distortion of the vortex blobs after 100 steps. The initial vorticity field $\omega\left(\mathbf{x},0\right) = \exp\left(-12\left|\mathbf{x}\right|\right)$ with $\Delta t = 0.1$, $\sigma=0.02$ and $\mathrm{overlap} = 1.0$. Figure depicts the initial and the final distribution of the vortex blobs.}
+%        \label{fig:distortion}
+%\end{figure}
+
+	\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/lagrangian/distortion-crop.pdf}
+    \caption{Lagrangian distortion of the vortex blobs after 100 steps. The initial vorticity field $\omega\left(\mathbf{x},0\right) = \exp\left(-12\left|\mathbf{x}\right|\right)$ with $\Delta t = 0.1$, $\sigma=0.02$ and $\mathrm{overlap} = 1.0$. Figure depicts the initial and the final distribution of the vortex blobs.}
+    \label{fig:distortion}
+	\end{figure}
+
 
 We see that due to clustering of the vortex blobs, it fails to reproduce the correct vorticity field. A common strategy to overcome this problem is to remesh the vortex blobs to a uniform grid, so that we have a continuous vorticity field.
 
@@ -373,7 +381,7 @@ where the strengths of the particles $\tilde{\alpha}_q$ of the distorted lagrang
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.4\textwidth]{figures/lagrangian/interpolationGrid.pdf}
-	\caption{Interpolation of vortex blob ({\color{darkgreen}{$\bullet$}}, green) on the uniform grid.}
+	\caption{Interpolation of vortex blob ({\color{plotGreen}{$\bullet$}}, green) on the uniform grid.}
 	\label{fig:interpolationGrid}
 	\end{figure}
 
@@ -399,7 +407,7 @@ where $\xi = x_p - x$ is the distance of the particle to the interpolation nodes
 	\label{fig:interpolationKernel}
 	\end{figure}
 
-The interpolation kernel achieves the third-order accuracy as it conserves linear and the angular momentum of the vortex. Koumoutsakos \cite{Koumoutsakos1997} has investigated the drawback of the employing the remeshing strategy and have shown that there is approximately $4\%$ decay in enstrophy of the flow due to sub-grid dissipation. 
+The interpolation kernel achieves the third-order accuracy as it also conserves the linear and the angular momentum of the vortex. Koumoutsakos \cite{Koumoutsakos1997} has investigated the drawback of the employing the remeshing strategy and have shown that there is approximately $4\%$ decay in enstrophy of the flow due to sub-grid dissipation. 
 
 \section{Diffusion of Vortex Methods}
 \label{sec:diffusionVM}
