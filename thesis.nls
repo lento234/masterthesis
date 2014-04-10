@@ -2,7 +2,13 @@
 
  \nomgroup{A}
 
+  \item [{$c^2$}]\begingroup Diffusion parameter\nomunit {$[-]$}\nomeqref {2.0}
+		\nompageref{3}
+  \item [{$\mathcal {E}$}]\begingroup Enstrophy\nomunit {$[m^2\cdot s^{-2}]$}\nomeqref {2.0}
+		\nompageref{3}
   \item [{$h$}]\begingroup Nominal particle spacing\nomunit {[$m$]}\nomeqref {2.0}
+		\nompageref{3}
+  \item [{$h_{\nu }$}]\begingroup Diffusion distance\nomunit {$[m]$}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$\mathbf {K}$}]\begingroup Biot-Savart kernel\nomunit {[$-$]}\nomeqref {2.0}
 		\nompageref{3}
@@ -26,6 +32,8 @@
 		\nompageref{3}
   \item [{$\mathbf {u}_{\omega }$}]\begingroup Vortical velocity\nomunit {$[m\cdot s^{-1}]$}\nomeqref {2.0}
 		\nompageref{3}
+  \item [{$W$}]\begingroup Interpolation kernel weight\nomunit {$[-]$}\nomeqref {2.0}
+		\nompageref{3}
   \item [{$\mathbf {x}$}]\begingroup Position vector\nomunit {$[m]$}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$\mathbf {x}_p$}]\begingroup Position vector of the particle\nomunit {$[m]$}\nomeqref {2.0}
@@ -33,11 +41,19 @@
 
  \nomgroup{G}
 
+  \item [{$\alpha _p$}]\begingroup Circulation of the particle\nomunit {$[m^2\cdot s^{-1}]$}\nomeqref {2.0}
+		\nompageref{3}
+  \item [{$\beta _p$}]\begingroup Corrected circulation of the particle\nomunit {$[m^2\cdot s^{-1}]$}\nomeqref {2.0}
+		\nompageref{3}
+  \item [{$\Delta t_c$}]\begingroup Convection time-step size\nomunit {$[s]$}\nomeqref {2.0}
+		\nompageref{3}
+  \item [{$\Delta t_d$}]\begingroup Diffusion time-step size\nomunit {$[s]$}\nomeqref {2.0}
+		\nompageref{3}
+  \item [{$\epsilon $}]\begingroup Distance between the particles\nomunit {$[m]$}\nomeqref {2.0}
+		\nompageref{3}
   \item [{$\zeta _{\sigma }$}]\begingroup Smooth cut-off function of the blob\nomunit {[$-$]}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$\Gamma $}]\begingroup Circulation\nomunit {$[m^2\cdot s^{-1}]$}\nomeqref {2.0}
-		\nompageref{3}
-  \item [{$\Gamma _p$}]\begingroup Circulation of the particle\nomunit {$[m^2\cdot s^{-1}]$}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$\nu $}]\begingroup Kinematic viscosity\nomunit {$[m^2\cdot s^{-1}]$}\nomeqref {2.0}
 		\nompageref{3}
@@ -56,13 +72,13 @@
 		\nompageref{3}
   \item [{\textbf {GPU}}]\begingroup Graphics Processing Units\nomeqref {2.0}
 		\nompageref{3}
-  \item [{\textbf {PSE}}]\begingroup Particle Strength Exchange\nomeqref {2.24}
-		\nompageref{10}
+  \item [{\textbf {PSE}}]\begingroup Particle Strength Exchange\nomeqref {2.29}
+		\nompageref{13}
   \item [{\textbf {VAWT}}]\begingroup Vertical-Axis Wind Turbine\nomeqref {1.0}
 		\nompageref{1}
   \item [{\textbf {VPM}}]\begingroup Vortex Particle Method\nomeqref {2.0}
 		\nompageref{3}
-  \item [{\textbf {VRM}}]\begingroup Vortex Redistribution Method\nomeqref {2.24}
-		\nompageref{10}
+  \item [{\textbf {VRM}}]\begingroup Vortex Redistribution Method\nomeqref {2.29}
+		\nompageref{14}
 
 \end{thenomenclature}

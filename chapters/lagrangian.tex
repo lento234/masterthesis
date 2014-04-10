@@ -17,6 +17,11 @@
 	\lsymb[f]{$\mathbf{K_{\sigma}}$}{Vortex blob kernel}{[$-$]}{kb}	
 	\lsymb[f]{$h$}{Nominal particle spacing}{[$m$]}{h}	
 	\lsymb[f]{$\mathrm{overlap}$}{Overlap ratio of the blobs}{[$-$]}{o}	
+	\lsymb[f]{$W$}{Interpolation kernel weight}{$[-]$}{w}
+	\lsymb[f]{$\mathcal{E}$}{Enstrophy}{$[m^2\cdot s^{-2}]$}{en}
+	\lsymb[f]{$h_{\nu}$}{Diffusion distance}{$[m]$}{hn}
+	\lsymb[f]{$c^2$}{Diffusion parameter}{$[-]$}{c}
+
 
 	\gsymb[f]{$\zeta_{\sigma}$}{Smooth cut-off function of the blob}{[$-$]}{ff}	
 	\gsymb[f]{$\rho$}{Density}{$[kg\cdot m^{-3}]$}{qq}
@@ -25,8 +30,11 @@
 	\gsymb[f]{$\omega$}{Vorticity}{$[s^{-1}]$}{xx}
 	\gsymb[f]{$\omega^h$}{Discrete vorticity field}{$[s^{-1}]$}{xx}
 	\gsymb[f]{$\alpha_p$}{Circulation of the particle}{$[m^2\cdot s^{-1}]$}{ap}
+	\gsymb[f]{$\beta_p$}{Corrected circulation of the particle}{$[m^2\cdot s^{-1}]$}{bp}
+	\gsymb[f]{$\epsilon$}{Distance between the particles}{$[m]$}{ep}
 	\gsymb[f]{$\sigma$}{Core size}{[$m$]}{rr}
-	
+	\gsymb[f]{$\Delta t_d$}{Diffusion time-step size}{$[s]$}{dtd}	
+	\gsymb[f]{$\Delta t_c$}{Convection time-step size}{$[s]$}{dtc}		
 	
 
 
@@ -113,6 +121,7 @@ The viscous splitting algorithm is basically a fractional step method, where the
 	\item Sub-step 2: diffusion
 		\begin{equation}
 		\frac{\partial\omega}{\partial t} = \nu\nabla^2\omega.
+		\label{eq:vsa2}
 		\end{equation}
 	
 	\end{itemize}
@@ -127,7 +136,7 @@ There are many ways of dealing with the diffusion of the vorticity field. During
 %------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------
 \section{Spatial Discretization: Generation of Vortex Blobs}
-
+\label{sec:spatialDiscretization}
 
 In order to deal with the vorticity field, we must first discretize the vorticity to vortex particles. Vortex blobs have been first introduced by Chorin and is a mollified particle carrying the local circulation. Vortex blobs describes a smooth vorticity field and are ideal because of it does not cause singularity issues when particles approach each other.
 
@@ -138,6 +147,7 @@ The velocity field can be decomposed using the Helmholtz decomposition, given as
 
 	\begin{equation}
 	\mathbf{u} = \mathbf{u}_{\omega} + \mathbf{u}_{\phi},
+	\label{eq:helmholtz}
 	\end{equation}
 
 where $\mathbf{u}_{\omega}$ is the rotational component of the velocity and $\mathbf{u}_{\phi}$ is the irrotational component. solenoidal and potential velocity respectively. In an unbounded flow we have $\mathbf{u}_{\phi}$ equal to the free-stream velocity $\mathbf{u}_{\infty}$. For bounded flow, we must include the presence of the body, see section \ref{sec:boundaryConditions}.
@@ -183,7 +193,7 @@ In the discrete of the convection equation \ref{eq:convectionEulerian} of the vi
 	\end{equation}
 with
 	\begin{equation}
-	\frac{\mathrm{d}\Gamma_p}{\mathrm{d}t} = 0.
+	\frac{\mathrm{d}\alpha_p}{\mathrm{d}t} = 0.
 	\end{equation}
 
 As the diffusion is done at the next sub-step, we have to ensure that the circulation is conserved.
@@ -407,17 +417,47 @@ where $\xi = x_p - x$ is the distance of the particle to the interpolation nodes
 	\label{fig:interpolationKernel}
 	\end{figure}
 
-The interpolation kernel achieves the third-order accuracy as it also conserves the linear and the angular momentum of the vortex. Koumoutsakos \cite{Koumoutsakos1997} has investigated the drawback of the employing the remeshing strategy and have shown that there is approximately $4\%$ decay in enstrophy of the flow due to sub-grid dissipation. 
+The interpolation kernel achieves the third-order accuracy as it also conserves the linear and the angular momentum of the vortex. Koumoutsakos \cite{Koumoutsakos1997} has investigated the drawback of the employing the remeshing strategy and have shown that there is approximately $4\%$ decay in enstrophy of the flow due to sub-grid dissipation. Note that enstrophy $ \mathcal{E}$, is defined as
+
+	\begin{equation}
+	\mathcal{E} = \frac{1}{2}\int_S \omega^2 dS
+	\end{equation}
+	
+and is directly related to the energy (kinetic energy) of the fluid and gives and insight in the energy production and the dissipation of the fluid. Enstrophy is especially useful in turbulence flow investigation as it helps describe the energy cascade of the fluid.		
 
 \section{Diffusion of Vortex Methods}
 \label{sec:diffusionVM}
 
-Chorin initially employed a random walk method, however this method suffers some limitations in accuracy and since then several methods have been introduced that can be used to simulate the diffusion. \printAcron{Particle Strength Exchange}{PSE} method \cite{Degond1989}, is an algorithm to treat diffusion by exchange of vortex element strengths. \printAcron{Vortex Redistribution Method}{VRM} \cite{Shankar1996} models diffusion by distributing the fraction of circulation of the vortex elements to the neighbouring vortices. 
+So far, we have dealth with unbounded Euler flow, where we disregarded the viscosity of the flow. However, for real flow we must take in account of the diffusion of the vorticity. Chorin's approach to deal with the viscous term was to employ the viscous splitting algorithm. The flow is segregated to inviscid and viscous component and during the second sub-step we deal with the diffusion of the vorticity, equation \ref{eq:vsa2}. The equation can again be solved as a system of ODEs, similar to the convection step, where we say,
 
-\subsection{Vorticity diffusion techniques}
-%
+	\begin{equation}
+	\frac{\mathrm{d}\mathbf{x}_p}{\mathrm{d}t} = 0,
+	\end{equation}
+with
+	\begin{equation}
+	\frac{\mathrm{d}\alpha_p}{\mathrm{d}t} = \nu\Delta\alpha_p.
+	\end{equation}
+
+Therefore in the diffusive step, we fix the position of the vortex blobs and only have to modify the strengths of the particles to mimic the diffusion process. Chorin initially employed a random walk method, which generates and disperse vorticity using pseudo-random number algorithm \cite{Chorin1973}. However, this method suffers some limitations in accuracy. Since then \printAcron{Particle Strength Exchange}{PSE} method \cite{Degond1989}, has been a common approach that has been used to treat diffusion.
+
+\subsubsection*{Particle Strength Exchange}
+The Particle Strength Exchange method, first proposed by Mas-Gallic \cite{Degond1989}, showed that diffusion can be treated for a particle method isotropic and anisotropic viscosity by approximating the diffusion operator (laplacian) with an integral operator and discretizing the operator using particles. The PSE can be seen as circulation correction method, where during the diffusion step of the viscous splitting algorithm, the strengths of the particle are corrected such that it accounts for the diffusion.
+ 
+\subsubsection*{Vortex Redistribution Method}
+An alternative method to simulate the diffusion is to use the \printAcron{Vortex Redistribution Method}{VRM} \cite{Shankar1996}. The model simulates diffusion by distributing the fraction of circulation of the vortex blobs to each other satisfying the diffusion. The model is based on conserving the moments of the particles by satisfying a linear system of equations. The circulation of the particle are transfer to the nearby particles that are 
+
+	\begin{equation}
+	h_{\nu} = \sqrt{\nu\Delta t_d}
+	\end{equation}
+
+where $h_{\nu}$ is the diffusion distance and is directly related to the kinematic viscosity $\nu$ and the diffusive time-step $\Delta t_d$ of the simulation. Not that the diffusive time-step $\Delta t_d$ is equal to the convective time-step $\Delta t_c$ if the diffusion process is done during every time-step. However, we can easily adjust the diffusion time-step and perform diffusion at a multiple step of the convection.
+
+This is vital as a VRM (and also the PSE) requires a search algorithm to determine the particles that are within the zone of influence. A direct evaluation required $\mathcal{O}\left(N^2\right)$ evaluation, however can be speed up to $\mathcal{O}\left(\log N\right)$ using search tree algorithm.
+
 \subsection{Modified remeshing for treating diffusion}
-The diffusion method that is applied here has been proposed by Shankar and Van Dommelen \cite{Shankar1996} and the modified ${{{\rm{M'}}}_4}$ interpolation kernel has been derived by Ghoniem and Wee \cite{Wee2006} and was also applied by Speck \cite{Speck2011}. The diffusion is simulated by the modified interpolation kernel during the remeshing process. During remeshing, the heat equation is satisfied by transferring the correct fraction of circulation to produce the proper amount of diffusion. The ${{{\rm{M'}}}_4}$ kernel was modified to treat the diffusion and is given by: 
+From further investigation of the VRM, we see that it is similar to remeshing strategy used to counter the lagrangian distortion during the convection process. Therefore Ghoniem and Wee \cite{Wee2006} has proposed to combine the remeshing and the diffusion. The application of this methodology was validated by Speck \cite{Speck2011a}. The diffusion is simulated by the modifying the interpolation kernel of the remeshing process. The key advantage of the modified remeshing method is that now it deals with the uniform remeshing grid helping us eliminating the computational expensive research requirement. The second advantage as shown by the authors is the simplicity. The method only requires a slight modification to the original remeshing tool.
+
+During remeshing, the heat equation is satisfied by transferring the correct fraction of circulation to produce the proper amount of diffusion. The $\mathrm{M'}_4$ kernel was modified to treat the diffusion and is given by: 
 
 \begin{equation}
 {{{\rm{M'}}}_4}\left( {\xi ,c} \right) =
@@ -436,24 +476,64 @@ c^2 = \frac{\nu \Delta t_d}{h^2},
 \label{eq:c2}
 \end{equation}
 
-and corresponds to the transfer quantity for diffusion. The $\nu$ denotes the viscosity of the fluid, $t_d$ is the diffusion time step and $\Delta x$ is the blob spacing. When $c \rightarrow 0$, the interpolation kernel turns to the classical non-diffusion kernel.  This modified interpolation kernel conserves the circulation of each vortex and also satisfies the conservation of linear and angular momentum of the vorticies.
+and corresponds to the transfer quantity for diffusion. The addition terms in the interpolation kernel accounts for the diffusion process. When $c \rightarrow 0$, the interpolation kernel turns to the classical non-diffusion kernel. 
 
-The vortex method employs the viscous splitting procedure, where the vortex blobs are convected first and is then diffused through the remeshing process using the modified interpolation kernel. The advantage of this methodology is that the convection process is not constrained by the CFL condition. So, the convection time step size can be different than from the diffusion time step size and the diffusion time step size is a multiple of the convection time step size depending on the redistribution frequency $f_{redist}$. Therefore, the constrained that is imposed on the redistribution frequency is the stability bounds of the modified interpolation kernel. Analyzing the amplification factor and the phase error of the modified interpolation kernel in the Fourier space requires that the $c^2$ should be as follows:
-
+Similar to the VRM, we can perform the remeshing at a given multiple step $k_d$ of the convection step. However, we have an additional constraint on the diffusion time-step $\Delta t_d$, equation \ref{eq:c2}. Wee and Ghoniem \cite{Wee2006} also investigated the error growth and the stability properties of the interpolation kernel in the Fourier space and have determined that for $\mathrm{M'}_4$ interpolation kernel, we must satisfy
 
 \begin{equation}
 \frac{1}{6} \le c^2 \le \frac{1}{2}.
 \label{eq:c2stability}
 \end{equation}
 
-This will ensure the stability of the problem and will suppress any spurious oscillations and ensure that it is a non-negative interpolation kernel with non-negative redistribution fractions.
+to ensure amplification factor and the phase error does not grow. This will ensure the stability of the problem and will suppress any spurious oscillations and ensure that it is a non-negative interpolation kernel with non-negative redistribution fractions.
 
-\subsection{Convergence study of the viscous vortex method}
-%%------------------------------------------------------------------------------------------------------
-%%------------------------------------------------------------------------------------------------------
-%%------------------------------------------------------------------------------------------------------
+The downside of the this approach, as also for the standard remeshing approach is the global remeshing generates large computation data and scales with the number of particles $N$. Therefore for problems with large number of particles, a tree-structured remeshing would be more feasible strategy \cite{Winckelmans1996}.
+
 \section{Boundary conditions at solid boundary}
 \label{sec:boundaryConditions}
+
+So far, we have only dealt with unbounded flow. During bounded flow simulation, we must impose addition constraint of the boundary to the simulation to simulate any flow about a geometry. From Helmholtz decomposition, we can have decompose the velocity field to the rotation and the irrotation component, equation \ref{eq:helmholtz}. With the Helmholtz decomposition, we can use the potential component to prescribe the boundary conditions at the solid wall boundary,
+
+	\begin{equation}
+	\mathbf{u}_{\phi} = \nabla\Phi.
+	\end{equation}
+
+The incompressibility constraint results in a Laplace's equation for the potential field and unique solution is obtained by enforcing the wall boundary conditions,
+
+	\begin{equation}
+	\mathbf{u}_b\cdot\mathbf{\hat{n}} = \left(\mathbf{u}_{\omega} + \nabla\Phi\right) \cdot \mathbf{\hat{n}},
+	\end{equation}
+
+and is defined as enforcing the no-through flow at the solid boundary wall, moving at $\mathbf{u}_b$. Note that the $\mathbf{\hat{n}}$ is the normal vector of the solid boundary.
+
+An alternative approach of enforcing the solid boundary condition is not to decompose the velocity field into potential and rotational but to consider the solid boundary as an extension of the vorticity field through vortex sheets, as utilized by Koumoutsakos and Cottet \cite{}. Koumoutsakos and Cottet proposed that the bounded problem can be considered as a extended vorticity field consisting of the vorticity in the fluid and the vortex sheet distribution resulted from the tangential velocity discontinuity at the boundary, figure \ref{fig:noSlipVorticityField}.
+
+	\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.6\textwidth]{figures/lagrangian/noSlipVorticityField.pdf}
+	\caption{Extended vorticity field consisting of vorticity in the fluid and vortex sheet distribution.}
+	\label{fig:noSlipVorticityField}
+	\end{figure}
+
+
+
+As we have seen in section \ref{sec:spatialDiscretization}, the rotation component $\mathbf{u}_{\omega}$ represents the vorticity of the flow and to impose the boundary condition of the solid boundary we must deal with the potential component $\mathbf{u}_{\phi}$. Thus we we will be able to enforce the kinematic boundary condition of the no-through (impermeable) solid boundary. 
+
+The Helmholtz decomposition of the velocity flow for bounded flow can be written as
+
+	\begin{equation}
+	\mathbf{u} = \mathbf{u}_{\omega} + \mathbf{u}_{\phi},
+	\end{equation}
+
+where now, the potential field
+
+
+	\begin{figure}[b]
+	\centering
+	\includegraphics[width=0.8\textwidth]{figures/lagrangian/extendedVorticityField.pdf}
+	\caption{Extended vorticity field: Vortex blobs and Vortex sheets}
+	\label{fig:extendedVorticityField}
+	\end{figure}
 
 \subsection{Boundary integral equations}
 %
@@ -473,6 +553,11 @@ This will ensure the stability of the problem and will suppress any spurious osc
 \section{Validation of lagrangian method}
 
 \subsection{Lamb-oseen vortex at $Re=100$}
+
+\subsection{Convergence study of the viscous vortex method}
+%%------------------------------------------------------------------------------------------------------
+%%------------------------------------------------------------------------------------------------------
+%%------------------------------------------------------------------------------------------------------
 %
 \subsection{Convection of Clercx-Bruneau dipole at $Re=625$}
 %

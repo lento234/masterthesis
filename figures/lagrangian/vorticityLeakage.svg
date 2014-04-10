@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+    xmlns:latexdraw="http://latexdraw.sourceforge.net/namespaces/latexdraw"
+    version="1.1" baseProfile="full">
+    <defs>
+        <pattern latexdraw:type="hlines"
+            latexdraw:rotationAngle="0.7853981633974483"
+            latexdraw:size="7.05555534362793"
+            patternUnits="userSpaceOnUse" id="pattern283" x="0" y="0"
+            width="589" height="255">
+            <rect fill="white" stroke="none" width="589" height="255"/>
+            <g stroke="black" stroke-width="2.0" stroke-dasharray="none">
+                <path d="M 389.5 242.69351081822123 L 402.3064891817788 255.5 M 389.5 229.88702163644246 L 415.11297836355754 255.5 M 389.5 217.08053245466368 L 427.9194675453363 255.5 M 389.5 204.2740432728849 L 440.7259567271151 255.5 M 389.5 191.46755409110614 L 453.53244590889386 255.5 M 389.5 178.66106490932737 L 466.33893509067263 255.5 M 389.5 165.8545757275486 L 479.1454242724514 255.5 M 389.5 153.04808654576982 L 491.9519134542302 255.5 M 389.5 140.24159736399105 L 504.75840263600895 255.5 M 389.5 127.43510818221228 L 517.5648918177877 255.5 M 389.5 114.6286190004335 L 530.3713809995664 255.5 M 389.5 101.82212981865473 L 543.1778701813452 255.5 M 389.5 89.01564063687596 L 555.9843593631239 255.5 M 389.5 76.20915145509719 L 568.7908485449026 255.5 M 389.5 63.40266227331841 L 581.5973377266813 255.5 M 389.5 50.59617309153964 L 594.40382690846 255.5 M 389.5 37.78968390976087 L 607.2103160902387 255.5 M 389.5 24.983194727982095 L 620.0168052720175 255.5 M 389.5 12.176705546203323 L 632.8232944537962 255.5 M 389.5 -0.6297836355754498 L 645.6297836355749 255.5 M 389.5 -13.436272817354222 L 658.4362728173536 255.5 M 389.5 -26.242761999132995 L 671.2427619991323 255.5 M 389.5 -39.04925118091177 L 684.049251180911 255.5 M 389.5 -51.85574036269054 L 696.8557403626897 255.5 M 389.5 -64.66222954446931 L 709.6622295444685 255.5 M 389.5 -77.46871872624808 L 722.4687187262472 255.5 M 389.5 -90.27520790802686 L 735.2752079080259 255.5 M 389.5 -103.08169708980563 L 748.0816970898046 255.5 M 389.5 -115.8881862715844 L 760.8881862715833 255.5 M 389.5 -128.69467545336317 L 773.694675453362 255.5 M 389.5 -141.50116463514195 L 786.5011646351408 255.5 M 389.5 -154.30765381692072 L 799.3076538169195 255.5 M 389.5 -167.1141429986995 L 812.1141429986982 255.5 M 389.5 -179.92063218047826 L 824.9206321804769 255.5 M 389.5 -192.72712136225704 L 837.7271213622556 255.5 M 389.5 -205.5336105440358 L 850.5336105440343 255.5 "/>
+            </g>
+        </pattern>
+        <pattern latexdraw:type="hlines"
+            latexdraw:rotationAngle="0.7853981633974483"
+            latexdraw:size="7.05555534362793"
+            patternUnits="userSpaceOnUse" id="pattern285" x="0" y="0"
+            width="442" height="275">
+            <rect fill="white" stroke="none" width="442" height="275"/>
+            <g stroke="black" stroke-width="2.0" stroke-dasharray="none">
+                <path d="M 242.5 262.6935108182212 L 255.30648918177877 275.5 M 242.5 249.88702163644246 L 268.11297836355754 275.5 M 242.5 237.08053245466368 L 280.9194675453363 275.5 M 242.5 224.2740432728849 L 293.7259567271151 275.5 M 242.5 211.46755409110614 L 306.53244590889386 275.5 M 242.5 198.66106490932737 L 319.33893509067263 275.5 M 242.5 185.8545757275486 L 332.1454242724514 275.5 M 242.5 173.04808654576982 L 344.9519134542302 275.5 M 242.5 160.24159736399105 L 357.75840263600895 275.5 M 242.5 147.43510818221228 L 370.5648918177877 275.5 M 242.5 134.6286190004335 L 383.3713809995665 275.5 M 242.5 121.82212981865473 L 396.17787018134527 275.5 M 242.5 109.01564063687596 L 408.98435936312404 275.5 M 242.5 96.20915145509719 L 421.7908485449028 275.5 M 242.5 83.40266227331841 L 434.5973377266816 275.5 M 242.5 70.59617309153964 L 447.40382690846036 275.5 M 242.5 57.78968390976087 L 460.21031609023913 275.5 M 242.5 44.983194727982095 L 473.0168052720179 275.5 M 242.5 32.17670554620332 L 485.8232944537967 275.5 M 242.5 19.37021636442455 L 498.62978363557545 275.5 M 242.5 6.563727182645778 L 511.4362728173542 275.5 M 242.5 -6.242761999132995 L 524.242761999133 275.5 M 242.5 -19.049251180911767 L 537.0492511809117 275.5 M 242.5 -31.85574036269054 L 549.8557403626904 275.5 M 242.5 -44.66222954446931 L 562.6622295444691 275.5 M 242.5 -57.468718726248085 L 575.4687187262479 275.5 M 242.5 -70.27520790802686 L 588.2752079080266 275.5 M 242.5 -83.08169708980563 L 601.0816970898053 275.5 M 242.5 -95.8881862715844 L 613.888186271584 275.5 M 242.5 -108.69467545336317 L 626.6946754533627 275.5 M 242.5 -121.50116463514195 L 639.5011646351414 275.5 M 242.5 -134.30765381692072 L 652.3076538169202 275.5 M 242.5 -147.1141429986995 L 665.1141429986989 275.5 M 242.5 -159.92063218047826 L 677.9206321804776 275.5 M 242.5 -172.72712136225704 L 690.7271213622563 275.5 M 242.5 -185.5336105440358 L 703.533610544035 275.5 M 242.5 -198.34009972581458 L 716.3400997258137 275.5 M 242.5 -211.14658890759335 L 729.1465889075924 275.5 "/>
+            </g>
+        </pattern>
+    </defs>
+    <g>
+        <g latexdraw:type="circle" id="id283">
+            <circle cx="489.5" cy="155.5" r="99.0"
+                latexdraw:borderPos="outer" stroke-width="2.0"
+                stroke="black" fill="url(#pattern283)" stroke-dasharray="8.0, 8.0"/>
+        </g>
+        <g latexdraw:type="circle" id="id285">
+            <circle cx="342.5" cy="175.5" r="99.0"
+                latexdraw:borderPos="outer" stroke-width="2.0"
+                stroke="black" fill="url(#pattern285)" stroke-dasharray="8.0, 8.0"/>
+        </g>
+        <g latexdraw:type="arc" id="id287">
+            <path
+                d="M 649.1641003279682 257.46516544986423 A 700.0 700.0 0.0 0 0 170.3358996720319 257.4651654498641 "
+                stroke-width="2.0" stroke="black" fill="none" latexdraw:rotationAngle="0.0"/>
+        </g>
+    </g>
+    <metadata>
+        <latexdraw:metadata>
+            <latexdraw:displayBorders>false</latexdraw:displayBorders>
+            <latexdraw:autoAdjust>true</latexdraw:autoAdjust>
+            <latexdraw:ppc>50</latexdraw:ppc>
+            <latexdraw:zoom>1.0</latexdraw:zoom>
+            <latexdraw:unit>cm</latexdraw:unit>
+            <latexdraw:classicGrid>false</latexdraw:classicGrid>
+            <latexdraw:gridGap>10</latexdraw:gridGap>
+            <latexdraw:code>0</latexdraw:code>
+            <latexdraw:displayGrid>true</latexdraw:displayGrid>
+            <latexdraw:magneticGrid>false</latexdraw:magneticGrid>
+            <latexdraw:autoUpdate>true</latexdraw:autoUpdate>
+            <latexdraw:version>2.0.8</latexdraw:version>
+            <latexdraw:size>
+                <latexdraw:width>1214</latexdraw:width>
+                <latexdraw:height>691</latexdraw:height>
+            </latexdraw:size>
+            <latexdraw:position>
+                <latexdraw:x>350</latexdraw:x>
+                <latexdraw:y>205</latexdraw:y>
+            </latexdraw:position>
+            <latexdraw:dividerPosition>0.6293245469522241</latexdraw:dividerPosition>
+            <latexdraw:displayCodePanel>true</latexdraw:displayCodePanel>
+            <latexdraw:displayXScale>true</latexdraw:displayXScale>
+            <latexdraw:displayYScale>true</latexdraw:displayYScale>
+            <latexdraw:delimitorOpacity>130</latexdraw:delimitorOpacity>
+        </latexdraw:metadata>
+    </metadata>
+</svg>
