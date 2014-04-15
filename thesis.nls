@@ -14,15 +14,21 @@
 		\nompageref{3}
   \item [{$\mathbf {K_{\sigma }}$}]\begingroup Vortex blob kernel\nomunit {[$-$]}\nomeqref {2.0}
 		\nompageref{3}
+  \item [{$\mathbf {\hat {n}}$}]\begingroup Normal vector\nomunit {$[-]$}\nomeqref {2.0}
+		\nompageref{3}
   \item [{$N_p$}]\begingroup Number of particles\nomunit {$[-]$}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$\mathrm {overlap}$}]\begingroup Overlap ratio of the blobs\nomunit {[$-$]}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$p$}]\begingroup Pressure\nomunit {$[\mathrm {Pa}]$}\nomeqref {2.0}
 		\nompageref{3}
+  \item [{$\mathbf {\hat {s}}$}]\begingroup Tangent vector\nomunit {$[-]$}\nomeqref {2.0}
+		\nompageref{3}
   \item [{$t$}]\begingroup Time\nomunit {$[s]$}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$\mathbf {u}$}]\begingroup Velocity\nomunit {$[m\cdot s^{-1}]$}\nomeqref {2.0}
+		\nompageref{3}
+  \item [{$\mathbf {u}_{\gamma }$}]\begingroup Vortex sheet induced velocity\nomunit {$[m\cdot s^{-1}]$}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$\mathbf {u}^h$}]\begingroup Discrete velocity\nomunit {$[m\cdot s^{-1}]$}\nomeqref {2.0}
 		\nompageref{3}
@@ -46,6 +52,8 @@
   \item [{$\beta _p$}]\begingroup Corrected circulation of the particle\nomunit {$[m^2\cdot s^{-1}]$}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$\Delta t_c$}]\begingroup Convection time-step size\nomunit {$[s]$}\nomeqref {2.0}
+		\nompageref{3}
+  \item [{$\gamma $}]\begingroup Vortex sheet strengths\nomunit {$[s]$}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$\Delta t_d$}]\begingroup Diffusion time-step size\nomunit {$[s]$}\nomeqref {2.0}
 		\nompageref{3}

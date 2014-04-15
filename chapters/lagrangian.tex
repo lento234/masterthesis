@@ -12,6 +12,7 @@
 	\lsymb[f]{$\mathbf{u}_{\infty}$}{Free-stream velocity}{$[m\cdot s^{-1}]$}{ul}
 	\lsymb[f]{$\mathbf{u}_{\omega}$}{Vortical velocity}{$[m\cdot s^{-1}]$}{uz}
 	\lsymb[f]{$\mathbf{u}_{\phi}$}{Potential velocity}{$[m\cdot s^{-1}]$}{up}
+	\lsymb[f]{$\mathbf{u}_{\gamma}$}{Vortex sheet induced velocity}{$[m\cdot s^{-1}]$}{uc}
 	\lsymb[f]{$N_p$}{Number of particles}{$[-]$}{np}	
 	\lsymb[f]{$\mathbf{K}$}{Biot-Savart kernel}{[$-$]}{k}
 	\lsymb[f]{$\mathbf{K_{\sigma}}$}{Vortex blob kernel}{[$-$]}{kb}	
@@ -21,6 +22,8 @@
 	\lsymb[f]{$\mathcal{E}$}{Enstrophy}{$[m^2\cdot s^{-2}]$}{en}
 	\lsymb[f]{$h_{\nu}$}{Diffusion distance}{$[m]$}{hn}
 	\lsymb[f]{$c^2$}{Diffusion parameter}{$[-]$}{c}
+	\lsymb[f]{$\mathbf{\hat{n}}$}{Normal vector}{$[-]$}{n}
+	\lsymb[f]{$\mathbf{\hat{s}}$}{Tangent vector}{$[-]$}{s}	
 
 
 	\gsymb[f]{$\zeta_{\sigma}$}{Smooth cut-off function of the blob}{[$-$]}{ff}	
@@ -35,7 +38,7 @@
 	\gsymb[f]{$\sigma$}{Core size}{[$m$]}{rr}
 	\gsymb[f]{$\Delta t_d$}{Diffusion time-step size}{$[s]$}{dtd}	
 	\gsymb[f]{$\Delta t_c$}{Convection time-step size}{$[s]$}{dtc}		
-	
+	\gsymb[f]{$\gamma$}{Vortex sheet strengths}{$[s]$}{dtc}		
 
 
 %To model the flow around a VAWT, several approaches can be taken, Vermeer at al. (2003) \cite{Vermeer2003} have also summarized in their paper. The two main approaches of investigating the flow is either employing a numerical method to simulate the flow or through experimental simulations.
@@ -241,7 +244,7 @@ Koumoutsakos and Chorin \cite{Cottet2000a}, have shown that for proper communica
 	\mathrm{overlap} = \frac{\sigma}{h},
 	\end{equation}
 
-	\begin{figure}[b]
+	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.4\textwidth]{figures/lagrangian/blobOverlap.pdf}
 	\caption{Vortex blob with overlap $\sigma/h$}
@@ -372,7 +375,7 @@ During the convection step, we see that another source of error in the vorticity
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.9\textwidth]{figures/lagrangian/distortion-crop.pdf}
-    \caption{Lagrangian distortion of the vortex blobs after 100 steps. The initial vorticity field $\omega\left(\mathbf{x},0\right) = \exp\left(-12\left|\mathbf{x}\right|\right)$ with $\Delta t = 0.1$, $\sigma=0.02$ and $\mathrm{overlap} = 1.0$. Figure depicts the initial and the final distribution of the vortex blobs.}
+    \caption{Lagrangian distortion of the vortex blobs after 100 steps. The initial vorticity field $\omega\left(\mathbf{x},0\right) = \exp\left(-12\left|\mathbf{x}\right|\right)$ with $\Delta t = 0.1$, $\sigma=0.02$ and $\mathrm{overlap} = 1.0$. Figure depicts $\textbf{(a)}$ the initial and $\textbf{(b)}$ the final distribution of the vortex blobs.}
     \label{fig:distortion}
 	\end{figure}
 
@@ -423,7 +426,7 @@ The interpolation kernel achieves the third-order accuracy as it also conserves 
 	\mathcal{E} = \frac{1}{2}\int_S \omega^2 dS
 	\end{equation}
 	
-and is directly related to the energy (kinetic energy) of the fluid and gives and insight in the energy production and the dissipation of the fluid. Enstrophy is especially useful in turbulence flow investigation as it helps describe the energy cascade of the fluid.		
+and is directly related to the kinetic energy of the fluid and gives and insight in the energy production and the dissipation of the fluid. Enstrophy is especially useful in turbulence flow investigation as it helps describe the energy cascade of the fluid.		
 
 \section{Diffusion of Vortex Methods}
 \label{sec:diffusionVM}
@@ -502,11 +505,18 @@ The incompressibility constraint results in a Laplace's equation for the potenti
 
 	\begin{equation}
 	\mathbf{u}_b\cdot\mathbf{\hat{n}} = \left(\mathbf{u}_{\omega} + \nabla\Phi\right) \cdot \mathbf{\hat{n}},
+	\label{eq:potentialBC}
 	\end{equation}
 
-and is defined as enforcing the no-through flow at the solid boundary wall, moving at $\mathbf{u}_b$. Note that the $\mathbf{\hat{n}}$ is the normal vector of the solid boundary.
+and is defined as enforcing the no-through flow at the solid boundary wall, moving at $\mathbf{u}_b$. Note that the $\mathbf{\hat{n}}$ is the normal vector of the solid boundary. A classical approach for determine the solution to the Laplace's equation is by Green's function formulation. This approach required a singularity distribution over the body resulting in the appropriate boundary condition. Doublets and/or source panels are used to attain the required potential such that equation \ref{eq:potentialBC} is satisfied.
 
-An alternative approach of enforcing the solid boundary condition is not to decompose the velocity field into potential and rotational but to consider the solid boundary as an extension of the vorticity field through vortex sheets, as utilized by Koumoutsakos and Cottet \cite{}. Koumoutsakos and Cottet proposed that the bounded problem can be considered as a extended vorticity field consisting of the vorticity in the fluid and the vortex sheet distribution resulted from the tangential velocity discontinuity at the boundary, figure \ref{fig:noSlipVorticityField}.
+\subsubsection{Linked boundary conditions}
+
+However Koumoutsakos, Leonary and Pepin \cite{Koumoutsakos1994b}, have suggested to enforce the boundary conditions through vortex sheets. The alternative approach of enforcing the solid boundary condition is not to decompose the velocity field into potential and rotational but to consider the solid boundary as an extension of the vorticity field through vortex sheets $\gamma$, figure \ref{fig:noSlipVorticityField}. Due to the non-zero tangential velocity at the surface, a sudden discontinuity in the velocity field can be considered as vortex sheet. Therefore, now to enforce the boundary conditions of the solid wall, we must satisfy the no slip velocity at the boundary,
+
+	\begin{equation}
+	\mathbf{u}\cdot\mathbf{\hat{s}} = \mathbf{u}_b\cdot\mathbf{\hat{s}}.
+	\end{equation}
 
 	\begin{figure}[t]
 	\centering
@@ -515,31 +525,142 @@ An alternative approach of enforcing the solid boundary condition is not to deco
 	\label{fig:noSlipVorticityField}
 	\end{figure}
 
+Koumoutsakos \cite{Koumoutsakos1993} only relies on the vortex sheet to enforce the no-slip velocity as no-slip boundary condition directly satisfies the no-through boundary conditions, also known as the linked boundary conditions. This was also proven by Shiels \cite{Shiels1998} and further investigated by Cooper, Mar and Barba \cite{Cooper2009b} and shown that vortex sheet is the only necessary singularity element required to satisfy both the boundary conditions. Therefore, enforcing the no-slip boundary condition directly satisfies the no-through constraint at the surface.
 
-
-As we have seen in section \ref{sec:spatialDiscretization}, the rotation component $\mathbf{u}_{\omega}$ represents the vorticity of the flow and to impose the boundary condition of the solid boundary we must deal with the potential component $\mathbf{u}_{\phi}$. Thus we we will be able to enforce the kinematic boundary condition of the no-through (impermeable) solid boundary. 
-
-The Helmholtz decomposition of the velocity flow for bounded flow can be written as
+\subsection{Boundary integral equations}
+Thus the decomposed velocity field can be summarized as
 
 	\begin{equation}
-	\mathbf{u} = \mathbf{u}_{\omega} + \mathbf{u}_{\phi},
+	\mathbf{u} = \mathbf{u}_{\omega} + \mathbf{u}_{\gamma} + \mathbf{u}_{\infty}
+	\end{equation}
+	
+where the $\mathbf{u}_{\gamma}$ denotes the velocity filed induced by the vortex sheet. Applying the no-slip boundary conditions, we can say that
+
+	\begin{equation}
+	\left(\mathbf{u}_{\mathrm{ext}} + \mathbf{u}_{\gamma}\right)\cdot\mathbf{\hat{s}} = \mathbf{u}_b \cdot \mathbf{\hat{s}}
+	\label{eq:kinematicBCofVSOutside}
 	\end{equation}
 
-where now, the potential field
+where $\mathbf{u}_{\mathrm{ext}} = \mathbf{u}_{\omega} + \mathbf{u}_{\infty}$ is the velocity field induced from domain external of the body and the vortex sheet. For the tangential boundary condition, for a well-conditioned system of equations, the induced velocity from the vortex sheet can be summarized as  
 
+	\begin{equation}
+	\left(\mathbf{u}_{\mathrm{ext}} - \mathbf{u}_b\right) \cdot \mathbf{\hat{s}} = \mathbf{u}_{\gamma}\cdot\mathbf{\hat{s}}.
+	\label{eq:kinematicBCofVS}
+	\end{equation}
 
-	\begin{figure}[b]
+The equation states that underneath the vortex sheet, we must have a vortex sheet inducing the velocity field $\mathbf{u}_{\gamma}$ to counter the slip velocity $\mathbf{u}_{\mathrm{slip}} = \left(\mathbf{u}_{\mathrm{ext}} - \mathbf{u}_b\right)$ such that we satisfy the no-slip kinematic boundary conditions. Note that, $\mathbf{u}_{\gamma}$ of equation \ref{eq:kinematicBCofVS}, is negative of equation \ref{eq:kinematicBCofVSOutside} as we looking under the vortex sheet. Koumoutsakos \cite{Koumoutsakos1993}, expressed the relation of the vortex sheet strengths to the no-slip boundary condition at the surface of the body (inside the body) through the Fredholm integral equation of the second kind,
+
+	\begin{equation}
+	-\frac{\gamma\left(s\right)}{2} + \frac{1}{2\pi}\oint\frac{\partial}{\partial n}\left[\log\left|\mathbf{x}\left(s\right)-\mathbf{x}\left(s'\right)\right|\right]\gamma\left(s'\right)ds'= \mathbf{u}_{\mathrm{slip}}\cdot\mathbf{\hat{s}}.
+	\label{eq:fredholmIntegral2ndKind}
+	\end{equation}
+		
+The LHS of the equation states at the point $s$, the velocity discontinuity is due to the vortex sheet at the point and the induced velocity of all the other vortex sheet acting on the point. 
+
+However, the equation \ref{eq:fredholmIntegral2ndKind} is not unique and accepts arbitrary solution for the vortex sheet strengths, therefore we must imposed an additional constraint on the strength of the vortex sheet. The addition constraint is a constraint on the net circulation of the vortex sheet. As the vortex sheet is considered as an extension to the vorticity field, we could say that the net circulation of the vortex panels	is the circulation that was not captured by the vortex blobs, figure \ref{fig:extendedVorticityField}.
+	
+	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.8\textwidth]{figures/lagrangian/extendedVorticityField.pdf}
 	\caption{Extended vorticity field: Vortex blobs and Vortex sheets}
 	\label{fig:extendedVorticityField}
-	\end{figure}
+	\end{figure}	
+	
+When considering a moving boundary, we must also take into account of the circulation of the body due to its motion. The net circulation of the problem is given as
 
-\subsection{Boundary integral equations}
-%
-\subsubsection{Linked boundary conditions}
-%
+	\begin{equation}
+	\Gamma = \Gamma_{\omega} + \Gamma_{\gamma} + \Gamma_{b} = 0,
+	\end{equation}	
+
+where $\Gamma_{\omega}$ is the circulation of the vorticity in the fluid (i.e. the vortex blobs), $\Gamma_{\gamma}$ is the wall bounded circulation (i.e. vortex sheets),
+
+	\begin{equation}
+	\Gamma_{\gamma} = \oint\limits_S\gamma\left(s\right)\ d s,
+	\end{equation}	
+
+and the $\Gamma_b$ is the circulation of the moving body. The circulation inside the body can be considered also be considered as an extension to the vorticity field, where the body is filled with uniform vorticity due to the rotation of the body. Therefore the circulation of a moving body can calculated simply integrating the ``vorticity'' inside the body
+
+	\begin{equation}
+	\Gamma_b = \iint\limits_{body} \nabla \times \mathbf{u}_b \ d A.
+	\end{equation}	
+
+So the constraint imposed on the net circulation of the vortex sheets is given as,
+
+	\begin{equation}
+	\Gamma_{\gamma} = - \left(\Gamma_{\omega} + \Gamma_b\right).
+	\end{equation}	
+
+A standard diffusion process would require the circulation of the vortex panel to diffused into the domain of the vortex blobs. However, as we employ the hybrid coupling strategy, the vorticity from the body is entered from the eulerian domain. The eulerian domain acts as the near-wall solver \cite{Daeninck2006}, and the strengths of the particles is interpolated from the eulerian domain, section \ref{}.
+
+\todo{CiTe Hybrid sectin}
+
 \subsection{Panel method for treating no-slip boundary condition}
+Equation \ref{eq:fredholmIntegral2ndKind} is solved by discretizing the body into $M$ vortex panels giving us a system of equation with can used to determine the $M$ unknowns of the strength of the vortex panels. The method refered as panel method has been greatly summarized by Katz and Plotkin \cite{Katz2001a}. 
+
+Katz and Plotkins have shown several types of panel distributions with various orders of accuracy, from $0^{\mathrm{th}}$
+order point vortex or up to $2^{\mathrm{nd}}$ order varying panel strength curvatured distribution. For this project, we have used a constant-strength vortex distribution that discretized the vortex sheet into straight segments, classified as \printAcron{Constant-Strength Vortex Method}{CSVM}.
+
+Panel methods are constructed by discretizing the integral equation and forming a system of equations to solve the $M$ unknowns of the vortex panel,
+
+	\begin{equation}
+	\underbrace{\begin{pmatrix}
+	-\frac{1}{2} & a_{12} & \cdots & a_{1M}\\ 
+	a_{21} & -\frac{1}{2} & \cdots & a_{2M}\\
+	\vdots & \vdots & \ddots & \vdots\\ 
+	a_{M1} & a_{M2} & \cdots & -\frac{1}{2}
+	\end{pmatrix}}_{\mathbf{A}_{MM}} \underbrace{\begin{pmatrix}
+	\gamma_{1}\\ \gamma_{2}\\
+	\vdots\\
+	\gamma_M\\
+	\end{pmatrix}}_{\vec{\gamma}} = \underbrace{\begin{pmatrix}
+	\mathrm{RHS}_1\\ 
+	\mathrm{RHS}_2\\ 
+	\vdots\\
+	\mathrm{RHS}_M
+	\end{pmatrix}}_{\overrightarrow{\mathrm{RHS}}}
+	\end{equation}
+
+
+where $A_{MM}$ contains the weights of the influence of the vortex panels $\vec{\gamma}$ on each other and the $\overrightarrow{\mathrm{RHS}}$ is
+
+	\begin{equation}
+	\mathrm{RHS} = \mathbf{u}_{\mathrm{slip}}\cdot\mathbf{\hat{s}}
+	\end{equation}
+	
+is the boundary condition to the system of equations. In addition, we have another constraint on the net circulation of the vortex panels and in discrete from we say that,
+
+	\begin{equation}
+	\sum_{i}^{M} \gamma_i\Delta s = \Gamma_{\gamma}
+	\end{equation}	
+
+and results in a $M+1$ system of equations for solving the $M$ unknown strengths of the vortex panels,
+
+	\begin{equation}
+	\underbrace{\begin{pmatrix}
+	-\frac{1}{2} & a_{12} & \cdots & a_{1M}\\ 
+	a_{21} & -\frac{1}{2} & \cdots & a_{2M}\\
+	\vdots & \vdots & \ddots & \vdots\\ 
+	a_{M1} & a_{M2} & \cdots & -\frac{1}{2}\\
+	\Delta s_1 & \Delta s_2 & \cdots & \Delta s_M
+	\end{pmatrix}}_{\mathbf{B}_{\left(M+1\right)M}} \underbrace{\begin{pmatrix}
+	\gamma_{1}\\ \gamma_{2}\\
+	\vdots\\
+	\gamma_M\\
+	\end{pmatrix}}_{\vec{\gamma}} = \underbrace{\begin{pmatrix}
+	\mathrm{RHS}_1\\ 
+	\mathrm{RHS}_2\\ 
+	\vdots\\
+	\mathrm{RHS}_M\\
+	\Gamma_{\gamma}
+	\end{pmatrix}}_{\overrightarrow{\mathrm{RHS}}}
+	\end{equation}
+
+However, as we have an additional constraint on the net strength of the panels, we have $M+1$ set of equations with $M$ unknowns giving us a overdetermined problem. The approach to solve such a problem is either by using a \printAcron{Least-Square solution method}{LSTSQ}, or introducing a new unknown or as used by Katz, eliminating an equation. Enforcing the no-slip boundary condition at each panel location is our vital criteria and therefore, elimination of an equation is not a viable strategy and so the LSTSQ method was utilized for the project.
+
+\subsubsection{Constant-Strength Vortex Method}
+
+The Constant-Strength vortex method ({\color{darkblue}CSVM}) is based on the flat (straight) discretization of the vortex sheet. 
+
 %
 \subsection{Convergence study of panel method}
 %
