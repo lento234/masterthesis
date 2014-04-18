@@ -8,11 +8,15 @@
 		\nompageref{3}
   \item [{$h$}]\begingroup Nominal particle spacing\nomunit {[$m$]}\nomeqref {2.0}
 		\nompageref{3}
-  \item [{$h_{\nu }$}]\begingroup Diffusion distance\nomunit {$[m]$}\nomeqref {2.0}
+  \item [{$h_{\nu }$}]\begingroup Characteristic diffusion distance\nomunit {$[m]$}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$\mathbf {K}$}]\begingroup Biot-Savart kernel\nomunit {[$-$]}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$\mathbf {K_{\sigma }}$}]\begingroup Vortex blob kernel\nomunit {[$-$]}\nomeqref {2.0}
+		\nompageref{3}
+  \item [{$\mathbf {A}$}]\begingroup Vortex panel influence matrix\nomunit {$[-]$}\nomeqref {2.0}
+		\nompageref{3}
+  \item [{$k_{d}$}]\begingroup Diffusion frequency multiple\nomunit {$[-]$}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$\mathbf {\hat {n}}$}]\begingroup Normal vector\nomunit {$[-]$}\nomeqref {2.0}
 		\nompageref{3}
@@ -28,7 +32,11 @@
 		\nompageref{3}
   \item [{$\mathbf {u}$}]\begingroup Velocity\nomunit {$[m\cdot s^{-1}]$}\nomeqref {2.0}
 		\nompageref{3}
+  \item [{$\mathbf {u}_{b}$}]\begingroup Velocity of the body\nomunit {$[m\cdot s^{-1}]$}\nomeqref {2.0}
+		\nompageref{3}
   \item [{$\mathbf {u}_{\gamma }$}]\begingroup Vortex sheet induced velocity\nomunit {$[m\cdot s^{-1}]$}\nomeqref {2.0}
+		\nompageref{3}
+  \item [{$\mathbf {u}_{\mathrm {ext}}$}]\begingroup External induced velocity\nomunit {$[m\cdot s^{-1}]$}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$\mathbf {u}^h$}]\begingroup Discrete velocity\nomunit {$[m\cdot s^{-1}]$}\nomeqref {2.0}
 		\nompageref{3}
@@ -36,11 +44,15 @@
 		\nompageref{3}
   \item [{$\mathbf {u}_{\phi }$}]\begingroup Potential velocity\nomunit {$[m\cdot s^{-1}]$}\nomeqref {2.0}
 		\nompageref{3}
+  \item [{$\mathbf {u}_{\mathrm {slip}}$}]\begingroup Boundary slip velocity\nomunit {$[m\cdot s^{-1}]$}\nomeqref {2.0}
+		\nompageref{3}
   \item [{$\mathbf {u}_{\omega }$}]\begingroup Vortical velocity\nomunit {$[m\cdot s^{-1}]$}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$W$}]\begingroup Interpolation kernel weight\nomunit {$[-]$}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$\mathbf {x}$}]\begingroup Position vector\nomunit {$[m]$}\nomeqref {2.0}
+		\nompageref{3}
+  \item [{$\mathbf {x}_{\nu }$}]\begingroup Position vector of particle to be diffused\nomunit {$[m]$}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$\mathbf {x}_p$}]\begingroup Position vector of the particle\nomunit {$[m]$}\nomeqref {2.0}
 		\nompageref{3}
@@ -51,9 +63,17 @@
 		\nompageref{3}
   \item [{$\beta _p$}]\begingroup Corrected circulation of the particle\nomunit {$[m^2\cdot s^{-1}]$}\nomeqref {2.0}
 		\nompageref{3}
-  \item [{$\Delta t_c$}]\begingroup Convection time-step size\nomunit {$[s]$}\nomeqref {2.0}
+  \item [{$\Gamma $}]\begingroup Circulation\nomunit {$[m^2\cdot s^{-1}]$}\nomeqref {2.0}
+		\nompageref{3}
+  \item [{$\Gamma _{b}$}]\begingroup Circulation of moving body\nomunit {$[m^2\cdot s^{-1}]$}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$\gamma $}]\begingroup Vortex sheet strengths\nomunit {$[s]$}\nomeqref {2.0}
+		\nompageref{3}
+  \item [{$\Gamma _{\gamma }$}]\begingroup Circulation of vortex sheet\nomunit {$[m^2\cdot s^{-1}]$}\nomeqref {2.0}
+		\nompageref{3}
+  \item [{$\Gamma _{\omega }$}]\begingroup Circulation of the fluid\nomunit {$[m^2\cdot s^{-1}]$}\nomeqref {2.0}
+		\nompageref{3}
+  \item [{$\Delta t_c$}]\begingroup Convection time-step size\nomunit {$[s]$}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$\Delta t_d$}]\begingroup Diffusion time-step size\nomunit {$[s]$}\nomeqref {2.0}
 		\nompageref{3}
@@ -61,9 +81,9 @@
 		\nompageref{3}
   \item [{$\zeta _{\sigma }$}]\begingroup Smooth cut-off function of the blob\nomunit {[$-$]}\nomeqref {2.0}
 		\nompageref{3}
-  \item [{$\Gamma $}]\begingroup Circulation\nomunit {$[m^2\cdot s^{-1}]$}\nomeqref {2.0}
-		\nompageref{3}
   \item [{$\nu $}]\begingroup Kinematic viscosity\nomunit {$[m^2\cdot s^{-1}]$}\nomeqref {2.0}
+		\nompageref{3}
+  \item [{$\xi $}]\begingroup Scale relative position of particle to stencil node\nomunit {$[-]$}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$\rho $}]\begingroup Density\nomunit {$[kg\cdot m^{-3}]$}\nomeqref {2.0}
 		\nompageref{3}
@@ -76,17 +96,21 @@
 
  \nomgroup{Y}
 
+  \item [{\textbf {CSVM}}]\begingroup Constant-Strength Vortex Method\nomeqref {2.53}
+		\nompageref{20}
   \item [{\textbf {FMM}}]\begingroup Fast-Multipole Method\nomeqref {2.0}
 		\nompageref{3}
   \item [{\textbf {GPU}}]\begingroup Graphics Processing Units\nomeqref {2.0}
 		\nompageref{3}
-  \item [{\textbf {PSE}}]\begingroup Particle Strength Exchange\nomeqref {2.29}
-		\nompageref{13}
+  \item [{\textbf {LSTSQ}}]\begingroup Least-Square solution method\nomeqref {2.57}
+		\nompageref{21}
+  \item [{\textbf {PSE}}]\begingroup Particle Strength Exchange\nomeqref {2.30}
+		\nompageref{14}
   \item [{\textbf {VAWT}}]\begingroup Vertical-Axis Wind Turbine\nomeqref {1.0}
 		\nompageref{1}
   \item [{\textbf {VPM}}]\begingroup Vortex Particle Method\nomeqref {2.0}
 		\nompageref{3}
-  \item [{\textbf {VRM}}]\begingroup Vortex Redistribution Method\nomeqref {2.29}
+  \item [{\textbf {VRM}}]\begingroup Vortex Redistribution Method\nomeqref {2.30}
 		\nompageref{14}
 
 \end{thenomenclature}

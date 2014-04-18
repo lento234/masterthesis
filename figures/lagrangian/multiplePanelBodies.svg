@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+    xmlns:latexdraw="http://latexdraw.sourceforge.net/namespaces/latexdraw"
+    version="1.1" baseProfile="full">
+    <defs>
+        <pattern latexdraw:type="hlines"
+            latexdraw:rotationAngle="-0.7853981633974483"
+            latexdraw:size="7.05555534362793"
+            patternUnits="userSpaceOnUse" id="pattern571" x="0" y="0"
+            width="296" height="353">
+            <rect fill="white" stroke="none" width="296" height="353"/>
+            <g stroke="black" stroke-width="2.0" stroke-dasharray="none">
+                <path d="M 132.0 201.80648918177877 L 144.80648918177877 189.0 M 132.0 214.61297836355754 L 157.61297836355754 189.0 M 132.0 227.41946754533632 L 170.41946754533632 189.0 M 132.0 240.2259567271151 L 183.2259567271151 189.0 M 132.0 253.03244590889386 L 196.03244590889386 189.0 M 132.0 265.83893509067263 L 208.83893509067263 189.0 M 132.0 278.6454242724514 L 221.6454242724514 189.0 M 132.0 291.4519134542302 L 234.45191345423018 189.0 M 132.0 304.25840263600895 L 247.25840263600895 189.0 M 132.0 317.0648918177877 L 260.0648918177877 189.0 M 132.0 329.8713809995665 L 272.8713809995665 189.0 M 132.0 342.67787018134527 L 285.67787018134527 189.0 M 132.0 355.48435936312404 L 298.48435936312404 189.0 M 132.0 368.2908485449028 L 311.2908485449028 189.0 M 132.0 381.0973377266816 L 324.0973377266816 189.0 M 132.0 393.90382690846036 L 336.90382690846036 189.0 M 132.0 406.71031609023913 L 349.71031609023913 189.0 M 132.0 419.5168052720179 L 362.5168052720179 189.0 M 132.0 432.3232944537967 L 375.3232944537967 189.0 M 132.0 445.12978363557545 L 388.12978363557545 189.0 M 132.0 457.9362728173542 L 400.9362728173542 189.0 M 132.0 470.742761999133 L 413.742761999133 189.0 M 132.0 483.54925118091177 L 426.54925118091177 189.0 M 132.0 496.35574036269054 L 439.35574036269054 189.0 M 132.0 509.1622295444693 L 452.1622295444693 189.0 M 132.0 521.9687187262481 L 464.9687187262481 189.0 M 132.0 534.7752079080269 L 477.77520790802686 189.0 M 132.0 547.5816970898056 L 490.58169708980563 189.0 M 132.0 560.3881862715843 L 503.3881862715844 189.0 M 132.0 573.1946754533631 L 516.1946754533632 189.0 M 132.0 586.0011646351418 L 529.0011646351419 189.0 M 132.0 598.8076538169205 L 541.8076538169206 189.0 M 132.0 611.6141429986992 L 554.6141429986993 189.0 M 132.0 624.4206321804779 L 567.420632180478 189.0 M 132.0 637.2271213622566 L 580.2271213622568 189.0 M 132.0 650.0336105440354 L 593.0336105440355 189.0 M 132.0 662.8400997258141 L 605.8400997258142 189.0 M 132.0 675.6465889075928 L 618.6465889075929 189.0 M 132.0 688.4530780893715 L 631.4530780893716 189.0 M 132.0 701.2595672711502 L 644.2595672711503 189.0 M 132.0 714.0660564529289 L 657.066056452929 189.0 "/>
+            </g>
+        </pattern>
+        <pattern latexdraw:type="hlines"
+            latexdraw:rotationAngle="-0.7853981633974483"
+            latexdraw:size="7.05555534362793"
+            patternUnits="userSpaceOnUse" id="pattern573" x="0" y="0"
+            width="486" height="309">
+            <rect fill="white" stroke="none" width="486" height="309"/>
+            <g stroke="black" stroke-width="2.0" stroke-dasharray="none">
+                <path d="M 356.0 191.80648918177877 L 368.8064891817788 179.0 M 356.0 204.61297836355754 L 381.61297836355754 179.0 M 356.0 217.41946754533632 L 394.4194675453363 179.0 M 356.0 230.2259567271151 L 407.2259567271151 179.0 M 356.0 243.03244590889386 L 420.03244590889386 179.0 M 356.0 255.83893509067263 L 432.83893509067263 179.0 M 356.0 268.6454242724514 L 445.6454242724514 179.0 M 356.0 281.4519134542302 L 458.4519134542302 179.0 M 356.0 294.25840263600895 L 471.25840263600895 179.0 M 356.0 307.0648918177877 L 484.0648918177877 179.0 M 356.0 319.8713809995665 L 496.8713809995665 179.0 M 356.0 332.67787018134527 L 509.67787018134527 179.0 M 356.0 345.48435936312404 L 522.484359363124 179.0 M 356.0 358.2908485449028 L 535.2908485449027 179.0 M 356.0 371.0973377266816 L 548.0973377266814 179.0 M 356.0 383.90382690846036 L 560.9038269084601 179.0 M 356.0 396.71031609023913 L 573.7103160902388 179.0 M 356.0 409.5168052720179 L 586.5168052720176 179.0 M 356.0 422.3232944537967 L 599.3232944537963 179.0 M 356.0 435.12978363557545 L 612.129783635575 179.0 M 356.0 447.9362728173542 L 624.9362728173537 179.0 M 356.0 460.742761999133 L 637.7427619991324 179.0 M 356.0 473.54925118091177 L 650.5492511809111 179.0 M 356.0 486.35574036269054 L 663.3557403626899 179.0 M 356.0 499.1622295444693 L 676.1622295444686 179.0 M 356.0 511.9687187262481 L 688.9687187262473 179.0 M 356.0 524.7752079080269 L 701.775207908026 179.0 M 356.0 537.5816970898056 L 714.5816970898047 179.0 M 356.0 550.3881862715843 L 727.3881862715834 179.0 M 356.0 563.1946754533631 L 740.1946754533622 179.0 M 356.0 576.0011646351418 L 753.0011646351409 179.0 M 356.0 588.8076538169205 L 765.8076538169196 179.0 M 356.0 601.6141429986992 L 778.6141429986983 179.0 M 356.0 614.4206321804779 L 791.420632180477 179.0 M 356.0 627.2271213622566 L 804.2271213622557 179.0 "/>
+            </g>
+        </pattern>
+    </defs>
+    <g>
+        <g latexdraw:type="circle" id="id571">
+            <circle cx="214.0" cy="271.0" r="81.0"
+                latexdraw:borderPos="outer" stroke-width="2.0"
+                stroke="black" fill="url(#pattern571)"/>
+        </g>
+        <g latexdraw:type="circle" id="id573">
+            <circle cx="421.0" cy="244.0" r="64.0"
+                latexdraw:borderPos="outer" stroke-width="2.0"
+                stroke="black" fill="url(#pattern573)"/>
+        </g>
+        <g latexdraw:type="text" id="id575"
+            font-family="Times New Roman" fill="black" font-size="24" latexdraw:x="137.0">
+            <text x="137.0" y="276.0"><![CDATA[\definecolor{color495}{rgb}{0.996078431372549,0.996078431372549,0.996078431372549}\psframebox[linewidth=0.04,linecolor=color495,fillstyle=solid,framesep=0.02]{\textsf{body a}}]]></text>
+        </g>
+        <g latexdraw:type="text" id="id578"
+            font-family="Times New Roman" fill="black" font-size="24" latexdraw:x="351.0">
+            <text x="351.0" y="253.0"><![CDATA[\definecolor{color495}{rgb}{0.996078431372549,0.996078431372549,0.996078431372549}\psframebox[linewidth=0.04,linecolor=color495,fillstyle=solid,framesep=0.02]{\textsf{body b}}]]></text>
+        </g>
+    </g>
+    <metadata>
+        <latexdraw:metadata>
+            <latexdraw:displayBorders>false</latexdraw:displayBorders>
+            <latexdraw:autoAdjust>true</latexdraw:autoAdjust>
+            <latexdraw:ppc>50</latexdraw:ppc>
+            <latexdraw:zoom>1.0</latexdraw:zoom>
+            <latexdraw:unit>cm</latexdraw:unit>
+            <latexdraw:classicGrid>false</latexdraw:classicGrid>
+            <latexdraw:gridGap>10</latexdraw:gridGap>
+            <latexdraw:code>0</latexdraw:code>
+            <latexdraw:displayGrid>true</latexdraw:displayGrid>
+            <latexdraw:magneticGrid>true</latexdraw:magneticGrid>
+            <latexdraw:autoUpdate>true</latexdraw:autoUpdate>
+            <latexdraw:version>2.0.8</latexdraw:version>
+            <latexdraw:size>
+                <latexdraw:width>1241</latexdraw:width>
+                <latexdraw:height>803</latexdraw:height>
+            </latexdraw:size>
+            <latexdraw:position>
+                <latexdraw:x>116</latexdraw:x>
+                <latexdraw:y>121</latexdraw:y>
+            </latexdraw:position>
+            <latexdraw:dividerPosition>0.5374697824335214</latexdraw:dividerPosition>
+            <latexdraw:displayCodePanel>true</latexdraw:displayCodePanel>
+            <latexdraw:displayXScale>true</latexdraw:displayXScale>
+            <latexdraw:displayYScale>true</latexdraw:displayYScale>
+            <latexdraw:delimitorOpacity>130</latexdraw:delimitorOpacity>
+        </latexdraw:metadata>
+    </metadata>
+</svg>

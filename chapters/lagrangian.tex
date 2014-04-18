@@ -4,6 +4,7 @@
 	
 	\lsymb[f]{$\mathbf{x}$}{Position vector}{$[m]$}{x}
 	\lsymb[f]{$\mathbf{x}_p$}{Position vector of the particle}{$[m]$}{xp}
+	\lsymb[f]{$\mathbf{x}_{\nu}$}{Position vector of particle to be diffused}{$[m]$}{xmm}
 	\lsymb[f]{$t$}{Time}{$[s]$}{t}
 	\lsymb[f]{$\mathbf{u}$}{Velocity}{$[m\cdot s^{-1}]$}{u}
 	%\lsymb[f]{$\mathbf{u}\left(\mathbf{x},t\right)$}{Velocity field}{$[m\cdot s^{-1}]$}{ua}
@@ -13,6 +14,10 @@
 	\lsymb[f]{$\mathbf{u}_{\omega}$}{Vortical velocity}{$[m\cdot s^{-1}]$}{uz}
 	\lsymb[f]{$\mathbf{u}_{\phi}$}{Potential velocity}{$[m\cdot s^{-1}]$}{up}
 	\lsymb[f]{$\mathbf{u}_{\gamma}$}{Vortex sheet induced velocity}{$[m\cdot s^{-1}]$}{uc}
+	\lsymb[f]{$\mathbf{u}_{\mathrm{ext}}$}{External induced velocity}{$[m\cdot s^{-1}]$}{ue}
+	\lsymb[f]{$\mathbf{u}_{b}$}{Velocity of the body}{$[m\cdot s^{-1}]$}{ub}	
+	\lsymb[f]{$\mathbf{u}_{\mathrm{slip}}$}{Boundary slip velocity}{$[m\cdot s^{-1}]$}{us}	
+		
 	\lsymb[f]{$N_p$}{Number of particles}{$[-]$}{np}	
 	\lsymb[f]{$\mathbf{K}$}{Biot-Savart kernel}{[$-$]}{k}
 	\lsymb[f]{$\mathbf{K_{\sigma}}$}{Vortex blob kernel}{[$-$]}{kb}	
@@ -20,25 +25,32 @@
 	\lsymb[f]{$\mathrm{overlap}$}{Overlap ratio of the blobs}{[$-$]}{o}	
 	\lsymb[f]{$W$}{Interpolation kernel weight}{$[-]$}{w}
 	\lsymb[f]{$\mathcal{E}$}{Enstrophy}{$[m^2\cdot s^{-2}]$}{en}
-	\lsymb[f]{$h_{\nu}$}{Diffusion distance}{$[m]$}{hn}
 	\lsymb[f]{$c^2$}{Diffusion parameter}{$[-]$}{c}
 	\lsymb[f]{$\mathbf{\hat{n}}$}{Normal vector}{$[-]$}{n}
 	\lsymb[f]{$\mathbf{\hat{s}}$}{Tangent vector}{$[-]$}{s}	
+	\lsymb[f]{$h_{\nu}$}{Characteristic diffusion distance}{$[m]$}{hm}		
+	\lsymb[f]{$k_{d}$}{Diffusion frequency multiple}{$[-]$}{kd}			
+	
+	\lsymb[f]{$\mathbf{A}$}{Vortex panel influence matrix}{$[-]$}{kd}				
 
 
 	\gsymb[f]{$\zeta_{\sigma}$}{Smooth cut-off function of the blob}{[$-$]}{ff}	
 	\gsymb[f]{$\rho$}{Density}{$[kg\cdot m^{-3}]$}{qq}
 	\gsymb[f]{$\nu$}{Kinematic viscosity}{$[m^2\cdot s^{-1}]$}{mm}
-	\gsymb[f]{$\Gamma$}{Circulation}{$[m^2\cdot s^{-1}]$}{g}
+	\gsymb[f]{$\Gamma$}{Circulation}{$[m^2\cdot s^{-1}]$}{c}
+	\gsymb[f]{$\Gamma_{\omega}$}{Circulation of the fluid}{$[m^2\cdot s^{-1}]$}{cxx}	
+	\gsymb[f]{$\Gamma_{\gamma}$}{Circulation of vortex sheet}{$[m^2\cdot s^{-1}]$}{ccc}		
+	\gsymb[f]{$\Gamma_{b}$}{Circulation of moving body}{$[m^2\cdot s^{-1}]$}{cb}			
 	\gsymb[f]{$\omega$}{Vorticity}{$[s^{-1}]$}{xx}
-	\gsymb[f]{$\omega^h$}{Discrete vorticity field}{$[s^{-1}]$}{xx}
-	\gsymb[f]{$\alpha_p$}{Circulation of the particle}{$[m^2\cdot s^{-1}]$}{ap}
-	\gsymb[f]{$\beta_p$}{Corrected circulation of the particle}{$[m^2\cdot s^{-1}]$}{bp}
-	\gsymb[f]{$\epsilon$}{Distance between the particles}{$[m]$}{ep}
+	\gsymb[f]{$\omega^h$}{Discrete vorticity field}{$[s^{-1}]$}{xxh}
+	\gsymb[f]{$\alpha_p$}{Circulation of the particle}{$[m^2\cdot s^{-1}]$}{aap}
+	\gsymb[f]{$\beta_p$}{Corrected circulation of the particle}{$[m^2\cdot s^{-1}]$}{bbp}
+	\gsymb[f]{$\epsilon$}{Distance between the particles}{$[m]$}{eep}
 	\gsymb[f]{$\sigma$}{Core size}{[$m$]}{rr}
 	\gsymb[f]{$\Delta t_d$}{Diffusion time-step size}{$[s]$}{dtd}	
 	\gsymb[f]{$\Delta t_c$}{Convection time-step size}{$[s]$}{dtc}		
-	\gsymb[f]{$\gamma$}{Vortex sheet strengths}{$[s]$}{dtc}		
+	\gsymb[f]{$\gamma$}{Vortex sheet strengths}{$[s]$}{cc}		
+	\gsymb[f]{$\xi$}{Scale relative position of particle to stencil node}{$[-]$}{nn}
 
 
 %To model the flow around a VAWT, several approaches can be taken, Vermeer at al. (2003) \cite{Vermeer2003} have also summarized in their paper. The two main approaches of investigating the flow is either employing a numerical method to simulate the flow or through experimental simulations.
@@ -394,7 +406,7 @@ where the strengths of the particles $\tilde{\alpha}_q$ of the distorted lagrang
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.4\textwidth]{figures/lagrangian/interpolationGrid.pdf}
-	\caption{Interpolation of vortex blob ({\color{plotGreen}{$\bullet$}}, green) on the uniform grid.}
+	\caption{Remehsing of vortex blob ({\color{plotGreen}{$\bullet$}}, green) on the uniform grid defined by the $\left(4\times4\right)$ 2-D stencil.}
 	\label{fig:interpolationGrid}
 	\end{figure}
 
@@ -411,12 +423,19 @@ For lagrangian problem, we use the efficient interpolation kernel that has been 
 	\label{eq:interpKernel}
 	\end{equation}
 
-where $\xi = x_p - x$ is the distance of the particle to the interpolation nodes. The $\mathrm{M'}_4$ is a third-order accurate piecewise smooth B-spline kernel, where $m = 4$ giving it 4 support nodes, figure \ref{fig:interpolationKernel}. For the two dimensional problem that we have, the 2-D interpolation formula is simply tensor product of the 1-D interpolation kernel equation \ref{eq:interpKernel}, and results in $4^2 = 16$ support nodes, figure \ref{fig:interpolationGrid}.
+where 
+
+	\begin{equation}
+	\xi = \frac{x_{\nu} - x_i}{h}
+	\label{eq:xiEquation}
+	\end{equation}
+
+is the scale relative position of the particle $x_{\nu}$ to the $i^{\mathrm{th}}$ interpolation node $x_i$. The $\mathrm{M'}_4$ is a third-order accurate piecewise smooth B-spline kernel, where $m = 4$ giving it 4 support nodes, figure \ref{fig:interpolationKernel}. For the two dimensional problem that we have, the 2-D interpolation formula is simply tensor product of the 1-D interpolation kernel equation \ref{eq:interpKernel}, and results in $4^2 = 16$ support nodes, figure \ref{fig:interpolationGrid}.
 
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.7\textwidth]{figures/lagrangian/interpolationKernel.pdf}
-	\caption{Interpolation kernel}
+	\caption{Monaghan's \cite{Monaghan1985} third-order peicewise smooth B-spline kernel, $M'_4$}
 	\label{fig:interpolationKernel}
 	\end{figure}
 
@@ -457,6 +476,8 @@ where $h_{\nu}$ is the diffusion distance and is directly related to the kinemat
 
 This is vital as a VRM (and also the PSE) requires a search algorithm to determine the particles that are within the zone of influence. A direct evaluation required $\mathcal{O}\left(N^2\right)$ evaluation, however can be speed up to $\mathcal{O}\left(\log N\right)$ using search tree algorithm.
 
+The downside of the this approach, as also for the standard remeshing approach is the global remeshing generates large computation data and scales with the number of particles $N$. Therefore for problems with large number of particles, a tree-structured remeshing would be more feasible strategy \cite{Winckelmans1996}.
+
 \subsection{Modified remeshing for treating diffusion}
 From further investigation of the VRM, we see that it is similar to remeshing strategy used to counter the lagrangian distortion during the convection process. Therefore Ghoniem and Wee \cite{Wee2006} has proposed to combine the remeshing and the diffusion. The application of this methodology was validated by Speck \cite{Speck2011a}. The diffusion is simulated by the modifying the interpolation kernel of the remeshing process. The key advantage of the modified remeshing method is that now it deals with the uniform remeshing grid helping us eliminating the computational expensive research requirement. The second advantage as shown by the authors is the simplicity. The method only requires a slight modification to the original remeshing tool.
 
@@ -488,111 +509,158 @@ Similar to the VRM, we can perform the remeshing at a given multiple step $k_d$ 
 \label{eq:c2stability}
 \end{equation}
 
-to ensure amplification factor and the phase error does not grow. This will ensure the stability of the problem and will suppress any spurious oscillations and ensure that it is a non-negative interpolation kernel with non-negative redistribution fractions.
+to ensure amplification factor and the phase error does not grow. This will ensure the stability of the problem and will suppress any spurious oscillations and ensure that it is a non-negative interpolation kernel with non-negative redistribution fractions. 
 
-The downside of the this approach, as also for the standard remeshing approach is the global remeshing generates large computation data and scales with the number of particles $N$. Therefore for problems with large number of particles, a tree-structured remeshing would be more feasible strategy \cite{Winckelmans1996}.
+However, we see that constraint on $c^2$ not only imposes a maximum $\Delta t_d$ but also a constraint on the minimum $\Delta t_d$. This means that in scenarios, the $\Delta t_d = k_d \cdot \Delta t_c$ and this might introduce sudden change in vorticity field. Therefore, during the coupling of the lagrangian and eulerian domains, we would like to diffuse the vorticity after every convection scheme.
+
+\subsubsection*{Simple redistribution scheme}
+
+The simple redistribution scheme based on the Shankar and Van Dommelen \cite{Shankar1996}, developed by Tutty \cite{2010arXiv1009.0166T}, makes it possible to remesh and diffuse the vorticity after every convection step, 
+
+	\begin{equation}
+	\alpha_i^{n+1} = \sum_k \alpha_k^n W_{ki}^n, 
+	\end{equation}
+
+where $W_{ki}^n$ is the fraction of circulation from vortex blob $k$ transferred to vortex blob $i$ by diffusion during the time step $n$. The fractions $W_{ki}^n$ are calculated by conserving vorticity, center of vorticity, linear, and angular momentum of the vortex blobs \cite{2010arXiv1009.0166T}. In two dimensional problem the redistribution fractions are simple tensors products of the $x,y$ one dimensional redistribution fractions,
+
+
+	\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.7\textwidth]{figures/lagrangian/simpleRedistribution.pdf}
+	\caption{One dimensional, Simple redistribution scheme, diffusing the vortex blobs to the four stencil points ($k=i-1,\dots,i+2$) with vortex blob positioned at $x_i \le x_{\nu} \le x_{i+1}$ and nominal blob spacing $h$.}
+	\label{fig:simpleRedistribution}
+	\end{figure}
+
+	\begin{equation}
+	W_{kl} = F_k G_l, \quad k = i-1,\cdots,i+2, \quad \l = j-1,\dots,j+2
+	\end{equation}
+
+giving it a 16 point stencil. The one-dimension redistribution fractions for $x$-direction is a linear combination of the two basis solution of the redistribution equation for conservations,
+
+	\begin{equation}
+	F_k = \left(1-\Delta\right)\cdot f_k + \Delta\cdot g_k, \quad k = i-1,\dots,i+2
+	\end{equation}
+
+having a four point stencil, figure \ref{fig:simpleRedistribution}. The basis solution of redistribution are 
+
+	\begin{subequations}
+	\begin{align}
+	f_i &= 1 - 2\left(\frac{h_{\nu}}{h}\right)^2 - \xi^2\\
+	f_{i-1} &= \frac{1}{2}\left(1-f_i-\xi\right)\\
+	f_{i+1} &= \frac{1}{2}\left(1-f_i+\xi\right)
+	\end{align}
+	\end{subequations}
+and 	
+	\begin{subequations}
+	\begin{align}
+	g_{i+1} &= 1 - 2\left(\frac{h_{\nu}}{h}\right)^2 - \xi_1^2\\
+	g_{i} &= \frac{1}{2}\left(1-g_{i+1}-\xi_1\right)\\
+	g_{i+2} &= \frac{1}{2}\left(1-g_{i+1}+\xi_1\right)
+	\end{align}
+	\end{subequations}
+
+where $\xi$ is given by equation \ref{eq:xiEquation}, $\xi_1 = \xi - 1$ are the distances between the $k^{\mathrm{th}}$ stencil nodes $x_k$ and the vortex blob that is to be diffused with $x_i \le x_{\nu} \le x_{i+1}$. Note, $f_k$ and $g_k$ is zero for all the other $k$. In the above equation, $h_{\nu}$ is the characteristic diffusion distance over the time $\Delta t_d$, 
+
+	\begin{equation}
+	h_{\nu} = \sqrt{\Delta t_d \cdot \nu}.
+	\end{equation}
+	
+	
+The only constraint imposed  for positive redistribution fraction is
+
+	\begin{equation}
+	\frac{h_{\nu}}{h} < \frac{1}{\sqrt{2}}.
+	\end{equation}
+	
+giving us the maximum time-step size constraint of
+	\begin{equation}
+	\Delta t_d < \frac{h^2}{2\nu}.
+	\end{equation}
+
+So now, we are able to perform diffusion, together with the convection step (i.e $k_d = 1$).
 
 \section{Boundary conditions at solid boundary}
 \label{sec:boundaryConditions}
 
 So far, we have only dealt with unbounded flow. During bounded flow simulation, we must impose addition constraint of the boundary to the simulation to simulate any flow about a geometry. From Helmholtz decomposition, we can have decompose the velocity field to the rotation and the irrotation component, equation \ref{eq:helmholtz}. With the Helmholtz decomposition, we can use the potential component to prescribe the boundary conditions at the solid wall boundary,
-
 	\begin{equation}
 	\mathbf{u}_{\phi} = \nabla\Phi.
 	\end{equation}
 
 The incompressibility constraint results in a Laplace's equation for the potential field and unique solution is obtained by enforcing the wall boundary conditions,
-
 	\begin{equation}
 	\mathbf{u}_b\cdot\mathbf{\hat{n}} = \left(\mathbf{u}_{\omega} + \nabla\Phi\right) \cdot \mathbf{\hat{n}},
 	\label{eq:potentialBC}
 	\end{equation}
-
 and is defined as enforcing the no-through flow at the solid boundary wall, moving at $\mathbf{u}_b$. Note that the $\mathbf{\hat{n}}$ is the normal vector of the solid boundary. A classical approach for determine the solution to the Laplace's equation is by Green's function formulation. This approach required a singularity distribution over the body resulting in the appropriate boundary condition. Doublets and/or source panels are used to attain the required potential such that equation \ref{eq:potentialBC} is satisfied.
 
 \subsubsection{Linked boundary conditions}
 
-However Koumoutsakos, Leonary and Pepin \cite{Koumoutsakos1994b}, have suggested to enforce the boundary conditions through vortex sheets. The alternative approach of enforcing the solid boundary condition is not to decompose the velocity field into potential and rotational but to consider the solid boundary as an extension of the vorticity field through vortex sheets $\gamma$, figure \ref{fig:noSlipVorticityField}. Due to the non-zero tangential velocity at the surface, a sudden discontinuity in the velocity field can be considered as vortex sheet. Therefore, now to enforce the boundary conditions of the solid wall, we must satisfy the no slip velocity at the boundary,
-
+However Koumoutsakos, Leonard and Pepin \cite{Koumoutsakos1994b}, have suggested to enforce the boundary conditions through vortex sheets. The alternative approach of enforcing the solid boundary condition is not to decompose the velocity field into potential and rotational but to consider the solid boundary as an extension of the vorticity field through vortex sheets $\gamma$, figure \ref{fig:noSlipVorticityField}. Due to the non-zero tangential velocity at the surface, a sudden discontinuity in the velocity field can be considered as vortex sheet. Therefore, now to enforce the boundary conditions of the solid wall, we must satisfy the no slip velocity at the boundary,
 	\begin{equation}
 	\mathbf{u}\cdot\mathbf{\hat{s}} = \mathbf{u}_b\cdot\mathbf{\hat{s}}.
 	\end{equation}
 
+Koumoutsakos \cite{Koumoutsakos1993} only relies on the vortex sheet to enforce the no-slip velocity as no-slip boundary condition directly satisfies the no-through boundary conditions, also known as the linked boundary conditions. This was also proven by Shiels \cite{Shiels1998} and further investigated by Cooper, Mar and Barba \cite{Cooper2009b} and shown that vortex sheet is the only necessary singularity element required to satisfy both the boundary conditions. Therefore, enforcing the no-slip boundary condition directly satisfies the no-through constraint at the surface.
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.6\textwidth]{figures/lagrangian/noSlipVorticityField.pdf}
-	\caption{Extended vorticity field consisting of vorticity in the fluid and vortex sheet distribution.}
+	\caption{Extended vorticity field consisting of vorticity in the fluid and vortex sheet distribution around the body.}
 	\label{fig:noSlipVorticityField}
 	\end{figure}
 
-Koumoutsakos \cite{Koumoutsakos1993} only relies on the vortex sheet to enforce the no-slip velocity as no-slip boundary condition directly satisfies the no-through boundary conditions, also known as the linked boundary conditions. This was also proven by Shiels \cite{Shiels1998} and further investigated by Cooper, Mar and Barba \cite{Cooper2009b} and shown that vortex sheet is the only necessary singularity element required to satisfy both the boundary conditions. Therefore, enforcing the no-slip boundary condition directly satisfies the no-through constraint at the surface.
-
 \subsection{Boundary integral equations}
 Thus the decomposed velocity field can be summarized as
-
 	\begin{equation}
 	\mathbf{u} = \mathbf{u}_{\omega} + \mathbf{u}_{\gamma} + \mathbf{u}_{\infty}
 	\end{equation}
-	
 where the $\mathbf{u}_{\gamma}$ denotes the velocity filed induced by the vortex sheet. Applying the no-slip boundary conditions, we can say that
-
 	\begin{equation}
 	\left(\mathbf{u}_{\mathrm{ext}} + \mathbf{u}_{\gamma}\right)\cdot\mathbf{\hat{s}} = \mathbf{u}_b \cdot \mathbf{\hat{s}}
 	\label{eq:kinematicBCofVSOutside}
 	\end{equation}
-
 where $\mathbf{u}_{\mathrm{ext}} = \mathbf{u}_{\omega} + \mathbf{u}_{\infty}$ is the velocity field induced from domain external of the body and the vortex sheet. For the tangential boundary condition, for a well-conditioned system of equations, the induced velocity from the vortex sheet can be summarized as  
-
 	\begin{equation}
 	\left(\mathbf{u}_{\mathrm{ext}} - \mathbf{u}_b\right) \cdot \mathbf{\hat{s}} = \mathbf{u}_{\gamma}\cdot\mathbf{\hat{s}}.
 	\label{eq:kinematicBCofVS}
 	\end{equation}
 
 The equation states that underneath the vortex sheet, we must have a vortex sheet inducing the velocity field $\mathbf{u}_{\gamma}$ to counter the slip velocity $\mathbf{u}_{\mathrm{slip}} = \left(\mathbf{u}_{\mathrm{ext}} - \mathbf{u}_b\right)$ such that we satisfy the no-slip kinematic boundary conditions. Note that, $\mathbf{u}_{\gamma}$ of equation \ref{eq:kinematicBCofVS}, is negative of equation \ref{eq:kinematicBCofVSOutside} as we looking under the vortex sheet. Koumoutsakos \cite{Koumoutsakos1993}, expressed the relation of the vortex sheet strengths to the no-slip boundary condition at the surface of the body (inside the body) through the Fredholm integral equation of the second kind,
-
 	\begin{equation}
 	-\frac{\gamma\left(s\right)}{2} + \frac{1}{2\pi}\oint\frac{\partial}{\partial n}\left[\log\left|\mathbf{x}\left(s\right)-\mathbf{x}\left(s'\right)\right|\right]\gamma\left(s'\right)ds'= \mathbf{u}_{\mathrm{slip}}\cdot\mathbf{\hat{s}}.
 	\label{eq:fredholmIntegral2ndKind}
 	\end{equation}
 		
-The LHS of the equation states at the point $s$, the velocity discontinuity is due to the vortex sheet at the point and the induced velocity of all the other vortex sheet acting on the point. 
+The \printAcron{Left Hand Side}{LHS} of the equation states at the point $s$, the velocity discontinuity is due to the vortex sheet at the point and the induced velocity of all the other vortex sheet acting on the point. 
 
-However, the equation \ref{eq:fredholmIntegral2ndKind} is not unique and accepts arbitrary solution for the vortex sheet strengths, therefore we must imposed an additional constraint on the strength of the vortex sheet. The addition constraint is a constraint on the net circulation of the vortex sheet. As the vortex sheet is considered as an extension to the vorticity field, we could say that the net circulation of the vortex panels	is the circulation that was not captured by the vortex blobs, figure \ref{fig:extendedVorticityField}.
+However, the equation \ref{eq:fredholmIntegral2ndKind} is not unique and accepts arbitrary solution for the vortex sheet strengths, therefore we must imposed an additional constraint on the strength of the vortex sheet. The addition constraint is a constraint on the net circulation of the vortex sheet. As the vortex sheet is considered as an extension to the vorticity field, we could say that the net circulation of the vortex panels	is the circulation that was not captured by the vortex blobs, figure \ref{fig:extendedVorticityField}. As vortex blobs are not available very-near the body, it is not possible for the vortex blobs to resolve the high gradient vorticity at the boundary. Therefore, all the vorticity in the vortex sheet domain must be captured by the vortex sheet.
 	
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.8\textwidth]{figures/lagrangian/extendedVorticityField.pdf}
-	\caption{Extended vorticity field: Vortex blobs and Vortex sheets}
+	\caption{Extended vorticity field: Vortex sheet being an extension to the vorticity field (resolved by the vortex blobs) which is able to fully resolve the boundary vorticity}
 	\label{fig:extendedVorticityField}
 	\end{figure}	
 	
 When considering a moving boundary, we must also take into account of the circulation of the body due to its motion. The net circulation of the problem is given as
-
 	\begin{equation}
 	\Gamma = \Gamma_{\omega} + \Gamma_{\gamma} + \Gamma_{b} = 0,
 	\end{equation}	
-
 where $\Gamma_{\omega}$ is the circulation of the vorticity in the fluid (i.e. the vortex blobs), $\Gamma_{\gamma}$ is the wall bounded circulation (i.e. vortex sheets),
-
 	\begin{equation}
 	\Gamma_{\gamma} = \oint\limits_S\gamma\left(s\right)\ d s,
 	\end{equation}	
-
 and the $\Gamma_b$ is the circulation of the moving body. The circulation inside the body can be considered also be considered as an extension to the vorticity field, where the body is filled with uniform vorticity due to the rotation of the body. Therefore the circulation of a moving body can calculated simply integrating the ``vorticity'' inside the body
-
 	\begin{equation}
 	\Gamma_b = \iint\limits_{body} \nabla \times \mathbf{u}_b \ d A.
 	\end{equation}	
 
 So the constraint imposed on the net circulation of the vortex sheets is given as,
-
 	\begin{equation}
 	\Gamma_{\gamma} = - \left(\Gamma_{\omega} + \Gamma_b\right).
 	\end{equation}	
 
-A standard diffusion process would require the circulation of the vortex panel to diffused into the domain of the vortex blobs. However, as we employ the hybrid coupling strategy, the vorticity from the body is entered from the eulerian domain. The eulerian domain acts as the near-wall solver \cite{Daeninck2006}, and the strengths of the particles is interpolated from the eulerian domain, section \ref{}.
-
-\todo{CiTe Hybrid sectin}
+Now, in a pure lagrangian, we must transfer the vorticity generated from the body to the fluid. This is typically done by diffusing the vorticity of the vortex on the fluid, however in our hybrid coupling method, we can use the eulerian domain to introduce the vorticity into the fluid. The eulerian domain acts as the near-wall solver \cite{Daeninck2006}, and the strengths of the particles is interpolated from the eulerian domain, section \ref{}.\todo{CiTe Hybrid sectin}
 
 \subsection{Panel method for treating no-slip boundary condition}
 Equation \ref{eq:fredholmIntegral2ndKind} is solved by discretizing the body into $M$ vortex panels giving us a system of equation with can used to determine the $M$ unknowns of the strength of the vortex panels. The method refered as panel method has been greatly summarized by Katz and Plotkin \cite{Katz2001a}. 
@@ -618,6 +686,7 @@ Panel methods are constructed by discretizing the integral equation and forming 
 	\vdots\\
 	\mathrm{RHS}_M
 	\end{pmatrix}}_{\overrightarrow{\mathrm{RHS}}}
+	\label{eq:vortexSheetSystemofEquations}
 	\end{equation}
 
 
@@ -659,7 +728,138 @@ However, as we have an additional constraint on the net strength of the panels, 
 
 \subsubsection{Constant-Strength Vortex Method}
 
-The Constant-Strength vortex method ({\color{darkblue}CSVM}) is based on the flat (straight) discretization of the vortex sheet. 
+The Constant-Strength vortex method ({\color{darkblue}CSVM}) is based on the flat (straight) discretization of the vortex sheet, where the panel have constant vortex strength as per definition. To solve the strengths of the panel problem, we enforce the dirichlet velocity boundary conditions at the collocation point $x_{cp}$, which is located just below the vortex sheet, figure \ref{fig:vortexPanelDefinition}. The coefficient $a_{ij}$ of the influence matrix $\mathbf{A}$ is defined as
+	\begin{equation}
+	a_{ij} = \mathbf{\hat{u}}_{ij} \cdot \mathbf{\hat{t}}_i,
+	\end{equation}
+		
+and is the tangential influence coefficient of $j^{\mathrm{th}}$ panel on the $i^{\textrm{th}}$ panel. Therefore, induced velocity $\mathbf{\hat{u}}_{ij} = \left(\hat{u},\hat{v}\right)_{ij}$ is the unit induced velocity of the $j^{\mathrm{th}}$ panel on to the collocation points of $i^{\mathrm{th}}$ panel, where the vortex panels have unit strength (i.e $\hat{\gamma}_i = 1$). In general, the induced velocity of the vortex panels are calculated in the local panel coordinates, figure \ref{fig:panelDefinitions}, and the transformation from the local panel coordinate $(x',y')$ to the global coordinates systems $(x,y)$ is given by 
+
+	\begin{equation}
+	\begin{bmatrix}
+	u_{ij}\\
+	v_{ij}\\
+	\end{bmatrix} = \begin{bmatrix}
+	\cos\alpha_j & \sin\alpha_j \\
+	-\sin\alpha_j & \cos\alpha_j
+	\end{bmatrix} \cdot \begin{bmatrix}
+	u'_{ij}\\
+	v'_{ij}
+	\end{bmatrix}
+	\end{equation}
+
+The induced velocity of the vortex panel $j$ on the collocation point $i$ is given as
+
+	\begin{subequations}
+	\begin{align}
+	u'_{ij} &= \frac{\gamma_j}{2\pi}\left[\tan^{-1}\frac{y'_i-y'_{j,2}}{x'_i-x'_{j,2}} - \tan^{-1}\frac{y'_i-y'_{j,1}}{x'_i -x'_{j,1}}\right],\\
+	v'_{ij} &= -\frac{\gamma_j}{4\pi}\ln\frac{\left(x'_i-x'_{j,1}\right)^2 + \left(y'_i-y'_{j,1}\right)^2}{\left(x'_i-x'_{j,2}\right)^2+\left(y'_i-y'_{j,2}\right)^2}
+	\end{align}
+	\end{subequations}
+
+\begin{figure}[t]
+        \centering
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{figures/lagrangian/panelCoordinateDefinition.pdf}
+                \caption{Panel discretization of the body in the global cartesian coordinates system $\left(x,y\right)$ and local panel coordinates rotated by $\alpha_i$.}
+                \label{fig:panelCoordinateDefinition}
+        \end{subfigure}%
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+          %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{figures/lagrangian/vortexPanelDefinition.pdf}
+                \caption{Constant strength vortex panel in the local panel coordinate system $\left(x',y'\right)$ inducing velocity on the point $P$.}
+                \label{fig:vortexPanelDefinition}
+        \end{subfigure}
+        \caption{Vortex panel's global \textbf{(a)} and local \textbf{(b)} coordinates system definition as defined by Katz and Plotkins \cite{Katz2001a}.}
+        \label{fig:panelDefinitions}
+\end{figure}	
+	
+where $(x'_1,y'_1)_j$ and $(x'_2,y'_2)_j$ are the coordinates of the panel start and end point in its local panel coordinate system. Note that the self-induction of the vortex panel (when $i=j$), the influence coefficient becomes $a_{ij} = -1/2$, and can be seen in the diagonal terms of equation \ref{eq:vortexSheetSystemofEquations}. So, by taking $\hat{\gamma}_i = 1$, we are able to construct the influence coefficients of the influence matrix $\mathbf{A}$ and can solve the strengths of the panel, 
+	\begin{equation}
+	\mathbf{B}\cdot\gamma = \mathrm{RHS},
+	\end{equation}
+using the LSTSQ method. 
+
+	\begin{figure}[b]
+	\centering
+	\includegraphics[width=0.6\textwidth]{figures/lagrangian/twoPanelBodies.pdf}
+	\caption{twoPanelBodies}
+	\label{fig:twoPanelBodies}
+	\end{figure}
+
+If we are dealing with multiple geometries, figure \ref{fig:twoPanelBodies}, the panel method can be easily extended by constructing a global influence matrix, 
+
+	\begin{equation}
+	\underbrace{\begin{pmatrix}
+		c_{a_1a_1} & \cdots & c_{a_1a_N} & c_{a_1b_1} &\cdots & c_{a_1b_M}\\
+		\vdots & \ddots & \vdots & \vdots &\ddots & \vdots\\
+		c_{a_Na_1} & \cdots & c_{a_Na_N} & c_{a_Nb_1} &\cdots & c_{a_Nb_M}\\
+		c_{b_1a_1} & \cdots & c_{b_1a_N} & c_{b_1b_1} &\cdots & c_{b_1b_M}\\
+		\vdots & \ddots & \vdots & \vdots &\ddots & \vdots\\
+		c_{b_Ma_1} & \cdots & c_{b_Ma_N} & c_{b_Mb_1} &\cdots & c_{b_Mb_M}\\
+		\Delta s_{a_1} & \cdots & \Delta s_{a_N} & 0 & \cdots & 0\\
+		0 & \cdots & 0 & \Delta s_{b_1} & \cdots & \Delta s_{b_M}\\
+	\end{pmatrix}
+	\begin{pmatrix}
+		\gamma_{a_1}\\
+		\vdots\\
+		\gamma_{a_N}\\
+		\gamma_{b_1}\\
+		\vdots\\
+		\gamma_{b_M}\\
+	\end{pmatrix}}_{\begin{pmatrix}
+						AA & AB \\
+						BA & BB \\
+						\Delta s_A & 0\\
+						0 & \Delta s_B \\
+					\end{pmatrix} \begin{pmatrix}
+								\gamma_{A}\\
+								\gamma_{B}\\
+							\end{pmatrix}} 
+	= 
+	\underbrace{\begin{pmatrix}
+		\mathrm{RHS}_{a_1}\\
+		\vdots\\
+		\mathrm{RHS}_{a_N}\\
+		\mathrm{RHS}_{b_1}\\
+		\vdots\\
+		\mathrm{RHS}_{b_M}\\
+		\Gamma_{\gamma,a}\\	
+	\Gamma_{\gamma,b}
+	\end{pmatrix}}_{ 
+			\begin{pmatrix}
+				\mathrm{RHS}_{a}\\
+				\mathrm{RHS}_{b}\\
+				\Gamma_{\gamma,a}\\	
+				\Gamma_{\gamma,b}
+			\end{pmatrix}}
+	\end{equation}
+
+where the diagonal matrices ($AA, BB$) are the self-induction matrix of the panel body and the non-diagonal terms ($AB,BA$) are the inter-induction matrix containing the panel influence of $B\rightarrow A$ and $A\rightarrow B$ respectively. The final two rows of the induction matrix contains the additional circulation constraint for each body.
+
+
+%	\begin{equation}
+%	\begin{pmatrix}
+%	\mathrm{ab} & \mathrm{ab}\\
+%	\mathrm{ba} & \mathrm{bb}\\
+%	\Delta s_a & 0\\
+%	0 & \Delta s_b
+%	\end{pmatrix}
+%	\begin{pmatrix}
+%	\gamma_a\\
+%	\gamma_b	
+%	\end{pmatrix} = \begin{pmatrix}
+%		\mathrm{RHS}_a\\
+%		\mathrm{RHS}_b\\
+%		\Gamma_{\gamma,a}\\	
+%		\Gamma_{\gamma,b}
+%		\end{pmatrix}
+%	\end{equation}
+
+
+
+
 
 %
 \subsection{Convergence study of panel method}
