@@ -17,6 +17,9 @@
 	\lsymb[f]{$\mathbf{u}_{\mathrm{ext}}$}{External induced velocity}{$[m\cdot s^{-1}]$}{ue}
 	\lsymb[f]{$\mathbf{u}_{b}$}{Velocity of the body}{$[m\cdot s^{-1}]$}{ub}	
 	\lsymb[f]{$\mathbf{u}_{\mathrm{slip}}$}{Boundary slip velocity}{$[m\cdot s^{-1}]$}{us}	
+	\lsymb[f]{$u_{r}$}{Radial velocity}{$[m\cdot s^{-1}]$}{ur}	
+	\lsymb[f]{$u_{\theta}$}{Angular velocity}{$[m\cdot s^{-1}]$}{uhh}	
+
 		
 	\lsymb[f]{$N_p$}{Number of particles}{$[-]$}{np}	
 	\lsymb[f]{$\mathbf{K}$}{Biot-Savart kernel}{[$-$]}{k}
@@ -45,13 +48,13 @@
 	\gsymb[f]{$\omega^h$}{Discrete vorticity field}{$[s^{-1}]$}{xxh}
 	\gsymb[f]{$\alpha_p$}{Circulation of the particle}{$[m^2\cdot s^{-1}]$}{aap}
 	\gsymb[f]{$\beta_p$}{Corrected circulation of the particle}{$[m^2\cdot s^{-1}]$}{bbp}
-	\gsymb[f]{$\epsilon$}{Distance between the particles}{$[m]$}{eep}
+	%\gsymb[f]{$\epsilon$}{Distance between the particles}{$[m]$}{eep}
 	\gsymb[f]{$\sigma$}{Core size}{[$m$]}{rr}
 	\gsymb[f]{$\Delta t_d$}{Diffusion time-step size}{$[s]$}{dtd}	
 	\gsymb[f]{$\Delta t_c$}{Convection time-step size}{$[s]$}{dtc}		
 	\gsymb[f]{$\gamma$}{Vortex sheet strengths}{$[s]$}{cc}		
 	\gsymb[f]{$\xi$}{Scale relative position of particle to stencil node}{$[-]$}{nn}
-
+	\gsymb[f]{$\epsilon$}{Relative error}{$[-]$}{ee}
 
 %To model the flow around a VAWT, several approaches can be taken, Vermeer at al. (2003) \cite{Vermeer2003} have also summarized in their paper. The two main approaches of investigating the flow is either employing a numerical method to simulate the flow or through experimental simulations.
 
@@ -857,25 +860,138 @@ where the diagonal matrices ($AA, BB$) are the self-induction matrix of the pane
 %		\end{pmatrix}
 %	\end{equation}
 
-
-
-
-
 %
 \subsection{Convergence study of panel method}
-%
-\section{Simulation acceleration techniques}
-\label{sec:sat}
-%
-\subsection{Fast multi-pole Method}
-%
-\subsection{Parallel computation in GPU}
+The validation of the panel method was done by performing a convergence study of a cylinder. The vortex panels where used to simulate a potential flow around a cylinder and the solution of the panels was compared with the analytical solutions.
+
+	\begin{table}[b]
+	    \centering
+	    \begin{tabular}{ l r c }
+	        \hline
+	        Parameters\T\B              & Value 	& Unit    \\
+	        \hline
+	        $R$\T                     	& $1$	    & $[m\cdot s^{-1}]$ \\
+	        $\mathbf{u}_{\infty}$ 		& $\left[1, 0\right]$  	& $[m\cdot s^{-1}]$ \\
+	        $N_{\mathrm{panels}}$\B     & $100$  	& $[-]$   \\
+	        \hline
+	    \end{tabular}
+	    \caption{Panel study parameters}
+	    \label{tab:panelParams}
+	\end{table}
+
+To test the solution of the vortex panels with the analytical solution, the problem was first run for the parameters in the table \ref{tab:panelParams}. The velocity field of the potential flow solution is shown in figure \ref{fig:panelCylinder_velocityField}. The figure shows the norm of the velocity, and we see that it shows the velocity field of a potential flow solution, with an infinitely thin boundary layer, stagnating to zero velocity inside the body.
+
+	\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.7\textwidth]{figures/lagrangian/panelCylinder_velocityField.pdf}
+	\caption{Panel method solution: Potential flow velocity field around unit cylinder. The figure depicts $\left\Vert\mathbf{u}\right\Vert$ with zero velocity inside the body.}
+	\label{fig:panelCylinder_velocityField}
+	\end{figure}
+
+The jagged velocity field around the surface of the cylinder is simply due to the sampling resolution of the field; For higher resolution, this will not be there. In order to determine the accuracy of the solution, the velocity field of the panel solution was compared with the analytical solution. The analytical velocity field around a cylinder is given as,
+	\begin{subequations}
+	\begin{align}
+	u_r &= u\left(1 - \frac{R^2}{r^2}\right)\cos\theta\\
+	u_{\theta} &= -u\left(1+\frac{R^2}{r^2}\right)\cos\theta
+	\end{align}
+	\label{eq:potentialCylinderAnalytical}
+	\end{subequations}	
+where $u_r$ and $u_{\theta}$ are the radial and the angular velocity respectively. The equation \ref{eq:potentialCylinderAnalytical} is a function of the radius from the center of the cylinder (in our case $r_0 = [0, 0]$) and the radius of the cylinder $R$. 
+
+\begin{figure}[!b]
+        \centering
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{figures/lagrangian/panelCylinder_versusAnalytical.pdf}
+                \caption{Comparison of the velocity field.}
+                \label{fig:panelCylinder_versusAnalytical}
+        \end{subfigure}%
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+          %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{figures/lagrangian/panelCylinder_error.pdf}
+                \caption{Error in velocity field}
+                \label{fig:panelCylinder_error}
+        \end{subfigure}
+        \caption{Comparison of the velocity field along the $y$-axis $0\rightarrow10$. Figure \textbf{(a)} shows both the solutions, the numerical $\left\Vert\mathbf{u}^h\right\Vert$ [solid blue,{\color{plotBlue}{---}}] and the analytical solution [solid black, ---]. Figure \textbf{(b)} shows the relative error $\epsilon$ between the solution, given by equation \ref{eq:panelRelativeError}}
+        \label{fig:panelCylinderComparision}
+\end{figure}	
+
+The velocity field of the panel was compared with this analytical solution along the y-axis from $y=0$ to $y=10$, figure \ref{fig:panelCylinder_versusAnalytical}. Comparing the solutions of the plot we see that the solution of the vortex panels and the analytical potential flow solution matches everywhere except at the surface. This is correct because the potential flow solution has a slip velocity (i.e non-zero velocity) at the surface of the body, whereas the vortex panels solves for a no-slip boundary condition at the collocation points of the surface. This explains the sudden drop of the velocity from two to zero at the surface.	
+
+The figure \ref{fig:panelCylinder_error} shows the relative error $\epsilon$ between the numerical and the analytical solution,
+	\begin{equation}
+	\epsilon = \frac{\left\Vert\mathbf{u}-\mathbf{u}^h\right\Vert}{\left\Vert\mathbf{u}\right\Vert}
+	\label{eq:panelRelativeError}
+	\end{equation}
+	
+where $\mathbf{u}$ is the analytical solution and the $\mathbf{u}^h$ is the numerical (panel method) solution. Ignoring the solution right at the surface ($r=R$), we see that the error between the numerical and the analytical solution reduces from $\epsilon=5\times10^{-3}\rightarrow 8\times10^{-5}$ as we go from $r=1\rightarrow10$. This behavior of the error tells us that the solution of the constant-strength vortex panels gets more accurate as we go further away from the panels; right next to the panels, we have the largest error. This is because the vortex panels discretizes the body using a first-order approximation (straight panels) and also discretizes the vortex sheet strength using a first-order approximation. 
+
+The convergence analysis of the vortex panels shows that the panels that we are employing is indeed a first-order method as the error converges at $\mathcal{O}\left(N\right)$, figure \ref{fig:panelCylinder_convergence}.
+
+
+	\begin{figure}[!t]
+	\centering
+	\includegraphics[width=0.7\textwidth]{figures/lagrangian/panelCylinder_convergence.pdf}
+	\caption{Convergence plot of the constant-strength straight vortex panels. The figures depicts the reduction is error at $\mathcal{O}\left(N\right)$.}
+	\label{fig:panelCylinder_convergence}
+	\end{figure}
+
+%\newpage
+%\section{Simulation acceleration techniques}
+%\label{sec:sat}
+%%
+%\subsection{Fast multi-pole Method}
+%%
+%\subsection{Parallel computation in GPU}
 %
 \section{Validation of lagrangian method}
+The validation of the lagrangian method was done by comparing the results of the Lamb-Oseen vortex and the analyzing the convection of the Clercx-Bruneau dipole. Validating each components of the hybrid method separately is vital as to ensure coupling is done correctly.
 
-\subsection{Lamb-oseen vortex at $Re=100$}
+\subsection{Evolution of Lamb-Oseen vortex}
+The evolution of the Lamb-Oseen vortex can be considered to be one of the simplest to validate the viscous vortex method as it is derived from the diffusion equation.
+
+	\begin{figure}[!t]
+	\centering
+	\includegraphics[width=0.99\textwidth]{figures/lagrangian/lambOseen_convection_vorticityErrorContours_compressed-crop.pdf}
+	\caption{Error growth of Lamb-Oseen vortex during the evolution}
+	\label{fig:lambOseen_convection_vorticityErrorContours_compressed}
+	\end{figure}
+
+	\begin{figure}[p]
+	\centering
+	\includegraphics[width=0.7\textwidth]{figures/lagrangian/lambOseen_convection_errorGrowth_compressed.pdf}
+	\caption{Error growth of Lamb-Oseen vortex during the evolution}
+	\label{fig:lambOseen_convection_errorGrowth_compressed}
+	\end{figure}
+	
+	\begin{figure}[p]
+	        \centering
+	        \begin{subfigure}[b]{0.5\textwidth}
+	                \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_convergence_dx_sigma0p02_compressed.pdf}
+	                \caption{Comparison of the velocity field.}
+	                \label{fig:lambOseen_convergence_dx_sigma0p02_compressed}
+	        \end{subfigure}%
+	        ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+	          %(or a blank line to force the subfigure onto a new line)
+	        \begin{subfigure}[b]{0.5\textwidth}
+	                \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_convergence_dx_compressed.pdf}
+	                \caption{Error in velocity field}
+	                \label{fig:lambOseen_convergence_dx_compressed}
+	        \end{subfigure}
+	        \caption{dx}
+	        \label{fig:lambOseen_convergence_dx}
+	\end{figure}	
+
+	\begin{figure}[p]
+	\centering
+	\includegraphics[width=0.7\textwidth]{figures/lagrangian/lambOseen_convergence_dt_compressed.pdf}
+	\caption{Error growth of Lamb-Oseen vortex during the evolution}
+	\label{fig:lambOseen_convergence_dt_compressed}
+	\end{figure}
+
 
 \subsection{Convergence study of the viscous vortex method}
+
 %%------------------------------------------------------------------------------------------------------
 %%------------------------------------------------------------------------------------------------------
 %%------------------------------------------------------------------------------------------------------

@@ -40,9 +40,13 @@
 		\nompageref{3}
   \item [{$\mathbf {u}^h$}]\begingroup Discrete velocity\nomunit {$[m\cdot s^{-1}]$}\nomeqref {2.0}
 		\nompageref{3}
+  \item [{$u_{\theta }$}]\begingroup Angular velocity\nomunit {$[m\cdot s^{-1}]$}\nomeqref {2.0}
+		\nompageref{3}
   \item [{$\mathbf {u}_{\infty }$}]\begingroup Free-stream velocity\nomunit {$[m\cdot s^{-1}]$}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$\mathbf {u}_{\phi }$}]\begingroup Potential velocity\nomunit {$[m\cdot s^{-1}]$}\nomeqref {2.0}
+		\nompageref{3}
+  \item [{$u_{r}$}]\begingroup Radial velocity\nomunit {$[m\cdot s^{-1}]$}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$\mathbf {u}_{\mathrm {slip}}$}]\begingroup Boundary slip velocity\nomunit {$[m\cdot s^{-1}]$}\nomeqref {2.0}
 		\nompageref{3}
@@ -77,7 +81,7 @@
 		\nompageref{3}
   \item [{$\Delta t_d$}]\begingroup Diffusion time-step size\nomunit {$[s]$}\nomeqref {2.0}
 		\nompageref{3}
-  \item [{$\epsilon $}]\begingroup Distance between the particles\nomunit {$[m]$}\nomeqref {2.0}
+  \item [{$\epsilon $}]\begingroup Relative error\nomunit {$[-]$}\nomeqref {2.0}
 		\nompageref{3}
   \item [{$\zeta _{\sigma }$}]\begingroup Smooth cut-off function of the blob\nomunit {[$-$]}\nomeqref {2.0}
 		\nompageref{3}
@@ -102,6 +106,8 @@
 		\nompageref{3}
   \item [{\textbf {GPU}}]\begingroup Graphics Processing Units\nomeqref {2.0}
 		\nompageref{3}
+  \item [{\textbf {LHS}}]\begingroup Left Hand Side\nomeqref {2.49}
+		\nompageref{19}
   \item [{\textbf {LSTSQ}}]\begingroup Least-Square solution method\nomeqref {2.57}
 		\nompageref{21}
   \item [{\textbf {PSE}}]\begingroup Particle Strength Exchange\nomeqref {2.30}
