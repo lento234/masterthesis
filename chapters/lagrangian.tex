@@ -1107,10 +1107,6 @@ We see that the simple redistribution scheme is not only more stable at performi
 
 \subsection{Convergence study of the viscous vortex method}
 
-The final validation we can perform to ensure the scheme performs as according to theory is to perform a convergence study. For a numerical scheme that is stable, the error in discretization must converge as the resolution is increased. 
-
-In the case of spatial discretization, if we where to increase the spatial resolution the error must converge. As we are dealing with vortex blobs, there are multiple ways of increasing the resolution. The straight forward method would be to increase the density of particles in a given area, i.e. reducing the blob spacing $h$ and maintaining the core spreading $\sigma$. Figure \ref{fig:lambOseen_convergence_dx_sigma0p02_compressed} shows the convergence of the spatial discretization when the core size $\sigma$ is maintained at $\sigma=0.02$. At this case, the overlap ratio changes with the blob spacing according to equation \ref{eq:overlapRatio}. At lower blob spacing $h$, the error in vorticity quickly drops to near machine precision. This performs as expected and shows us that error converges as spatial resolution increased. Figure \ref{fig:lambOseen_convergence_dx_compressed}, shows the convergence of error when $\mathrm{overlap} = 1$, is maintained. This means that the blob spacing is equal to core size $h=\sigma$. So, when reducing the blobs spacing, this also reduces the core size. At this scenario, we see that there is also a convergence is spatial discretization.
-
 	\begin{figure}[!t]
 	        \centering
 	        \begin{subfigure}[b]{0.5\textwidth}
@@ -1127,20 +1123,62 @@ In the case of spatial discretization, if we where to increase the spatial resol
 	        \end{subfigure}
 	        \caption{Convergence in spatial discretization of the vortex blobs. Figure \textbf{(a)} shows the convergence by fixing the core size $\sigma$ and \textbf{(b)} shows the convergence when overlap ratio is fixed.}
 	        \label{fig:lambOseen_convergence_dx}
-	\end{figure}	
+	\end{figure}
 
-To investigate the convergence in temporal discretization, we determined the growth in Lamb-Oseen vorticity field after convecting with various convection step size $\Delta t_c$. Note that we are using the Tutty's diffusion scheme, so $\Delta t_d = \Delta t_c$. We see that error converges at $\mathcal{O}(\Delta t)$, meaning that the aggregate convection and diffusion scheme is of first order. 
+The final validation we can perform to ensure the scheme performs as according to theory is to perform a convergence study. For a numerical scheme that is stable, the error in discretization must converge as the resolution is increased. 
+
 	\begin{figure}[!b]
 	\centering
-	\includegraphics[width=0.7\textwidth]{figures/lagrangian/lambOseen_convergence_dt_compressed.pdf}
+	\includegraphics[width=0.6\textwidth]{figures/lagrangian/lambOseen_convergence_dt_compressed.pdf}
 	\caption{Error growth of Lamb-Oseen vorticity field after one-step.}
 	\label{fig:lambOseen_convergence_dt_compressed}
 	\end{figure}
-%%------------------------------------------------------------------------------------------------------
-%%------------------------------------------------------------------------------------------------------
-%%------------------------------------------------------------------------------------------------------
-%
-%\subsection{Convection of Clercx-Bruneau dipole at $Re=625$}
-%
-\section{Summary}
-%
+
+In the case of spatial discretization, if we where to increase the spatial resolution the error must converge. As we are dealing with vortex blobs, there are multiple ways of increasing the resolution. The straight forward method would be to increase the density of particles in a given area, i.e. reducing the blob spacing $h$ and maintaining the core spreading $\sigma$. Figure \ref{fig:lambOseen_convergence_dx_sigma0p02_compressed} shows the convergence of the spatial discretization when the core size $\sigma$ is maintained at $\sigma=0.02$. At this case, the overlap ratio changes with the blob spacing according to equation \ref{eq:overlapRatio}. At lower blob spacing $h$, the error in vorticity quickly drops to near machine precision. This performs as expected and shows us that error converges as spatial resolution increased. Figure \ref{fig:lambOseen_convergence_dx_compressed}, shows the convergence of error when $\mathrm{overlap} = 1$, is maintained. This means that the blob spacing is equal to core size $h=\sigma$. So, when reducing the blobs spacing, this also reduces the core size. At this scenario, we see that there is also a convergence is spatial discretization.
+	
+To investigate the convergence in temporal discretization, we determined the growth in Lamb-Oseen vorticity field after convecting with various convection step size $\Delta t_c$. Note that we are using the Tutty's diffusion scheme, so $\Delta t_d = \Delta t_c$. We see that error converges at $\mathcal{O}(\Delta t)$, meaning that the aggregate convection and diffusion scheme is of first order. 
+
+
+\section{Summary of the Lagrangian method}
+
+In summary, the Lagrangian domain of the hybrid method has been described. The Lagrangian method is used to described the evolution of the wake past the geometry. As a wake predominantly involves in the convection and the diffusion of the wake, Vortex Particle Method is the ideal choice for this domain. Unlike, typical Eulerian method, VPM only required fluid elements where there is vorticity and this means the VPM is inherently auto-adaptive. Furthermore, the computation of the these elements have been accelerated using FMM and parallelized for GPU hardwares. This enables the method to be high efficient and allows for future scalability.
+
+For the VPM, the choice of fluid elements was vortex blobs. This has non-zero core size, removing the singularity when performing Biot-Savart calculations. The strengths of these particles is initialized by assigning the local circulation strength to the particle, given by equation \ref{eq:particleCirculationAssignment}. We see that when dealing with only a Lagrangian method this does not pose a problem. However, when we perform coupling, we see that the gaussian blurring of the original vorticity field during the initialization is a fundamental source of error during the coupling. Strategies such as Beale's iterative method, can help us recover the original vorticity field, however, it is an ill-conditioned problem and can introduce errors. Moreover, we will see that this strategy is not viable when coupling as the correction can only be performed on a non-finite domain. The only approach to minimize this error is to reduce the gaussian spreading by increasing the overlap ratio to $overlap=1$ and minimize the blob spacing $h$ as much as possible. So, the proper handling of the initialization of the vortex blob strength is still an open question, and when solved can significantly improve the accuracy and the efficiency of the hybrid coupling. More on this will be discussed in section \ref{}. \todo{citation}
+
+The convection of the vortex blobs is done using a $4^{\mathrm{th}}$-order Runge-Kutta Method. However, even with this higher order convection methods, we will have to deal with lagrangian grid distortion. Lagrangian distortion occurs when particles fail to maintain the overlap ratio as particles will tend to clump together and create regions of no fluid elements due to high strains in the fluid. To deal with this, we use a $\mathrm{M}'_4$ interpolation kernel that remeshing the particles that satisfies the conservation of circulation, linear and angular impulse. 
+
+Diffusion of the vortex blobs is also an import part of the VPM. Initially, we employed the modified interpolation kernel by Wee \cite{}, which integrated the diffusion process into the standard interpolation kernel. However, the method poses two problems: the diffusion time step $\Delta t_d$ has a lower limit; the diffusion process introduces error when diffusion does not occur at every step, $k_d \neq 1$. To overcome this problem, we used the simple redistribution scheme by Tutty \cite{}, which enables us to perform diffusion at arbitrary time-steps, specifically at the same frequency as convection time step. So now, we can diffuse and convect at every iteration, which make the scheme more continuous and more ideal for coupling in the hybrid method.
+
+To deal a body in the flow (for the Lagrangian method), we used vortex panels to enforce the no-slip boundary condition. Koumoutsakos, Leonard, Pepin \cite{}, have shown that enforcing no-slip boundary condition is equivalent to no-through boundary condition and they are linked to each. Constant-Strenth Vortex panels, based of Katz \cite{}, where used to treat the body and the problem was verified and validated with the analytical solution of a potential flow around a cylinder. There is one difference between our vortex panel method and the standard boundary element method used in VPM. The panels does not solve the problem of vorticity production from the body, as this is dealth with in the Eulerian domain and transfered to the Lagrangian domain. So when validation the Lagrangian method, we cannot validate a problem containing a body.
+
+To validate the vortex blob only Lagrangian method, we used the analytical solution of the Lamb-Oseen vortex. We verified that the Wee's diffusion method indeed miss-performed when the diffusion was not done at every step. The validation was done by investigating the error in the vorticity and the velocity field and was able to conclude that the vortex blobs performed according to literature.
+
+\subsection*{Lagrangian method algorithm}
+
+	\begin{figure}[!t]
+		\centering
+		\begin{tikzpicture}
+			[node distance=.8cm, start chain=going below,]
+			\node[punktchain, join] (solvePanel) {Solve for panels};
+		    \node[punktchain, join] (solveVelocity) {Determine the total velocity field};
+		    \node[punktchain, join] (convect)     {Convect the vortex blobs};
+		    \node[punktchain, join] (remesh) 	  {Remesh the Lagrangian field};
+		    \node[punktchain, join] (diffuse)     {Diffuse the vortex blobs};		    
+		\end{tikzpicture}
+		\caption{Flowchart of the Lagrangian method. The flowchart shows coupling between vortex panels and vortex blobs to evolve from $t_n$ to $t_{n+1}$.}
+		\label{fig:flowchart_lagrangian}
+	\end{figure}
+	
+
+The flowchart to one time step of the Lagrangian method is given by figure \ref{fig:flowchart_lagrangian}.The algorithm to the Lagrangian method can be summarized as follows:
+
+	\begin{enumerate}
+	\item \textbf{Solve for panels:} Determine the strengths of the vortex panels $\gamma$, such that the no-slip boundary condition on the collocation points of the vortex panels is enforced. We will have ensure that the total circulation of the vortex panels satisfies the conservation of circulation.
+	\item \textbf{Determine the total velocity field:} Determine the total velocity field $\mathbf{u}$, which is sum of the velocity field induced by the vortex blobs $\mathbf{u}_{\omega}$, the newly calculated vortex panels $\mathbf{u}_{\gamma}$ and free-stream flow $\mathbf{u}_{\infty}$. 
+	\item \textbf{Convect the vortex blobs:} Use the velocity field to time march the vortex blobs to the new position, from $t_n$ to $t_{n+1}$, by the time step size $\Delta t_c$.
+	\item \textbf{Remesh the Lagrangian field:} Remesh the vortex blobs onto a structured square lattices using the $\mathrm{M}'_4$ interpolation kernel.
+	\item \textbf{Diffuse the vortex blobs:} Diffuse the vortex blobs using the $\Delta t_d$ diffusion time step, by modifying the strengths of the vortex blobs according to simple redistribution method for treating diffusion.
+	\end{enumerate}
+
+The difference here is that the vorticity is not generated from the body in this algorithm. We introduce the vorticity generation from the Eulerian method by interpolating the new vorticity field from the Eulerian domain onto the Lagrangian domain using the Hybrid coupling strategys.
+

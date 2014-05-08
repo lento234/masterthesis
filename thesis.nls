@@ -22,7 +22,7 @@
 		\nompageref{9}
   \item [{$N_p$}]\begingroup Number of particles\nomunit {-}\nomeqref {2.0}
 		\nompageref{9}
-  \item [{$\mathrm {overlap}$}]\begingroup Overlap ratio of the blobs\nomunit {[$-$]}\nomeqref {2.0}
+  \item [{$\mathrm {overlap}$}]\begingroup Overlap ratio of the blobs\nomunit {-}\nomeqref {2.0}
 		\nompageref{9}
   \item [{$p$}]\begingroup Pressure\nomunit {\si {\pascal }}\nomeqref {2.0}
 		\nompageref{9}
