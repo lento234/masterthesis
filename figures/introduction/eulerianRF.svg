@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+    xmlns:latexdraw="http://latexdraw.sourceforge.net/namespaces/latexdraw"
+    version="1.1" baseProfile="full">
+    <defs/>
+    <g>
+        <g latexdraw:type="bezierCurve" id="id46">
+            <path
+                d="M 320.0 290.0 C 337.41974016914725 241.8345499990687 518.4027147795987 220.24936688645437 550.0 260.0 C 581.5972852204013 299.75063311354563 551.0921029206147 374.42502879768676 500.0 390.0 C 448.9078970793853 405.57497120231324 470.0 400.0 420.0 410.0 C 370.0 420.0 374.46394187782624 400.37123435792137 330.0 370.0 C 285.53605812217376 339.62876564207863 302.58025983085275 338.1654500009313 320.0 290.0 z "
+                stroke-width="2.0" stroke="black" fill="none" latexdraw:rotationAngle="0.0"/>
+        </g>
+        <g latexdraw:type="bezierCurve" id="id49">
+            <path
+                d="M 201.00014404812532 309.6924697837989 C 280.48396814493395 352.7228009635001 394.83970831843055 275.19444506060825 433.38929077184554 260.33414872472986 C 471.9388732252605 245.47385238885147 584.9474299394892 248.94376694186775 659.0425201992264 221.1006114726493 "
+                stroke-width="2.0" stroke="black" fill="none" latexdraw:rotationAngle="0.0"/>
+        </g>
+        <g latexdraw:type="bezierCurve" id="id52">
+            <path
+                d="M 201.00014404812532 372.97236857747725 C 283.1783350634699 374.2379665533509 403.59640080367217 330.8807559990453 440.7987997978193 317.2860576390404 C 478.00119879196643 303.6913592790355 581.579471291319 318.55165561491395 659.0425201992264 322.3484495425346 "
+                stroke-width="2.0" stroke="black" fill="none" latexdraw:rotationAngle="0.0"/>
+        </g>
+        <g latexdraw:type="bezierCurve" id="id55">
+            <path
+                d="M 201.00014404812532 448.90824712989127 C 287.8934771709076 407.1435139260636 404.26999253330615 377.7078811063672 446.86112536452504 369.1755746498567 C 489.4522581957439 360.64326819334616 583.600246480221 353.98839893937384 659.0425201992264 385.6283483362129 "
+                stroke-width="2.0" stroke="black" fill="none" latexdraw:rotationAngle="0.0"/>
+        </g>
+        <g latexdraw:type="text" id="id58" font-family="Dialog"
+            fill="black" font-size="30" latexdraw:x="440.0">
+            <text x="440.0" y="400.0"><![CDATA[$\mathbf{V}$]]></text>
+        </g>
+        <g latexdraw:type="text" id="id61" font-family="Dialog"
+            fill="black" font-size="24" latexdraw:x="290.0">
+            <text x="290.0" y="300.0"><![CDATA[$\left(\mathbf{u},p\right)$]]></text>
+        </g>
+    </g>
+    <metadata>
+        <latexdraw:metadata>
+            <latexdraw:displayBorders>false</latexdraw:displayBorders>
+            <latexdraw:autoAdjust>true</latexdraw:autoAdjust>
+            <latexdraw:ppc>50</latexdraw:ppc>
+            <latexdraw:zoom>1.0</latexdraw:zoom>
+            <latexdraw:unit>cm</latexdraw:unit>
+            <latexdraw:classicGrid>false</latexdraw:classicGrid>
+            <latexdraw:gridGap>10</latexdraw:gridGap>
+            <latexdraw:code>0</latexdraw:code>
+            <latexdraw:displayGrid>true</latexdraw:displayGrid>
+            <latexdraw:magneticGrid>true</latexdraw:magneticGrid>
+            <latexdraw:autoUpdate>true</latexdraw:autoUpdate>
+            <latexdraw:version>2.0.8</latexdraw:version>
+            <latexdraw:size>
+                <latexdraw:width>1249</latexdraw:width>
+                <latexdraw:height>1028</latexdraw:height>
+            </latexdraw:size>
+            <latexdraw:position>
+                <latexdraw:x>179</latexdraw:x>
+                <latexdraw:y>52</latexdraw:y>
+            </latexdraw:position>
+            <latexdraw:dividerPosition>0.6357085668534828</latexdraw:dividerPosition>
+            <latexdraw:displayCodePanel>true</latexdraw:displayCodePanel>
+            <latexdraw:displayXScale>true</latexdraw:displayXScale>
+            <latexdraw:displayYScale>true</latexdraw:displayYScale>
+            <latexdraw:delimitorOpacity>130</latexdraw:delimitorOpacity>
+        </latexdraw:metadata>
+    </metadata>
+</svg>

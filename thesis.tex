@@ -56,24 +56,60 @@
 %\usepackage{makeidx}
 %
 
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{graphicx}
-\usepackage{caption}
-\usepackage{subcaption}
-%\usepackage{hyperref}
-%\usepackage{graphicx}
+\usepackage{amsmath} % math
+\usepackage{amsfonts} % math
+\usepackage{amssymb} % math
+\usepackage{graphicx} % figures
+\usepackage{caption} % figures
+\usepackage{subcaption} % multiple figures
+\usepackage{tikz} % flowchart
+%\usepackage{longtable}
+\usepackage{ctable}
+\usepackage{booktabs}
+\usepackage{siunitx} % use SI unit
 
-%\usepackage{color}
-%\usepackage{python}
+% Flowchart definition
+\usetikzlibrary{calc,trees,positioning,arrows,chains,shapes.geometric,%
+    decorations.pathreplacing,decorations.pathmorphing,shapes,%
+    matrix,shapes.symbols}
+
+\tikzset{
+>=stealth',
+  punktchain/.style={
+    rectangle, 
+    %rounded corners, 
+    fill=black!10,
+    %draw=black, % very thick,
+    text width=15em, 
+    minimum height=3em, 
+    text centered, 
+    on chain},
+  line/.style={draw, thick, <-},
+  element/.style={
+    tape,
+    top color=white,
+    bottom color=blue!50!black!60!,
+    minimum width=8em,
+    draw=blue!40!black!90, very thick,
+    text width=10em, 
+    minimum height=3.5em, 
+    text centered, 
+    on chain},
+  every join/.style={->, thick,shorten >=1pt},
+  decoration={brace},
+  tuborg/.style={decorate},
+  tubnode/.style={midway, right=2pt},
+}
+
 
 %=================%
 % custom commands %
 %=================%
 %
 % Custom commands
+% print todo
 \newcommand{\todo}[1]{\textcolor{red}{\centerline{!!! #1 !!!}}}
+% Print and index acronyms
 \newcommand{\printAcron}[2]{#1 ({\color{darkblue}{#2}})\acron[f]{#2}{#1}}
 
 % short-hand notations for cosine, sine and tangent with calligraphic C, S and T

@@ -2,59 +2,62 @@
 \label{ch:theory}
 
 	
-	\lsymb[f]{$\mathbf{x}$}{Position vector}{$[m]$}{x}
-	\lsymb[f]{$\mathbf{x}_p$}{Position vector of the particle}{$[m]$}{xp}
-	\lsymb[f]{$\mathbf{x}_{\nu}$}{Position vector of particle to be diffused}{$[m]$}{xmm}
-	\lsymb[f]{$t$}{Time}{$[s]$}{t}
-	\lsymb[f]{$\mathbf{u}$}{Velocity}{$[m\cdot s^{-1}]$}{u}
+	\lsymb[f]{$\mathbf{x}$}{Position vector}{\si{\m}}{x}
+	\lsymb[f]{$\mathbf{x}_p$}{Position vector of the particle}{\si{\m}}{xp}
+	\lsymb[f]{$\mathbf{x}_{\nu}$}{Position vector of particle to be diffused}{\si{\m}}{xmm}
+	\lsymb[f]{$t$}{Time}{\si{\s}}{t}
+	\lsymb[f]{$\mathbf{u}$}{Velocity}{\si{\m\per\s}}{u}
 	%\lsymb[f]{$\mathbf{u}\left(\mathbf{x},t\right)$}{Velocity field}{$[m\cdot s^{-1}]$}{ua}
-	\lsymb[f]{$p$}{Pressure}{$[\mathrm{Pa}]$}{p}
-	\lsymb[f]{$\mathbf{u}^h$}{Discrete velocity}{$[m\cdot s^{-1}]$}{uh}	
-	\lsymb[f]{$\mathbf{u}_{\infty}$}{Free-stream velocity}{$[m\cdot s^{-1}]$}{ul}
-	\lsymb[f]{$\mathbf{u}_{\omega}$}{Vortical velocity}{$[m\cdot s^{-1}]$}{uz}
-	\lsymb[f]{$\mathbf{u}_{\phi}$}{Potential velocity}{$[m\cdot s^{-1}]$}{up}
-	\lsymb[f]{$\mathbf{u}_{\gamma}$}{Vortex sheet induced velocity}{$[m\cdot s^{-1}]$}{uc}
-	\lsymb[f]{$\mathbf{u}_{\mathrm{ext}}$}{External induced velocity}{$[m\cdot s^{-1}]$}{ue}
-	\lsymb[f]{$\mathbf{u}_{b}$}{Velocity of the body}{$[m\cdot s^{-1}]$}{ub}	
-	\lsymb[f]{$\mathbf{u}_{\mathrm{slip}}$}{Boundary slip velocity}{$[m\cdot s^{-1}]$}{us}	
-	\lsymb[f]{$u_{r}$}{Radial velocity}{$[m\cdot s^{-1}]$}{ur}	
-	\lsymb[f]{$u_{\theta}$}{Angular velocity}{$[m\cdot s^{-1}]$}{uhh}	
+	\lsymb[f]{$p$}{Pressure}{\si{\pascal}}{p}
+	\lsymb[f]{$\mathbf{u}^h$}{Discrete velocity}{\si{\m\per\s}}{uh}	
+	\lsymb[f]{$\mathbf{u}_{\infty}$}{Free-stream velocity}{\si{\m\per\s}}{ul}
+	\lsymb[f]{$\mathbf{u}_{\omega}$}{Vortical velocity}{\si{\m\per\s}}{uz}
+	\lsymb[f]{$\mathbf{u}_{\phi}$}{Potential velocity}{\si{\m\per\s}}{up}
+	\lsymb[f]{$\mathbf{u}_{\gamma}$}{Vortex sheet induced velocity}{\si{\m\per\s}}{uc}
+	\lsymb[f]{$\mathbf{u}_{\mathrm{ext}}$}{External induced velocity}{\si{\m\per\s}}{ue}
+	\lsymb[f]{$\mathbf{u}_{b}$}{Velocity of the body}{\si{\m\per\s}}{ub}	
+	\lsymb[f]{$\mathbf{u}_{\mathrm{slip}}$}{Boundary slip velocity}{\si{\m\per\s}}{us}	
+	\lsymb[f]{$u_{r}$}{Radial velocity}{\si{\m\per\s}}{ur}	
+	\lsymb[f]{$u_{\theta}$}{Angular velocity}{\si{\m\per\s}}{uhh}	
 
 		
-	\lsymb[f]{$N_p$}{Number of particles}{$[-]$}{np}	
-	\lsymb[f]{$\mathbf{K}$}{Biot-Savart kernel}{[$-$]}{k}
-	\lsymb[f]{$\mathbf{K_{\sigma}}$}{Vortex blob kernel}{[$-$]}{kb}	
-	\lsymb[f]{$h$}{Nominal particle spacing}{[$m$]}{h}	
-	\lsymb[f]{$\mathrm{overlap}$}{Overlap ratio of the blobs}{[$-$]}{o}	
-	\lsymb[f]{$W$}{Interpolation kernel weight}{$[-]$}{w}
-	\lsymb[f]{$\mathcal{E}$}{Enstrophy}{$[m^2\cdot s^{-2}]$}{en}
-	\lsymb[f]{$c^2$}{Diffusion parameter}{$[-]$}{c}
-	\lsymb[f]{$\mathbf{\hat{n}}$}{Normal vector}{$[-]$}{n}
-	\lsymb[f]{$\mathbf{\hat{s}}$}{Tangent vector}{$[-]$}{s}	
-	\lsymb[f]{$h_{\nu}$}{Characteristic diffusion distance}{$[m]$}{hm}		
-	\lsymb[f]{$k_{d}$}{Diffusion frequency multiple}{$[-]$}{kd}			
+	\lsymb[f]{$N_p$}{Number of particles}{-}{np}	
+	\lsymb[f]{$\mathbf{K}$}{Biot-Savart kernel}{-}{k}
+	\lsymb[f]{$\mathbf{K_{\sigma}}$}{Vortex blob kernel}{-}{kb}	
+	\lsymb[f]{$h$}{Nominal particle spacing}{\si{m}}{h}	
+	\lsymb[f]{$\mathrm{overlap}$}{Overlap ratio of the blobs}{-}{o}	
+	\lsymb[f]{$W$}{Interpolation kernel weight}{-}{w}
+	\lsymb[f]{$\mathcal{E}$}{Enstrophy}{\si{m^2.s^{-2}}}{en}
+	\lsymb[f]{$c^2$}{Diffusion parameter}{-}{c}
+	\lsymb[f]{$\mathbf{\hat{n}}$}{Normal vector}{-}{n}
+	\lsymb[f]{$\mathbf{\hat{s}}$}{Tangent vector}{-}{s}	
+	\lsymb[f]{$h_{\nu}$}{Characteristic diffusion distance}{\si{m}}{hm}		
+	\lsymb[f]{$k_{d}$}{Diffusion frequency multiple}{-}{kd}			
 	
-	\lsymb[f]{$\mathbf{A}$}{Vortex panel influence matrix}{$[-]$}{kd}				
+	\lsymb[f]{$\mathbf{A}$}{Vortex panel influence matrix}{-}{kd}				
 
+	\lsymb[f]{$r$}{Radial position}{\si{m}}{r}
 
-	\gsymb[f]{$\zeta_{\sigma}$}{Smooth cut-off function of the blob}{[$-$]}{ff}	
-	\gsymb[f]{$\rho$}{Density}{$[kg\cdot m^{-3}]$}{qq}
-	\gsymb[f]{$\nu$}{Kinematic viscosity}{$[m^2\cdot s^{-1}]$}{mm}
-	\gsymb[f]{$\Gamma$}{Circulation}{$[m^2\cdot s^{-1}]$}{c}
-	\gsymb[f]{$\Gamma_{\omega}$}{Circulation of the fluid}{$[m^2\cdot s^{-1}]$}{cxx}	
-	\gsymb[f]{$\Gamma_{\gamma}$}{Circulation of vortex sheet}{$[m^2\cdot s^{-1}]$}{ccc}		
-	\gsymb[f]{$\Gamma_{b}$}{Circulation of moving body}{$[m^2\cdot s^{-1}]$}{cb}			
-	\gsymb[f]{$\omega$}{Vorticity}{$[s^{-1}]$}{xx}
-	\gsymb[f]{$\omega^h$}{Discrete vorticity field}{$[s^{-1}]$}{xxh}
-	\gsymb[f]{$\alpha_p$}{Circulation of the particle}{$[m^2\cdot s^{-1}]$}{aap}
-	\gsymb[f]{$\beta_p$}{Corrected circulation of the particle}{$[m^2\cdot s^{-1}]$}{bbp}
+	\gsymb[f]{$\zeta_{\sigma}$}{Smooth cut-off function of the blob}{-}{ff}	
+	\gsymb[f]{$\rho$}{Density}{\si{kg.m^{-3}}}{qq}
+	\gsymb[f]{$\nu$}{Kinematic viscosity}{\si{m^2.s^{-1}}}{mm}
+	\gsymb[f]{$\Gamma$}{Circulation}{\si{m^2.s^{-1}}}{c}
+	\gsymb[f]{$\Gamma_{\omega}$}{Circulation of the fluid}{\si{m^2.s^{-1}}}{cxx}	
+	\gsymb[f]{$\Gamma_{\gamma}$}{Circulation of vortex sheet}{\si{m^2.s^{-1}}}{ccc}		
+	\gsymb[f]{$\Gamma_{b}$}{Circulation of moving body}{\si{m^2.s^{-1}}}{cb}			
+	\gsymb[f]{$\omega$}{Vorticity}{\si{s^{-1}}}{xx}
+	\gsymb[f]{$\omega^h$}{Discrete vorticity field}{\si{s^{-1}}}{xxh}
+	\gsymb[f]{$\alpha_p$}{Circulation of the particle}{\si{m^2.s^{-1}}}{aap}
+	\gsymb[f]{$\beta_p$}{Corrected circulation of the particle}{\si{m^2.s^{-1}}}{bbp}
 	%\gsymb[f]{$\epsilon$}{Distance between the particles}{$[m]$}{eep}
-	\gsymb[f]{$\sigma$}{Core size}{[$m$]}{rr}
-	\gsymb[f]{$\Delta t_d$}{Diffusion time-step size}{$[s]$}{dtd}	
-	\gsymb[f]{$\Delta t_c$}{Convection time-step size}{$[s]$}{dtc}		
-	\gsymb[f]{$\gamma$}{Vortex sheet strengths}{$[s]$}{cc}		
-	\gsymb[f]{$\xi$}{Scale relative position of particle to stencil node}{$[-]$}{nn}
-	\gsymb[f]{$\epsilon$}{Relative error}{$[-]$}{ee}
+	\gsymb[f]{$\sigma$}{Core size}{\si{m}}{rr}
+	\gsymb[f]{$\Delta t_d$}{Diffusion time-step size}{\si{s}}{dtd}	
+	\gsymb[f]{$\Delta t_c$}{Convection time-step size}{\si{s}}{dtc}		
+	\gsymb[f]{$\gamma$}{Vortex sheet strengths}{\si{s}}{cc}		
+	\gsymb[f]{$\xi$}{Scale relative position of particle to stencil node}{-}{nn}
+	\gsymb[f]{$\epsilon$}{Relative error}{-}{ee}
+	\gsymb[f]{$\tau$}{Scaled viscous time}{\si{m^2}}{ss}
+	\gsymb[f]{$\Gamma_c$}{Circulation of the vortex core}{\si{m^2.s^{-1}}}{cc}
 
 %To model the flow around a VAWT, several approaches can be taken, Vermeer at al. (2003) \cite{Vermeer2003} have also summarized in their paper. The two main approaches of investigating the flow is either employing a numerical method to simulate the flow or through experimental simulations.
 
@@ -96,7 +99,7 @@ by the stokes theorem, as represents the integral vorticity of the domain, figur
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.3\linewidth]{./figures/lagrangian/vorticityCirculation.pdf}
-	\caption{Circulation of the fluid}
+	\caption{Definition of circulation of the fluid}
 	\label{fig:vorticityCirculation}
 	\end{figure}
 
@@ -202,21 +205,6 @@ Thus the discrete vorticity field is an $N$-body problem inducing velocity on ea
 	
 However, like all $N$-body problem, equation \ref{eq:GreensKernel} has a singularity when the particles approach each other and can result in numerical instability. To overcome this we can mollify the kernel, removing the singularity.
 
-\subsection{Convection of vortex blobs}
-
-In the discrete of the convection equation \ref{eq:convectionEulerian} of the viscous-splitting algorithm, the is solved as system of ODEs, where
-
-	\begin{equation}
-	\frac{\mathrm{d}\mathbf{x}_p}{\mathrm{d}t} = \mathbf{u}\left(\mathbf{x}_p\right),
-	\end{equation}
-with
-	\begin{equation}
-	\frac{\mathrm{d}\alpha_p}{\mathrm{d}t} = 0.
-	\end{equation}
-
-As the diffusion is done at the next sub-step, we have to ensure that the circulation is conserved.
-
-
 \subsection{Mollified vortex kernels}
 
 A vortex particle with a mollified core, non-zero core-size, is referred to as vortex blobs. The advantage of the vortex blobs is that the with a smooth distribution of the vorticity, the singularity disappears and so numerical instability does not happen when blobs get too close to each other. An ideal choice for a cutoff function is a Gaussian distribution, figure \ref{fig:gaussianDistribution}.
@@ -231,7 +219,7 @@ A vortex particle with a mollified core, non-zero core-size, is referred to as v
 Gaussian kernels satisfy the requirement for smooth distribution ad decays quickly and is defined as
 	
 	\begin{equation}
-	\zeta_{\sigma} = \frac{1}{k\pi\sigma^2}\exp\left(\frac{-\left|\mathbf{x}\right|}{k\sigma^2}\right),
+	\zeta_{\sigma} = \frac{1}{k\pi\sigma^2}\exp\left(-\frac{\left|\mathbf{x}\right|}{k\sigma^2}\right),
 	\end{equation}
 
 where $k$ is 1, 2 or 4 and determines the width of the kernel, $\sigma$ is core-size of the blob. Note that smoothing function is chosen such that $\int \zeta = 1$, ensuring the conservation of circulation when mollified. So, using a smooth cut-off function $\zeta_{\sigma}$, the mollified kernel $\mathbf{K}_{\sigma}$ is given as 
@@ -257,6 +245,7 @@ Koumoutsakos and Chorin \cite{Cottet2000a}, have shown that for proper communica
 
 	\begin{equation}
 	\mathrm{overlap} = \frac{\sigma}{h},
+	\label{eq:overlapRatio}
 	\end{equation}
 
 	\begin{figure}[t]
@@ -271,7 +260,7 @@ where $h$ is the nominal particle spacing, figure \ref{fig:blobOverlap}. If the 
 
 
 \subsection{Vortex blob initialization}
-
+\label{subsec:vortexBlobInitialization}
 Now the question arises on how to initialize the particle's circulation strengths $\alpha_p$. A common approach that is used is to estimate the particles strength is to say that
 
 	\begin{equation}
@@ -360,6 +349,21 @@ Furthermore, we could also adjust the $\mathrm{overlap}$ of the blobs, figure \r
 
 Therefore, for the hybrid coupling, we set $\mathrm{overlap} = 1.0$ and maximize the spatial resolution at the coupling zone. 
 
+\section{Convection of vortex blobs}
+
+In the discrete of the convection equation \ref{eq:convectionEulerian} of the viscous-splitting algorithm, the is solved as system of ODEs, where
+
+	\begin{equation}
+	\frac{\mathrm{d}\mathbf{x}_p}{\mathrm{d}t} = \mathbf{u}\left(\mathbf{x}_p\right),
+	\end{equation}
+with
+	\begin{equation}
+	\frac{\mathrm{d}\alpha_p}{\mathrm{d}t} = 0.
+	\end{equation}
+
+As the diffusion is done at the next sub-step, we have to ensure that the circulation is conserved.
+
+
 \subsection{Remeshing scheme: Treating lagrangian grid distortion}
 \label{subsec:remeshing}
 %
@@ -387,7 +391,7 @@ During the convection step, we see that another source of error in the vorticity
 %        \label{fig:distortion}
 %\end{figure}
 
-	\begin{figure}[t]
+	\begin{figure}[!b]
 	\centering
 	\includegraphics[width=0.9\textwidth]{figures/lagrangian/distortion-crop.pdf}
     \caption{Lagrangian distortion of the vortex blobs after 100 steps. The initial vorticity field $\omega\left(\mathbf{x},0\right) = \exp\left(-12\left|\mathbf{x}\right|\right)$ with $\Delta t = 0.1$, $\sigma=0.02$ and $\mathrm{overlap} = 1.0$. Figure depicts $\textbf{(a)}$ the initial and $\textbf{(b)}$ the final distribution of the vortex blobs.}
@@ -406,7 +410,7 @@ However, when transfering the vorticity from the old deformed grid to the new la
 where the strengths of the particles $\tilde{\alpha}_q$ of the distorted lagrangian grid $\tilde{x}_q$ is transfered to the regular lagrangian grid $x_p$ using the interpolation kernel, weighted $W$, giving us the remeshing particle strengths $\alpha_p$. The transfer of strengths of one particles to it's interpolation nodes can be seen in figure \ref{fig:interpolationGrid}.
 
 
-	\begin{figure}[t]
+	\begin{figure}[!b]
 	\centering
 	\includegraphics[width=0.4\textwidth]{figures/lagrangian/interpolationGrid.pdf}
 	\caption{Remehsing of vortex blob ({\color{plotGreen}{$\bullet$}}, green) on the uniform grid defined by the $\left(4\times4\right)$ 2-D stencil.}
@@ -438,11 +442,13 @@ is the scale relative position of the particle $x_{\nu}$ to the $i^{\mathrm{th}}
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.7\textwidth]{figures/lagrangian/interpolationKernel.pdf}
-	\caption{Monaghan's \cite{Monaghan1985} third-order peicewise smooth B-spline kernel, $M'_4$}
+	\caption{$M'_4$ interpolation kernel, a third-order peicewise smooth B-spline kernel by Monaghan \cite{Monaghan1985}}
 	\label{fig:interpolationKernel}
 	\end{figure}
 
 The interpolation kernel achieves the third-order accuracy as it also conserves the linear and the angular momentum of the vortex. Koumoutsakos \cite{Koumoutsakos1997} has investigated the drawback of the employing the remeshing strategy and have shown that there is approximately $4\%$ decay in enstrophy of the flow due to sub-grid dissipation. Note that enstrophy $ \mathcal{E}$, is defined as
+
+% 4 % , give context, what time, how many remshings, say they are negligible for what we do.
 
 	\begin{equation}
 	\mathcal{E} = \frac{1}{2}\int_S \omega^2 dS
@@ -527,7 +533,7 @@ The simple redistribution scheme based on the Shankar and Van Dommelen \cite{Sha
 where $W_{ki}^n$ is the fraction of circulation from vortex blob $k$ transferred to vortex blob $i$ by diffusion during the time step $n$. The fractions $W_{ki}^n$ are calculated by conserving vorticity, center of vorticity, linear, and angular momentum of the vortex blobs \cite{2010arXiv1009.0166T}. In two dimensional problem the redistribution fractions are simple tensors products of the $x,y$ one dimensional redistribution fractions,
 
 
-	\begin{figure}[t]
+	\begin{figure}[!b]
 	\centering
 	\includegraphics[width=0.7\textwidth]{figures/lagrangian/simpleRedistribution.pdf}
 	\caption{One dimensional, Simple redistribution scheme, diffusing the vortex blobs to the four stencil points ($k=i-1,\dots,i+2$) with vortex blob positioned at $x_i \le x_{\nu} \le x_{i+1}$ and nominal blob spacing $h$.}
@@ -604,7 +610,7 @@ However Koumoutsakos, Leonard and Pepin \cite{Koumoutsakos1994b}, have suggested
 	\mathbf{u}\cdot\mathbf{\hat{s}} = \mathbf{u}_b\cdot\mathbf{\hat{s}}.
 	\end{equation}
 
-Koumoutsakos \cite{Koumoutsakos1993} only relies on the vortex sheet to enforce the no-slip velocity as no-slip boundary condition directly satisfies the no-through boundary conditions, also known as the linked boundary conditions. This was also proven by Shiels \cite{Shiels1998} and further investigated by Cooper, Mar and Barba \cite{Cooper2009b} and shown that vortex sheet is the only necessary singularity element required to satisfy both the boundary conditions. Therefore, enforcing the no-slip boundary condition directly satisfies the no-through constraint at the surface.
+Koumoutsakos \cite{Koumoutsakos1993b} only relies on the vortex sheet to enforce the no-slip velocity as no-slip boundary condition directly satisfies the no-through boundary conditions, also known as the linked boundary conditions. This was also proven by Shiels \cite{Shiels1998} and further investigated by Cooper, Mar and Barba \cite{Cooper2009b} and shown that vortex sheet is the only necessary singularity element required to satisfy both the boundary conditions. Therefore, enforcing the no-slip boundary condition directly satisfies the no-through constraint at the surface.
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.6\textwidth]{figures/lagrangian/noSlipVorticityField.pdf}
@@ -628,7 +634,7 @@ where $\mathbf{u}_{\mathrm{ext}} = \mathbf{u}_{\omega} + \mathbf{u}_{\infty}$ is
 	\label{eq:kinematicBCofVS}
 	\end{equation}
 
-The equation states that underneath the vortex sheet, we must have a vortex sheet inducing the velocity field $\mathbf{u}_{\gamma}$ to counter the slip velocity $\mathbf{u}_{\mathrm{slip}} = \left(\mathbf{u}_{\mathrm{ext}} - \mathbf{u}_b\right)$ such that we satisfy the no-slip kinematic boundary conditions. Note that, $\mathbf{u}_{\gamma}$ of equation \ref{eq:kinematicBCofVS}, is negative of equation \ref{eq:kinematicBCofVSOutside} as we looking under the vortex sheet. Koumoutsakos \cite{Koumoutsakos1993}, expressed the relation of the vortex sheet strengths to the no-slip boundary condition at the surface of the body (inside the body) through the Fredholm integral equation of the second kind,
+The equation states that underneath the vortex sheet, we must have a vortex sheet inducing the velocity field $\mathbf{u}_{\gamma}$ to counter the slip velocity $\mathbf{u}_{\mathrm{slip}} = \left(\mathbf{u}_{\mathrm{ext}} - \mathbf{u}_b\right)$ such that we satisfy the no-slip kinematic boundary conditions. Note that, $\mathbf{u}_{\gamma}$ of equation \ref{eq:kinematicBCofVS}, is negative of equation \ref{eq:kinematicBCofVSOutside} as we looking under the vortex sheet. Koumoutsakos \cite{Koumoutsakos1993b}, expressed the relation of the vortex sheet strengths to the no-slip boundary condition at the surface of the body (inside the body) through the Fredholm integral equation of the second kind,
 	\begin{equation}
 	-\frac{\gamma\left(s\right)}{2} + \frac{1}{2\pi}\oint\frac{\partial}{\partial n}\left[\log\left|\mathbf{x}\left(s\right)-\mathbf{x}\left(s'\right)\right|\right]\gamma\left(s'\right)ds'= \mathbf{u}_{\mathrm{slip}}\cdot\mathbf{\hat{s}}.
 	\label{eq:fredholmIntegral2ndKind}
@@ -812,13 +818,13 @@ If we are dealing with multiple geometries, figure \ref{fig:twoPanelBodies}, the
 		\vdots\\
 		\gamma_{b_M}\\
 	\end{pmatrix}}_{\begin{pmatrix}
-						AA & AB \\
-						BA & BB \\
-						\Delta s_A & 0\\
-						0 & \Delta s_B \\
+						C_{aa} & C_{ab} \\
+						C_{ba} & C_{bb} \\
+						\Delta s_a & 0\\
+						0 & \Delta s_b \\
 					\end{pmatrix} \begin{pmatrix}
-								\gamma_{A}\\
-								\gamma_{B}\\
+								\gamma_{a}\\
+								\gamma_{b}\\
 							\end{pmatrix}} 
 	= 
 	\underbrace{\begin{pmatrix}
@@ -839,7 +845,7 @@ If we are dealing with multiple geometries, figure \ref{fig:twoPanelBodies}, the
 			\end{pmatrix}}
 	\end{equation}
 
-where the diagonal matrices ($AA, BB$) are the self-induction matrix of the panel body and the non-diagonal terms ($AB,BA$) are the inter-induction matrix containing the panel influence of $B\rightarrow A$ and $A\rightarrow B$ respectively. The final two rows of the induction matrix contains the additional circulation constraint for each body.
+where the diagonal matrices ($C_{aa}$, $C_{bb}$) are the self-induction matrix of the panel body and the non-diagonal terms ($C_{ab}$, $C_{ba}$) are the inter-induction matrix containing the panel influence of $b\rightarrow a$ and $a\rightarrow b$ respectively. The final two rows of the induction matrix contains the additional circulation constraint for each body.
 
 
 %	\begin{equation}
@@ -861,23 +867,51 @@ where the diagonal matrices ($AA, BB$) are the self-induction matrix of the pane
 %	\end{equation}
 
 %
-\subsection{Convergence study of panel method}
+\subsection{Error analysis of panel method}
 The validation of the panel method was done by performing a convergence study of a cylinder. The vortex panels where used to simulate a potential flow around a cylinder and the solution of the panels was compared with the analytical solutions.
 
-	\begin{table}[b]
-	    \centering
-	    \begin{tabular}{ l r c }
-	        \hline
-	        Parameters\T\B              & Value 	& Unit    \\
-	        \hline
-	        $R$\T                     	& $1$	    & $[m\cdot s^{-1}]$ \\
-	        $\mathbf{u}_{\infty}$ 		& $\left[1, 0\right]$  	& $[m\cdot s^{-1}]$ \\
-	        $N_{\mathrm{panels}}$\B     & $100$  	& $[-]$   \\
-	        \hline
-	    \end{tabular}
-	    \caption{Panel study parameters}
-	    \label{tab:panelParams}
-	\end{table}
+%	\begin{table}[b]
+%	    \centering
+%	    \begin{tabular}{ l c l }
+%	        \hline
+%	        Parameters\T\B	            & Value 	& Unit    \\
+%	        \hline
+%	        $R$\T                     	& $1$	    & \si{m} \\
+%	        $\mathbf{u}_{\infty}$ 		& $\left[1, 0\right]$  	& \si{m.s^{-1}} \\
+%	        $N_{\mathrm{panels}}$\B     & $100$  	& -   \\
+%	        \hline
+%	    \end{tabular}
+%	    \caption{Panel study parameters}
+%	    \label{tab:panelParams}
+%	\end{table}
+
+%	\begin{table}[b]
+%	    \centering
+%	    \caption{Panel study parameters Panel study parameters Panel study parameters}
+%	    \begin{tabular}{ l c l }
+%	    	\toprule
+%	        Parameters\T\B	            & Value 	& Unit    \\
+%	        \midrule
+%	        $R$\T                     	& $1$	    & \si{m} \\
+%	        $\mathbf{u}_{\infty}$ 		& $\left[1, 0\right]$  	& \si{m.s^{-1}} \\
+%	        $N_{\mathrm{panels}}$\B     & $100$  	& -   \\
+%			\bottomrule
+%	    \end{tabular}
+%	    
+%	    \label{tab:panelParams}
+%	\end{table}	
+%	
+	\ctable[
+	    caption = {Panel study parameters},
+	    label   = {tab:panelParams},
+	    pos = b,
+	]{lll}{}{\FL
+	Parameters 				& Value 			& Description \ML
+	$R$  					& 1 \si{m} 			& Radius of cylinder\\
+	$\mathbf{u}_{\infty}$	& 1 \si{m.s^{-1}}	& Free-stream velocity\\
+	$N_{\mathrm{panels}}$	& 100				& Number of panels\LL}	
+	
+	
 
 To test the solution of the vortex panels with the analytical solution, the problem was first run for the parameters in the table \ref{tab:panelParams}. The velocity field of the potential flow solution is shown in figure \ref{fig:panelCylinder_velocityField}. The figure shows the norm of the velocity, and we see that it shows the velocity field of a potential flow solution, with an infinitely thin boundary layer, stagnating to zero velocity inside the body.
 
@@ -912,7 +946,7 @@ where $u_r$ and $u_{\theta}$ are the radial and the angular velocity respectivel
                 \caption{Error in velocity field}
                 \label{fig:panelCylinder_error}
         \end{subfigure}
-        \caption{Comparison of the velocity field along the $y$-axis $0\rightarrow10$. Figure \textbf{(a)} shows both the solutions, the numerical $\left\Vert\mathbf{u}^h\right\Vert$ [solid blue,{\color{plotBlue}{---}}] and the analytical solution [solid black, ---]. Figure \textbf{(b)} shows the relative error $\epsilon$ between the solution, given by equation \ref{eq:panelRelativeError}}
+        \caption{Comparison of the velocity field along the $y$-axis $0\rightarrow10$. Figure \textbf{(a)} shows both the solutions, the numerical $\left\Vert\mathbf{u}^h\right\Vert$ [solid blue, {\color{plotBlue}{---}}] and the analytical solution [solid black, ---]. Figure \textbf{(b)} shows the relative error $\epsilon$ between the solution, given by equation \ref{eq:panelRelativeError}}
         \label{fig:panelCylinderComparision}
 \end{figure}	
 
@@ -924,14 +958,15 @@ The figure \ref{fig:panelCylinder_error} shows the relative error $\epsilon$ bet
 	\label{eq:panelRelativeError}
 	\end{equation}
 	
-where $\mathbf{u}$ is the analytical solution and the $\mathbf{u}^h$ is the numerical (panel method) solution. Ignoring the solution right at the surface ($r=R$), we see that the error between the numerical and the analytical solution reduces from $\epsilon=5\times10^{-3}\rightarrow 8\times10^{-5}$ as we go from $r=1\rightarrow10$. This behavior of the error tells us that the solution of the constant-strength vortex panels gets more accurate as we go further away from the panels; right next to the panels, we have the largest error. This is because the vortex panels discretizes the body using a first-order approximation (straight panels) and also discretizes the vortex sheet strength using a first-order approximation. 
+where $\mathbf{u}$ is the analytical solution and the $\mathbf{u}^h$ is the numerical (panel method) solution. Ignoring the solution right at the surface ($r=R$), we see that the error between the numerical and the analytical solution reduces from $\epsilon=\num{5e-3}\rightarrow \num{8e-5}$ as we go from $r=1\rightarrow10$. This behavior of the error tells us that the solution of the constant-strength vortex panels gets more accurate as we go further away from the panels; right next to the panels, we have the largest error. This is because the vortex panels discretizes the body using a first-order approximation (straight panels) and also discretizes the vortex sheet strength using a first-order approximation. 
+
+\subsubsection*{Convergence analysis}
 
 The convergence analysis of the vortex panels shows that the panels that we are employing is indeed a first-order method as the error converges at $\mathcal{O}\left(N\right)$, figure \ref{fig:panelCylinder_convergence}.
 
-
 	\begin{figure}[!t]
 	\centering
-	\includegraphics[width=0.7\textwidth]{figures/lagrangian/panelCylinder_convergence.pdf}
+	\includegraphics[width=0.7\textwidth]{figures/lagrangian/panelCylinder_convergence_compressed.pdf}
 	\caption{Convergence plot of the constant-strength straight vortex panels. The figures depicts the reduction is error at $\mathcal{O}\left(N\right)$.}
 	\label{fig:panelCylinder_convergence}
 	\end{figure}
@@ -944,59 +979,168 @@ The convergence analysis of the vortex panels shows that the panels that we are 
 %%
 %\subsection{Parallel computation in GPU}
 %
-\section{Validation of lagrangian method}
-The validation of the lagrangian method was done by comparing the results of the Lamb-Oseen vortex and the analyzing the convection of the Clercx-Bruneau dipole. Validating each components of the hybrid method separately is vital as to ensure coupling is done correctly.
+\section{Validation of Lagrangian method}
+Note that during this validation study, we are unable to validate the proper handling of the Lagrangian boundary conditions. This is because, we have only defined the vorticity generation from the boundary in the Eulerian domain and we neglected the vorticity production from the vortex panels, due to the natural of the coupling method, we are unable to validate the proper coupling of vortex panels with vortex blobs. Therefore, validation study for the Lagrangian method is done separately, ensuring no-through flow on vortex panels, and ensuring proper handling of vorticity with vortex blobs.
+
+In order to verify and validate the vortex blobs, we use the analytical solution of the Lamb-Oseen vortex evolution. The validation of the lagrangian method was done by comparing the results of the Lamb-Oseen vortex and the analyzing the convection of the Clercx-Bruneau dipole. 
+
+\subsection*{Lamb-Oseen vortex}
+
+\begin{figure}[!t]
+        \centering
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_vorticityDistribution_compressed.pdf}
+                \caption{Vorticity field}
+                \label{fig:lambOseen_vorticityDistribution}
+        \end{subfigure}%
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+          %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_velocityDistribution_compressed.pdf}
+                \caption{Velocity Field}
+                \label{fig:lambOseen_velocityDistribution}
+        \end{subfigure}
+        \caption{Lamb-Oseen \textbf{(a)} vorticity distribution, and \textbf{(b)} velocity distribution. $\Gamma_c = 1$, $\tau=\num{2e-3}$.}
+        \label{fig:lambOseen_distributions}
+\end{figure}
+
+The Lamb-Oseen vortex is a simple solution of unbounded laminar Navier-Stokes equation of a vortex core diffusing as time passes. It was first demonstrate by Lamb \cite{} and Oseen \cite{}. The vorticity distribution $\omega$ of the core at a given time is defined as,
+
+	\begin{equation}
+	\omega\left(\mathbf{x},\tau\right) = \frac{\Gamma_c}{4\pi\tau} \exp\left(-\frac{r^2}{4\tau}\right),
+	\end{equation}
+
+and is a function of core strength $\Gamma_c$, the scaled viscous time $\tau$, and distance from the core center $r$. At $\tau=0$, the Lamb-Oseen vorticity distribution is a Dirac delta function and diffusion as time progresses. Figure \ref{fig:lambOseen_vorticityDistribution} shows the vorticity distribution of the Lamb-Oseen vortex with core strength $\Gamma_c=1$ at scaled viscous time $\tau=\num{2e-3}$. Note, the scaled viscous time is defined as $\tau \equiv \nu t$. The velocity field of this core is given as 
+
+	\begin{subequations}
+	\begin{align}
+	u_{\theta} &= \frac{\Gamma_c}{2\pi r} \left[1-\exp\left(-\frac{r^2}{4\tau}\right)\right]\\
+	u_r &= 0
+	\end{align}
+	\end{subequations}
+
+where $u_{\theta}$ is the circumferential velocity and the radial velocity $u_r$ is zero. This can be seen on figure \ref{fig:lambOseen_velocityDistribution}. 
+
+To determine whether the lagrangian method performs according to theory, this analytical solution will be used to verify and then validate the solution.
 
 \subsection{Evolution of Lamb-Oseen vortex}
-The evolution of the Lamb-Oseen vortex can be considered to be one of the simplest to validate the viscous vortex method as it is derived from the diffusion equation.
+
+The lagrangian method ran the case of Lamb-Oseen vortex simulation according to the parameters tabulated in table \ref{tab:lambOseenParams}. The problem was initialized by discretizing the vorticity field of the Lamb-Oseen $\Gamma_c=1$ and $\nu=\num{5e-4}$ at $\tau_0 = \num{2e-3}$. The vorticity field was discretized from $(x,y)$ - domain $\left[-0.5,0.5\right]^2$ using vortex blobs with $\sigma=0.01$, and $\mathrm{overlap}=1$, giving it a fixed blob spacing $h=0.01$. We employed the standard initialization method of vortex blobs from section \ref{subsec:vortexBlobInitialization}. However, as explained before, we have to take in account of the gaussian blurring of the original vorticity field and thus posses a problem when evaluating the error with the analytical Lamb-Oseen solution.
+
+Barba \cite{Barba2004c}, had encountered the problem before when investigating with a Lamb-Oseen vortex. Her solution to the problem was to apply a ``time-shift correction", solving the problem of this very particular discretization of the diffusion equation using gaussian vortex blobs. Therefore, this is a special scenario and this approach cannot be used for other problems.
+
+	\ctable[
+		caption = {Summary of the Lamb-Oseen vortex evolution study parameters. Table shows the parameters of Tutty's diffusion method \cite{2010arXiv1009.0166T}},
+		label   = {tab:lambOseenParams},
+		pos = t,]{lcll}{}{\FL
+		
+		Parameters 					& Value 	& Unit					& Description \ML
+		$\Gamma_c$\T               	& 1 &\si{m^2.s^{-1}} 				& Core strength\\
+		$\Omega$               		& $\left[-0.5,0.5\right]^2$ &\si{m}	& Initial particle domain \\
+		$\mathbf{u}_{\infty}$ 		& $\left[0, 0\right]$ &\si{m.s^{-1}} & Free-stream velocity\\
+		$\nu$						& $\num{5e-4}$ &\si{kg.s^{-1}.m^{-1}}& Kinematic viscosity\\
+		$ (\tau_0,\tau_f)$ 		    & \numrange{2e-3}{2.5e-3} &\si{m^2}	& Initial and final scaled viscous time\\
+		$ (t_0,t_f)$ 		    	& \numrange{4}{5} &\si{s}			& Initial and final simulation time\\		
+		$ \Delta t_c = \Delta t_d$ 	& $0.01$ &\si{s}						& Diffusion and convection time step size\\
+		$ N_{\mathrm{t-steps}}$ 	& 100 & -						& Number of time integration steps\\		
+		$ \sigma$ 					& $0.01$ &\si{m}						& Vortex blob core size\\	        
+		$ \mathrm{overlap}$			& $1$	& -							& Overlap ratio\\	        	        
+		$ k$						& $2$	& -							& Gaussian kernel width spreading\\
+		$ f_{\mathrm{redist}}$		& $1$ 	& -							& Redistribution occurance\\	        	        
+		$ f_{\mathrm{popControl}}$		& $1$  & -							& Population control occurance\\	        	        
+		$ \Gamma_{\mathrm{threshold}}$ & $(\num{1e-14},\num{1e-14})$ &\si{m^2.s^{-1}} & Population control threshold\LL}
+
+The ``time-shift correction" is derived by determining the diffusion effect caused by the discretization of the diffusion equation using gaussian blobs (with $k=2$). Barba determined that discretization of the diffusion equation reconstructs the vorticity field that has been diffused by $\sigma^2/2\nu$. So, in order to compare the results will have to shift the time by this value in order to compare with the analytical Lamb-Oseen solution. Therefore, when initializing the particles with a certain strength, we will have to reverse the time by $\sigma^2/2\nu$, giving us the initial particles strengths of the Lamb-Oseen vorticity field as,
+
+	\begin{equation}
+	\alpha_0 = \omega_0\cdot h^2 = \frac{\Gamma_c}{4\pi\nu\left(t-\sigma^2/2\nu\right)} \exp\left[-\frac{r^2}{4\nu\left(t-\sigma^2/2\nu\right)}\right].
+	\end{equation}
+	
+Using this method, we can investigate the error growth of the vortex blob method. The vortex blobs where convected and diffused according to the parameters in table \ref{tab:lambOseenParams}. For the primary and the main investigation, we used diffusion method proposed by Tutty \cite{2010arXiv1009.0166T}. The advantage of this approach is that the we can perform diffusion after every convection step. This makes the method less prone to time integration error and eliminates any discontinuous behaviour in the evolution. We will see that when coupling the Lagrangian method and Eulerian method, discontinuity in the problem introduces additional errors.
 
 	\begin{figure}[!t]
 	\centering
 	\includegraphics[width=0.99\textwidth]{figures/lagrangian/lambOseen_convection_vorticityErrorContours_compressed-crop.pdf}
-	\caption{Error growth of Lamb-Oseen vortex during the evolution}
+	\caption{Relative error growth of Lamb-Oseen vorticity during the evolution (in logarithmic scale). The figure shows \textbf{(a)}, the initial relative error at $t_0=4$, and \textbf{(b)} the final relative error in vorticity at $t_f=5$.}
 	\label{fig:lambOseen_convection_vorticityErrorContours_compressed}
 	\end{figure}
 
-	\begin{figure}[p]
+So, using the Tutty's diffusion method (the simple restribution scheme), we convect at diffuse the vortex blobs at $\Delta t_c=\Delta t_d = 0.01$. The time integration of the problem is done using a $4^{\mathrm{th}}$-order Runge-Kutta method ($\mathrm{RK4}$). During the convection we will have to treat the lagrangian distortion using the remeshing scheme discussed before. The vortex blobs are remeshed every step ($f_{\mathrm{redist}}=1$). Remeshing at every step is not necessary and are typically every 10 iterations. However, as our diffusion scheme and hybrid method requires structured lattice of vortex blobs for efficient calculations, we remesh every step. The additional circulation processing we will have to do during the evolution of the vortex blobs is to remove unnecessary vortex blobs. To make the simulation as efficient as possible, it would be ideal to remove vortex elements where they are not needed. This is done by removing as many blobs as possible such that we does not violate the conservation of circulation to great extend. We places a cap of the maximum loss of total circulation, $\Gamma_{\mathrm{threshold}}=\num{1e-14}$. This process is referred to as ``population control" and is done at every iteration $f_{\mathrm{popControl}}=1$.
+
+To verify where our Lagrangian scheme is function according to theory, we evaluated the error growth of the simulation with respect to the Lamb-Oseen analytical solution. Figure \ref{fig:lambOseen_convection_vorticityErrorContours_compressed}, shows the initial and the final relative error in vorticity. We see that initially we have a maximum relative error around \num{e-8} and the center of the Lamb-Oseen core. After 100 steps from $t_0=4$ to $t_f=5$, we see that the maximum relative error increased to \num{e-2}. The error of the vorticity are predominantly localized at the center of the core. This is because, this is where we have the highest gradient in the vorticity, as seen from figure \ref{fig:lambOseen_vorticityDistribution}. Therefore, with the current vortex blob discretization, we are not able to reconstruct this large gradient of the vorticity field. 
+
+	\begin{figure}[!t]
 	\centering
 	\includegraphics[width=0.7\textwidth]{figures/lagrangian/lambOseen_convection_errorGrowth_compressed.pdf}
-	\caption{Error growth of Lamb-Oseen vortex during the evolution}
+	\caption{Relative error growth of Lamb-Oseen vortex during the evolution from $t_0=4$ to $t_f=5$. Figure depicts the error in vorticity: maximum relative error [ ---, solid black], .error in $L^2-\mathrm{norm}$ [ - -, dashed black]; and error in velocity: maximum relative error [ {\color{plotBlue}{---}}, solid blue], error in $L^2-\mathrm{norm}$ [ {\color{plotBlue}{- -}}, dashed blue].}
 	\label{fig:lambOseen_convection_errorGrowth_compressed}
 	\end{figure}
+
+Figure \ref{fig:lambOseen_convection_errorGrowth_compressed}, shows the error growth of the Lamb-Oseen vortex from $t_0=4$ to $t_f=5$. The figure plots the error growth of the vorticity and the velocity and due to the nature of the relationship with vorticity and velocity, the error in vorticity is an order higher that the error in velocity. The figure shows the both the maximum relative error, and the error in $L^2-\mathrm{norm}$. The maximum relative error (for example for vorticity), is determined as
+
+	\begin{equation}
+	\left\Vert \omega^{\mathrm{exact}} - \omega^{\mathrm{discrete}} \right\Vert_{\infty} = \frac{\max\{\left|\omega^{\mathrm{exact}} - \omega^{\mathrm{discrete}}\right|\}}{\max\{\left|\omega^{\mathrm{exact}}\right|\}}.
+	\end{equation}
+
+The error in $L^2-\mathrm{norm}$ of the vorticity is calculated as 
+
+	\begin{equation}
+	\left\Vert \omega^{\mathrm{exact}} - \omega^{\mathrm{discrete}} \right\Vert_2 = \left(\sum_{i}^{N}\left| \omega^{\mathrm{exact}} - \omega^{\mathrm{discrete}} \right|^2 \cdot h^2\right)^{\frac{1}{2}}.
+	\end{equation}
+
+The error in velocity is calculated in similar fashion. Investigating the plot, we see that after the first iteration, there is sudden increase in the error, however as time progresses, the error does not growth unbounded. From literature, we see that this trend has also been observed by Barba \cite{Barba2004c} and Speck \cite{Speck2011a}. For comparison, we used similar parameters and observe that the sudden jump in error has been similar to the literature.
 	
-	\begin{figure}[p]
+\subsubsection*{Comparison of diffusion schemes: Tutty vs. Wee}
+
+To validate that the Tutty diffusion scheme indeed performs better that the Wee's diffusion scheme, we compared the error growth of the problem using both diffusion schemes. Figure \ref{fig:lambOseen_diffusionMethod_comparison_compressed} shows the error growth of maximum relative error in vorticity of both diffusion schemes. The solid lines represents the solution of the Wee's diffusion scheme and the dashed lines shows the Tutty's diffusion scheme. The convection and the diffusion time steps where controlled by modifying the blob spacing $h$, and keeping the convection time step size $\Delta t_c = 0.01$. 
+
+At $h = \num{4e-3}$, both schemes have the diffusion time step $\Delta t_d = 0.01$ meaning that the diffusion occurs at every iteration $k_d = 1$. During this time wee see that the Wee's diffusion scheme performs slightly better that Tutty's diffusion scheme. This is because, the diffusion of the vortex blobs is directly incorporated into the remeshing scheme, whereas the Tutty's simple redistribution scheme segregates the diffusion and the remeshing. At $h = \num{5e-3}$, the diffusion constraint of the Wee's diffusion scheme changes the allowable diffusion time step to $\Delta t_d = 0.02$, meaning that diffusion has to be performs at every second step $k_d=2$. When investigating the growth in error, we see that the diffusion scheme has a large increase in error, whereas the simple redistribution scheme does not have this limitation and is still able to diffuse at every step and has only a slight increase in error.
+
+We see that the simple redistribution scheme is not only more stable at performing diffusion, but it is also more versatile as it only has an upper limit for $\Delta t_d$. Therefore, if were to use the Wee's modified interpolation kernel for diffusion, we must ensure that $k_d = 1$, by ensure $1/6 \le c^2 \le 1/2$. If this constraint is not possible we have to use Tutty's simple redistribution scheme.
+
+	\begin{figure}[!b]
+	\centering
+	\includegraphics[width=0.7\textwidth]{figures/lagrangian/lambOseen_diffusionMethod_comparison_compressed.pdf}
+	\caption{Comparison of Tutty's, simple redistribution scheme and Wee's modified interpolation method for treating diffusion. Figure depicts the growth in maximum relative error in vorticity from $t_0=4$ to $t_f=5$ at $\Delta t_c = 0.01$. The Wee diffusion scheme with $\Delta t_d = \Delta t_c = 0.01$ [{\color{plotBlue}{---}}, solid blue], and $\Delta t_d = 2 \Delta t_c = 0.02$ [---, solid black]. The Tutty's diffusion scheme, $c^2 = 1/3$, with $\Delta t_d = \Delta t_c = 0.01$ [ {\color{plotBlue}{- -}}, solid blue], and $\Delta t_d = \Delta t_c = 0.02$ [ - -, dashed black].}
+	\label{fig:lambOseen_diffusionMethod_comparison_compressed}
+	\end{figure}
+
+\subsection{Convergence study of the viscous vortex method}
+
+The final validation we can perform to ensure the scheme performs as according to theory is to perform a convergence study. For a numerical scheme that is stable, the error in discretization must converge as the resolution is increased. 
+
+In the case of spatial discretization, if we where to increase the spatial resolution the error must converge. As we are dealing with vortex blobs, there are multiple ways of increasing the resolution. The straight forward method would be to increase the density of particles in a given area, i.e. reducing the blob spacing $h$ and maintaining the core spreading $\sigma$. Figure \ref{fig:lambOseen_convergence_dx_sigma0p02_compressed} shows the convergence of the spatial discretization when the core size $\sigma$ is maintained at $\sigma=0.02$. At this case, the overlap ratio changes with the blob spacing according to equation \ref{eq:overlapRatio}. At lower blob spacing $h$, the error in vorticity quickly drops to near machine precision. This performs as expected and shows us that error converges as spatial resolution increased. Figure \ref{fig:lambOseen_convergence_dx_compressed}, shows the convergence of error when $\mathrm{overlap} = 1$, is maintained. This means that the blob spacing is equal to core size $h=\sigma$. So, when reducing the blobs spacing, this also reduces the core size. At this scenario, we see that there is also a convergence is spatial discretization.
+
+	\begin{figure}[!t]
 	        \centering
 	        \begin{subfigure}[b]{0.5\textwidth}
 	                \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_convergence_dx_sigma0p02_compressed.pdf}
-	                \caption{Comparison of the velocity field.}
+	                \caption{Error in vorticity vs. $h$ with $\sigma = 0.02$}
 	                \label{fig:lambOseen_convergence_dx_sigma0p02_compressed}
 	        \end{subfigure}%
 	        ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
 	          %(or a blank line to force the subfigure onto a new line)
 	        \begin{subfigure}[b]{0.5\textwidth}
 	                \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_convergence_dx_compressed.pdf}
-	                \caption{Error in velocity field}
+	                \caption{Error in vorticity vs. $h$, $\sigma$ with $\mathrm{overlap}=1$.}
 	                \label{fig:lambOseen_convergence_dx_compressed}
 	        \end{subfigure}
-	        \caption{dx}
+	        \caption{Convergence in spatial discretization of the vortex blobs. Figure \textbf{(a)} shows the convergence by fixing the core size $\sigma$ and \textbf{(b)} shows the convergence when overlap ratio is fixed.}
 	        \label{fig:lambOseen_convergence_dx}
 	\end{figure}	
 
-	\begin{figure}[p]
+To investigate the convergence in temporal discretization, we determined the growth in Lamb-Oseen vorticity field after convecting with various convection step size $\Delta t_c$. Note that we are using the Tutty's diffusion scheme, so $\Delta t_d = \Delta t_c$. We see that error converges at $\mathcal{O}(\Delta t)$, meaning that the aggregate convection and diffusion scheme is of first order. 
+	\begin{figure}[!b]
 	\centering
 	\includegraphics[width=0.7\textwidth]{figures/lagrangian/lambOseen_convergence_dt_compressed.pdf}
-	\caption{Error growth of Lamb-Oseen vortex during the evolution}
+	\caption{Error growth of Lamb-Oseen vorticity field after one-step.}
 	\label{fig:lambOseen_convergence_dt_compressed}
 	\end{figure}
-
-
-\subsection{Convergence study of the viscous vortex method}
-
 %%------------------------------------------------------------------------------------------------------
 %%------------------------------------------------------------------------------------------------------
 %%------------------------------------------------------------------------------------------------------
 %
-\subsection{Convection of Clercx-Bruneau dipole at $Re=625$}
+%\subsection{Convection of Clercx-Bruneau dipole at $Re=625$}
 %
 \section{Summary}
 %
