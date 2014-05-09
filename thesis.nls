@@ -30,8 +30,12 @@
 		\nompageref{9}
   \item [{$\mathbf {\hat {s}}$}]\begingroup Tangent vector\nomunit {-}\nomeqref {2.0}
 		\nompageref{9}
+  \item [{$T$}]\begingroup Cell of Finite Element mesh\nomunit {-}\nomeqref {3.0}
+		\nompageref{41}
   \item [{$t$}]\begingroup Time\nomunit {\si {\s }}\nomeqref {2.0}
 		\nompageref{9}
+  \item [{$\mathcal {T}_h$}]\begingroup Finite Element mesh\nomunit {-}\nomeqref {3.0}
+		\nompageref{41}
   \item [{$\mathbf {u}$}]\begingroup Velocity\nomunit {\si {\m \per \s }}\nomeqref {2.0}
 		\nompageref{9}
   \item [{$\mathbf {u}_{b}$}]\begingroup Velocity of the body\nomunit {\si {\m \per \s }}\nomeqref {2.0}
@@ -54,6 +58,12 @@
 		\nompageref{9}
   \item [{$\mathbf {u}_{\omega }$}]\begingroup Vortical velocity\nomunit {\si {\m \per \s }}\nomeqref {2.0}
 		\nompageref{9}
+  \item [{$v$}]\begingroup Test function\nomunit {-}\nomeqref {3.0}
+		\nompageref{41}
+  \item [{$V$}]\begingroup Trial vector function space\nomunit {-}\nomeqref {3.0}
+		\nompageref{41}
+  \item [{$\hat {V}$}]\begingroup Test vector function space\nomunit {-}\nomeqref {3.0}
+		\nompageref{41}
   \item [{$W$}]\begingroup Interpolation kernel weight\nomunit {-}\nomeqref {2.0}
 		\nompageref{9}
   \item [{$\mathbf {x}$}]\begingroup Position vector\nomunit {\si {\m }}\nomeqref {2.0}
@@ -99,6 +109,14 @@
 		\nompageref{9}
   \item [{$\tau $}]\begingroup Scaled viscous time\nomunit {\si {m^2}}\nomeqref {2.0}
 		\nompageref{9}
+  \item [{$\Omega $}]\begingroup Fluid domain\nomunit {-}\nomeqref {3.0}
+		\nompageref{41}
+  \item [{$\partial \Omega $}]\begingroup Boundary of the domain $\Omega $\nomunit {-}\nomeqref {3.0}
+		\nompageref{41}
+  \item [{$\Omega _E$}]\begingroup Eulerian fluid domain\nomunit {-}\nomeqref {3.0}
+		\nompageref{41}
+  \item [{$\Omega _L$}]\begingroup Lagrangian fluid domain\nomunit {-}\nomeqref {3.0}
+		\nompageref{41}
   \item [{$\omega $}]\begingroup Vorticity\nomunit {\si {s^{-1}}}\nomeqref {2.0}
 		\nompageref{9}
   \item [{$\omega ^h$}]\begingroup Discrete vorticity field\nomunit {\si {s^{-1}}}\nomeqref {2.0}
@@ -114,14 +132,18 @@
 		\nompageref{2}
   \item [{\textbf {CSVM}}]\begingroup Constant-Strength Vortex Method\nomeqref {2.53}
 		\nompageref{26}
+  \item [{\textbf {DOF}}]\begingroup Degrees of Freedom\nomeqref {3.0}
+		\nompageref{42}
+  \item [{\textbf {FDM}}]\begingroup Finite Difference Method\nomeqref {3.0}
+		\nompageref{41}
+  \item [{\textbf {FEM}}]\begingroup Finite Element Method\nomeqref {3.0}
+		\nompageref{41}
   \item [{\textbf {FMM}}]\begingroup Fast Multipole Method\nomeqref {1.0}
 		\nompageref{3}
-  \item [{\textbf {FMM}}]\begingroup Fast-Multipole Method\nomeqref {2.0}
-		\nompageref{9}
+  \item [{\textbf {FVM}}]\begingroup Finite Volume Method \nomeqref {3.0}
+		\nompageref{41}
   \item [{\textbf {GPU}}]\begingroup Graphical Processing Units\nomeqref {1.0}
 		\nompageref{3}
-  \item [{\textbf {GPU}}]\begingroup Graphics Processing Units\nomeqref {2.0}
-		\nompageref{9}
   \item [{\textbf {HVM}}]\begingroup Hybrid Eulerian-Lagrangian Vortex Particle Method\nomeqref {1.0}
 		\nompageref{3, 4}
   \item [{\textbf {LHS}}]\begingroup Left Hand Side\nomeqref {2.49}

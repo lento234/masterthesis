@@ -74,7 +74,7 @@
 %------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------
 \section{Introduction to Vortex Particle Method}
-\printAcron{Vortex Particle Method}{VPM} is a branch of computational fluid dynamics that deals with the evolution of the vorticity of the fluid in a lagrangian description. Typically, the fluid is viewed at a fixed window where it is described as a function of space $\mathbf{x}$ and time $t$. However, the lagrangian point of view regards the fluid as a collection of the particles carrying the property of the fluid. 
+\indexAcron{Vortex Particle Method}{VPM} is a branch of computational fluid dynamics that deals with the evolution of the vorticity of the fluid in a lagrangian description. Typically, the fluid is viewed at a fixed window where it is described as a function of space $\mathbf{x}$ and time $t$. However, the lagrangian point of view regards the fluid as a collection of the particles carrying the property of the fluid. 
 
 %\todo{Lagrangian vs. Eulerian fluid diagram}
 
@@ -469,13 +469,13 @@ with
 	\frac{\mathrm{d}\alpha_p}{\mathrm{d}t} = \nu\Delta\alpha_p.
 	\end{equation}
 
-Therefore in the diffusive step, we fix the position of the vortex blobs and only have to modify the strengths of the particles to mimic the diffusion process. Chorin initially employed a random walk method, which generates and disperse vorticity using pseudo-random number algorithm \cite{Chorin1973}. However, this method suffers some limitations in accuracy. Since then \printAcron{Particle Strength Exchange}{PSE} method \cite{Degond1989}, has been a common approach that has been used to treat diffusion.
+Therefore in the diffusive step, we fix the position of the vortex blobs and only have to modify the strengths of the particles to mimic the diffusion process. Chorin initially employed a random walk method, which generates and disperse vorticity using pseudo-random number algorithm \cite{Chorin1973}. However, this method suffers some limitations in accuracy. Since then \indexAcron{Particle Strength Exchange}{PSE} method \cite{Degond1989}, has been a common approach that has been used to treat diffusion.
 
 \subsubsection*{Particle Strength Exchange}
 The Particle Strength Exchange method, first proposed by Mas-Gallic \cite{Degond1989}, showed that diffusion can be treated for a particle method isotropic and anisotropic viscosity by approximating the diffusion operator (laplacian) with an integral operator and discretizing the operator using particles. The PSE can be seen as circulation correction method, where during the diffusion step of the viscous splitting algorithm, the strengths of the particle are corrected such that it accounts for the diffusion.
  
 \subsubsection*{Vortex Redistribution Method}
-An alternative method to simulate the diffusion is to use the \printAcron{Vortex Redistribution Method}{VRM} \cite{Shankar1996}. The model simulates diffusion by distributing the fraction of circulation of the vortex blobs to each other satisfying the diffusion. The model is based on conserving the moments of the particles by satisfying a linear system of equations. The circulation of the particle are transfer to the nearby particles that are 
+An alternative method to simulate the diffusion is to use the \indexAcron{Vortex Redistribution Method}{VRM} \cite{Shankar1996}. The model simulates diffusion by distributing the fraction of circulation of the vortex blobs to each other satisfying the diffusion. The model is based on conserving the moments of the particles by satisfying a linear system of equations. The circulation of the particle are transfer to the nearby particles that are 
 
 	\begin{equation}
 	h_{\nu} = \sqrt{\nu\Delta t_d}
@@ -640,7 +640,7 @@ The equation states that underneath the vortex sheet, we must have a vortex shee
 	\label{eq:fredholmIntegral2ndKind}
 	\end{equation}
 		
-The \printAcron{Left Hand Side}{LHS} of the equation states at the point $s$, the velocity discontinuity is due to the vortex sheet at the point and the induced velocity of all the other vortex sheet acting on the point. 
+The \indexAcron{Left Hand Side}{LHS} of the equation states at the point $s$, the velocity discontinuity is due to the vortex sheet at the point and the induced velocity of all the other vortex sheet acting on the point. 
 
 However, the equation \ref{eq:fredholmIntegral2ndKind} is not unique and accepts arbitrary solution for the vortex sheet strengths, therefore we must imposed an additional constraint on the strength of the vortex sheet. The addition constraint is a constraint on the net circulation of the vortex sheet. As the vortex sheet is considered as an extension to the vorticity field, we could say that the net circulation of the vortex panels	is the circulation that was not captured by the vortex blobs, figure \ref{fig:extendedVorticityField}. As vortex blobs are not available very-near the body, it is not possible for the vortex blobs to resolve the high gradient vorticity at the boundary. Therefore, all the vorticity in the vortex sheet domain must be captured by the vortex sheet.
 	
@@ -675,7 +675,7 @@ Now, in a pure lagrangian, we must transfer the vorticity generated from the bod
 Equation \ref{eq:fredholmIntegral2ndKind} is solved by discretizing the body into $M$ vortex panels giving us a system of equation with can used to determine the $M$ unknowns of the strength of the vortex panels. The method refered as panel method has been greatly summarized by Katz and Plotkin \cite{Katz2001a}. 
 
 Katz and Plotkins have shown several types of panel distributions with various orders of accuracy, from $0^{\mathrm{th}}$
-order point vortex or up to $2^{\mathrm{nd}}$ order varying panel strength curvatured distribution. For this project, we have used a constant-strength vortex distribution that discretized the vortex sheet into straight segments, classified as \printAcron{Constant-Strength Vortex Method}{CSVM}.
+order point vortex or up to $2^{\mathrm{nd}}$ order varying panel strength curvatured distribution. For this project, we have used a constant-strength vortex distribution that discretized the vortex sheet into straight segments, classified as \indexAcron{Constant-Strength Vortex Method}{CSVM}.
 
 Panel methods are constructed by discretizing the integral equation and forming a system of equations to solve the $M$ unknowns of the vortex panel,
 
@@ -733,7 +733,7 @@ and results in a $M+1$ system of equations for solving the $M$ unknown strengths
 	\end{pmatrix}}_{\overrightarrow{\mathrm{RHS}}}
 	\end{equation}
 
-However, as we have an additional constraint on the net strength of the panels, we have $M+1$ set of equations with $M$ unknowns giving us a overdetermined problem. The approach to solve such a problem is either by using a \printAcron{Least-Square solution method}{LSTSQ}, or introducing a new unknown or as used by Katz, eliminating an equation. Enforcing the no-slip boundary condition at each panel location is our vital criteria and therefore, elimination of an equation is not a viable strategy and so the LSTSQ method was utilized for the project.
+However, as we have an additional constraint on the net strength of the panels, we have $M+1$ set of equations with $M$ unknowns giving us a overdetermined problem. The approach to solve such a problem is either by using a \indexAcron{Least-Square solution method}{LSTSQ}, or introducing a new unknown or as used by Katz, eliminating an equation. Enforcing the no-slip boundary condition at each panel location is our vital criteria and therefore, elimination of an equation is not a viable strategy and so the LSTSQ method was utilized for the project.
 
 \subsubsection{Constant-Strength Vortex Method}
 
