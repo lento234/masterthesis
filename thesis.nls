@@ -150,6 +150,8 @@
 		\nompageref{25}
   \item [{\textbf {LSTSQ}}]\begingroup Least-Square solution method\nomeqref {2.57}
 		\nompageref{27}
+  \item [{\textbf {MPI}}]\begingroup Message Passing Interface\nomeqref {3.9}
+		\nompageref{45}
   \item [{\textbf {PIV}}]\begingroup Particle Image Velocimetry\nomeqref {1.0}
 		\nompageref{2}
   \item [{\textbf {PSE}}]\begingroup Particle Strength Exchange\nomeqref {2.30}
