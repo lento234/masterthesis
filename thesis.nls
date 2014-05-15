@@ -130,14 +130,20 @@
 		\nompageref{2}
   \item [{\textbf {CFD}}]\begingroup Compuational Fluid Dynamic\nomeqref {1.0}
 		\nompageref{2}
+  \item [{\textbf {CG}}]\begingroup Continuous Galerkin\nomeqref {3.1}
+		\nompageref{43}
   \item [{\textbf {CSVM}}]\begingroup Constant-Strength Vortex Method\nomeqref {2.53}
 		\nompageref{26}
+  \item [{\textbf {DG}}]\begingroup Discontinous Galerkin\nomeqref {3.1}
+		\nompageref{43}
   \item [{\textbf {DOF}}]\begingroup Degrees of Freedom\nomeqref {3.0}
 		\nompageref{42}
   \item [{\textbf {FDM}}]\begingroup Finite Difference Method\nomeqref {3.0}
 		\nompageref{41}
   \item [{\textbf {FEM}}]\begingroup Finite Element Method\nomeqref {3.0}
 		\nompageref{41}
+  \item [{\textbf {FE}}]\begingroup Forward Euler\nomeqref {3.17}
+		\nompageref{49}
   \item [{\textbf {FMM}}]\begingroup Fast Multipole Method\nomeqref {1.0}
 		\nompageref{3}
   \item [{\textbf {FVM}}]\begingroup Finite Volume Method \nomeqref {3.0}
@@ -146,11 +152,13 @@
 		\nompageref{3}
   \item [{\textbf {HVM}}]\begingroup Hybrid Eulerian-Lagrangian Vortex Particle Method\nomeqref {1.0}
 		\nompageref{3, 4}
+  \item [{\textbf {IPCS}}]\begingroup Incremental Pressure Correction Scheme\nomeqref {3.14}
+		\nompageref{48}
   \item [{\textbf {LHS}}]\begingroup Left Hand Side\nomeqref {2.49}
 		\nompageref{25}
   \item [{\textbf {LSTSQ}}]\begingroup Least-Square solution method\nomeqref {2.57}
 		\nompageref{27}
-  \item [{\textbf {MPI}}]\begingroup Message Passing Interface\nomeqref {3.9}
+  \item [{\textbf {MPI}}]\begingroup Message Passing Interface\nomeqref {3.10}
 		\nompageref{45}
   \item [{\textbf {PIV}}]\begingroup Particle Image Velocimetry\nomeqref {1.0}
 		\nompageref{2}
