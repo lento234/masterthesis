@@ -17,24 +17,24 @@
 %\section{Purpose of eulerian domain}
 Standard \printAcron{Computation Fluid Dynamics}{CFD} method discretizes the fluid into smaller regions, known as grids, and solves the set of Navier-Stokes equations in this region. This type of formulation is referred to as Eulerian method as we are evaluating the change of flow property in a given volume.
 
-For the hybrid method, we use the Navier-Stokes grid formulation in the near-body region. The advantage of using the Eulerian method at this region is that it is much more efficient in resolving the boundary layer than the typical Vortex Particle Method. We can directly enforce the wall boundary condition at the wall boundary of the Eulerian domain, solving the problem of vorticity generation from a body. In the hybrid coupling strategy, we will interpolate this newly resolved near-wall solution on to the Lagrangian domain, where the vortex blobs will efficiently evolve the particles from the Lagrangian frame point.
+For the hybrid method, we use the Navier-Stokes grid formulation in the near-body region. The advantage of using the Eulerian method at this region is that it is much more efficient in resolving the boundary layer than the typical Vortex Particle Method. We can directly enforce the wall boundary condition at the wall boundary of the Eulerian domain, solving the problem of vorticity generation from a body. In the hybrid coupling strategy, we will then interpolate this newly resolved near-wall solution on to the Lagrangian domain, where the vortex blobs will efficiently evolve the particles from the Lagrangian frame point.
 
-The various approaches to solve the fluid dynamics problem from a Eulerian reference frame. \indexAcron{Finite Volume Method }{FVM}, \indexAcron{Finite Difference Method}{FDM}, and \indexAcron{Finite Element Method}{FEM} are the common choice for solving the Navier-Stokes problem and differ by the way they approach to solve the problem. FVM divides the domain into volumes where it enforces the conservation of mass and momentum in each sub-domains. FDM divides the domain into nodes and use local Taylor expansions to approximate the partial differential equations. FEM divides the domain into elements and solves the problem using variational calculus. So, in the end, the choice of Eulerian method does not have a direct impact on the coupling with the Lagrangian method. 
+The various approaches to solve the fluid dynamics problem from a Eulerian reference frame. \indexAcron{Finite Volume Method }{FVM}, \indexAcron{Finite Difference Method}{FDM}, and \indexAcron{Finite Element Method}{FEM} are the common choice for solving the Navier-Stokes problem and differ by the way they approach to solve the problem. FVM divides the domain into volumes where it enforces the conservation of mass and momentum in each sub-domains. FDM divides the domain into nodes and use local Taylor expansions to approximate the partial differential equations. FEM divides the domain into elements and solves the problem using variational calculus. So, in the end, the choice of Eulerian method does not have a direct impact on the coupling with the Lagrangian method and purpose of the Eulerian method is to efficiently, and accurately resolve the near-body region.
 
-We have decided to use the FEM packages provided by the \texttt{FEniCS} project as they have be already implemented efficient, multi-threaded algorithms for solving differential equation and provide extensive features for future developments such as adaptive mesh refinement, fluid-structure interaction, and efficient computation of turbulence.
+We have decided to use the FEM packages provided by the \fenics project as they have be already implemented efficient, parallelized algorithms for solving differential equation and provide extensive features for future developments such as adaptive mesh refinement, fluid-structure interaction, and efficient computation of turbulence.
 
 \section{Introduction to Finite Element Method}
 
-\printAcron{Finite Element Method}{FEM} is numerical method to solve for the solution of a given differential equation. It is solved by describing it as a variation problem, and by minimizing the error we can reach a approximate solution for the boundary value problem \cite{Brenner2008}. So, the FEM approximates the unknown variables and converts the partial differential equations to algebraic equations. It was traditionally used for solid mechanics, for the analysis of aircraft structures \cite{Rao2005}, but have since then used to solve the Navier-Stokes fluid dynamics problems \cite{Guermond2006} \cite{Johnston2004} \cite{Guermond2003}.
+\printAcron{Finite Element Method}{FEM} is numerical method to solve for the solution of a given differential equation. It is solved by describing it as a variation problem, and by minimizing the error we can reach a approximate solution for the boundary value problem \cite{Brenner2008}. So, the FEM approximates the unknown variables and converts the partial differential equations to a set of algebraic equations, which makes them easier to solve. It was traditionally used for solid mechanics, for the analysis of aircraft structures \cite{Rao2005}, but have since then used to solve fluid dynamics problems \cite{Guermond2006} \cite{Johnston2004} \cite{Guermond2003}.
 
 \subsection*{Finite element discretization}
 
-Finite Element solves by dividing the domain of interest into small, simple regions known as ``finite elements". These ``elements" are connected at the joints and are called nodes or nodal points. We use these sets of node and elements to represent the actual variation in the field (such as displacement, velocity, pressure or temperature) using simple functions, known as basis functions. Therefore, we have transformed a domain of infinite \indexAcron{Degrees of Freedom}{DOF} to a finite number of DOFs. We combine this set of equations of element equations into a global system of equations to solve for the final problem.
+Finite Element solves by dividing the domain of interest into small, simple regions known as ``elements". These ``elements" are connected at the joints which are called nodes or nodal points. We use these sets of node and elements to represent the actual variation in the field (such as displacement, velocity, pressure or temperature) using simple functions, known as basis functions. Therefore, we have transformed a domain of infinite \indexAcron{Degrees of Freedom}{DOF} to a finite number of DOFs. We combine this set of equations of element equations into a global system of equations to solve for the final problem.
 
 	\begin{figure}[b]
 	\centering
 	\includegraphics[width=0.4\linewidth]{./figures/eulerian/finiteElementDefinitions.pdf}
-	\caption{A two-dimensional Finite Element geometry. The cell represents the area of the element, and vertices are the edge of the cell.}
+	\caption{A two-dimensional Finite Element geometry. The cell represents the area of the element, and verticies are the edge of the cell.}
 	\label{fig:finiteElementDefinitions}
 	\end{figure}
 
@@ -72,10 +72,10 @@ Any given function $u \in V$ is a expressed in a linear combination of basis fun
 
 There are several numbers of Finite Element families, such as Brezzi-Douglas-Marini, Crouzeiz-Raviart, Discontinuous Lagrange, Hermite, and Lagrange elements \cite{Logg2012a}. Each has its own advantage such as the Discontinous Lagrange, also referred to as \indexAcron{Discontinous Galerkin}{DG} element consists of functions that are totally discontinuous. Originally introduced for hyperbolic problem by Reed and Hill \cite{Reed1973}, the method ables to conserve mass at each element, and are high-order accuracy and robust in solving advection problem. However, for the current problem, we have relied on the standard Lagrange elements, also known as \indexAcron{Continuous Galerkin}{CG}, which are based on the Lagrange polynomials \cite{Chen2011}.
 
-\subsection*{Variational problem}
+\subsection*{Variational formulation}
 \label{subsec:variationalProblem}
 
-To solve a basic problem such as a Poisson equation numerically, we need to convert it into a variational problem. The methodology is followed from the \texttt{FEniCS} tutorial provide by Langtangen \cite{Langtangen2012}. A 1D Poisson problem is given as,
+To solve a basic problem such as a Poisson equation numerically, we need to convert it into a variational problem. The methodology is followed from the \fenics tutorial provide by Langtangen \cite{Langtangen2012}. A 1D Poisson problem is given as,
 
 	\begin{subequations}
 	\begin{align*}
@@ -89,21 +89,27 @@ We can transform equation \ref{eq:poissonEq} into the variational form by multip
 
 
 	\begin{equation}
-	- \int_{\Omega} \left(\nabla^2 u\right)v\ \mathrm{d}x= \int_{\Omega} fv\ \mathrm{d}x.
+	- \int_{\Omega} \left(\nabla^2 u\right)v\ \mathrm{d}x= \int_{\Omega} fv\ \mathrm{d}x, \qquad \forall\ v \in \hat{V}.
 	\label{eq:poissonEqVariationFormA}
 	\end{equation}
 
 The function $u$ in variational form, equation \ref{eq:poissonEqVariationFormA}, is known as the trial function and it is the solution that we are trying to approximate. The test function $v$ lies in the test function space $\hat{V}$ and our trial function $u$ lies on the function space $V$. When performing integration by parts, the test function $v$ is required to be zero at regions where $u$ is known. So, the additional terms cancel and we get,
 
 	\begin{equation}
-	- \int_{\Omega} \nabla u \nabla v\ \mathrm{d}x= \int_{\Omega} fv\ \mathrm{d}x \qquad \forall v \in \hat{V}
+	- \int_{\Omega} \nabla u \nabla v\ \mathrm{d}x= \int_{\Omega} fv\ \mathrm{d}x \qquad \forall\ v \in \hat{V}
 	\label{eq:poissonEqVariationFormB}
 	\end{equation}
 
-This form is referred to as the ``weak-form" of the original Poisson equation and is valid for all $v$ in the trial space $\hat{V}$. In order to solve this continuous problem numerically, we must discretize it first into discrete variational problem,
+This form is referred to as the ``weak-form" of the original Poisson equation and is valid for all $v$ in the trial space $\hat{V}$. Note as the inner product of two function $f$ and $g$ is defined as $\langle f,g \rangle = \int_{\Omega}fg\ \mathrm{d}x$, equation \ref{eq:poissonEqVariationFormB} can be summarized as,
 
 	\begin{equation}
-	- \int_{\Omega} \nabla u_h \nabla v\ \mathrm{d}x= \int_{\Omega} fv\ \mathrm{d}x \qquad \forall v \in \hat{V}_h \subset \hat{V},
+	\langle \nabla u,\nabla v \rangle = \langle f,v \rangle, \qquad \forall\ v \in \hat{V}.
+	\end{equation}
+
+In order to solve this continuous problem numerically, we must discretize it first into discrete variational problem,
+
+	\begin{equation}
+	- \int_{\Omega} \nabla u_h \nabla v\ \mathrm{d}x= \int_{\Omega} fv\ \mathrm{d}x \qquad \forall\ v \in \hat{V}_h \subset \hat{V},
 	\label{eq:poissonEqDiscreteVariational}
 	\end{equation}
 
@@ -159,7 +165,7 @@ In order to generate the mesh of the fluid domain, we used \gmsh, a three-dimens
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.5\linewidth]{./figures/eulerian/dolfinExampleFigure-rotated270.pdf}
-	\caption{\texttt{DOLFIN} \texttt{VTK} plot of the Poisson solution, given by the problem, source code listing \ref{lst:pycode-poisson}.}
+	\caption{\dolfin VTK plot of the Poisson solution, given by the problem, source code listing \ref{lst:pycode-poisson}.}
 	\label{fig:dolfinExampleFigure}
 	\end{figure}
 
@@ -167,11 +173,11 @@ The \fenics Project is a collaborative work of various universities, that develo
 
 	\begin{listing}[p]
 	\inputminted[fontseries=courier,obeytabs,fontsize=\footnotesize,mathescape,linenos,numbersep=5pt,frame=lines,framesep=2mm,xleftmargin=20mm,xrightmargin=20mm]{python}{figures/eulerian/dolfinExample.py}
-	\caption{A complete program for solving the Poisson problem and plotting the solution. The Poisson problem is given as $-\nabla^2{u} = f$, where $u_0 = \sin{x}\cdot\cos{y}$ on the boundary and $f=2$. The code is written in python using \texttt{DOLFIN} 1.2 library}
+	\caption{A complete program for solving the Poisson problem and plotting the solution. The Poisson problem is given as $-\nabla^2{u} = f$, where $u_0 = \sin{x}\cdot\cos{y}$ on the boundary and $f=2$. The code is written in \python using \dolfin 1.2 library}
 	\label{lst:pycode-poisson}
 	\end{listing}
 
-The consists of various libraries such as \textsc{UFC}, \textsc{UFL}, \textsc{FIAT}, \textsc{INSTANT} and mainly \textsc{Dolfin}. \dolfin is the core library aimed at automating the solution of partial differential equations using finite element method \cite{Logg2011}. It uses automated code generation maintaining high level of mathematical expressions and internally providing efficient, multi-threaded performance using the \indexAcron{Message Passing Interface}{MPI}. It used built-in linear algebra backend such as \textsc{PETSc}, \textsc{Trilinos/Epectra}, \textsc{uBLAS}, and \textsc{MTL4}.
+The consists of various libraries such as UFC, UFL, FIAT, INSTANT and mainly \textsc{Dolfin}. \dolfin is the core library aimed at automating the solution of partial differential equations using finite element method \cite{Logg2011}. It uses automated code generation maintaining high level of mathematical expressions and internally providing efficient, multi-threaded performance using the \indexAcron{Message Passing Interface}{MPI}. It used built-in linear algebra backend such as PETSc, TRILINOS/EPECTRA, uBLAS, and MTL4.
 
 The Poisson problem to with the source code was evaluated is given by,
 
@@ -185,7 +191,7 @@ where $f=2$ and $u(x) = u_0(x) = \sin x \cdot \cos y$ on boundary $\partial \Ome
 
 The proper generation of the fluid mesh is an important aspect of the Finite Element method. It is a non-trivial process, as a non-ideal mesh can be computationally expensive, given un-precise data, and even cause convergence issues. There have been literatures dedicated just to improve the mesh generation, that focuses of improving the quality of the mesh thereby increasing the quality of the data and increasing the robustness of the simulation \cite{Hansen2005}. 
 
-We used \gmsh an open-source finite element mesh generator, which has implemented a user-friendly interface and fast algorithms, developed by Geuzaine and Remacle \cite{Geuzaine2009a}. Its kernel uses \textsc{BLAS} and \texttt{LAPACK} linear algebra packages, and is written in \texttt{C++}. It allows for scriptability making it ideal to chain it with our current \texttt{Python} code project for automation.
+We used \gmsh an open-source finite element mesh generator, which has implemented a user-friendly interface and fast algorithms, developed by Geuzaine and Remacle \cite{Geuzaine2009a}. Its kernel uses \textsc{BLAS} and LAPACK linear algebra packages, and is written in C++. It allows for scriptability making it ideal to chain it with our current \python code project for automation.
 
 \section{Solving Incompressible Navier-Stokes Equations}
 The finite element method will be used to describe the Eulerian domain of the hybrid scheme. In the Lagrangian domain, we have used the vorticity-velocity formulation of the Navier-Stokes to describe the evolution of the vorticity in the wake. In the Eulerian domain, where have the no-slip boundary, we have decided to use the primitive variables for formulation the fluid dynamics problem. 
@@ -218,7 +224,7 @@ The velocity field $\mathbf{u}$ is vector function that lies on the vector-value
 
 \subsection{Incremental pressure correction scheme}
 
-The algorithm to solve the Navier-Stokes problem was first demonstrated by Chorin in 1968 \cite{Chorin1968}, nowadays referred to as Chorin's projection method or non-incremental pressure correction scheme. The process relied on first computing a tentative velocity by initially neglecting the pressure in the momentum equation of the Navier-Stokes problem, equation \ref{eq:2Dns}. The velocity field is corrected by determining the pressure field satisfying a divergence free vector field. This method however does not satisfy the discrete incompressibility constraint exactly and Goda 1979 \cite{Goda1979a}, has introduced a improvement to scheme known as the \indexAcron{Incremental Pressure Correction Scheme}{IPCS}.
+The algorithm to solve the Navier-Stokes problem was first demonstrated by Chorin in 1968 \cite{Chorin1968}, nowadays referred to as Chorin's projection method or non-incremental pressure correction scheme. The process relied on first computing a tentative velocity by initially neglecting the pressure in the momentum equation of the Navier-Stokes problem, equation \ref{eq:2Dns}. The velocity field is corrected by determining the pressure field satisfying a divergence free vector field. This method however does not satisfy the discrete incompressibility constraint exactly and so Goda, has introduced a improvement to scheme known as the \indexAcron{Incremental Pressure Correction Scheme}{IPCS}, Goda 1979 \cite{Goda1979a}.
 
 The method computed the viscous term at the incremented time $(t_{n-1} + t_n)/2$ and used the stress formulation determining the corrected pressure \cite{Logg2012a}. The algorithms to the IPCS scheme can be summarized as follows:
 
@@ -259,7 +265,7 @@ The method computed the viscous term at the incremented time $(t_{n-1} + t_n)/2$
 	\end{figure}
 	
 	
-This algorithm was implemented using \texttt{DOLFIN}'s Krylov \texttt{GMRES} solver with absolute and relative error tolerance of \num{e-25} and \num{e-12} respectively. The program structure was based on the collection of benchmark and solvers provided by the \texttt{FEniCS} examples scripts \cite{nsbench}.
+This algorithm was implemented using \textsc{Dolfin}'s Krylov \textsc{Gmres} solver with absolute and relative error tolerance of \num{e-25} and \num{e-12} respectively. The program structure was based on the collection of benchmark and solvers provided by the \fenics examples scripts \cite{nsbench}.
 
 The algorithm described above an explicit time marching scheme, also referred to as \indexAcron{Forward Euler}{FE}, which is the simplest time marching scheme. Therefore, for the time marching scheme to be stable, we require the CFL number satisfy the following condition:
 

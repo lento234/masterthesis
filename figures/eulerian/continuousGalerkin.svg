@@ -2,44 +2,57 @@
 <svg xmlns="http://www.w3.org/2000/svg"
     xmlns:latexdraw="http://latexdraw.sourceforge.net/namespaces/latexdraw"
     version="1.1" baseProfile="full">
-    <defs>
-        <marker overflow="visible" orient="auto" id="arrow2-44">
-            <path
-                d="M 0.0 0.0 L -4.652083333333334 1.6614583333333335 L -2.79125 0.0 L -4.652083333333334 -1.6614583333333335 z "
-                latexdraw:arrSizeNum="2.0" fill="black"/>
-        </marker>
-        <marker overflow="visible" orient="auto" id="arrow2-45">
-            <path
-                d="M 0.0 0.0 L -4.652083333333334 1.6614583333333335 L -2.79125 0.0 L -4.652083333333334 -1.6614583333333335 z "
-                latexdraw:arrSizeNum="2.0" fill="black"/>
-        </marker>
-    </defs>
+    <defs/>
     <g>
-        <g latexdraw:type="line" id="id44">
-            <line x1="180.0" x2="460.0" y1="320.0" y2="320.0"
-                stroke-width="2.0" stroke="black"
-                latexdraw:rotationAngle="0.0" marker-end="url(#arrow2-44)"/>
+        <g latexdraw:type="drawing" id="id125">
+            <g latexdraw:type="polygon" id="id126">
+                <polygon points="200.0,200.0 200.0,400.0 400.0,400.0 "
+                    stroke-width="2.0" stroke="black" fill="#c8c8c8"/>
+            </g>
+            <g latexdraw:type="dot" id="id127" latexdraw:size="15.0"
+                latexdraw:dotShape="dot" latexdraw:position="200.0 200.0">
+                <circle r="7.5" fill="black" cx="200.0" cy="200.0"/>
+            </g>
+            <g latexdraw:type="dot" id="id128" latexdraw:size="15.0"
+                latexdraw:dotShape="dot" latexdraw:position="400.0 400.0">
+                <circle r="7.5" fill="black" cx="400.0" cy="400.0"/>
+            </g>
+            <g latexdraw:type="dot" id="id129" latexdraw:size="15.0"
+                latexdraw:dotShape="dot" latexdraw:position="200.0 400.0">
+                <circle r="7.5" fill="black" cx="200.0" cy="400.0"/>
+            </g>
         </g>
-        <g latexdraw:type="line" id="id45">
-            <line x1="180.0" x2="180.0" y1="320.0" y2="40.0"
-                stroke-width="2.0" stroke="black"
-                latexdraw:rotationAngle="0.0" marker-end="url(#arrow2-45)"/>
-        </g>
-        <g latexdraw:type="polygon" id="id46">
-            <polygon points="180.0,120.0 180.0,320.0 360.0,320.0 "
+        <g latexdraw:type="polygon" id="id131">
+            <polygon points="500.0,200.0 500.0,400.0 700.0,400.0 "
                 stroke-width="2.0" stroke="black" fill="#c8c8c8"/>
         </g>
-        <g latexdraw:type="dot" id="id47" latexdraw:size="15.0"
-            latexdraw:dotShape="dot" latexdraw:position="180.0 120.0">
-            <circle r="7.5" fill="black" cx="180.0" cy="120.0"/>
+        <g latexdraw:type="dot" id="id132" latexdraw:size="15.0"
+            latexdraw:dotShape="dot" latexdraw:position="500.0 200.0">
+            <circle r="7.5" fill="black" cx="500.0" cy="200.0"/>
         </g>
-        <g latexdraw:type="dot" id="id48" latexdraw:size="15.0"
-            latexdraw:dotShape="dot" latexdraw:position="360.0 320.0">
-            <circle r="7.5" fill="black" cx="360.0" cy="320.0"/>
+        <g latexdraw:type="dot" id="id133" latexdraw:size="15.0"
+            latexdraw:dotShape="dot" latexdraw:position="700.0 400.0">
+            <circle r="7.5" fill="black" cx="700.0" cy="400.0"/>
         </g>
-        <g latexdraw:type="dot" id="id49" latexdraw:size="15.0"
-            latexdraw:dotShape="dot" latexdraw:position="180.0 320.0">
-            <circle r="7.5" fill="black" cx="180.0" cy="320.0"/>
+        <g latexdraw:type="dot" id="id134" latexdraw:size="15.0"
+            latexdraw:dotShape="dot" latexdraw:position="500.0 400.0">
+            <circle r="7.5" fill="black" cx="500.0" cy="400.0"/>
+        </g>
+        <g latexdraw:type="dot" id="id135" latexdraw:size="15.0"
+            latexdraw:dotShape="dot" latexdraw:position="500.0 310.0">
+            <circle r="7.5" fill="black" cx="500.0" cy="310.0"/>
+        </g>
+        <g latexdraw:type="dot" id="id136" latexdraw:size="15.0"
+            latexdraw:dotShape="dot" latexdraw:position="610.0 310.0">
+            <circle r="7.5" fill="black" cx="610.0" cy="310.0"/>
+        </g>
+        <g latexdraw:type="text" id="id137" font-family="Dialog"
+            fill="black" font-size="18" latexdraw:x="240.0">
+            <text x="240.0" y="270.0"><![CDATA[$\mathrm{CG}_1$]]></text>
+        </g>
+        <g latexdraw:type="text" id="id140" font-family="Dialog"
+            fill="black" font-size="18" latexdraw:x="540.0">
+            <text x="540.0" y="270.0"><![CDATA[$\mathrm{CG}_2$]]></text>
         </g>
     </g>
     <metadata>
@@ -57,14 +70,14 @@
             <latexdraw:autoUpdate>true</latexdraw:autoUpdate>
             <latexdraw:version>2.0.8</latexdraw:version>
             <latexdraw:size>
-                <latexdraw:width>1249</latexdraw:width>
-                <latexdraw:height>795</latexdraw:height>
+                <latexdraw:width>1861</latexdraw:width>
+                <latexdraw:height>998</latexdraw:height>
             </latexdraw:size>
             <latexdraw:position>
-                <latexdraw:x>460</latexdraw:x>
-                <latexdraw:y>232</latexdraw:y>
+                <latexdraw:x>192</latexdraw:x>
+                <latexdraw:y>77</latexdraw:y>
             </latexdraw:position>
-            <latexdraw:dividerPosition>0.6357085668534828</latexdraw:dividerPosition>
+            <latexdraw:dividerPosition>0.6389038151531434</latexdraw:dividerPosition>
             <latexdraw:displayCodePanel>true</latexdraw:displayCodePanel>
             <latexdraw:displayXScale>true</latexdraw:displayXScale>
             <latexdraw:displayYScale>true</latexdraw:displayYScale>
