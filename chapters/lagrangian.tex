@@ -74,11 +74,11 @@
 %------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------
 \section{Introduction to Vortex Particle Method}
-\indexAcron{Vortex Particle Method}{VPM} is a branch of computational fluid dynamics that deals with the evolution of the vorticity of the fluid in a lagrangian description. Typically, the fluid is viewed at a fixed window where it is described as a function of space $\mathbf{x}$ and time $t$. However, the lagrangian point of view regards the fluid as a collection of the particles carrying the property of the fluid. 
+\indexAcron{Vortex Particle Method}{VPM} is a branch of computational fluid dynamics that deals with the evolution of the vorticity of the fluid in a Lagrangian description. Typically, the fluid is viewed at a fixed window where the change in the fluid properties are evaluated. However, the Lagrangian formulation, regard the fluid as a collection of the particles carrying the property of the fluid. 
 
 %\todo{Lagrangian vs. Eulerian fluid diagram}
 
-Unlike the typical eulerian method that require discretization of all the fluid domain, VPM only needs fluid elements where there is vorticity. This means that the VPM are inherently auto-adaptive method that only simulated the flow of interest. Furthermore, with the computational acceleration methods such as \printAcron{Fast-Multipole Method}{FMM} and parallel computation on \printAcron{Graphics Processing Units}{GPU}, VPM can be more efficient that typical eulerian methods.
+Unlike the typical Eulerian method that require the discretization of all the fluid domain, VPM only needs fluid elements where there is vorticity. This means that the VPM are inherently auto-adaptive method that only simulated the flow of interest. Furthermore, with the computational acceleration methods such as \printAcron{Fast-Multipole Method}{FMM} and parallel computation in \printAcron{Graphics Processing Unit}{GPU}, VPM are must more efficient at evolving the vorticity field that the typical Eulerian methods.
 
 \subsection{Vorticity}
 Vorticity $\omega$, the governing element of vortex particle method, is defined as
@@ -87,14 +87,14 @@ Vorticity $\omega$, the governing element of vortex particle method, is defined 
 	\mathbf{\omega} = \Delta \times \mathbf{u},
 	\end{equation}
 
-where $\mathbf{u}$ is the velocity. The circulation $\Gamma$ is defined as
+where $\mathbf{u}$ is the velocity. The circulation $\Gamma$ is defined by the stokes theorem,
 
 	\begin{equation}
-	\Gamma = \int_L\mathbf{u}\cdot d \mathbf{r}=\int_S\omega\cdot\mathbf{n}\ dS,
+	\Gamma = \int_L\mathbf{u}\cdot d \mathbf{s}=\int_A\omega\cdot\mathbf{n}\ dA,
 	\label{eq:definitionOfCirculation}
 	\end{equation}
 
-by the stokes theorem, as represents the integral vorticity of the domain, figure \ref{fig:vorticityCirculation}
+and represents the integral vorticity of the domain, figure \ref{fig:vorticityCirculation}
 
 	\begin{figure}[t]
 	\centering
@@ -104,42 +104,42 @@ by the stokes theorem, as represents the integral vorticity of the domain, figur
 	\end{figure}
 
  
-\subsection{Velocity-vorticity formulation of the Navier-Stokes equations}
-The governing equation of the vortex particle method is velocity-vorticity $\mathbf{u}-\omega$ formulation of the Navier-Stokes equations \cite{Cottet2000a}. The 2-D incompressible Navier-Stokes momentum equation is given as
+\subsection{Velocity-Vorticity formulation of the Navier-Stokes equations}
+The governing equation of the vortex particle method is the velocity-vorticity $\mathbf{u}-\omega$ formulation of the Navier-Stokes equations \cite{Cottet2000a}. The 2-D incompressible Navier-Stokes momentum equation is given as,
 
 	\begin{equation}
 	\frac{\partial \mathbf{u}}{\partial t} + \mathbf{u}\cdot\nabla\mathbf{u} = - \frac{1}{\rho} \nabla p + \nu \nabla^2\mathbf{u},
 	\label{eq:mom}
 	\end{equation}
 
-relating the velocity field $\mathbf{u}\left(\mathbf{x},t\right)$ to the pressure field $\mathbf{p\left(\mathbf{x},t\right)}$, the kinematic viscosity $\nu$ and density $\rho$. Furthermore, we also have to satisfy the incompressibility constraint given as
+relating the velocity field $\mathbf{u}\left(\mathbf{x},t\right)$ to the pressure field $p\left(\mathbf{x},t\right)$, the kinematic viscosity $\nu$ and density $\rho$. Furthermore, we also have to satisfy the incompressibility constraint given as, 
 
 	\begin{equation}
 	\nabla\cdot\mathbf{u} = 0.
 	\end{equation}
 
-To attain the velocity-vorticity formulation, we should take the curl of the velocity-pressure $\mathbf{u}-p$ formulation of the Navier-Stokes equation. Taking the curl of the momentum equation \ref{eq:mom}, we get the vorticity transport equation
+To attain the velocity-vorticity formulation, we should take the curl of the velocity-pressure formulation $\mathbf{u}-p$ of the Navier-Stokes equation. Taking the curl of the 2-D momentum equation \ref{eq:mom}, we derive the vorticity transport equation
 
 	\begin{equation}
 	\frac{\partial \omega}{\partial t} + \mathbf{u}\cdot\nabla\omega = \nu \nabla^2 \omega,
 	\end{equation}
 
-which only relates the vorticity to the velocity enabling us to neglect the pressure field. Note that as we are dealing with the two dimensional flow, we neglected the stretching term. 
+which only relates the vorticity to the velocity enabling us to neglect the pressure field. Note that as we are dealing with the two dimensional flow, we can neglected the 3-D stretching term. 
 
 
 \subsection{Viscous splitting algorithm}
-Vortex particle method was initially used to model the evolution of incompressible, inviscid flows. However, in order to simulate a real flow, we must also deal with the viscous behaviour of the fluid. Chorin \cite{Chorin1973} has shown that using the viscous splitting algorithm, it is possible to simulate a viscous flow. 
+Vortex particle method was initially used to model the evolution of incompressible, inviscid flows. However, in order to simulate a real flow, we must also deal with the viscous behavior of the fluid. Chorin in 1973 \cite{Chorin1973}, showed that using the viscous splitting algorithm, it is possible to take in account of the viscous effects of the flow. 
 
-The viscous splitting algorithm is basically a fractional step method, where the viscous and the inviscid part of the transport equation is dealt in two subsequent steps, 
+The viscous splitting algorithm is basically a fractional step method, where the viscous and the inviscid part of the transport equation are dealt with in two subsequent steps, 
 
 	\begin{itemize}
-	\item Sub-step 1: convection
+	\item Sub-step 1: \textbf{Convection}
 		\begin{equation}
 		\frac{\partial\omega}{\partial t} + \mathbf{u}\cdot\nabla\omega=0;
 		\label{eq:convectionEulerian}
 		\end{equation}
 		
-	\item Sub-step 2: diffusion
+	\item Sub-step 2: \textbf{Diffusion}
 		\begin{equation}
 		\frac{\partial\omega}{\partial t} = \nu\nabla^2\omega.
 		\label{eq:vsa2}
@@ -149,9 +149,9 @@ The viscous splitting algorithm is basically a fractional step method, where the
 
 The first sub-step of the evolution deals with the convection of the vorticity. Note that, by convection we imply the advection of the vorticity field where the diffusion process is neglected. The second sub-step is where we deals with the diffusion of the vorticity field. 
 
-There are several advantage to this type of evolution. As the convection and diffusion are handled separately, there is minimum dispersion during the convection and furthermore, the is no restriction of the advection CFL number \cite{Wee2006}.
+There are several advantage to this type of evolution. As the convection and diffusion are handled separately, there is minimum dispersion during the convection step and furthermore, the is no restriction of the advection CFL number, as shown by Wee (2006) \cite{Wee2006}.
 
-There are many ways of dealing with the diffusion of the vorticity field. During this project, we use a modified interpolation kernel \cite{Wee2006} that can simultaneously treat diffusion and remesh the vortex particles, see section \ref{sec:diffusionVM}.
+There are many ways of dealing with the diffusion of the vorticity field. During this project, we initially used a modified interpolation kernel by Wee (2006) \cite{Wee2006} that can simultaneously treat diffusion and remesh the vortex particles. Later, we used a simple redistribution scheme by Tutty (2010) \cite{2010arXiv1009.0166T}, that was less constrained on time-step size for the diffusion, see section \ref{sec:diffusionVM}.
 
 %------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------
@@ -159,27 +159,26 @@ There are many ways of dealing with the diffusion of the vorticity field. During
 \section{Spatial Discretization: Generation of Vortex Blobs}
 \label{sec:spatialDiscretization}
 
-In order to deal with the vorticity field, we must first discretize the vorticity to vortex particles. Vortex blobs have been first introduced by Chorin and is a mollified particle carrying the local circulation. Vortex blobs describes a smooth vorticity field and are ideal because of it does not cause singularity issues when particles approach each other.
+Before we can convect and diffuse the vorticity field, we must first discretize the vorticity field into Lagrangian fluid elements. For this project we used vortex blobs, that was introduced by Chorin. Vortex blobs are mollified vortex particle carrying the local circulation of the fluid. They describes a smooth vorticity field, and this is important because non-modified vortex particles have asymptotic vorticity distribution and causes issues when particles approach each other.
 
-\todo{check for consistency, continuity}
 \subsection{Biot-Savart law}
 
-The velocity field can be decomposed using the Helmholtz decomposition, given as
+The velocity field can be decomposed using the Helmholtz decomposition given as,
 
 	\begin{equation}
 	\mathbf{u} = \mathbf{u}_{\omega} + \mathbf{u}_{\phi},
 	\label{eq:helmholtz}
 	\end{equation}
 
-where $\mathbf{u}_{\omega}$ is the rotational component of the velocity and $\mathbf{u}_{\phi}$ is the irrotational component. solenoidal and potential velocity respectively. In an unbounded flow we have $\mathbf{u}_{\phi}$ equal to the free-stream velocity $\mathbf{u}_{\infty}$. For bounded flow, we must include the presence of the body, see section \ref{sec:boundaryConditions}.
+where $\mathbf{u}_{\omega}$ is the rotational component of the velocity and $\mathbf{u}_{\phi}$ is the irrotational component, the solenoidal and the potential velocity respectively. In an unbounded flow we have $\mathbf{u}_{\phi}$ equal to the free-stream velocity $\mathbf{u}_{\infty}$, whereas for bounded flow, we must include the presence of the body, see section \ref{sec:boundaryConditions}.
 	
-The velocity can be related to the vorticity using the Biot-Savart law
+The velocity can be related to the vorticity using the Biot-Savart law as,
 
 	\begin{equation}
 	\mathbf{u}_{\omega} = \mathbf{K}\star\omega,
 	\end{equation}
 	
-where the $\star$ represents convolution of the 2-D kernel $\mathbf{K}$ given by
+where the $\star$ represents convolution of the 2-D kernel $\mathbf{K}$ given by,
 
 	\begin{equation}
 	\mathbf{K} = \frac{1}{2\pi\left|\mathbf{x}\right|^2}\left(-x_2,x_1\right).
@@ -187,89 +186,83 @@ where the $\star$ represents convolution of the 2-D kernel $\mathbf{K}$ given by
 	\end{equation}
 	
 \subsection{Discrete form of vorticity field}
-The spatial discretization of the fluid domain is done through $N$ quadrature points. With the Biot-Savart law, we can treat these quadratures are discrete particles carrying the local quantities. The discrete vorticity field is given as
+The spatial discretization of the fluid domain is done through $N$ quadrature points. With the Biot-Savart law, we can treat these quadratures as discrete particles carrying the local quantities. The discrete vorticity field is given as,
 
 	\begin{equation}
 	\omega\left(\mathbf{x},t\right) \simeq \omega^h\left(\mathbf{x},t\right) = \sum_{p}\alpha_p\left(t\right)\delta \left[\mathbf{x}-\mathbf{x}_p\left(t\right)\right],
 	\end{equation}
 
-where $\alpha_{p}$ is the estimate of the circulation around the particle $\mathbf{x}_p$ with core size $\sigma$. We must not that $\omega^h$ is an approximately equal to $\omega$ of the fluid due to the discretization.
-
-The discrete form of the velocity is therefore written as
+where $\alpha_{p}$ is the estimate of the circulation around the particle $\mathbf{x}_p$ with core size $\sigma$. We must note that $\omega^h$ is the discrete vorticity field and therefore in an approximation of the continuous vorticity field $\omega$. The discrete form of the velocity is therefore written as,
 
 	\begin{equation}
 	\mathbf{u} \simeq \mathbf{u}^h = \sum_p \mathbf{K}\left[\mathbf{x}-\mathbf{x}_p\left(t\right)\right]\alpha_p\left(t\right).
 	\end{equation}
 	
-Thus the discrete vorticity field is an $N$-body problem inducing velocity on each and implicitly evolving the vorticity field. This is one of the advantage of the vortex particle method as there are many ways to efficiently treat the problem. The $N$-body problem can be parallelized and can be accelerated using fast summation methods such as FMM, see \ref{sec:sat}.
+Thus the discrete vorticity field is an $N$-body problem inducing velocity on each and implicitly evolving the vorticity field. This is the main advantage of the vortex particle method as there are many efficient methods to evaluate the induced velocities. The $N$-body problem can be parallelized in GPUs, and furthermore the induced velocity calculations can be simplified using fast summation methods such as the \printAcron{Fast Multipole Method}{FMM}.
 	
-However, like all $N$-body problem, equation \ref{eq:GreensKernel} has a singularity when the particles approach each other and can result in numerical instability. To overcome this we can mollify the kernel, removing the singularity.
+Like all the $N$-body problems, equation \ref{eq:GreensKernel} is an asymptotic kernel, and has a singularity when the particles approach each other. This can pose numerical instability when convecting the particle, and to overcome this, we can mollify the kernel, removing the singularity to create a smooth velocity field.
 
 \subsection{Mollified vortex kernels}
 
-A vortex particle with a mollified core, non-zero core-size, is referred to as vortex blobs. The advantage of the vortex blobs is that the with a smooth distribution of the vorticity, the singularity disappears and so numerical instability does not happen when blobs get too close to each other. An ideal choice for a cutoff function is a Gaussian distribution, figure \ref{fig:gaussianDistribution}.
+A vortex particle with a mollified core, non-zero core-size, is referred to as a vortex blob. The advantage of a vortex blob is that the with its smooth distribution of the vorticity, the singularity disappear, and the numerical instability when the blobs get too close to each other, does not occur anymore. An ideal choice for a cutoff function that gives a smooth vorticity distribution is the Gaussian distribution, shown in figure \ref{fig:gaussianDistribution}.
 
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.7\textwidth]{figures/lagrangian/gaussianKernel.pdf}
-	\caption{Vortex blob with Gaussian distribution: [$k=2$, $\sigma=1.0$]}
+	\caption{The smoothing function $\zeta_{\sigma}$ for a gaussian distribution with $k=2$, $\sigma=1.0$.}
 	\label{fig:gaussianDistribution}
 	\end{figure}
 
-Gaussian kernels satisfy the requirement for smooth distribution ad decays quickly and is defined as
+Gaussian kernels satisfy the requirement for smooth distribution, decaying quickly away from the blob. It is defined as,
 	
 	\begin{equation}
 	\zeta_{\sigma} = \frac{1}{k\pi\sigma^2}\exp\left(-\frac{\left|\mathbf{x}\right|}{k\sigma^2}\right),
 	\end{equation}
 
-where $k$ is 1, 2 or 4 and determines the width of the kernel, $\sigma$ is core-size of the blob. Note that smoothing function is chosen such that $\int \zeta = 1$, ensuring the conservation of circulation when mollified. So, using a smooth cut-off function $\zeta_{\sigma}$, the mollified kernel $\mathbf{K}_{\sigma}$ is given as 
+where $k$ is either 1, 2 or 4 and it determines the width of the kernel; $\sigma$ is core-size of the blob. Note that smoothing function is chosen such that $\int \zeta = 1$, ensuring the conservation when mollified (i.e. the conservation of circulation). So using the smooth cut-off function $\zeta_{\sigma}$, the mollified Biot-Savart kernel $\mathbf{K}_{\sigma}$ is given as,	 
 
 	\begin{equation}
 	\mathbf{K}_{\sigma} = \mathbf{K} \star \zeta_{\sigma}.
 	\end{equation}
 
-The mollified vorticity field, represented by vortex blobs is given as
+The discrete mollified vorticity field, represented by vortex blobs is now defined as,
 
 	\begin{equation}
 	\omega^h\left(\mathbf{x},t\right) = \sum_p \alpha_p\left(t\right)\zeta_{\sigma}\left[\mathbf{x}-\mathbf{x}_p\left(t\right)\right],
 	\label{eq:mollifiedVorticityField}
 	\end{equation}
 
-now representing the mollified vorticity field and equivalently, the mollified velocity field is given as
+and similarly the discrete mollified velocity field is given as,
 
 	\begin{equation}
 	\mathbf{u}^h\left(\mathbf{x},t\right) = \sum_p \mathbf{K}_{\sigma}\left[\mathbf{x}-\mathbf{x}_p\left(t\right)\right]\alpha_p\left(t\right).
 	\end{equation}
 
-Koumoutsakos and Chorin \cite{Cottet2000a}, have shown that for proper communication between the particle, the particle needs to overlap,
-
-	\begin{equation}
-	\mathrm{overlap} = \frac{\sigma}{h},
-	\label{eq:overlapRatio}
-	\end{equation}
-
-	\begin{figure}[t]
+	\begin{figure}[b]
 	\centering
 	\includegraphics[width=0.4\textwidth]{figures/lagrangian/blobOverlap.pdf}
 	\caption{Vortex blob with overlap $\sigma/h$}
 	\label{fig:blobOverlap}
 	\end{figure}
 
-	
-where $h$ is the nominal particle spacing, figure \ref{fig:blobOverlap}. If the particles fail to overlap, vortex blobs will also fail to recover the vorticity field. Such problems occurs when blobs are clustered due to high flow strain, leading to lagrangian grid distorting and must be treated, see section \ref{subsec:remeshing}.
+Koumoutsakos and Chorin \cite{Cottet2000a}, in order to have proper communication between the vortex particles, the particles needs to have an overlap. The overlap ratio is defined as,
+
+	\begin{equation}
+	\mathrm{overlap} = \frac{\sigma}{h},
+	\label{eq:overlapRatio}
+	\end{equation}
+
+where $h$ is the nominal particle spacing. Figure \ref{fig:blobOverlap} shows the visual representation of the overlap ratio. If the particles fail to overlap, as confirmed by Koumoutsakos and Chorin \cite{Cottet2000a}, the vortex blobs will fail to represent the correct vorticity field. This problem occurs when blobs cluster together at regions of high flow strain. This localized clustering effect leads to lagrangian grid distorting, and has to be treading using remeshing schemes, covered in section \ref{subsec:remeshing}.
 
 
 \subsection{Vortex blob initialization}
 \label{subsec:vortexBlobInitialization}
-Now the question arises on how to initialize the particle's circulation strengths $\alpha_p$. A common approach that is used is to estimate the particles strength is to say that
+Now the question arises on how should we initialize the particle's circulation strengths $\alpha_p$. The common approach that is used as a standard is to estimate the particles strength by the local properties,
 
 	\begin{equation}
-	\alpha_p = \omega_p\cdot h^2.
+	\alpha_p = \omega_p\cdot h^2,
 	\label{eq:particleCirculationAssignment}
 	\end{equation}
-
-This might seem like a valid assumption as the circulation of a given area is the integral of the vorticity in the area, equation \ref{eq:definitionOfCirculation}, however this is no longer valid when regularizing the vorticity field using mollified gaussian kernels, equation \ref{eq:mollifiedVorticityField}. Barba and Rossi \cite{Barba2010}, has described this problem as gaussian blurring of the original vorticity field. Even though the particle have acquired the correct circulation strengths (i.e the local property), when evaluating the mollified vorticity field, we see that there is a mismatch in the evaluated vorticity field, figure \ref{fig:particleInitialization}. 
-
 
 	\begin{figure}[t]
 	\centering
@@ -278,7 +271,14 @@ This might seem like a valid assumption as the circulation of a given area is th
 	\label{fig:particleInitialization}
 	\end{figure}
 
+saying the particle carry the circulation of its local area. This might seem like a valid assumption as the circulation of a given area is the integral of the vorticity in the area, given by equation \ref{eq:definitionOfCirculation}, and it does satisfy the conservation of the circulation as all the circulation in the fluid is represented by the blobs.
+
+However, this type of initialization suffers some accuracy when the vorticity field is regularizing the vorticity field using mollified gaussian kernels, equation \ref{eq:mollifiedVorticityField}. Barba and Rossi \cite{Barba2010}, has described this problem as gaussian blurring of the original vorticity field. Even though the particle have acquired the correct circulation strengths (i.e the local property), when evaluating the mollified vorticity field, we see that there is a mismatch in the evaluated vorticity field, figure \ref{fig:particleInitialization}. 
+
 Another way of viewing this characteristic is say the conservation of circulation is only valid globally, but not locally. A common standard for recovering the initial vorticity field is perform the Beale's method \cite{Beale1988}.
+
+
+
 
 \subsubsection*{Beale's Iterative Method}
 
