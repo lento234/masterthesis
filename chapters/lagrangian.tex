@@ -356,7 +356,7 @@ The convection equation \ref{eq:convectionEulerian} of the viscous-splitting alg
 with
 	\begin{equation}
 	\frac{\mathrm{d}\alpha_p}{\mathrm{d}t} = 0.
-	\lable{eq:conservationODE}
+	\label{eq:conservationODE}
 	\end{equation}
 
 This problem in now solved using a Lagrangian formulation where the vortex blobs is used to discretize the vorticity field. Using the Biot-Savart law, equation \ref{eq:discreteVelocity}, we can determine the induced velocities acting on each particles. The calculation of the induced velocities an $N$-body problem and is parallelized using GPU hardware and simplified using an FMM approach.
