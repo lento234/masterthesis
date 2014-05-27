@@ -5,345 +5,388 @@
     <defs>
         <pattern latexdraw:type="crosshatch"
             latexdraw:rotationAngle="0.0" latexdraw:size="30.0"
-            patternUnits="userSpaceOnUse" id="pattern317" x="0" y="0"
-            width="700" height="500">
-            <rect fill="white" stroke="none" width="700" height="500"/>
+            patternUnits="userSpaceOnUse" id="pattern269" x="0" y="0"
+            width="700" height="499">
+            <rect fill="white" stroke="none" width="700" height="499"/>
             <g stroke="#969696" stroke-width="0.5" stroke-dasharray="none">
-                <path d="M 100.0 100.0 L 100.0 500.0 M 130.5 100.0 L 130.5 500.0 M 161.0 100.0 L 161.0 500.0 M 191.5 100.0 L 191.5 500.0 M 222.0 100.0 L 222.0 500.0 M 252.5 100.0 L 252.5 500.0 M 283.0 100.0 L 283.0 500.0 M 313.5 100.0 L 313.5 500.0 M 344.0 100.0 L 344.0 500.0 M 374.5 100.0 L 374.5 500.0 M 405.0 100.0 L 405.0 500.0 M 435.5 100.0 L 435.5 500.0 M 466.0 100.0 L 466.0 500.0 M 496.5 100.0 L 496.5 500.0 M 527.0 100.0 L 527.0 500.0 M 557.5 100.0 L 557.5 500.0 M 588.0 100.0 L 588.0 500.0 M 618.5 100.0 L 618.5 500.0 M 649.0 100.0 L 649.0 500.0 M 679.5 100.0 L 679.5 500.0 M 100.0 100.0 L 700.0 100.0 M 100.0 130.5 L 700.0 130.5 M 100.0 161.0 L 700.0 161.0 M 100.0 191.5 L 700.0 191.5 M 100.0 222.0 L 700.0 222.0 M 100.0 252.5 L 700.0 252.5 M 100.0 283.0 L 700.0 283.0 M 100.0 313.5 L 700.0 313.5 M 100.0 344.0 L 700.0 344.0 M 100.0 374.5 L 700.0 374.5 M 100.0 405.0 L 700.0 405.0 M 100.0 435.5 L 700.0 435.5 M 100.0 466.0 L 700.0 466.0 M 100.0 496.5 L 700.0 496.5 "/>
+                <path d="M 100.0 99.0 L 100.0 499.0 M 130.5 99.0 L 130.5 499.0 M 161.0 99.0 L 161.0 499.0 M 191.5 99.0 L 191.5 499.0 M 222.0 99.0 L 222.0 499.0 M 252.5 99.0 L 252.5 499.0 M 283.0 99.0 L 283.0 499.0 M 313.5 99.0 L 313.5 499.0 M 344.0 99.0 L 344.0 499.0 M 374.5 99.0 L 374.5 499.0 M 405.0 99.0 L 405.0 499.0 M 435.5 99.0 L 435.5 499.0 M 466.0 99.0 L 466.0 499.0 M 496.5 99.0 L 496.5 499.0 M 527.0 99.0 L 527.0 499.0 M 557.5 99.0 L 557.5 499.0 M 588.0 99.0 L 588.0 499.0 M 618.5 99.0 L 618.5 499.0 M 649.0 99.0 L 649.0 499.0 M 679.5 99.0 L 679.5 499.0 M 100.0 99.0 L 700.0 99.0 M 100.0 129.5 L 700.0 129.5 M 100.0 160.0 L 700.0 160.0 M 100.0 190.5 L 700.0 190.5 M 100.0 221.0 L 700.0 221.0 M 100.0 251.5 L 700.0 251.5 M 100.0 282.0 L 700.0 282.0 M 100.0 312.5 L 700.0 312.5 M 100.0 343.0 L 700.0 343.0 M 100.0 373.5 L 700.0 373.5 M 100.0 404.0 L 700.0 404.0 M 100.0 434.5 L 700.0 434.5 M 100.0 465.0 L 700.0 465.0 M 100.0 495.5 L 700.0 495.5 "/>
             </g>
         </pattern>
         <pattern latexdraw:type="hlines"
             latexdraw:rotationAngle="-0.7853981633974483"
             latexdraw:size="7.05555534362793"
-            patternUnits="userSpaceOnUse" id="pattern321" x="0" y="0"
+            patternUnits="userSpaceOnUse" id="pattern271" x="0" y="0"
             width="490" height="360">
             <rect fill="white" stroke="none" width="490" height="360"/>
             <g stroke="black" stroke-width="2.0" stroke-dasharray="none">
                 <path d="M 310.0 252.80648918177877 L 322.8064891817788 240.0 M 310.0 265.61297836355754 L 335.61297836355754 240.0 M 310.0 278.4194675453363 L 348.4194675453363 240.0 M 310.0 291.2259567271151 L 361.2259567271151 240.0 M 310.0 304.03244590889386 L 374.03244590889386 240.0 M 310.0 316.83893509067263 L 386.83893509067263 240.0 M 310.0 329.6454242724514 L 399.6454242724514 240.0 M 310.0 342.4519134542302 L 412.4519134542302 240.0 M 310.0 355.25840263600895 L 425.25840263600895 240.0 M 310.0 368.0648918177877 L 438.0648918177877 240.0 M 310.0 380.8713809995665 L 450.8713809995665 240.0 M 310.0 393.67787018134527 L 463.67787018134527 240.0 M 310.0 406.48435936312404 L 476.48435936312404 240.0 M 310.0 419.2908485449028 L 489.2908485449028 240.0 M 310.0 432.0973377266816 L 502.0973377266816 240.0 M 310.0 444.90382690846036 L 514.9038269084604 240.0 M 310.0 457.71031609023913 L 527.7103160902391 240.0 M 310.0 470.5168052720179 L 540.5168052720178 240.0 M 310.0 483.3232944537967 L 553.3232944537965 240.0 M 310.0 496.12978363557545 L 566.1297836355752 240.0 M 310.0 508.9362728173542 L 578.9362728173539 240.0 M 310.0 521.742761999133 L 591.7427619991327 240.0 M 310.0 534.5492511809118 L 604.5492511809114 240.0 M 310.0 547.3557403626905 L 617.3557403626901 240.0 M 310.0 560.1622295444693 L 630.1622295444688 240.0 M 310.0 572.968718726248 L 642.9687187262475 240.0 M 310.0 585.7752079080267 L 655.7752079080262 240.0 M 310.0 598.5816970898054 L 668.581697089805 240.0 M 310.0 611.3881862715841 L 681.3881862715837 240.0 M 310.0 624.1946754533628 L 694.1946754533624 240.0 M 310.0 637.0011646351415 L 707.0011646351411 240.0 M 310.0 649.8076538169203 L 719.8076538169198 240.0 M 310.0 662.614142998699 L 732.6141429986985 240.0 M 310.0 675.4206321804777 L 745.4206321804772 240.0 M 310.0 688.2271213622564 L 758.227121362256 240.0 M 310.0 701.0336105440351 L 771.0336105440347 240.0 M 310.0 713.8400997258138 L 783.8400997258134 240.0 M 310.0 726.6465889075926 L 796.6465889075921 240.0 M 310.0 739.4530780893713 L 809.4530780893708 240.0 M 310.0 752.25956727115 L 822.2595672711495 240.0 M 310.0 765.0660564529287 L 835.0660564529283 240.0 M 310.0 777.8725456347074 L 847.872545634707 240.0 M 310.0 790.6790348164861 L 860.6790348164857 240.0 "/>
             </g>
         </pattern>
-        <marker overflow="visible" orient="auto" id="arrow1-326">
+        <marker overflow="visible" orient="auto" id="arrow1-276">
             <path
                 d="M 0.0 0.0 L 7.452083333333333 2.6614583333333335 L 4.4712499999999995 0.0 L 7.452083333333333 -2.6614583333333335 z "
                 latexdraw:arrSizeNum="4.0" fill="black"/>
         </marker>
-        <marker overflow="visible" orient="auto" id="arrow2-326">
+        <marker overflow="visible" orient="auto" id="arrow2-276">
             <path
                 d="M 0.0 0.0 L -7.452083333333333 2.6614583333333335 L -4.4712499999999995 0.0 L -7.452083333333333 -2.6614583333333335 z "
                 latexdraw:arrSizeNum="4.0" fill="black"/>
         </marker>
-        <marker overflow="visible" orient="auto" id="arrow1-327">
+        <marker overflow="visible" orient="auto" id="arrow1-277">
             <path
                 d="M 0.0 0.0 L 7.452083333333333 2.6614583333333335 L 4.4712499999999995 0.0 L 7.452083333333333 -2.6614583333333335 z "
                 latexdraw:arrSizeNum="4.0" fill="black"/>
         </marker>
     </defs>
     <g>
-        <g latexdraw:type="ellipse" id="id317">
-            <ellipse cx="400.0" cy="300.0" rx="299.0" ry="199.0"
+        <g latexdraw:type="ellipse" id="id269">
+            <ellipse cx="400.0" cy="299.0" rx="299.0" ry="199.0"
                 latexdraw:borderPos="outer" stroke-width="2.0"
-                stroke="black" fill="url(#pattern317)"/>
+                stroke="black" fill="url(#pattern269)"/>
         </g>
-        <g latexdraw:type="ellipse" id="id319">
-            <ellipse cx="400.0" cy="300.0" rx="179.0" ry="119.0"
-                latexdraw:borderPos="outer" stroke-width="2.0"
-                stroke="black" fill="none"/>
-        </g>
-        <g latexdraw:type="ellipse" id="id321">
+        <g latexdraw:type="ellipse" id="id271">
             <ellipse cx="400.0" cy="300.0" rx="89.0" ry="59.0"
                 latexdraw:borderPos="outer" stroke-width="2.0"
-                stroke="black" fill="url(#pattern321)"/>
+                stroke="black" fill="url(#pattern271)"/>
         </g>
-        <g latexdraw:type="text" id="id323" font-family="Dialog"
+        <g latexdraw:type="text" id="id273" font-family="Dialog"
             fill="black" font-size="30" latexdraw:x="295.0">
             <text x="295.0" y="309.0"><![CDATA[\definecolor{color1}{rgb}{0.996078431372549,0.996078431372549,0.996078431372549}\psframebox[linewidth=0.04,linecolor=color1,fillstyle=solid]{\textsf{body}}]]></text>
         </g>
-        <g latexdraw:type="line" id="id326">
+        <g latexdraw:type="line" id="id276">
             <line x1="407.0" x2="407.0" y1="499.0" y2="359.0"
                 stroke-width="2.0" stroke="black"
                 latexdraw:rotationAngle="0.0"
-                marker-start="url(#arrow1-326)" marker-end="url(#arrow2-326)"/>
+                marker-start="url(#arrow1-276)" marker-end="url(#arrow2-276)"/>
         </g>
-        <g latexdraw:type="line" id="id327">
-            <line x1="550.9999999999928" x2="740.0"
-                y1="370.85909892324565" y2="480.0" stroke-width="2.0"
-                stroke="black" latexdraw:rotationAngle="0.0" marker-start="url(#arrow1-327)"/>
+        <g latexdraw:type="line" id="id277">
+            <line x1="485.0" x2="740.0" y1="328.0" y2="480.0"
+                stroke-width="2.0" stroke="black"
+                latexdraw:rotationAngle="0.0" marker-start="url(#arrow1-277)"/>
         </g>
-        <g latexdraw:type="text" id="id328" font-family="Dialog"
+        <g latexdraw:type="text" id="id278" font-family="Dialog"
             fill="black" font-size="44" latexdraw:x="202.0">
             <text x="202.0" y="470.0"><![CDATA[$\Omega_{E}$]]></text>
         </g>
-        <g latexdraw:type="text" id="id330" font-family="Dialog"
+        <g latexdraw:type="text" id="id280" font-family="Dialog"
             fill="#010101" font-size="44" latexdraw:x="542.0">
-            <text x="542.0" y="438.0"><![CDATA[\definecolor{color330}{rgb}{0.00392156862745098,0.00392156862745098,0.00392156862745098}\color{color330}$\Omega_{L}$]]></text>
+            <text x="542.0" y="438.0"><![CDATA[\definecolor{color280}{rgb}{0.00392156862745098,0.00392156862745098,0.00392156862745098}\color{color280}$\Omega_{L}$]]></text>
         </g>
-        <g latexdraw:type="dot" id="id332" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id282" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="554.0 201.0">
             <circle r="4.0" fill="#010101" cx="554.0" cy="201.0"/>
         </g>
-        <g latexdraw:type="dot" id="id333" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id283" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="592.0 219.0">
             <circle r="4.0" fill="#010101" cx="592.0" cy="219.0"/>
         </g>
-        <g latexdraw:type="dot" id="id334" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id284" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="619.0 253.0">
             <circle r="4.0" fill="#010101" cx="619.0" cy="253.0"/>
         </g>
-        <g latexdraw:type="dot" id="id335" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id285" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="639.0 219.0">
             <circle r="4.0" fill="#010101" cx="639.0" cy="219.0"/>
         </g>
-        <g latexdraw:type="dot" id="id336" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id286" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="668.0 259.0">
             <circle r="4.0" fill="#010101" cx="668.0" cy="259.0"/>
         </g>
-        <g latexdraw:type="dot" id="id337" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id287" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="675.0 312.0">
             <circle r="4.0" fill="#010101" cx="675.0" cy="312.0"/>
         </g>
-        <g latexdraw:type="dot" id="id338" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id288" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="644.0 348.0">
             <circle r="4.0" fill="#010101" cx="644.0" cy="348.0"/>
         </g>
-        <g latexdraw:type="dot" id="id339" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id289" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="628.0 309.0">
             <circle r="4.0" fill="#010101" cx="628.0" cy="309.0"/>
         </g>
-        <g latexdraw:type="dot" id="id340" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id290" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="551.0 387.0">
             <circle r="4.0" fill="#010101" cx="551.0" cy="387.0"/>
         </g>
-        <g latexdraw:type="dot" id="id341" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id291" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="606.0 373.0">
             <circle r="4.0" fill="#010101" cx="606.0" cy="373.0"/>
         </g>
-        <g latexdraw:type="dot" id="id342" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id292" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="521.0 408.0">
             <circle r="4.0" fill="#010101" cx="521.0" cy="408.0"/>
         </g>
-        <g latexdraw:type="dot" id="id343" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id293" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="586.0 348.0">
             <circle r="4.0" fill="#010101" cx="586.0" cy="348.0"/>
         </g>
-        <g latexdraw:type="dot" id="id344" latexdraw:size="8.0"
-            latexdraw:dotShape="dot" latexdraw:position="638.0 378.0">
-            <circle r="4.0" fill="#010101" cx="638.0" cy="378.0"/>
+        <g latexdraw:type="dot" id="id294" latexdraw:size="8.0"
+            latexdraw:dotShape="dot" latexdraw:position="420.0 229.0">
+            <circle r="4.0" fill="#010101" cx="420.0" cy="229.0"/>
         </g>
-        <g latexdraw:type="dot" id="id345" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id295" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="608.0 283.0">
             <circle r="4.0" fill="#010101" cx="608.0" cy="283.0"/>
         </g>
-        <g latexdraw:type="dot" id="id346" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id296" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="602.0 177.0">
             <circle r="4.0" fill="#010101" cx="602.0" cy="177.0"/>
         </g>
-        <g latexdraw:type="dot" id="id347" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id297" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="695.0 187.0">
             <circle r="4.0" fill="#010101" cx="695.0" cy="187.0"/>
         </g>
-        <g latexdraw:type="dot" id="id348" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id298" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="688.0 392.0">
             <circle r="4.0" fill="#010101" cx="688.0" cy="392.0"/>
         </g>
-        <g latexdraw:type="dot" id="id349" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id299" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="674.0 363.0">
             <circle r="4.0" fill="#010101" cx="674.0" cy="363.0"/>
         </g>
-        <g latexdraw:type="dot" id="id350" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id300" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="567.0 429.0">
             <circle r="4.0" fill="#010101" cx="567.0" cy="429.0"/>
         </g>
-        <g latexdraw:type="dot" id="id351" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id301" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="602.0 467.0">
             <circle r="4.0" fill="#010101" cx="602.0" cy="467.0"/>
         </g>
-        <g latexdraw:type="dot" id="id352" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id302" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="655.0 473.0">
             <circle r="4.0" fill="#010101" cx="655.0" cy="473.0"/>
         </g>
-        <g latexdraw:type="dot" id="id353" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id303" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="722.0 371.0">
             <circle r="4.0" fill="#010101" cx="722.0" cy="371.0"/>
         </g>
-        <g latexdraw:type="dot" id="id354" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id304" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="718.0 320.0">
             <circle r="4.0" fill="#010101" cx="718.0" cy="320.0"/>
         </g>
-        <g latexdraw:type="dot" id="id355" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id305" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="714.0 295.0">
             <circle r="4.0" fill="#010101" cx="714.0" cy="295.0"/>
         </g>
-        <g latexdraw:type="dot" id="id356" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id306" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="710.0 240.0">
             <circle r="4.0" fill="#010101" cx="710.0" cy="240.0"/>
         </g>
-        <g latexdraw:type="dot" id="id357" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id307" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="666.0 173.0">
             <circle r="4.0" fill="#010101" cx="666.0" cy="173.0"/>
         </g>
-        <g latexdraw:type="dot" id="id358" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id308" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="494.0 425.0">
             <circle r="4.0" fill="#010101" cx="494.0" cy="425.0"/>
         </g>
-        <g latexdraw:type="dot" id="id359" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id309" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="658.0 398.0">
             <circle r="4.0" fill="#010101" cx="658.0" cy="398.0"/>
         </g>
-        <g latexdraw:type="dot" id="id360" latexdraw:size="8.0"
-            latexdraw:dotShape="dot" latexdraw:position="509.0 453.0">
-            <circle r="4.0" fill="#010101" cx="509.0" cy="453.0"/>
-        </g>
-        <g latexdraw:type="dot" id="id361" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id310" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="540.0 435.0">
             <circle r="4.0" fill="#010101" cx="540.0" cy="435.0"/>
         </g>
-        <g latexdraw:type="dot" id="id362" latexdraw:size="8.0"
-            latexdraw:dotShape="dot" latexdraw:position="447.0 432.0">
-            <circle r="4.0" fill="#010101" cx="447.0" cy="432.0"/>
-        </g>
-        <g latexdraw:type="dot" id="id363" latexdraw:size="8.0"
-            latexdraw:dotShape="dot" latexdraw:position="450.0 457.0">
-            <circle r="4.0" fill="#010101" cx="450.0" cy="457.0"/>
-        </g>
-        <g latexdraw:type="dot" id="id364" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id311" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="760.0 345.0">
             <circle r="4.0" fill="#010101" cx="760.0" cy="345.0"/>
         </g>
-        <g latexdraw:type="dot" id="id365" latexdraw:size="8.0"
-            latexdraw:dotShape="dot" latexdraw:position="472.0 474.0">
-            <circle r="4.0" fill="#010101" cx="472.0" cy="474.0"/>
-        </g>
-        <g latexdraw:type="dot" id="id366" latexdraw:size="8.0"
-            latexdraw:dotShape="dot" latexdraw:position="531.0 470.0">
-            <circle r="4.0" fill="#010101" cx="531.0" cy="470.0"/>
-        </g>
-        <g latexdraw:type="dot" id="id367" latexdraw:size="8.0"
-            latexdraw:dotShape="dot" latexdraw:position="511.0 492.0">
-            <circle r="4.0" fill="#010101" cx="511.0" cy="492.0"/>
-        </g>
-        <g latexdraw:type="dot" id="id368" latexdraw:size="8.0"
-            latexdraw:dotShape="dot" latexdraw:position="553.0 494.0">
-            <circle r="4.0" fill="#010101" cx="553.0" cy="494.0"/>
-        </g>
-        <g latexdraw:type="dot" id="id369" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id312" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="526.0 138.0">
             <circle r="4.0" fill="#010101" cx="526.0" cy="138.0"/>
         </g>
-        <g latexdraw:type="dot" id="id370" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id313" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="579.0 144.0">
             <circle r="4.0" fill="#010101" cx="579.0" cy="144.0"/>
         </g>
-        <g latexdraw:type="dot" id="id371" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id314" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="519.0 175.0">
             <circle r="4.0" fill="#010101" cx="519.0" cy="175.0"/>
         </g>
-        <g latexdraw:type="dot" id="id372" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id315" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="477.0 165.0">
             <circle r="4.0" fill="#010101" cx="477.0" cy="165.0"/>
         </g>
-        <g latexdraw:type="dot" id="id373" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id316" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="680.0 117.0">
             <circle r="4.0" fill="#010101" cx="680.0" cy="117.0"/>
         </g>
-        <g latexdraw:type="dot" id="id374" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id317" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="640.0 138.0">
             <circle r="4.0" fill="#010101" cx="640.0" cy="138.0"/>
         </g>
-        <g latexdraw:type="dot" id="id375" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id318" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="598.0 128.0">
             <circle r="4.0" fill="#010101" cx="598.0" cy="128.0"/>
         </g>
-        <g latexdraw:type="dot" id="id376" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id319" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="697.0 146.0">
             <circle r="4.0" fill="#010101" cx="697.0" cy="146.0"/>
         </g>
-        <g latexdraw:type="dot" id="id377" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id320" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="750.0 218.0">
             <circle r="4.0" fill="#010101" cx="750.0" cy="218.0"/>
         </g>
-        <g latexdraw:type="dot" id="id378" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id321" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="601.0 422.0">
             <circle r="4.0" fill="#010101" cx="601.0" cy="422.0"/>
         </g>
-        <g latexdraw:type="dot" id="id379" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id322" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="635.0 454.0">
             <circle r="4.0" fill="#010101" cx="635.0" cy="454.0"/>
         </g>
-        <g latexdraw:type="dot" id="id380" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id323" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="570.0 453.0">
             <circle r="4.0" fill="#010101" cx="570.0" cy="453.0"/>
         </g>
-        <g latexdraw:type="dot" id="id381" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id324" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="758.0 293.0">
             <circle r="4.0" fill="#010101" cx="758.0" cy="293.0"/>
         </g>
-        <g latexdraw:type="dot" id="id382" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id325" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="774.0 253.0">
             <circle r="4.0" fill="#010101" cx="774.0" cy="253.0"/>
         </g>
-        <g latexdraw:type="dot" id="id383" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id326" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="796.0 289.0">
             <circle r="4.0" fill="#010101" cx="796.0" cy="289.0"/>
         </g>
-        <g latexdraw:type="dot" id="id384" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id327" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="787.0 224.0">
             <circle r="4.0" fill="#010101" cx="787.0" cy="224.0"/>
         </g>
-        <g latexdraw:type="dot" id="id385" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id328" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="783.0 173.0">
             <circle r="4.0" fill="#010101" cx="783.0" cy="173.0"/>
         </g>
-        <g latexdraw:type="dot" id="id386" latexdraw:size="8.0"
-            latexdraw:dotShape="dot" latexdraw:position="618.0 488.0">
-            <circle r="4.0" fill="#010101" cx="618.0" cy="488.0"/>
-        </g>
-        <g latexdraw:type="dot" id="id387" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id329" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="776.0 325.0">
             <circle r="4.0" fill="#010101" cx="776.0" cy="325.0"/>
         </g>
-        <g latexdraw:type="dot" id="id388" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id330" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="754.0 149.0">
             <circle r="4.0" fill="#010101" cx="754.0" cy="149.0"/>
         </g>
-        <g latexdraw:type="dot" id="id389" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id331" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="800.0 360.0">
             <circle r="4.0" fill="#010101" cx="800.0" cy="360.0"/>
         </g>
-        <g latexdraw:type="dot" id="id390" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id332" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="757.0 392.0">
             <circle r="4.0" fill="#010101" cx="757.0" cy="392.0"/>
         </g>
-        <g latexdraw:type="dot" id="id391" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id333" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="777.0 450.0">
             <circle r="4.0" fill="#010101" cx="777.0" cy="450.0"/>
         </g>
-        <g latexdraw:type="dot" id="id392" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id334" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="804.0 410.0">
             <circle r="4.0" fill="#010101" cx="804.0" cy="410.0"/>
         </g>
-        <g latexdraw:type="dot" id="id393" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id335" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="753.0 424.0">
             <circle r="4.0" fill="#010101" cx="753.0" cy="424.0"/>
         </g>
-        <g latexdraw:type="dot" id="id394" latexdraw:size="8.0"
-            latexdraw:dotShape="dot" latexdraw:position="442.0 486.0">
-            <circle r="4.0" fill="#010101" cx="442.0" cy="486.0"/>
-        </g>
-        <g latexdraw:type="dot" id="id395" latexdraw:size="8.0"
+        <g latexdraw:type="dot" id="id336" latexdraw:size="8.0"
             latexdraw:dotShape="dot" latexdraw:position="551.0 169.0">
             <circle r="4.0" fill="#010101" cx="551.0" cy="169.0"/>
         </g>
-        <g latexdraw:type="dot" id="id396" latexdraw:size="8.0"
-            latexdraw:dotShape="dot" latexdraw:position="501.0 134.0">
-            <circle r="4.0" fill="#010101" cx="501.0" cy="134.0"/>
-        </g>
-        <g latexdraw:type="text" id="id397" font-family="Dialog"
+        <g latexdraw:type="text" id="id337" font-family="Dialog"
             fill="black" font-size="35" latexdraw:x="99.0">
             <text x="99.0" y="124.0"><![CDATA[$\Gamma_E$]]></text>
         </g>
-        <g latexdraw:type="text" id="id400" font-family="Dialog"
-            fill="black" font-size="35" latexdraw:x="170.0">
-            <text x="170.0" y="191.0"><![CDATA[$\Gamma_L$]]></text>
+        <g latexdraw:type="text" id="id339" font-family="Dialog"
+            fill="black" font-size="35" latexdraw:x="224.0">
+            <text x="224.0" y="244.0"><![CDATA[$\Gamma_L$]]></text>
+        </g>
+        <g latexdraw:type="dot" id="id341" latexdraw:size="8.0"
+            latexdraw:dotShape="dot" latexdraw:position="542.0 285.0">
+            <circle r="4.0" fill="#010101" cx="542.0" cy="285.0"/>
+        </g>
+        <g latexdraw:type="dot" id="id342" latexdraw:size="8.0"
+            latexdraw:dotShape="dot" latexdraw:position="556.0 229.0">
+            <circle r="4.0" fill="#010101" cx="556.0" cy="229.0"/>
+        </g>
+        <g latexdraw:type="dot" id="id343" latexdraw:size="8.0"
+            latexdraw:dotShape="dot" latexdraw:position="516.0 250.0">
+            <circle r="4.0" fill="#010101" cx="516.0" cy="250.0"/>
+        </g>
+        <g latexdraw:type="dot" id="id344" latexdraw:size="8.0"
+            latexdraw:dotShape="dot" latexdraw:position="573.0 258.0">
+            <circle r="4.0" fill="#010101" cx="573.0" cy="258.0"/>
+        </g>
+        <g latexdraw:type="dot" id="id345" latexdraw:size="8.0"
+            latexdraw:dotShape="dot" latexdraw:position="455.0 412.0">
+            <circle r="4.0" fill="#010101" cx="455.0" cy="412.0"/>
+        </g>
+        <g latexdraw:type="dot" id="id346" latexdraw:size="8.0"
+            latexdraw:dotShape="dot" latexdraw:position="469.0 356.0">
+            <circle r="4.0" fill="#010101" cx="469.0" cy="356.0"/>
+        </g>
+        <g latexdraw:type="dot" id="id347" latexdraw:size="8.0"
+            latexdraw:dotShape="dot" latexdraw:position="486.0 385.0">
+            <circle r="4.0" fill="#010101" cx="486.0" cy="385.0"/>
+        </g>
+        <g latexdraw:type="dot" id="id348" latexdraw:size="8.0"
+            latexdraw:dotShape="dot" latexdraw:position="529.0 325.0">
+            <circle r="4.0" fill="#010101" cx="529.0" cy="325.0"/>
+        </g>
+        <g latexdraw:type="dot" id="id349" latexdraw:size="8.0"
+            latexdraw:dotShape="dot" latexdraw:position="566.0 316.0">
+            <circle r="4.0" fill="#010101" cx="566.0" cy="316.0"/>
+        </g>
+        <g latexdraw:type="dot" id="id350" latexdraw:size="8.0"
+            latexdraw:dotShape="dot" latexdraw:position="483.0 241.0">
+            <circle r="4.0" fill="#010101" cx="483.0" cy="241.0"/>
+        </g>
+        <g latexdraw:type="dot" id="id351" latexdraw:size="8.0"
+            latexdraw:dotShape="dot" latexdraw:position="433.0 372.0">
+            <circle r="4.0" fill="#010101" cx="433.0" cy="372.0"/>
+        </g>
+        <g latexdraw:type="dot" id="id352" latexdraw:size="8.0"
+            latexdraw:dotShape="dot" latexdraw:position="366.0 366.0">
+            <circle r="4.0" fill="#010101" cx="366.0" cy="366.0"/>
+        </g>
+        <g latexdraw:type="dot" id="id353" latexdraw:size="8.0"
+            latexdraw:dotShape="dot" latexdraw:position="394.0 390.0">
+            <circle r="4.0" fill="#010101" cx="394.0" cy="390.0"/>
+        </g>
+        <g latexdraw:type="dot" id="id354" latexdraw:size="8.0"
+            latexdraw:dotShape="dot" latexdraw:position="435.0 398.0">
+            <circle r="4.0" fill="#010101" cx="435.0" cy="398.0"/>
+        </g>
+        <g latexdraw:type="dot" id="id355" latexdraw:size="8.0"
+            latexdraw:dotShape="dot" latexdraw:position="384.0 233.0">
+            <circle r="4.0" fill="#010101" cx="384.0" cy="233.0"/>
+        </g>
+        <g latexdraw:type="dot" id="id356" latexdraw:size="8.0"
+            latexdraw:dotShape="dot" latexdraw:position="632.0 375.0">
+            <circle r="4.0" fill="#010101" cx="632.0" cy="375.0"/>
+        </g>
+        <g latexdraw:type="dot" id="id357" latexdraw:size="8.0"
+            latexdraw:dotShape="dot" latexdraw:position="454.0 206.0">
+            <circle r="4.0" fill="#010101" cx="454.0" cy="206.0"/>
+        </g>
+        <g latexdraw:type="dot" id="id358" latexdraw:size="8.0"
+            latexdraw:dotShape="dot" latexdraw:position="504.0 215.0">
+            <circle r="4.0" fill="#010101" cx="504.0" cy="215.0"/>
+        </g>
+        <g latexdraw:type="dot" id="id359" latexdraw:size="8.0"
+            latexdraw:dotShape="dot" latexdraw:position="486.0 193.0">
+            <circle r="4.0" fill="#010101" cx="486.0" cy="193.0"/>
+        </g>
+        <g latexdraw:type="dot" id="id360" latexdraw:size="8.0"
+            latexdraw:dotShape="dot" latexdraw:position="456.0 177.0">
+            <circle r="4.0" fill="#010101" cx="456.0" cy="177.0"/>
+        </g>
+        <g latexdraw:type="dot" id="id361" latexdraw:size="8.0"
+            latexdraw:dotShape="dot" latexdraw:position="416.0 198.0">
+            <circle r="4.0" fill="#010101" cx="416.0" cy="198.0"/>
+        </g>
+        <g latexdraw:type="dot" id="id362" latexdraw:size="8.0"
+            latexdraw:dotShape="dot" latexdraw:position="473.0 206.0">
+            <circle r="4.0" fill="#010101" cx="473.0" cy="206.0"/>
         </g>
     </g>
     <metadata>
@@ -365,8 +408,8 @@
                 <latexdraw:height>975</latexdraw:height>
             </latexdraw:size>
             <latexdraw:position>
-                <latexdraw:x>71</latexdraw:x>
-                <latexdraw:y>78</latexdraw:y>
+                <latexdraw:x>103</latexdraw:x>
+                <latexdraw:y>79</latexdraw:y>
             </latexdraw:position>
             <latexdraw:dividerPosition>0.6378876781223806</latexdraw:dividerPosition>
             <latexdraw:displayCodePanel>true</latexdraw:displayCodePanel>

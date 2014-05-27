@@ -1,6 +1,6 @@
 \chapter{Introduction}
 \label{ch:Introduction}
-Conventional energy resources such as fossil fuels and nuclear energy are not only limited supply but also pose adhere effects on the environment. Therefore, we are striving to find a cheap and renewable source of energy. Wind energy is such source of energy and is getting more popular, and have also become more affordable. Novel renewable technologies such as \indexAcron{Vertical-Axis Wind Turbine}{VAWT} are now a promising research field that can satisfy this growing demand.
+Conventional energy resources such as fossil fuels and nuclear energy are not only limited but also pose adverse effects on the environment. Therefore, we are striving to find a cheap and renewable source of energy. Wind energy is such source of energy and is getting more popular, and have also become more affordable. Novel renewable technologies such as \indexAcron{Vertical-Axis Wind Turbine}{VAWT} are now a promising research field that can satisfy this growing demand.
 
 	\begin{figure}[!b]
         \centering
@@ -101,7 +101,17 @@ The \indexAcron{Hybrid Eulerian-Lagrangian Vortex Particle Method}{HVM} is a dom
 
 Several researches have already been done: Cottet and Koumoutsakos (2000a)\cite{Cottet2000a}, Guermond and Lu (2000) \cite{Guermond2000} simulated the advection dominated flows; Ould-Salhi et al. (2001) \cite{Ould-Salihi2001} blended the finite difference and vortex method together; Winckelmans et al. (2005a) \cite{Winckelmans2005a} investigated the trailing vorticies; Daeninck (2006) \cite{Daeninck2006} used a simplified coupling strategy, coupling Vortex Particle Method and Finite Diference Method; Stock (2010) \cite{Stock} expanded Daeninck's strategy, coupling Vortex Particle Method and Finite Volume Method and modeled a 3-D rotor.
 
-When evaluating the previous works, we see that not all domain decomposition methods are the same. The main difference differencing between the methods is their coupling strategies. Most works employ the Schwartz alternating method to couple the vortex particle method and the grid solver. The method initially solve the grid method and couples it with the vortex method by iteratively trying to satisfy the boundary conditions. However, for this project the coupling techniques that will based on the research work of Daeninck (2006) \cite{Daeninck2006} and Stock (2010) \cite{Stock}.
+When evaluating the previous works, we see that not all domain decomposition methods are the same. The main difference difference between the methods is their coupling strategies. Most works employ the Schwartz alternating method to couple the vortex particle method and the grid solver. The Schwartz alternating method (or sometimes referred to as Schwartz iterative method), couples the vortex particle method and the grid solver by iteratively determining the boundary condition such that the stream functions in both domains, $\psi_L$ and $\psi_E$ in $\Omega_L$ and $\Omega_E$ respectively, match at the overlap region $\Omega_E-\Omega_L$. Figure \ref{fig:domainDecomposition} shows the domain decomposition using the Schwartz alternating method. The summary of a single iteration of the Schwartz alternating method is as follows:
+	\begin{itemize}
+	\item Determine the Eulerian boundary condition, the stream function $\psi_{\Gamma_E}$ at the Eulerian boundary $\Gamma_E$, extracted from the Lagrangian stream function $\psi_L$in the Lagrangian domain $\Omega_L$.
+	\item Solve for the stream function $\psi_E$ in the Eulerian domain $\Omega_E$ with the new boundary condition $\Gamma_E$.
+	\item Determine the Lagrangian condition, the stream function $\psi_{\Gamma_L}$ at the Lagrangian boundary $\Gamma_L$, extracted from the Eulerian stream function $\psi_E$ in the Eulerian domain $\Omega_E$.
+	\item Solve the stream function $\psi_L$ in the Lagrangian domain with the boundary conditions $\psi_{\Gamma_L}$ at the Lagrangian boundary $\Gamma_L$.
+	\end{itemize}
+	
+This procedure is iterated until the stream functions of both the domains converges \cite{Ould-Salihi2001}. Onces the stream function is determined in both the domains, the velocity field can be obtained. Using the velocity field, we can evolve the vorticity field in both the domain. 
+
+As we realized now, the downside to this procedure is that we have solve the stream functions in both $\Omega_E$ and $\Omega_L$ iteratively, till we converge to a solution. This makes the computation very expensive, especially when we are dealing with large number of vortex particles. Therefore, for this project, we are using the coupling techniques that is based on the research work of Daeninck (2006) \cite{Daeninck2006} and Stock (2010) \cite{Stock}.
 
 	\begin{figure}[!t]
 		\centering
@@ -111,8 +121,7 @@ When evaluating the previous works, we see that not all domain decomposition met
 	\end{figure}
 
 \subsection{Simple coupling strategy}
-
-This approach will be referred to as the \indexAcron{Simple Coupling Strategy}{SCS}. It is simpler that the Schwartz iterative method, as no iteration is needed for the coupling procedure. The basic procedure is to solve the vortex method in the full fluid domain using relatively coarse evaluation of the near-wall region. Then we use the grid solver in the near-wall region to capture the detailed features of the boundary layer and transfer the vorticity field at this region to the vortex particles, figure \ref{fig:domainDecomposition_daenick}. Therefore, the grid solver basically acts are the correction for the under-resolved regions of the Lagrangian method. The functionality of this strategy has been demonstrated by Daeninck and was found to be significantly faster than the Schwartz coupling strategy. The \underline{features of the simple coupling strategy} can summarized as follows:
+This approach will be referred to as the \indexAcron{Simple Coupling Strategy}{SCS}. It is simpler that the Schwartz iterative method, as no iteration is needed for the coupling procedure. The basic procedure is to solve the vortex method in the full fluid domain using relatively coarse resolution of the near-wall region. Then we use the grid solver in the near-wall region to capture the detailed features of the boundary layer and transfer the vorticity field at this region to the vortex particles, figure \ref{fig:domainDecomposition_daenick}. Therefore, the grid solver basically acts as the correction for the under-resolved regions of the Lagrangian method. The functionality of this strategy has been demonstrated by Daeninck and was found to be significantly faster than the Schwartz coupling strategy. The features of the simple coupling strategy can summarized as follows:
 
 	\begin{itemize}
 	\item Eulerian method is used to resolve the near-wall region, at the Eulerian domain $\Omega_E$, enabling it to capture important features of the boundary layer (such as flow separation) with great accuracy.
@@ -126,32 +135,32 @@ This approach will be referred to as the \indexAcron{Simple Coupling Strategy}{S
 
 	\begin{figure}[!t]
 		\centering
-		\includegraphics[width=0.5\linewidth]{figures/introduction/domainDecomposition_daenick.pdf}
-		\caption{Modified domain decomposition without Schwartz alternating method. Lagrangian domain extends up to the surface of the body. Figure is based on Daeninck (2006) \cite{Daeninck2006}.}
+		\includegraphics[width=0.6\linewidth]{figures/introduction/domainDecomposition_daenick_type2.pdf}
+		\caption{Modified domain decomposition \underline{without} Schwartz alternating method. Lagrangian domain extends up to the surface of the body. Figure is based on Daeninck (2006) \cite{Daeninck2006}.}
 		\label{fig:domainDecomposition_daenick}
 	\end{figure}
 
-The \underline{algorithm} to the \printAcron{Simple Coupling Strategy}{SCS} follows from Daeninck's doctoral thesis, \cite{Daeninck2006}. Figure \ref{fig:flowchart_simpleCoupling} shows the overview to the SCS and can be summarized as follows:
+The algorithm to the \printAcron{Simple Coupling Strategy}{SCS} follows from Daeninck's doctoral thesis, \cite{Daeninck2006}. Figure \ref{fig:flowchart_simpleCoupling} shows the overview to the algorithm and can be summarized as follows:
 
 	\begin{enumerate}
 	\item \textbf{Correct Lagrangian:} Use the solution of the Eulerian domain $\Omega_E$ (in the near-wall region) to correct the solution of the Lagrangian domain $\Omega_L$, that is overlapping the Eulerian domain.  
 	
-	\item \textbf{Evolve Lagrangian:} With the modified solution, evolve the Lagrangian solution from $t_n$ to $t_{n+1}$.
+	\item \textbf{Evolve Lagrangian:} With the modified solution, evolve the Lagrangian solution from time step $t_n$ to next time step $t_{n+1}$.
 	
-	\item \textbf{Determine Eulerian boundary conditions:} Use the Lagrangian solution of $t_n$ and $t_{n+1}$ to determine the boundary conditions of the Eulerian domain.
+	\item \textbf{Determine Eulerian boundary conditions:} Use the Lagrangian solution of time $t_n$ and $t_{n+1}$ to determine the boundary conditions of the Eulerian domain.
 	
 	\item \textbf{Evolve Eulerian:} With the boundary condition, evolve the Eulerian solution from $t_n$ to $t_{n+1}$.
 	\end{enumerate}
 	
 This is the basic approach for coupling the Eulerian method in the Eulerian domain $\Omega_E$ with the Lagrangian method in the Lagrangian domain $\Omega_L$ without the iterative Schwartz algorithm. 
 
-Furthermore, the SCS handles the Lagrangian boundary condition differently from the classic hybrid method. Typically during the evolution process of the Lagrangian domain, the shedding of the vorticity is also defined in the Lagrangian method. However, in our coupling strategy, the Lagrangian method is under-resolved at the boundary and cannot be used to resolve the vorticity flux at the body. Instead, we use the Eulerian method to resolve the boundary, and the Eulerian method acts as the vorticity generator for the Lagrangian method. However, there as some \underline{assumptions} that we must satisfy, for this coupling strategy to be valid:
+Furthermore, the SCS handles the Lagrangian boundary condition differently from the classic hybrid method. Typically during the evolution process of the Lagrangian domain, the shedding of the vorticity is also defined in the Lagrangian method. However, in our coupling strategy, the Lagrangian method is under-resolved at the boundary and cannot be used to resolve the vorticity flux at the body. Instead, we use the Eulerian method to resolve the boundary, and the Eulerian method acts as the vorticity generator for the Lagrangian method. However, there as some assumptions that we must satisfy, for this coupling strategy to be valid:
 
-	\begin{enumerate}
+	\begin{itemize}
 	\item At $t_n$, before the evolution of both method to $t_{n+1}$, the Lagrangian solution matches Eulerian solution at the near-wall region.
 	\item After the evolution to $t_{n+1}$, the deviation of the Lagrangian solution (due to lack of vorticity flux at Lagrangian boundary), should be minimal.
 	\item Even though the Lagrangian domain is under-resolved in the near-wall region, it should be able to provide accurate boundary conditions for the Eulerian external boundary.
-	\end{enumerate}
+	\end{itemize}
 	
 	\begin{figure}[!t]
 		\centering
@@ -178,33 +187,32 @@ The test-cases that are used for this thesis are summarized as given:
 	\item[Impulsively started cylinder] \cite{LEONARD1995} \cite{Chang2006} \cite{Chassaing1986} \cite{Lecointe1985}\hfill\\
 	The impulsively started cylinder test case is used to analyse the forces acting on the cylinder. This test case is used to verify and validate the lift and drag evolution of the cylinder exposed to free-stream flow.
 	\item[Elliptic Airfoil] \cite{Nair1997}\hfill\\
-	The elliptic airfoil test cases focuses on the flow separation past a lifting body. The elliptic airfoil is pitched at high angle of attack and the flow past the airfoil is comparatively unsteady and undergoes phenomenons such as laminar separation bubble, flow separation and karman vortex shedding from the trailing edge of the airfoil. This helps us ensure coupling process is sound for complex flow phenomenons.
+	The elliptic airfoil test cases focuses on the flow separation past a lifting body. The elliptic airfoil is pitched at high angle of attack and the flow past the airfoil is comparatively unsteady and undergoes phenomenons such as laminar separation bubble, flow separation and karman vortex shedding from the trailing edge of the airfoil. This helps us ensure the coupling strategy is accurate for complex flow phenomenons.
 	\end{description}
 
 %\todo{add picture here}
 \section{Methodology}
 The initial steps of the development of the hybrid vortex methods is as follows:
 
-	\begin{itemize}
+	\begin{enumerate}
 	\item Develop the vortex particle method
 	\item Validate the vortex particle method against a Lamb-Oseen convection test case.
 	\item Develop the vortex panel method to deal with the boundaries for the vortex particle calculation. 
 	\item Validate the vortex panel method by solving a potential flow around a cylinder.
 	\item Develop the grid solver that is based on the Finite Element method. 
 	\item Validate the grid solver against test cases: impulsively starting cylinder, dipole-Wall interaction.
-	\end{itemize}
+	\end{enumerate}
 
 Once all the components have been validated, the methods will be coupled and validated against similar test cases.
 
-	\begin{itemize}
+	\begin{enumerate}
+	\setcounter{enumi}{6}
 	\item Couple vortex particle, vortex panel and grid solver together.
 	\item Validate it with the previous generated test case solution.
 	\item Introduce more complicated phenomenons: multiple geometry (i.e multiple grid meshes) and moving boundaries, if it feasible in the constraints of a master thesis.
-	\end{itemize}
+	\end{enumerate}
 
 If the coupled solver has been validated with the test cases, the final step will be to simulated the flow around a VAWT and investigating the performance vs. numerical and experimental data.
-
-%\subsection{Project Plan}
 
 \section{Thesis Outline}
 
