@@ -154,8 +154,6 @@
 		\nompageref{3}
   \item [{\textbf {HELVPM}}]\begingroup Hybrid Eulerian-Lagrangian Vortex Particle Method\nomeqref {1.0}
 		\nompageref{4}
-  \item [{\textbf {HVM}}]\begingroup Hybrid Eulerian-Lagrangian Vortex Particle Method\nomeqref {1.0}
-		\nompageref{5}
   \item [{\textbf {IPCS}}]\begingroup Incremental Pressure Correction Scheme\nomeqref {3.15}
 		\nompageref{52}
   \item [{\textbf {LHS}}]\begingroup Left Hand Side\nomeqref {2.49}
