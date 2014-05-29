@@ -82,11 +82,9 @@ The main literature to the vortex method (the Lagrangian domain of our hybrid me
 
 \subsection{Vorticity}
 Vorticity is the key subject of all vortex methods. Vorticity $\omega$, the governing element of vortex particle method, is defined as
-
 	\begin{equation}
 	\mathbf{\omega} = \nabla \times \mathbf{u},
 	\end{equation}
-
 where $\mathbf{u}$ is the vector velocity field. The circulation $\Gamma$ is defined by the stokes theorem,
 
 	\begin{equation}
@@ -106,24 +104,19 @@ and represents the integral vorticity of the domain defined by the line $\mathbf
  
 \subsection{Velocity-Vorticity formulation of the Navier-Stokes equations}
 The governing equation of the vortex particle method is the velocity-vorticity formulation $\mathbf{u}-\omega$ of the Navier-Stokes equations, as described by book Vortex Methods: Theory and Practice by Cottet and Koumoutsakos (2000) \cite{Cottet2000a}. The 2-D incompressible Navier-Stokes momentum equation is given as,
-
 	\begin{equation}
 	\frac{\partial \mathbf{u}}{\partial t} + \mathbf{u}\cdot\nabla\mathbf{u} = - \frac{1}{\rho} \nabla p + \nu \nabla^2\mathbf{u},
 	\label{eq:mom}
 	\end{equation}
-
 relating the velocity field $\mathbf{u}\left(\mathbf{x},t\right)$ to the pressure field $p\left(\mathbf{x},t\right)$, the kinematic viscosity $\nu$ and density $\rho$. Furthermore, we also have to satisfy the incompressibility constraint given as, 
-
 	\begin{equation}
 	\nabla\cdot\mathbf{u} = 0.
 	\end{equation}
 
-To attain the velocity-vorticity formulation, we should take the curl of the velocity-pressure formulation $\mathbf{u}-p$ of the Navier-Stokes equation. Taking the curl of the 2-D momentum equation \ref{eq:mom}, we derive the vorticity transport equation
-
+To attain the velocity-vorticity formulation, we should take the curl of the velocity-pressure formulation $\mathbf{u}-p$ of the Navier-Stokes equation. Taking the curl of the 2-D momentum equation \ref{eq:mom}, we derive the vorticity transport equation,
 	\begin{equation}
 	\frac{\partial \omega}{\partial t} + \mathbf{u}\cdot\nabla\omega = \nu \nabla^2 \omega,
 	\end{equation}
-
 which only relates the vorticity to the velocity enabling us to neglect the pressure field. Note that as we are dealing with the 2-D flow, we can neglected the 3-D stretching term. We also assume unit density, as we are dealing with incompressible flow, and it is trivial.
 
 \subsection{Viscous splitting algorithm}
@@ -143,7 +136,6 @@ The viscous splitting algorithm is a fractional step method, where the viscous a
 		\frac{\partial\omega}{\partial t} = \nu\nabla^2\omega.
 		\label{eq:vsa2}
 		\end{equation}
-	
 	\end{enumerate}
 
 The first sub-step of the evolution deals with the convection of the vorticity. Note that, by convection we imply the advection of the vorticity field where the diffusion process is neglected. The second sub-step is where we deals with the diffusion of the vorticity field. 
@@ -163,20 +155,15 @@ Before we can convect and diffuse the vorticity field, we must discretize the vo
 \subsection{Biot-Savart law}
 
 The velocity field can be decomposed using the Helmholtz decomposition given as,
-
 	\begin{equation}
 	\mathbf{u} = \mathbf{u}_{\omega} + \mathbf{u}_{\phi},
 	\label{eq:helmholtz}
 	\end{equation}
-
 where $\mathbf{u}_{\omega}$ is the rotational component of the velocity and $\mathbf{u}_{\phi}$ is the irrotational component, the solenoidal and the potential velocity respectively. In an unbounded flow we have $\mathbf{u}_{\phi}$ equal to the free-stream velocity $\mathbf{u}_{\infty}$, whereas for bounded flow, we must include the presence of the body, see section \ref{sec:boundaryConditions}. The velocity can be related to the vorticity using the Biot-Savart law given as,
-
 	\begin{equation}
 	\mathbf{u}_{\omega} = \mathbf{K}\star\omega,
 	\end{equation}
-	
 where $\star$ is the convolution of the vorticity with the 2-D kernel $\mathbf{K}$ given by,
-
 	\begin{equation}
 	\mathbf{K} = \frac{1}{2\pi\left|\mathbf{x}\right|^2}\left(-x_2,x_1\right).
 	\label{eq:GreensKernel}
@@ -186,13 +173,10 @@ From the kernel, we see that as the distance to the kernel center approaches zer
 	
 \subsection{Discrete form of vorticity field}
 The spatial discretization of the fluid domain is done through $N$ quadrature points. With the Biot-Savart law, we can treat these quadratures as discrete particles carrying the local quantities. The discrete vorticity field is given as,
-
 	\begin{equation}
 	\omega\left(\mathbf{x},t\right) \simeq \omega^h\left(\mathbf{x},t\right) = \sum_{p}\alpha_p\left(t\right)\delta \left[\mathbf{x}-\mathbf{x}_p\left(t\right)\right],
 	\end{equation}
-
 where $\alpha_{p}$ is the estimate of the circulation around the particle $\mathbf{x}_p$. We must note that $\omega^h$ is the discrete vorticity field and therefore in an approximation of the continuous vorticity field $\omega$. The discrete form of the velocity is therefore written as,
-
 	\begin{equation}
 	\mathbf{u} \simeq \mathbf{u}^h = \sum_p \mathbf{K}\left[\mathbf{x}-\mathbf{x}_p\left(t\right)\right]\alpha_p\left(t\right).
 	\label{eq:discreteVelocity}
@@ -205,7 +189,6 @@ In order to deal with the asymptotic because of the Biot-Savart kernel, equation
 \subsection{Mollified vortex kernels}
 
 A vortex particle with a mollified core has a non-zero core size $\sigma$. This mollified vortex particle is called vortex blob. The advantage of a vortex blob is that the with its smooth distribution of the vorticity, the singularity disappear, and the numerical instability when the blobs get too close to each other does not occur anymore. An ideal choice for a cutoff function that gives a smooth vorticity distribution is the Gaussian distribution, shown in figure \ref{fig:gaussianDistribution}. Gaussian kernels satisfy the requirement for smooth distribution, decaying quickly away from the blob. It is defined as,
-	
 	\begin{equation}
 	\zeta_{\sigma} = \frac{1}{k\pi\sigma^2}\exp\left(-\frac{\left|\mathbf{x}\right|}{k\sigma^2}\right),
 	\end{equation}
@@ -218,20 +201,16 @@ A vortex particle with a mollified core has a non-zero core size $\sigma$. This 
 	\end{figure}
 
 where $k$ is either 1, 2 or 4 and it determines the width of the kernel, and $\sigma$ is core-size of the blob. Note that smoothing function is chosen such that $\int \zeta = 1$, ensuring that circulation is conservated when mollified. So using the smooth cut-off function $\zeta_{\sigma}$, the mollified Biot-Savart kernel $\mathbf{K}_{\sigma}$ is given as,	 
-
 	\begin{equation}
 	\mathbf{K}_{\sigma} = \mathbf{K} \star \zeta_{\sigma}.
 	\end{equation}
 
 The discrete mollified vorticity field, represented by vortex blobs is now defined as,
-
 	\begin{equation}
 	\omega^h\left(\mathbf{x},t\right) = \sum_p \alpha_p\left(t\right)\zeta_{\sigma}\left[\mathbf{x}-\mathbf{x}_p\left(t\right)\right],
 	\label{eq:mollifiedVorticityField}
 	\end{equation}
-
 and similarly the discrete mollified velocity field is given as,
-
 	\begin{equation}
 	\mathbf{u}^h\left(\mathbf{x},t\right) = \sum_p \mathbf{K}_{\sigma}\left[\mathbf{x}-\mathbf{x}_p\left(t\right)\right]\alpha_p\left(t\right).
 	\end{equation}
@@ -244,12 +223,10 @@ and similarly the discrete mollified velocity field is given as,
 	\end{figure}
 
 Koumoutsakos and Chorin \cite{Cottet2000a}, explained that in order to ensure the smoothness of the velocity field, the vortex blobs needs to have an overlap with each other. The overlap ratio is defined as,
-
 	\begin{equation}
 	\mathrm{overlap} = \frac{\sigma}{h},
 	\label{eq:overlapRatio}
 	\end{equation}
-
 where $h$ is the nominal particle spacing, and $\sigma$ is the blob core size. Figure \ref{fig:blobOverlap} shows the visual representation of the overlap ratio.
 
 During the evolution of the vortex blobs, this overlap constraint is violated due to the strains in the flow. The vortex blobs cluster together at certain region and at others they disperse. This localized clustering effect is seen as a lagrangian grid distorting, and has to be treated using remeshing schemes, covered in section \ref{subsec:remeshing}.
@@ -258,7 +235,6 @@ During the evolution of the vortex blobs, this overlap constraint is violated du
 \subsection{Vortex blob initialization}
 \label{subsec:vortexBlobInitialization}
 Now the question arises on how should we initialize the particle's circulation strengths $\alpha_p$. The common approach that is used as a standard is to estimate the particles strength by the local properties,
-
 	\begin{equation}
 	\alpha_p = \omega_p\cdot h^2,
 	\label{eq:particleCirculationAssignment}
@@ -283,25 +259,19 @@ A common strategy, used by Koumoutsakos, Cottet, and other for recovering the in
 \subsubsection*{Beale's Iterative Method}
 
 The Beale's method is particle circulation processing scheme where the circulation of the particles are modified such that the mollified vorticity field matches the indented vorticity field (the initial vorticity field). The recovery of the vorticity field is done by performing a discrete deconvolution,
-
 	\begin{equation}
 	\sum_j^N \beta_j \zeta_{\sigma}\left(\mathbf{x}_i-\mathbf{x}_j\right) = \omega_i,
 		\end{equation}
-
 where $\beta_j$ is the circulation of the particles at positions $\mathbf{x}_j$ such that it matches the exact vorticity $\omega_i$ at the position $\mathbf{x}_i$ that we are evaluating.  As we are try to solve for a $N$ unknown problem, we must set up an $N$ system of equations. Multiplying both sides with the area associated to the blobs, we get
-
 	\begin{equation}
 	\mathbf{A}_{ij} \beta_j = \alpha_i^{\mathrm{exact}},
 	\end{equation}
-	
 where
-
 	\begin{equation}
 	\mathbf{A}_{ij} = \zeta_{\sigma}\left(\mathbf{x}_i - \mathbf{x}_j\right) \cdot h^2.
 	\end{equation}
 
 This is an $N \times N$ matrix containing the weights of the influence of each particle on each other. When we are dealing with large number of vortex blobs, we see that it is very expensive to invert the matrix $\mathbf{A}$, meaning that we would have to use a more efficient method. Furthermore as the deconvolution problem is a severely ill-condition problem \cite{Cottet2000a}, we should not directly invert the matrix. Beale's proposition to this problem was to iteratively solve for the solution,
-
 	\begin{equation}
 	\beta_{j}^{n+1} = \alpha_i + \beta_i^n - \mathbf{A}_{ij}\cdot\beta_j^n
 	\end{equation}
@@ -347,8 +317,7 @@ Therefore, to minimize the error between the mollified vorticity field and the e
 
 \section{Convection of vortex blobs}
 
-The convection equation \ref{eq:convectionEulerian} of the viscous-splitting algorithm, is solved as system of ODEs, where
-
+The convection equation \ref{eq:convectionEulerian} of the viscous-splitting algorithm, is solved as system of ODEs, where,
 	\begin{equation}
 	\frac{\mathrm{d}\mathbf{x}_p}{\mathrm{d}t} = \mathbf{u}\left(\mathbf{x}_p\right),
 	\label{eq:convectionODE}
@@ -376,11 +345,9 @@ Once we determine the induced velocity acting on each vortex blobs, they can be 
 During the convection step, the vortex blobs will start to cluster together at certain regions of the flow, where as at the other regions, we see that there are no blobs. This clustering and dispersing effect of the blobs is due to the high strains in the flow, figure \ref{fig:distortion}. This means that the overlap ratio is not satisfied everywhere in the flow. As we have seen before, in figure \ref{fig:convergenceOfBlobsOverlap}, overlap ratio has a large impact on the mollified vorticity field and must be satisfied. In order to treat this Lagrangian grid distortion, we can remesh the vortex blobs on to a uniform grid, regaining our intended overlap ratio.
 
 The remeshing is done by interpolating the strengths of the vortex blobs from distorted lagrangian grid on to a uniform grid. The strengths of the blobs of the new uniform grid is defined as,
-
 	\begin{equation}
 	\alpha_p = \sum_q\tilde{\alpha}_q W \left(\frac{x_p - \tilde{x}_q}{h}\right),
 	\end{equation}
-
 where the strengths of the blobs $\tilde{\alpha}_q$ of the distorted Lagrangian grid $\tilde{x}_q$ is transfered to the regular Lagrangian grid $x_p$ using the interpolation kernel $W$. Figure \ref{fig:interpolationGrid} shows the remeshing of one vortex blob of the distorted grid on to the structured uniform grid. During this transfer, we must ensure that the properties of the fluid are conserved. The interpolation kernel is constructed by ensuring that the circulation, the linear impulse, and the angular impulse of the fluid is conserved. For this project, we used the $\mathrm{M}'_4$ interpolation kernel.
 
 	\begin{figure}[t]
@@ -391,8 +358,8 @@ where the strengths of the blobs $\tilde{\alpha}_q$ of the distorted Lagrangian 
 	\end{figure}
 
 \subsubsection*{$\mathbf{M}^\prime_4$ interpolation kernel}
-The $\mathrm{M}^{\prime}_4$ interpolation kernel is an efficient interpolation kernel that has been used to reconstruct a smooth distribution, and was introduced by Monaghan in 1985 \cite{Monaghan1985}. For a \indexAcron{One-Dimensional}{1-D} problem, the $\mathrm{M}'_4$ interpolation kernel is given as,
 
+The $\mathrm{M}^{\prime}_4$ interpolation kernel is an efficient interpolation kernel that has been used to reconstruct a smooth distribution, and was introduced by Monaghan in 1985 \cite{Monaghan1985}. For a \indexAcron{One-Dimensional}{1-D} problem, the $\mathrm{M}'_4$ interpolation kernel is given as,
 	\begin{equation}
 	{\mathrm{M'}_4}\left( {\xi} \right) =
 	  \begin{cases}
@@ -408,7 +375,7 @@ where
 	\label{eq:xiEquation}
 	\end{equation}
 	
-is a non-dimensional parameter, relating the position of the particle $x_{\nu}$ to the position of the $i^{\mathrm{th}}$ interpolation node $x_i$. The $\mathrm{M'}_4$ is a third-order accurate, piecewise smooth, B-spline kernel, and with the $m = 4$, it has 4 support nodes in each dimension, figure \ref{fig:interpolationKernel}. For the two dimensional problem, the 2-D interpolation kernel is just the tensor product of the 1-D interpolation kernel, and will have a $4^2 = 16$ support nodes, as seen in figure \ref{fig:interpolationGrid}.
+is a non-dimensional parameter, relating the position of the particle $x_{\nu}$ to the position of the $i^{\mathrm{th}}$ interpolation node $x_i$. The $\mathrm{M'}_4$ is a third-order accurate, piecewise smooth, B-spline kernel, and with the $m = 4$, it has 4 support nodes in each dimension. Figure \ref{fig:interpolationKernel} shows the distribution of the kernel. For the two dimensional problem, the 2-D interpolation kernel is just the tensor product of the 1-D interpolation kernel, and will have a $4^2 = 16$ support nodes, as seen in figure \ref{fig:interpolationGrid}.
 
 	\begin{figure}[t]
 	\centering
@@ -431,7 +398,6 @@ is a non-dimensional parameter, relating the position of the particle $x_{\nu}$ 
 \label{sec:diffusionVM}
 
 So far, we have ignored the viscous effect of the flow, and in order to simulate a real flow, we must perform the diffusion of the vorticity field. Chorin simulated a viscous flow using the viscous splitting algorithm. The flow is segregated to inviscid and viscous component and during the second sub-step we deal with the diffusion of the vorticity, as show in equation \ref{eq:vsa2}. The diffusion term of the viscous splitting algorithm can be solved as a system of ODEs, similar to the convection step, given as,
-
 	\begin{equation}
 	\frac{\mathrm{d}\mathbf{x}_p}{\mathrm{d}t} = 0,
 	\end{equation}
@@ -446,12 +412,10 @@ So in the diffusion step, we fix the position of the vortex blobs, and only modi
 The Particle Strength Exchange method, first proposed by Mas-Gallic in 1989 \cite{Degond1989}, showed that diffusion can be treated for a particle method with an isotropic, or an anisotropic viscosity by approximating the diffusion operator (a Laplacian) with an integral operator, and discretize the method with particles \cite{Speck2011a}. %The PSE can be seen as circulation correction method, where during the diffusion step of the viscous splitting algorithm, the strengths of the particle are corrected such that it accounts for the diffusion.
  
 \subsubsection*{Vortex Redistribution Method}
-An alternative method to simulate the diffusion is to use the \indexAcron{Vortex Redistribution Method}{VRM} \cite{Shankar1996}. The model simulates diffusion by distributing the fraction of circulation of the vortex blobs to each other. It is based on conserving the moments of the particles by satisfying a linear system of equations. The circulation of the particle are transfer to the nearby particles that are within
-
+An alternative method to simulate the diffusion is to use the \indexAcron{Vortex Redistribution Method}{VRM} \cite{Shankar1996}. The model simulates diffusion by distributing the fraction of circulation of the vortex blobs to each other. It is based on conserving the moments of the particles by satisfying a linear system of equations. The circulation of the particle are transfer to the nearby particles that are within,
 	\begin{equation}
 	h_{\nu} = \sqrt{\nu\Delta t_d}
 	\end{equation}
-
 where $h_{\nu}$ is the diffusion distance and is directly related to the kinematic viscosity $\nu$ and the diffusive time-step $\Delta t_d$ of the simulation. This means that the VRM scheme (and also the PSE) requires a search algorithm to determine the particles that are within the zone of influence. A direct evaluation would require an $\mathcal{O}\left(N^2\right)$ evaluation. However, this can be optimized using a search tree algorithm, speeding up the search to an $\mathcal{O}\left(\log N\right)$.
 
 %Not that the diffusive time-step $\Delta t_d$ is equal to the convective time-step $\Delta t_c$ if the diffusion process is done during every time-step. However, we can easily adjust the diffusion time-step and perform diffusion at a multiple step of the convection. Not diffusing at every step can be helpful as 
@@ -459,57 +423,50 @@ where $h_{\nu}$ is the diffusion distance and is directly related to the kinemat
 %The downside of the this approach, as also for the standard remeshing approach is the global remeshing generates large computation data and scales with the number of particles $N$. Therefore for problems with large number of particles, a tree-structured remeshing would be more feasible strategy \cite{Winckelmans1996}.
 
 \subsection{Modified remeshing for treating diffusion}
-From further investigation of the VRM, we see that it is similar to remeshing strategy that we used to counter the lagrangian distortion during the convection process. So, Ghoniem and Wee in 2006 \cite{Wee2006} proposed to combine the remeshing and the diffusion. The application of this methodology was later validated by Speck in 2011 \cite{Speck2011a}. The diffusion is simulated by the modifying the interpolation kernel of the remeshing scheme. The key advantage of this modified remeshing is that, now we are dealing with a uniform grid, and no longer requires a search algorithm to find the particles in the zone of influence. This significantly reduced the computational cost, making this diffusion scheme practical for a large scale simulations. 
+\label{subsec:modifiedRemeshing}
+From further investigation of the VRM, Ghoniem and Wee saw that the VRM is similar to the remeshing strategy that we used to counter the lagrangian distortion during the convection process. So, Ghoniem and Wee in 2006 \cite{Wee2006}, proposed to combine the remeshing and the diffusion together in one process. The application of this methodology was later validated by Speck in 2011 \cite{Speck2011a}. This \indexAcron{Modified Remeshing Scheme}{MRS}, performs diffusion by modifying the interpolation kernel of the remeshing scheme. The key advantage of the MRM is that, now we are dealing with a uniform grid, and no longer requires a search algorithm to find the particles in the zone of influence. This significantly reduced the computational cost, making this diffusion scheme practical for a large scale simulations. 
 
-Ghoniem and Wee rederived the interpolation kernel that can perform both the remeshing and the diffusion simultaneously. The diffusion equation is satisfied by transferring the correct fraction of circulation during the remeshing. The $\mathrm{M'}_4$ kernel for treating the diffusion is given as,
-
-\begin{equation}
-{{{\rm{M'}}}_4}\left( {\xi ,c} \right) =
-  \begin{cases}
-   {1 - \frac{{5{\xi ^2}}}{2} + \frac{{3{{\left| \xi  \right|}^3}}}{2} - {c^2}\left( {2 - 9{\xi ^2} + 6{{\left| \xi  \right|}^3}} \right)} & {\left| \xi \right|} < 1, \\
-   \frac{1}{2}{\left( {2 - \left| \xi  \right|} \right)^2}\left( {1 - \left| \xi  \right|} \right) - {c^2}{\left( {2 - \left| \xi  \right|} \right)^2}\left( {1 - 2\left| \xi  \right|} \right) & 1 \le {\left| \xi \right|} < 2,\\
-   0 & 2 \le \left| \xi \right|,
-  \end{cases}
-\label{eq:modInterpKernel}
-\end{equation}
-
-where 
-
-\begin{equation}
-c^2 = \frac{\nu \Delta t_d}{h^2},
-\label{eq:c2}
-\end{equation}
-
-is a non-dimensional number that corresponds to the transfer weight for the diffusion. This additional terms in the interpolation kernel accounts for the diffusion process. When $c \rightarrow 0$, the interpolation kernel simply turns in to the standard remeshing kernel. Ghoniem and Wee also investigated the error growth and the stability properties of the interpolation kernel in the Fourier space and have determined that for stable diffusion and remeshing, we ensure that,
-
-\begin{equation}
-\frac{1}{6} \le c^2 \le \frac{1}{2}.
-\label{eq:c2stability}
-\end{equation}
-
-%to minimize the error growth amplification factor and the phase error. With this, we will ensure the stability of the problem and suppress any spurious oscillations and ensure that it is a non-negative interpolation kernel with non-negative redistribution fractions. 
-However, we see that the $c^2$ constraint imposes a constraint on the maximum and the minimum $\Delta t_d$. This means that the diffusion time step size $\Delta t_d$ will be a multiple of the convection step $\Delta t_c$,
-
+Ghoniem and Wee rederived the interpolation kernel that can perform both the remeshing and the diffusion simultaneously. The kernel transfers the correct fraction of circulation during the remeshing such that it satisfies the diffusion equation. The $\mathrm{M'}_4$ kernel for treating the diffusion is given as,
 	\begin{equation}
-	\Delta t_d = k_d \cdot \Delta t_c
+	{{{\rm{M'}}}_4}\left( {\xi ,c} \right) =
+	  \begin{cases}
+	   {1 - \frac{{5{\xi ^2}}}{2} + \frac{{3{{\left| \xi  \right|}^3}}}{2} - {c^2}\left( {2 - 9{\xi ^2} + 6{{\left| \xi  \right|}^3}} \right)} & {\left| \xi \right|} < 1, \\
+	   \frac{1}{2}{\left( {2 - \left| \xi  \right|} \right)^2}\left( {1 - \left| \xi  \right|} \right) - {c^2}{\left( {2 - \left| \xi  \right|} \right)^2}\left( {1 - 2\left| \xi  \right|} \right) & 1 \le {\left| \xi \right|} < 2,\\
+	   0 & 2 \le \left| \xi \right|,
+	  \end{cases}
+	\label{eq:modInterpKernel}
+	\end{equation}
+where 
+	\begin{equation}
+	c^2 = \frac{\nu \Delta t_d}{h^2},
+	\label{eq:c2}
+	\end{equation}
+is a non-dimensional number that corresponds to the transfer weight for the diffusion. This additional terms in the interpolation kernel accounts for the diffusion process. When $c \rightarrow 0$, the interpolation kernel simply turns in to the standard remeshing kernel. Ghoniem and Wee also investigated the error growth and the stability properties of the interpolation kernel in the Fourier space and have determined that for a stable diffusion and remeshing, we have to ensure that,
+	\begin{equation}
+	\frac{1}{6} \le c^2 \le \frac{1}{2}.
+	\label{eq:c2stability}
 	\end{equation}
 
-meaning that the diffusion of the vortex blobs will not be done at every step. This is a problem for hybrid method as the coupling of the Lagrangian method and the Eulerian method is performed at every step. If the Lagrangian method does not perform diffusion at every step, it will cause a sudden change in the vorticity field which causes a problem during the coupling process.
+%to minimize the error growth amplification factor and the phase error. With this, we will ensure the stability of the problem and suppress any spurious oscillations and ensure that it is a non-negative interpolation kernel with non-negative redistribution fractions. 
+However, we see that this $c^2$ constraint imposes a direct constraint on the maximum and the minimum $\Delta t_d$. This would mean that the diffusion time step size $\Delta t_d$ will be a multiple of the convection step $\Delta t_c$,
+	\begin{equation}
+	\Delta t_d = k_d \cdot \Delta t_c,
+	\end{equation}
+so the diffusion of the vortex blobs will not be done at every step of the evolution process. This is a problem for hybrid method as we couple the Lagrangian and the Eulerian method at every step. If the Lagrangian method does not perform diffusion at every step, from the Eulerian method's point of view, it would seem that the Lagrangian vorticity diffuses in a discontinuous fashion. This discontinuous behavior of the Lagrangian method (w.r.t. the Eulerian method), can cause stability issues during the coupling process, and should take care of.
 
-We could minimize this problem by modifying the $\Delta t_d$ such that it matches the diffusion time step $\Delta t_d$. This was feasible for our initial investigation where the Reynolds number was low, however for high Reynolds number problems, we need a scheme that was not constrained by the minimum diffusion time step.
+We could minimize this problem by modifying the $\Delta t_c$ such that it matches the diffusion time step (i.e $\Delta t_c = \Delta t_d$), so the diffusion is performed at every step. This was a feasible solution for our initial investigations with low Reynolds number flows, however when had to deal with the high Reynolds number flows, where the convection time step have to be small, we needed a scheme that was not constrained by the minimum diffusion time step.
 
 \subsubsection*{Simple redistribution scheme}
 
-The simple redistribution scheme based on the Shankar and Van Dommelen \cite{Shankar1996}, developed by Tutty \cite{2010arXiv1009.0166T}, makes it possible to remesh and diffuse the vorticity after every convection step, 
-
+The simple redistribution scheme, based on the Shankar and Van Dommelen \cite{Shankar1996}, developed by Tutty in 2010 \cite{2010arXiv1009.0166T}, makes it possible to remesh and diffuse the vorticity after every convection step. The strengths of the particles after the remeshing and diffusion is given as, 
 	\begin{equation}
 	\alpha_i^{n+1} = \sum_k \alpha_k^n W_{ki}^n, 
 	\end{equation}
+where $W_{ki}^n$ is the fraction of circulation from vortex blob $k$ transferred to vortex blob $i$ by the redistribution during the time step $n$. Like the MRS for treating diffusion, section \ref{subsec:modifiedRemeshing}, this \indexAcron{Simple Redistribution Scheme}{SRS} works by transferring the strengths of the particles to a fixed nodes rather than the neighboring nodes, figure \ref{fig:simpleRedistribution}. Therefore, if we use a uniform nodes, we do not need to employ a search algorithm to determine the neighboring nodes of the interpolation kernel. This makes the scheme as efficient as the MRS.
 
-where $W_{ki}^n$ is the fraction of circulation from vortex blob $k$ transferred to vortex blob $i$ by diffusion during the time step $n$. The fractions $W_{ki}^n$ are calculated by conserving vorticity, center of vorticity, linear, and angular momentum of the vortex blobs \cite{2010arXiv1009.0166T}. In two dimensional problem the redistribution fractions are simple tensors products of the $x,y$ one dimensional redistribution fractions,
+The fractions $W_{ki}^n$ are calculated by conserving the vorticity, the center of the vorticity, the linear, and the angular momentum of the vortex blobs \cite{2010arXiv1009.0166T}. For the two dimensional problem, the redistribution fractions are simple tensors products of the $x,y$ one dimensional redistribution fractions, given as,
 
-
-	\begin{figure}[!b]
+	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.7\textwidth]{figures/lagrangian/simpleRedistribution.pdf}
 	\caption{One dimensional, Simple redistribution scheme, diffusing the vortex blobs to the four stencil points ($k=i-1,\dots,i+2$) with vortex blob positioned at $x_i \le x_{\nu} \le x_{i+1}$ and nominal blob spacing $h$.}
@@ -517,76 +474,71 @@ where $W_{ki}^n$ is the fraction of circulation from vortex blob $k$ transferred
 	\end{figure}
 
 	\begin{equation}
-	W_{kl} = F_k G_l, \quad k = i-1,\cdots,i+2, \quad \l = j-1,\dots,j+2
+	W_{kl} = F_k G_l, \quad k = i-1,\cdots,i+2, \quad \l = j-1,\dots,j+2,
 	\end{equation}
-
-giving it a 16 point stencil. The one-dimension redistribution fractions for $x$-direction is a linear combination of the two basis solution of the redistribution equation for conservations,
-
+giving it a 16 point stencil. The one-dimension redistribution fractions for $x$-direction is a linear combination of the two basis solution for a conservative redistribution,
 	\begin{equation}
-	F_k = \left(1-\Delta\right)\cdot f_k + \Delta\cdot g_k, \quad k = i-1,\dots,i+2
+	F_k = \left(1-\Delta\right)\cdot f_k + \Delta\cdot g_k, \quad k = i-1,\dots,i+2,
 	\end{equation}
-
-having a four point stencil, figure \ref{fig:simpleRedistribution}. The basis solution of redistribution are 
-
+having a four point stencil, as show in figure \ref{fig:simpleRedistribution}. The basis solution of redistribution are 
 	\begin{subequations}
 	\begin{align}
-	f_i &= 1 - 2\left(\frac{h_{\nu}}{h}\right)^2 - \xi^2\\
 	f_{i-1} &= \frac{1}{2}\left(1-f_i-\xi\right)\\
-	f_{i+1} &= \frac{1}{2}\left(1-f_i+\xi\right)
+	f_i &= 1 - 2\left(\frac{h_{\nu}}{h}\right)^2 - \xi^2\\
+	f_{i+1} &= \frac{1}{2}\left(1-f_i+\xi\right)\\
+	f_{i+2} &= 0
 	\end{align}
 	\end{subequations}
 and 	
 	\begin{subequations}
 	\begin{align}
-	g_{i+1} &= 1 - 2\left(\frac{h_{\nu}}{h}\right)^2 - \xi_1^2\\
+	g_{i-1} &= 0\\
 	g_{i} &= \frac{1}{2}\left(1-g_{i+1}-\xi_1\right)\\
+	g_{i+1} &= 1 - 2\left(\frac{h_{\nu}}{h}\right)^2 - \xi_1^2\\
 	g_{i+2} &= \frac{1}{2}\left(1-g_{i+1}+\xi_1\right)
 	\end{align}
 	\end{subequations}
-
-where $\xi$ is given by equation \ref{eq:xiEquation}, $\xi_1 = \xi - 1$ are the distances between the $k^{\mathrm{th}}$ stencil nodes $x_k$ and the vortex blob that is to be diffused with $x_i \le x_{\nu} \le x_{i+1}$. Note, $f_k$ and $g_k$ is zero for all the other $k$. In the above equation, $h_{\nu}$ is the characteristic diffusion distance over the time $\Delta t_d$, 
-
+where $\xi$ is given by equation \ref{eq:xiEquation}. The $\xi_1 = \xi - 1$ is the distance between the $k^{\mathrm{th}}$ stencil node $x_k$ and the vortex blob that is to be diffused with $x_i \le x_{\nu} \le x_{i+1}$. In the above equation, $h_{\nu}$ is the characteristic diffusion distance during the time $\Delta t_d$, 
+%We have to note that, $f_k$ and $g_k$ is zero for all the other $k$. 
 	\begin{equation}
 	h_{\nu} = \sqrt{\Delta t_d \cdot \nu}.
 	\end{equation}
-	
-	
-The only constraint imposed  for positive redistribution fraction is
-
+		
+The only constraint imposed for a positive redistribution fraction is,
 	\begin{equation}
 	\frac{h_{\nu}}{h} < \frac{1}{\sqrt{2}}.
 	\end{equation}
-	
-giving us the maximum time-step size constraint of
+giving us the maximum time step size constraint of,
 	\begin{equation}
 	\Delta t_d < \frac{h^2}{2\nu}.
 	\end{equation}
-
-So now, we are able to perform diffusion, together with the convection step (i.e $k_d = 1$).
+	
+So we see that, this scheme only posses a constraint on the maximum diffusion time step size. For high Reynolds number flows, the convection time step is usually much smaller than the diffusion time step, meaning that now we can ensure that diffusion is performed with every convection step (i.e $k_d = 1$).
 
 \section{Boundary conditions at solid boundary}
 \label{sec:boundaryConditions}
 
-So far, we have only dealt with unbounded flow. During bounded flow simulation, we must impose addition constraint of the boundary to the simulation to simulate any flow about a geometry. From Helmholtz decomposition, we can have decompose the velocity field to the rotation and the irrotation component, equation \ref{eq:helmholtz}. With the Helmholtz decomposition, we can use the potential component to prescribe the boundary conditions at the solid wall boundary,
+So far, we have only dealt with unbounded flow. During bounded flow simulation, we must impose an addition constraint for the boundary, to simulate the flow with a geometry. Using the Helmholtz decomposition, we can have decompose the velocity field in to the rotational and the irrotational components, equation \ref{eq:helmholtz}. We can use the potential component to prescribe the boundary conditions at the solid wall boundary,
 	\begin{equation}
 	\mathbf{u}_{\phi} = \nabla\Phi.
 	\end{equation}
 
-The incompressibility constraint results in a Laplace's equation for the potential field and unique solution is obtained by enforcing the wall boundary conditions,
+The incompressibility constraint results in a Laplace's equation for the potential field and a unique solution is obtained by enforcing the wall boundary conditions,
 	\begin{equation}
 	\mathbf{u}_b\cdot\mathbf{\hat{n}} = \left(\mathbf{u}_{\omega} + \nabla\Phi\right) \cdot \mathbf{\hat{n}},
 	\label{eq:potentialBC}
 	\end{equation}
-and is defined as enforcing the no-through flow at the solid boundary wall, moving at $\mathbf{u}_b$. Note that the $\mathbf{\hat{n}}$ is the normal vector of the solid boundary. A classical approach for determine the solution to the Laplace's equation is by Green's function formulation. This approach required a singularity distribution over the body resulting in the appropriate boundary condition. Doublets and/or source panels are used to attain the required potential such that equation \ref{eq:potentialBC} is satisfied.
+enforcing the no-through flow at the solid boundary wall, moving at $\mathbf{u}_b$, where $\mathbf{\hat{n}}$ is the normal vector of the solid boundary. The approach for determine the solution to the Laplace's equation is by Green's function formulation. This approach required a singularity distribution over the body resulting in the appropriate boundary condition. Doublets and/or source panels are used to attain the required potential such that equation \ref{eq:potentialBC} is satisfied.
 
 \subsubsection{Linked boundary conditions}
 
-However Koumoutsakos, Leonard and Pepin \cite{Koumoutsakos1994b}, have suggested to enforce the boundary conditions through vortex sheets. The alternative approach of enforcing the solid boundary condition is not to decompose the velocity field into potential and rotational but to consider the solid boundary as an extension of the vorticity field through vortex sheets $\gamma$, figure \ref{fig:noSlipVorticityField}. Due to the non-zero tangential velocity at the surface, a sudden discontinuity in the velocity field can be considered as vortex sheet. Therefore, now to enforce the boundary conditions of the solid wall, we must satisfy the no slip velocity at the boundary,
+However Koumoutsakos, Leonard and Pepin in 1994 \cite{Koumoutsakos1994b}, suggested to use vortex sheets to enforce the boundary conditions. This alternate approach of enforcing the solid boundary condition is by not to decompose the velocity field into potential and rotational but to consider the solid boundary as an extension of the vorticity field through vortex sheets $\gamma$, figure \ref{fig:noSlipVorticityField}. Due to the non-zero tangential velocity at the surface, a sudden discontinuity in the velocity field can be considered as vortex sheet. So to enforce the boundary conditions of the solid wall, we must satisfy the no slip velocity at the boundary,
 	\begin{equation}
 	\mathbf{u}\cdot\mathbf{\hat{s}} = \mathbf{u}_b\cdot\mathbf{\hat{s}}.
 	\end{equation}
 
-Koumoutsakos \cite{Koumoutsakos1993b} only relies on the vortex sheet to enforce the no-slip velocity as no-slip boundary condition directly satisfies the no-through boundary conditions, also known as the linked boundary conditions. This was also proven by Shiels \cite{Shiels1998} and further investigated by Cooper, Mar and Barba \cite{Cooper2009b} and shown that vortex sheet is the only necessary singularity element required to satisfy both the boundary conditions. Therefore, enforcing the no-slip boundary condition directly satisfies the no-through constraint at the surface.
+Koumoutsakos \cite{Koumoutsakos1993b}, relied only on the vortex sheets to enforce the no-slip velocity. Koumoutsakos, Leonard and Pepin's paper in 1994 \cite{Koumoutsakos1994b} stated that, by satisfying no-slip boundary condition, it directly satisfies the no-through boundary conditions, as these boundary conditions are linked. This was also been stated by Shiels \cite{Shiels1998} and have been further employed by Cooper, Mar and Barba in 2009 \cite{Cooper2009b}. So enforcing the no-slip boundary condition directly satisfies the no-through constraint at the surface.
+
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.6\textwidth]{figures/lagrangian/noSlipVorticityField.pdf}
@@ -595,66 +547,83 @@ Koumoutsakos \cite{Koumoutsakos1993b} only relies on the vortex sheet to enforce
 	\end{figure}
 
 \subsection{Boundary integral equations}
-Thus the decomposed velocity field can be summarized as
+
+The Lagrangian method that we are using for the hybrid scheme, is modified according Stock \cite{Stock2010a}. The Lagrangian method under-resolved the vorticity field in the near-wall region. Furthermore, the vorticity of the fluid is segregated between the vortex blob domain and the vortex sheet domain, as seen in figure \ref{fig:extendedVorticityField}. The figure shows that, very near the wall the vorticity of the fluid is represented by the vortex sheet. In other words, the vortex sheet is an extension to the vorticity represented by the vortex blobs. The extended velocity field (of the extended vorticity field) is summarized as,
 	\begin{equation}
 	\mathbf{u} = \mathbf{u}_{\omega} + \mathbf{u}_{\gamma} + \mathbf{u}_{\infty}
 	\end{equation}
-where the $\mathbf{u}_{\gamma}$ denotes the velocity filed induced by the vortex sheet. Applying the no-slip boundary conditions, we can say that
+where the $\mathbf{u}_{\gamma}$ denotes the velocity field induced by the vortex sheet. Enforcing the no-slip boundary conditions, we state that,
 	\begin{equation}
 	\left(\mathbf{u}_{\mathrm{ext}} + \mathbf{u}_{\gamma}\right)\cdot\mathbf{\hat{s}} = \mathbf{u}_b \cdot \mathbf{\hat{s}}
 	\label{eq:kinematicBCofVSOutside}
 	\end{equation}
-where $\mathbf{u}_{\mathrm{ext}} = \mathbf{u}_{\omega} + \mathbf{u}_{\infty}$ is the velocity field induced from domain external of the body and the vortex sheet. For the tangential boundary condition, for a well-conditioned system of equations, the induced velocity from the vortex sheet can be summarized as  
+where $\mathbf{u}_{\mathrm{ext}} = \mathbf{u}_{\omega} + \mathbf{u}_{\infty}$ is the velocity field induced from the vortex blob domain. The equation states that the tangential component of the total velocity acting on the body should be equal to the tangential velocity of the body. So the induced velocity of the vortex sheet is given as,
 	\begin{equation}
 	\left(\mathbf{u}_{\mathrm{ext}} - \mathbf{u}_b\right) \cdot \mathbf{\hat{s}} = \mathbf{u}_{\gamma}\cdot\mathbf{\hat{s}}.
 	\label{eq:kinematicBCofVS}
 	\end{equation}
 
-The equation states that underneath the vortex sheet, we must have a vortex sheet inducing the velocity field $\mathbf{u}_{\gamma}$ to counter the slip velocity $\mathbf{u}_{\mathrm{slip}} = \left(\mathbf{u}_{\mathrm{ext}} - \mathbf{u}_b\right)$ such that we satisfy the no-slip kinematic boundary conditions. Note that, $\mathbf{u}_{\gamma}$ of equation \ref{eq:kinematicBCofVS}, is negative of equation \ref{eq:kinematicBCofVSOutside} as we looking under the vortex sheet. Koumoutsakos \cite{Koumoutsakos1993b}, expressed the relation of the vortex sheet strengths to the no-slip boundary condition at the surface of the body (inside the body) through the Fredholm integral equation of the second kind,
-	\begin{equation}
-	-\frac{\gamma\left(s\right)}{2} + \frac{1}{2\pi}\oint\frac{\partial}{\partial n}\left[\log\left|\mathbf{x}\left(s\right)-\mathbf{x}\left(s'\right)\right|\right]\gamma\left(s'\right)ds'= \mathbf{u}_{\mathrm{slip}}\cdot\mathbf{\hat{s}}.
-	\label{eq:fredholmIntegral2ndKind}
-	\end{equation}
-		
-The \indexAcron{Left Hand Side}{LHS} of the equation states at the point $s$, the velocity discontinuity is due to the vortex sheet at the point and the induced velocity of all the other vortex sheet acting on the point. 
-
-However, the equation \ref{eq:fredholmIntegral2ndKind} is not unique and accepts arbitrary solution for the vortex sheet strengths, therefore we must imposed an additional constraint on the strength of the vortex sheet. The addition constraint is a constraint on the net circulation of the vortex sheet. As the vortex sheet is considered as an extension to the vorticity field, we could say that the net circulation of the vortex panels	is the circulation that was not captured by the vortex blobs, figure \ref{fig:extendedVorticityField}. As vortex blobs are not available very-near the body, it is not possible for the vortex blobs to resolve the high gradient vorticity at the boundary. Therefore, all the vorticity in the vortex sheet domain must be captured by the vortex sheet.
-	
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.8\textwidth]{figures/lagrangian/extendedVorticityField.pdf}
 	\caption{Extended vorticity field: Vortex sheet being an extension to the vorticity field (resolved by the vortex blobs) which is able to fully resolve the boundary vorticity}
 	\label{fig:extendedVorticityField}
 	\end{figure}	
-	
-When considering a moving boundary, we must also take into account of the circulation of the body due to its motion. The net circulation of the problem is given as
+
+Note that as the boundary condition is enforced inside the body (under the vortex sheet), the velocity induced by the vortex sheet $\mathbf{u}_{\gamma}$ is the negative of equation \ref{eq:kinematicBCofVS}. Koumoutsakos \cite{Koumoutsakos1993b}, expressed the relation of the vortex sheet strengths to the no-slip boundary condition at the surface of the body (inside the body) through the Fredholm integral equation of the second kind,
 	\begin{equation}
-	\Gamma = \Gamma_{\omega} + \Gamma_{\gamma} + \Gamma_{b} = 0,
-	\end{equation}	
-where $\Gamma_{\omega}$ is the circulation of the vorticity in the fluid (i.e. the vortex blobs), $\Gamma_{\gamma}$ is the wall bounded circulation (i.e. vortex sheets),
+	-\frac{\gamma\left(s\right)}{2} + \frac{1}{2\pi}\oint\frac{\partial}{\partial n}\left[\log\left|\mathbf{x}\left(s\right)-\mathbf{x}\left(s'\right)\right|\right]\gamma\left(s'\right)ds'= \mathbf{u}_{\mathrm{slip}}\cdot\mathbf{\hat{s}}.
+	\label{eq:fredholmIntegral2ndKind}
+	\end{equation}
+
+where $\gamma(s)$ is the strength of the vortex sheet, and $\mathbf{u}_{\mathrm{slip}} = (\mathbf{u}_{\mathrm{ext}}-\mathbf{u}_{b})$, is the slip velocity that we have to cancel. The \indexAcron{Left Hand Side}{LHS} of the equation states at the point $s$, the velocity discontinuity is due to the vortex sheet of that point and integral of all the other vortex sheets around the body. However, the equation \ref{eq:fredholmIntegral2ndKind} is not unique and accepts arbitrary solution for the vortex sheet strengths, therefore we must imposed an additional constraint on the strength of the vortex sheet. The addition constraint is a constraint on the circulation of the fluid. To ensure conservation of circulation, 
 	\begin{equation}
-	\Gamma_{\gamma} = \oint\limits_S\gamma\left(s\right)\ d s,
-	\end{equation}	
-and the $\Gamma_b$ is the circulation of the moving body. The circulation inside the body can be considered also be considered as an extension to the vorticity field, where the body is filled with uniform vorticity due to the rotation of the body. Therefore the circulation of a moving body can calculated simply integrating the ``vorticity'' inside the body
+	\Gamma = \Gamma_{\mathrm{body}} + \Gamma_{\mathrm{fluid}} = 0,
+	\label{eq:circulationNet}
+	\end{equation}
+stating that the total circulation in the Lagrangian domain is the sum of the circulation of the body and the circulation of fluid, which should be equal to zero. As the body is in the domain of the vortex sheet, the circulation of the body is represented by the vortex sheet,
+	\begin{equation}
+	\Gamma_{\mathrm{body}} = \Gamma_{\gamma_{\mathrm{body}}}.
+	\label{eq:circulationBody}
+	\end{equation}
+
+The circulation of the body is due to the motion of the body traveling at $\mathbf{u}_b$. One can consider the body as filled with uniform vorticity due to the rotation of the body. Therefore the circulation of a moving body can calculated simply integrating the ``vorticity'' inside the body,
 	\begin{equation}
 	\Gamma_b = \iint\limits_{body} \nabla \times \mathbf{u}_b \ d A.
 	\end{equation}	
 
-So the constraint imposed on the net circulation of the vortex sheets is given as,
+Furthermore, as we are using the Lagrangian method according to Stock \cite{Stock2010a}, the boundary layer of the body is not resolved with the vortex blobs, as explained in figure \ref{fig:extendedVorticityField}. Therefore, the vortex sheet has to carry this neglected circulation of the boundary layer, and the circulation of the fluid is given as,
 	\begin{equation}
-	\Gamma_{\gamma} = - \left(\Gamma_{\omega} + \Gamma_b\right).
+	\Gamma_{\mathrm{fluid}} = \Gamma_{\gamma_{\mathrm{BL}}} + \Gamma_{\omega},
+	\label{eq:circulationFluid}
+	\end{equation}
+where $\Gamma_{\gamma_{\mathrm{BL}}}$ is the circulation of the boundary layer region represented by the vortex sheet, and $\Gamma_{\omega}$ is the total circulation captured by the vortex blobs. Combining equation \ref{eq:circulationBody} and \ref{eq:circulationFluid} into equation \ref{eq:circulationNet}, we derive the net circulation of the Lagrangian domain,
+	\begin{equation}
+	\Gamma = \Gamma_{\gamma_{\mathrm{body}}} + \Gamma_{\gamma_{\omega}} + \Gamma_{\omega} = 0,
+	\end{equation}
+where the total circulation represented by the vortex sheet is given as,
+	\begin{equation}
+	\Gamma_{\gamma} = \Gamma_{\gamma_{\mathrm{body}}} + \Gamma_{\gamma_{\mathrm{BL}}}.
+	\end{equation}
+
+Thus, the constraint imposed on the net circulation of the vortex sheets is given as,
+	\begin{equation}
+	\Gamma_{\gamma} = - \Gamma_{\omega}.
+	\end{equation}	
+ensuring that the total circulation of the fluid is zero. The total circulation of the vortex sheet is calculated by integrating the vortex sheet,
+	\begin{equation}
+	\Gamma_{\gamma} = \oint\limits_S\gamma\left(s\right)\ d s.
+	\label{eq:circulationConstraintonPanels}
 	\end{equation}	
 
-Now, in a pure lagrangian, we must transfer the vorticity generated from the body to the fluid. This is typically done by diffusing the vorticity of the vortex on the fluid, however in our hybrid coupling method, we can use the eulerian domain to introduce the vorticity into the fluid. The eulerian domain acts as the near-wall solver \cite{Daeninck2006}, and the strengths of the particles is interpolated from the eulerian domain, section \ref{}.\todo{CiTe Hybrid sectin}
+So we have to solve for the vortex sheet satisfying both the equation \ref{eq:fredholmIntegral2ndKind} and the equation \ref{eq:circulationConstraintonPanels}, which can be done using a panel method.
+
+%Now, in a pure lagrangian, we must transfer the vorticity generated from the body to the fluid. This is typically done by diffusing the vorticity of the vortex on the fluid, however in our hybrid coupling method, we can use the eulerian domain to introduce the vorticity into the fluid. The eulerian domain acts as the near-wall solver \cite{Daeninck2006}, and the strengths of the particles is interpolated from the eulerian domain, section \ref{}.\todo{CiTe Hybrid sectin}
 
 \subsection{Panel method for treating no-slip boundary condition}
-Equation \ref{eq:fredholmIntegral2ndKind} is solved by discretizing the body into $M$ vortex panels giving us a system of equation with can used to determine the $M$ unknowns of the strength of the vortex panels. The method refered as panel method has been greatly summarized by Katz and Plotkin \cite{Katz2001a}. 
+Equation \ref{eq:fredholmIntegral2ndKind} is solved by discretizing the body into $M$ vortex panels, giving us a system of $M$ equation to determine the $M$ unknowns of the strength of the vortex panels. This is the panel method, which has been extensively demonstrated by Katz and Plotkin \cite{Katz2001a}. Katz and Plotkins have shown several types of panel distributions with various orders of accuracy; from $0^{\mathrm{th}}$ order point vortex or up to $2^{\mathrm{nd}}$ order non-linear vortex panel. For this project, we have used a constant-strength vortex distribution that discretized the vortex sheet into straight segments, classified as \indexAcron{Constant-Strength Vortex Method}{CSVM}.
 
-Katz and Plotkins have shown several types of panel distributions with various orders of accuracy, from $0^{\mathrm{th}}$
-order point vortex or up to $2^{\mathrm{nd}}$ order varying panel strength curvatured distribution. For this project, we have used a constant-strength vortex distribution that discretized the vortex sheet into straight segments, classified as \indexAcron{Constant-Strength Vortex Method}{CSVM}.
-
-Panel methods are constructed by discretizing the integral equation and forming a system of equations to solve the $M$ unknowns of the vortex panel,
-
+Panel methods are constructed by discretizing the integral equation \ref{eq:fredholmIntegral2ndKind}, and forming a system of $M$ equations to solve the $M$ unknowns of the vortex panel,
 	\begin{equation}
 	\underbrace{\begin{pmatrix}
 	-\frac{1}{2} & a_{12} & \cdots & a_{1M}\\ 
@@ -670,25 +639,18 @@ Panel methods are constructed by discretizing the integral equation and forming 
 	\mathrm{RHS}_2\\ 
 	\vdots\\
 	\mathrm{RHS}_M
-	\end{pmatrix}}_{\overrightarrow{\mathrm{RHS}}}
+	\end{pmatrix}}_{\overrightarrow{\mathrm{RHS}}},
 	\label{eq:vortexSheetSystemofEquations}
 	\end{equation}
-
-
-where $A_{MM}$ contains the weights of the influence of the vortex panels $\vec{\gamma}$ on each other and the $\overrightarrow{\mathrm{RHS}}$ is
-
+where $A_{MM}$ contains the coefficients of the tangential induced velocity of vortex panels $\vec{\gamma}$ acting on each other. The $\overrightarrow{\mathrm{RHS}}$ is given as,
 	\begin{equation}
-	\mathrm{RHS} = \mathbf{u}_{\mathrm{slip}}\cdot\mathbf{\hat{s}}
+	\mathrm{RHS} = \mathbf{u}_{\mathrm{slip}}\cdot\mathbf{\hat{s}},
 	\end{equation}
-	
-is the boundary condition to the system of equations. In addition, we have another constraint on the net circulation of the vortex panels and in discrete from we say that,
-
+and contains the boundary condition to the system of equations. In addition, we have another constraint on the net circulation of the vortex panels, equation \ref{eq:circulationConstraintonPanels}. In the discrete form, the equation is given as,
 	\begin{equation}
-	\sum_{i}^{M} \gamma_i\Delta s = \Gamma_{\gamma}
+	\sum_{i}^{M} \gamma_i\Delta s = \Gamma_{\gamma},
 	\end{equation}	
-
 and results in a $M+1$ system of equations for solving the $M$ unknown strengths of the vortex panels,
-
 	\begin{equation}
 	\underbrace{\begin{pmatrix}
 	-\frac{1}{2} & a_{12} & \cdots & a_{1M}\\ 
@@ -706,20 +668,19 @@ and results in a $M+1$ system of equations for solving the $M$ unknown strengths
 	\vdots\\
 	\mathrm{RHS}_M\\
 	\Gamma_{\gamma}
-	\end{pmatrix}}_{\overrightarrow{\mathrm{RHS}}}
+	\end{pmatrix}}_{\overrightarrow{\mathrm{RHS}}},
 	\end{equation}
-
-However, as we have an additional constraint on the net strength of the panels, we have $M+1$ set of equations with $M$ unknowns giving us a overdetermined problem. The approach to solve such a problem is either by using a \indexAcron{Least-Square solution method}{LSTSQ}, or introducing a new unknown or as used by Katz, eliminating an equation. Enforcing the no-slip boundary condition at each panel location is our vital criteria and therefore, elimination of an equation is not a viable strategy and so the LSTSQ method was utilized for the project.
+the last equation imposing the circulation constraint on the panels. However, now we see that we have a set of $M+1$ equations with $M$ unknowns, making it an overdetermined problem. The approach to solve such a problem is either by using a \indexAcron{Least-Square solution method}{LSTSQ}, introducing a new unknown, or as used by Katz, eliminating an equation. Enforcing the no-slip boundary condition at each panel location is a vital criteria, and therefore we used the LSTSQ method for solving the problem.
 
 \subsubsection{Constant-Strength Vortex Method}
 
-The Constant-Strength vortex method ({\color{darkblue}CSVM}) is based on the flat (straight) discretization of the vortex sheet, where the panel have constant vortex strength as per definition. To solve the strengths of the panel problem, we enforce the dirichlet velocity boundary conditions at the collocation point $x_{cp}$, which is located just below the vortex sheet, figure \ref{fig:vortexPanelDefinition}. The coefficient $a_{ij}$ of the influence matrix $\mathbf{A}$ is defined as
+The Constant-Strength vortex method ({\color{darkblue}CSVM}) is based on the flat (straight) discretization of the vortex sheet, where the panel have constant vortex strength. To solve the strengths of the panel problem, we enforce the Dirichlet velocity boundary conditions at the collocation point $x_{cp}$, that is located just below the vortex sheet, shown in figure \ref{fig:vortexPanelDefinition}. The coefficient $a_{ij}$ of the influence matrix $\mathbf{A}$ is defined as,
 	\begin{equation}
 	a_{ij} = \mathbf{\hat{u}}_{ij} \cdot \mathbf{\hat{t}}_i,
 	\end{equation}
-		
-and is the tangential influence coefficient of $j^{\mathrm{th}}$ panel on the $i^{\textrm{th}}$ panel. Therefore, induced velocity $\mathbf{\hat{u}}_{ij} = \left(\hat{u},\hat{v}\right)_{ij}$ is the unit induced velocity of the $j^{\mathrm{th}}$ panel on to the collocation points of $i^{\mathrm{th}}$ panel, where the vortex panels have unit strength (i.e $\hat{\gamma}_i = 1$). In general, the induced velocity of the vortex panels are calculated in the local panel coordinates, figure \ref{fig:panelDefinitions}, and the transformation from the local panel coordinate $(x',y')$ to the global coordinates systems $(x,y)$ is given by 
+which represents the tangential influence coefficient of $j^{\mathrm{th}}$ panel on the $i^{\textrm{th}}$ panel. The influence coefficient is determined by prescribing the strengths of the vortex panels $\hat{\gamma}_i = 1$, resulting in an induced velocity $\mathbf{\hat{u}}_{ij} = \left(\hat{u},\hat{v}\right)_{ij}$ for a unit strength panel.
 
+In general, the induced velocity of the vortex panels are calculated in the local panel coordinates, figure \ref{fig:panelDefinitions}. This vector has to transformed from the local panel coordinate $(x',y')$ system to the global coordinates $(x,y)$ systems. The transformation is given as, 
 	\begin{equation}
 	\begin{bmatrix}
 	u_{ij}\\
@@ -733,8 +694,7 @@ and is the tangential influence coefficient of $j^{\mathrm{th}}$ panel on the $i
 	\end{bmatrix}
 	\end{equation}
 
-The induced velocity of the vortex panel $j$ on the collocation point $i$ is given as
-
+The induced velocity of the vortex panel $j$ on the collocation point $i$ (in the panel coordinate system) is given as,
 	\begin{subequations}
 	\begin{align}
 	u'_{ij} &= \frac{\gamma_j}{2\pi}\left[\tan^{-1}\frac{y'_i-y'_{j,2}}{x'_i-x'_{j,2}} - \tan^{-1}\frac{y'_i-y'_{j,1}}{x'_i -x'_{j,1}}\right],\\
@@ -760,20 +720,15 @@ The induced velocity of the vortex panel $j$ on the collocation point $i$ is giv
         \label{fig:panelDefinitions}
 \end{figure}	
 	
-where $(x'_1,y'_1)_j$ and $(x'_2,y'_2)_j$ are the coordinates of the panel start and end point in its local panel coordinate system. Note that the self-induction of the vortex panel (when $i=j$), the influence coefficient becomes $a_{ij} = -1/2$, and can be seen in the diagonal terms of equation \ref{eq:vortexSheetSystemofEquations}. So, by taking $\hat{\gamma}_i = 1$, we are able to construct the influence coefficients of the influence matrix $\mathbf{A}$ and can solve the strengths of the panel, 
-	\begin{equation}
-	\mathbf{B}\cdot\gamma = \mathrm{RHS},
-	\end{equation}
-using the LSTSQ method. 
-
-	\begin{figure}[b]
+where $(x'_1,y'_1)_j$ and $(x'_2,y'_2)_j$ are the coordinates of the panel start and end point in its local panel coordinate system. Note that when $i=j$, the influence coefficient becomes $a_{ij} = -1/2$, represented by the diagonal terms of equation \ref{eq:vortexSheetSystemofEquations}. 
+	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.6\textwidth]{figures/lagrangian/twoPanelBodies.pdf}
 	\caption{twoPanelBodies}
 	\label{fig:twoPanelBodies}
 	\end{figure}
 
-If we are dealing with multiple geometries, figure \ref{fig:twoPanelBodies}, the panel method can be easily extended by constructing a global influence matrix, 
+If we are dealing with multiple panel bodies (i.e. multiple geometries), as seen in figure \ref{fig:twoPanelBodies}, the panel problem can be solved by constructing a global influence matrix, 
 
 	\begin{equation}
 	\underbrace{\begin{pmatrix}
@@ -821,131 +776,7 @@ If we are dealing with multiple geometries, figure \ref{fig:twoPanelBodies}, the
 			\end{pmatrix}}
 	\end{equation}
 
-where the diagonal matrices ($C_{aa}$, $C_{bb}$) are the self-induction matrix of the panel body and the non-diagonal terms ($C_{ab}$, $C_{ba}$) are the inter-induction matrix containing the panel influence of $b\rightarrow a$ and $a\rightarrow b$ respectively. The final two rows of the induction matrix contains the additional circulation constraint for each body.
-
-
-%	\begin{equation}
-%	\begin{pmatrix}
-%	\mathrm{ab} & \mathrm{ab}\\
-%	\mathrm{ba} & \mathrm{bb}\\
-%	\Delta s_a & 0\\
-%	0 & \Delta s_b
-%	\end{pmatrix}
-%	\begin{pmatrix}
-%	\gamma_a\\
-%	\gamma_b	
-%	\end{pmatrix} = \begin{pmatrix}
-%		\mathrm{RHS}_a\\
-%		\mathrm{RHS}_b\\
-%		\Gamma_{\gamma,a}\\	
-%		\Gamma_{\gamma,b}
-%		\end{pmatrix}
-%	\end{equation}
-
-%
-\subsection{Error analysis of panel method}
-The validation of the panel method was done by performing a convergence study of a cylinder. The vortex panels where used to simulate a potential flow around a cylinder and the solution of the panels was compared with the analytical solutions.
-
-%	\begin{table}[b]
-%	    \centering
-%	    \begin{tabular}{ l c l }
-%	        \hline
-%	        Parameters\T\B	            & Value 	& Unit    \\
-%	        \hline
-%	        $R$\T                     	& $1$	    & \si{m} \\
-%	        $\mathbf{u}_{\infty}$ 		& $\left[1, 0\right]$  	& \si{m.s^{-1}} \\
-%	        $N_{\mathrm{panels}}$\B     & $100$  	& -   \\
-%	        \hline
-%	    \end{tabular}
-%	    \caption{Panel study parameters}
-%	    \label{tab:panelParams}
-%	\end{table}
-
-%	\begin{table}[b]
-%	    \centering
-%	    \caption{Panel study parameters Panel study parameters Panel study parameters}
-%	    \begin{tabular}{ l c l }
-%	    	\toprule
-%	        Parameters\T\B	            & Value 	& Unit    \\
-%	        \midrule
-%	        $R$\T                     	& $1$	    & \si{m} \\
-%	        $\mathbf{u}_{\infty}$ 		& $\left[1, 0\right]$  	& \si{m.s^{-1}} \\
-%	        $N_{\mathrm{panels}}$\B     & $100$  	& -   \\
-%			\bottomrule
-%	    \end{tabular}
-%	    
-%	    \label{tab:panelParams}
-%	\end{table}	
-%	
-	\ctable[
-	    caption = {Panel study parameters},
-	    label   = {tab:panelParams},
-	    pos = b,
-	]{lll}{}{\FL
-	Parameters 				& Value 			& Description \ML
-	$R$  					& 1 \si{m} 			& Radius of cylinder\\
-	$\mathbf{u}_{\infty}$	& 1 \si{m.s^{-1}}	& Free-stream velocity\\
-	$N_{\mathrm{panels}}$	& 100				& Number of panels\LL}	
-	
-	
-
-To test the solution of the vortex panels with the analytical solution, the problem was first run for the parameters in the table \ref{tab:panelParams}. The velocity field of the potential flow solution is shown in figure \ref{fig:panelCylinder_velocityField}. The figure shows the norm of the velocity, and we see that it shows the velocity field of a potential flow solution, with an infinitely thin boundary layer, stagnating to zero velocity inside the body.
-
-	\begin{figure}[t]
-	\centering
-	\includegraphics[width=0.7\textwidth]{figures/lagrangian/panelCylinder_velocityField.pdf}
-	\caption{Panel method solution: Potential flow velocity field around unit cylinder. The figure depicts $\left\Vert\mathbf{u}\right\Vert$ with zero velocity inside the body.}
-	\label{fig:panelCylinder_velocityField}
-	\end{figure}
-
-The jagged velocity field around the surface of the cylinder is simply due to the sampling resolution of the field; For higher resolution, this will not be there. In order to determine the accuracy of the solution, the velocity field of the panel solution was compared with the analytical solution. The analytical velocity field around a cylinder is given as,
-	\begin{subequations}
-	\begin{align}
-	u_r &= u\left(1 - \frac{R^2}{r^2}\right)\cos\theta\\
-	u_{\theta} &= -u\left(1+\frac{R^2}{r^2}\right)\cos\theta
-	\end{align}
-	\label{eq:potentialCylinderAnalytical}
-	\end{subequations}	
-where $u_r$ and $u_{\theta}$ are the radial and the angular velocity respectively. The equation \ref{eq:potentialCylinderAnalytical} is a function of the radius from the center of the cylinder (in our case $r_0 = [0, 0]$) and the radius of the cylinder $R$. 
-
-\begin{figure}[!b]
-        \centering
-        \begin{subfigure}[b]{0.5\textwidth}
-                \includegraphics[width=\textwidth]{figures/lagrangian/panelCylinder_versusAnalytical.pdf}
-                \caption{Comparison of the velocity field.}
-                \label{fig:panelCylinder_versusAnalytical}
-        \end{subfigure}%
-        ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
-          %(or a blank line to force the subfigure onto a new line)
-        \begin{subfigure}[b]{0.5\textwidth}
-                \includegraphics[width=\textwidth]{figures/lagrangian/panelCylinder_error.pdf}
-                \caption{Error in velocity field}
-                \label{fig:panelCylinder_error}
-        \end{subfigure}
-        \caption{Comparison of the velocity field along the $y$-axis $0\rightarrow10$. Figure \textbf{(a)} shows both the solutions, the numerical $\left\Vert\mathbf{u}^h\right\Vert$ [solid blue, {\color{plotBlue}{---}}] and the analytical solution [solid black, ---]. Figure \textbf{(b)} shows the relative error $\epsilon$ between the solution, given by equation \ref{eq:panelRelativeError}}
-        \label{fig:panelCylinderComparision}
-\end{figure}	
-
-The velocity field of the panel was compared with this analytical solution along the y-axis from $y=0$ to $y=10$, figure \ref{fig:panelCylinder_versusAnalytical}. Comparing the solutions of the plot we see that the solution of the vortex panels and the analytical potential flow solution matches everywhere except at the surface. This is correct because the potential flow solution has a slip velocity (i.e non-zero velocity) at the surface of the body, whereas the vortex panels solves for a no-slip boundary condition at the collocation points of the surface. This explains the sudden drop of the velocity from two to zero at the surface.	
-
-The figure \ref{fig:panelCylinder_error} shows the relative error $\epsilon$ between the numerical and the analytical solution,
-	\begin{equation}
-	\epsilon = \frac{\left\Vert\mathbf{u}-\mathbf{u}^h\right\Vert}{\left\Vert\mathbf{u}\right\Vert}
-	\label{eq:panelRelativeError}
-	\end{equation}
-	
-where $\mathbf{u}$ is the analytical solution and the $\mathbf{u}^h$ is the numerical (panel method) solution. Ignoring the solution right at the surface ($r=R$), we see that the error between the numerical and the analytical solution reduces from $\epsilon=\num{5e-3}\rightarrow \num{8e-5}$ as we go from $r=1\rightarrow10$. This behavior of the error tells us that the solution of the constant-strength vortex panels gets more accurate as we go further away from the panels; right next to the panels, we have the largest error. This is because the vortex panels discretizes the body using a first-order approximation (straight panels) and also discretizes the vortex sheet strength using a first-order approximation. 
-
-\subsubsection*{Convergence analysis}
-
-The convergence analysis of the vortex panels shows that the panels that we are employing is indeed a first-order method as the error converges at $\mathcal{O}\left(N\right)$, figure \ref{fig:panelCylinder_convergence}.
-
-	\begin{figure}[!t]
-	\centering
-	\includegraphics[width=0.7\textwidth]{figures/lagrangian/panelCylinder_convergence_compressed.pdf}
-	\caption{Convergence plot of the constant-strength straight vortex panels. The figures depicts the reduction is error at $\mathcal{O}\left(N\right)$.}
-	\label{fig:panelCylinder_convergence}
-	\end{figure}
+where the diagonal matrices ($C_{aa}$, $C_{bb}$), are the self-induction matrix of the panel body, $a \rightarrow a$ and $b \rightarrow b$ respectively. The non-diagonal terms ($C_{ab}$, $C_{ba}$) are the inter-induction matrix containing the panel influence of $b\rightarrow a$ and $a\rightarrow b$ respectively. The final two rows of the LHS matrix contains the circulation constraint for each body.
 
 %\newpage
 %\section{Simulation acceleration techniques}
@@ -956,13 +787,87 @@ The convergence analysis of the vortex panels shows that the panels that we are 
 %\subsection{Parallel computation in GPU}
 %
 \section{Validation of Lagrangian method}
-Note that during this validation study, we are unable to validate the proper handling of the Lagrangian boundary conditions. This is because, we have only defined the vorticity generation from the boundary in the Eulerian domain and we neglected the vorticity production from the vortex panels, due to the natural of the coupling method, we are unable to validate the proper coupling of vortex panels with vortex blobs. Therefore, validation study for the Lagrangian method is done separately, ensuring no-through flow on vortex panels, and ensuring proper handling of vorticity with vortex blobs.
+During the validation study, we are will not be able to validate the vorticity generation of the Lagrangian boundary. 
+This is due to the nature of the hybrid method that we are using for this project. The generation of the vorticity from the boundary is defined in the Eulerian method, which is then interpolated onto the Lagrangian domain. Therefore, test cases that relies on the generation of the vorticity from the boundary cannot be used to validate our Lagrangian method.
+Thus the validation study for the Lagrangian method was done separately; first ensuring no-through flow on vortex panels is properly handled; second ensuring that the vorticity of the flow is properly handled by the vortex blobs.
 
-In order to verify and validate the vortex blobs, we use the analytical solution of the Lamb-Oseen vortex evolution. The validation of the lagrangian method was done by comparing the results of the Lamb-Oseen vortex and the analyzing the convection of the Clercx-Bruneau dipole. 
+\subsection{Error analysis of panel method}
+The validation of the panel method was done by performing a convergence study of a cylinder. The vortex panels where used to simulate a potential flow around a cylinder and the solution of the panels were compared with the analytical solutions.
+
+	\ctable[
+	    caption = {Panel study parameters},
+	    label   = {tab:panelParams},
+	    pos = b,
+	]{lll}{}{\FL
+	Parameters 				& Value 			& Description \ML
+	$R$  					& 1 \si{m} 			& Radius of cylinder\\
+	$\mathbf{u}_{\infty}$	& 1 \si{m.s^{-1}}	& Free-stream velocity\\
+	$N_{\mathrm{panels}}$	& 100				& Number of panels\LL}	
+
+To test the solution of the vortex panels with the analytical solution, the problem was first run for the parameters in the table \ref{tab:panelParams}. The velocity field of the potential flow solution is shown in figure \ref{fig:panelCylinder_velocityField}. The figure shows the magnitude of the velocity, and we see that it shows the velocity field of a potential flow solution, with an infinitely thin boundary layer, stagnating to zero velocity inside the body.
+
+	\begin{figure}[!t]
+	\centering
+	\includegraphics[width=0.7\textwidth]{figures/lagrangian/panelCylinder_velocityField.pdf}
+	\caption{Panel method solution: Potential flow velocity field around unit cylinder. The figure depicts $\left\Vert\mathbf{u}\right\Vert$ with zero velocity inside the body.}
+	\label{fig:panelCylinder_velocityField}
+	\end{figure}
+
+The jagged velocity field around the surface of the cylinder is simply due to the sampling resolution of the field, and for a higher sampling resolution, this will vanish. In order to determine the accuracy of the solution, the velocity field of the panel solution was compared with the analytical solution. The analytical velocity field around a cylinder is given as,
+	\begin{subequations}
+	\begin{align}
+	u_r &= u\left(1 - \frac{R^2}{r^2}\right)\cos\theta,\\
+	u_{\theta} &= -u\left(1+\frac{R^2}{r^2}\right)\cos\theta,
+	\end{align}
+	\label{eq:potentialCylinderAnalytical}
+	\end{subequations}	
+where $u_r$ and $u_{\theta}$ are the radial and the angular velocity respectively. The equation \ref{eq:potentialCylinderAnalytical} is a function of the radius from the center of the cylinder (in our case $r_0 = [0, 0]$) and the radius of the cylinder $R$. 
+
+	\begin{figure}[!t]
+     \centering
+     \begin{subfigure}[b]{0.5\textwidth}
+             \includegraphics[width=\textwidth]{figures/lagrangian/panelCylinder_versusAnalytical.pdf}
+             \caption{Comparison of the velocity field.}
+             \label{fig:panelCylinder_versusAnalytical}
+     \end{subfigure}%
+     ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+       %(or a blank line to force the subfigure onto a new line)
+     \begin{subfigure}[b]{0.5\textwidth}
+             \includegraphics[width=\textwidth]{figures/lagrangian/panelCylinder_error.pdf}
+             \caption{Error in velocity field}
+             \label{fig:panelCylinder_error}
+     \end{subfigure}
+     \caption{Comparison of the velocity field along the $y$-axis $0\rightarrow10$. Figure \textbf{(a)} shows both the solutions, the numerical $\left\Vert\mathbf{u}^h\right\Vert$ [solid blue, {\color{plotBlue}{---}}] and the analytical solution [solid black, ---]. Figure \textbf{(b)} shows the relative error $\epsilon$ between the solution, given by equation \ref{eq:panelRelativeError}}
+     \label{fig:panelCylinderComparision}
+	\end{figure}
+
+
+The velocity field of the vortex panel was compared with this analytical solution along the y-axis from $y=0 \rightarrow 10$. Figure \ref{fig:panelCylinder_versusAnalytical} plots the magnitude of analytical velocity $\left\Vert\mathbf{u}\right\Vert$ and the vortex panel velocity field $\left\Vert\mathbf{u}^h\right\Vert$. Comparing the solutions of the plot we see that the solution of the vortex panels and the analytical potential flow solution matches everywhere except at the surface. This happens because the potential flow solution has a slip velocity (i.e non-zero velocity) at the surface of the body, whereas the vortex panels solves for a no-slip boundary condition at the collocation points of the surface. This explains the sudden drop of the velocity from two to zero at the surface.	
+
+	\begin{figure}[!b]
+	\centering
+	\includegraphics[width=0.7\textwidth]{figures/lagrangian/panelCylinder_convergence_compressed.pdf}
+	\caption{Convergence plot of the constant-strength straight vortex panels. The figures depicts the reduction is error at $\mathcal{O}\left(N\right)$.}
+	\label{fig:panelCylinder_convergence}
+	\end{figure}
+
+The figure \ref{fig:panelCylinder_error} shows the relative error $\epsilon$ between the numerical and the analytical solution,
+	\begin{equation}
+	\epsilon = \frac{\left\Vert\mathbf{u}-\mathbf{u}^h\right\Vert}{\left\Vert\mathbf{u}\right\Vert}
+	\label{eq:panelRelativeError}
+	\end{equation}
+	
+where $\mathbf{u}$ is the analytical solution and the $\mathbf{u}^h$ is the numerical (panel method) solution. Ignoring the solution right at the surface ($r=R$), we see that the error between the numerical and the analytical solution reduces from $\epsilon=\num{5e-3}\rightarrow \num{8e-5}$ as we go from $r=1\rightarrow10$. This behavior of the error tells us that the solution of the constant-strength vortex panels gets more accurate as we go further away from the panels; right next to the panels, we have the largest error. This is because the vortex panels discretizes the body using a first-order approximation (straight panels) and also discretizes the vortex sheet strength using a first-order approximation. 
+
+The convergence analysis of the vortex panels was done by determine the error of the vortex panel velocity field w.r.t to the analytical solution for the number of panels $N = 10 \rightarrow 1000$, figure \ref{fig:panelCylinder_convergence}. The error of the velocity field was determine at $R = 1.5$, and we see that the error converges at an $\mathcal{O}\left(N\right)$. This validates that the vortex panel that we have used is a $1^{\mathrm{st}}$ order vortex panel.
+
+\subsection{Evolution of the vortex blobs}
+
+In order to verify and validate the vortex blobs, we use the analytical solution of the Lamb-Oseen vortex evolution. The validation of the lagrangian method was done by comparing the results of the Lamb-Oseen vortex.
 
 \subsection*{Lamb-Oseen vortex}
 
-\begin{figure}[!t]
+\begin{figure}[!b]
         \centering
         \begin{subfigure}[b]{0.5\textwidth}
                 \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_vorticityDistribution_compressed.pdf}
@@ -998,8 +903,6 @@ and is a function of core strength $\Gamma_c$, the scaled viscous time $\tau$, a
 where $u_{\theta}$ is the circumferential velocity and the radial velocity $u_r$ is zero. This can be seen on figure \ref{fig:lambOseen_velocityDistribution}. 
 
 To determine whether the lagrangian method performs according to theory, this analytical solution will be used to verify and then validate the solution.
-
-\subsection{Evolution of Lamb-Oseen vortex}
 
 The lagrangian method ran the case of Lamb-Oseen vortex simulation according to the parameters tabulated in table \ref{tab:lambOseenParams}. The problem was initialized by discretizing the vorticity field of the Lamb-Oseen $\Gamma_c=1$ and $\nu=\num{5e-4}$ at $\tau_0 = \num{2e-3}$. The vorticity field was discretized from $(x,y)$ - domain $\left[-0.5,0.5\right]^2$ using vortex blobs with $\sigma=0.01$, and $\mathrm{overlap}=1$, giving it a fixed blob spacing $h=0.01$. We employed the standard initialization method of vortex blobs from section \ref{subsec:vortexBlobInitialization}. However, as explained before, we have to take in account of the gaussian blurring of the original vorticity field and thus posses a problem when evaluating the error with the analytical Lamb-Oseen solution.
 
