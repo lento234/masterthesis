@@ -215,13 +215,6 @@ and similarly the discrete mollified velocity field is given as,
 	\mathbf{u}^h\left(\mathbf{x},t\right) = \sum_p \mathbf{K}_{\sigma}\left[\mathbf{x}-\mathbf{x}_p\left(t\right)\right]\alpha_p\left(t\right).
 	\end{equation}
 
-	\begin{figure}[b]
-	\centering
-	\includegraphics[width=0.4\textwidth]{figures/lagrangian/blobOverlap.pdf}
-	\caption{Vortex blob with overlap $\sigma/h$}
-	\label{fig:blobOverlap}
-	\end{figure}
-
 Koumoutsakos and Chorin \cite{Cottet2000a}, explained that in order to ensure the smoothness of the velocity field, the vortex blobs needs to have an overlap with each other. The overlap ratio is defined as,
 	\begin{equation}
 	\mathrm{overlap} = \frac{\sigma}{h},
@@ -231,6 +224,12 @@ where $h$ is the nominal particle spacing, and $\sigma$ is the blob core size. F
 
 During the evolution of the vortex blobs, this overlap constraint is violated due to the strains in the flow. The vortex blobs cluster together at certain region and at others they disperse. This localized clustering effect is seen as a lagrangian grid distorting, and has to be treated using remeshing schemes, covered in section \ref{subsec:remeshing}.
 
+	\begin{figure}[!t]
+	\centering
+	\includegraphics[width=0.4\textwidth]{figures/lagrangian/blobOverlap.pdf}
+	\caption{Vortex blob with overlap an $\sigma/h$}
+	\label{fig:blobOverlap}
+	\end{figure}
 
 \subsection{Vortex blob initialization}
 \label{subsec:vortexBlobInitialization}
@@ -240,16 +239,16 @@ Now the question arises on how should we initialize the particle's circulation s
 	\label{eq:particleCirculationAssignment}
 	\end{equation}
 
-	\begin{figure}[t]
+	\begin{figure}[!b]
 	\centering
 	\includegraphics[width=0.7\textwidth]{figures/lagrangian/particleInitialization.pdf}
-	\caption{Mollified vorticity field of an arbitrary vorticity function with $\mathrm{overlap}=1.0$, $\sigma=0.19$, $h=0.19$. Vortex blob strength has been assigned by equation \ref{eq:particleCirculationAssignment}, sampling at exact vorticity [{\color{plotRed}{$\bullet$}}, red dot]. Figure depicts exact vorticity distribution $\omega$ [---, solid], vorticity field of each blob $\omega_i$ [{\color{darkgreen}{---}}, green dashed], the mollified vorticity field $\omega^h$ [- -, dashed].  }
+	\caption{Mollified vorticity field of a gaussian vorticity distribution with $\mathrm{overlap}=1.0$, $\sigma=0.19$, and $h=0.19$. Vortex blob strengths was assigned using equation \ref{eq:particleCirculationAssignment}, sampling the exact vorticity [{\color{plotRed}{$\bullet$}}, red dot]. Figure depicts the exact vorticity distribution $\omega$ [---, solid black], vorticity distribution of each blob $\omega_i$ [{\color{darkgreen}{---}}, dashed green], and the mollified vorticity field from the blobs $\omega^h$ [- -, dashed black].  }
 	\label{fig:particleInitialization}
 	\end{figure}
 
 meaning that the particle carry the circulation of its local area. This might seem like a valid assumption as the circulation of a given area is the integral of the vorticity in the area, given by equation\ \ref{eq:definitionOfCirculation}, and therefore we will be conserving the circulation as all the circulation in the fluid is represented by the blobs.
 
-However, this type of initialization suffers some accuracy in the vorticity field itself as the vorticity field represented by the blobs is no longer the initial vorticity field, but the mollified vorticity field, equation \ref{eq:mollifiedVorticityField}. Barba and Rossi \cite{Barba2010}, has described this problem as gaussian blurring of the original vorticity field. Even though the particle have acquired the correct circulation strengths (i.e the local property), when evaluating the mollified vorticity field, we see that there is a mismatch with the original vorticity field, figure \ref{fig:particleInitialization}. 
+However, this type of initialization suffers some accuracy in the vorticity field itself as the vorticity field represented by the blobs is no longer the initial vorticity field, but the mollified vorticity field, equation \ref{eq:mollifiedVorticityField}. Barba and Rossi \cite{Barba2010a}, has described this problem as gaussian blurring of the original vorticity field. Even though the particle have acquired the correct circulation strengths (i.e the local property), when evaluating the mollified vorticity field, we see that there is a mismatch with the original vorticity field, figure \ref{fig:particleInitialization}. 
 
 Another way of viewing this phenomenon is to say that the conservation of circulation is only valid globally (for an infinite domain), but once we try to conserve circulation locally (e.g. in a given sub-domain), is does not satisfy anymore. Figure \ref{fig:particleInitialization} shows this effect for a simple gaussian initial vorticity distribution $\omega$. The mollified vorticity field is given as $\omega^h$ and even though the integral of both function is the same (conservation of circulation is satisfied), the vorticity functions do not match. This is does not cause a lot of issues when we only dealing with vortex particle method, however once we start using domain decomposition methods, this problem is an issue. As the vorticity is the communication between both methods, we must have accurate vorticity distribution.
 
@@ -283,7 +282,7 @@ The another downside of using the Beale's correction method that it is only vali
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.7\textwidth]{figures/lagrangian/bealesCorrection.pdf}
-	\caption{Mollified vorticity field after two Beale's iteration, $\mathrm{overlap}=1.0$, $\sigma=0.19$, $h=0.19$. Figure depicts exact vorticity distribution $\omega$ [---, solid], vorticity field of each blob $\omega_i$ [{\color{plotGreen}{---}}, green dashed], the mollified vorticity field $\omega^h$ [- -, dashed], and the correct blob cell vorticity $\tilde{\omega}=\beta/h^2$ [{\color{plotRed}{$\bullet$}}, red dot].}
+	\caption{Mollified vorticity field after two Beale's iteration, with $\mathrm{overlap}=1.0$, $\sigma=0.19$, $h=0.19$. Figure depicts exact vorticity distribution $\omega$ [---, solid black], vorticity distribution of each blob $\omega_i$ [{\color{plotGreen}{---}}, dashed green], the mollified vorticity field $\omega^h$ [- -, dashed black], and the corrected blob cell vorticity $\tilde{\omega}=\beta/h^2$ [{\color{plotRed}{$\bullet$}}, red dot].}
 	\label{fig:bealesCorrection}
 	\end{figure}
 
@@ -305,7 +304,7 @@ An alternate method to reduce the gaussian blurring of the vorticity field is to
                 \caption{Convergence of $\mathrm{overlap}$ with $h = 0.08$}
                 \label{fig:convergenceOfBlobsOverlap}
         \end{subfigure}
-        \caption{Convergence of vorticity by modifying the spatial resolution. Figure depicts exact vorticity field $\omega$ with [---, black] and various resolutions.}
+        \caption{Convergence of the vorticity initialization by modifying the spatial resolution. Figure depicts exact vorticity field $\omega$ [---, solid black], the initialized vorticity distribution with various parameters.}
         \label{fig:convergenceOfSpatialResolution}
 \end{figure}	
 
@@ -338,7 +337,7 @@ Once we determine the induced velocity acting on each vortex blobs, they can be 
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.9\textwidth]{figures/lagrangian/distortion-crop.pdf}
-    \caption{Lagrangian distortion of the vortex blobs after 100 steps. The initial vorticity field $\omega\left(\mathbf{x},0\right) = \exp\left(-12\left|\mathbf{x}\right|\right)$ with $\Delta t = 0.1$, $\sigma=0.02$ and $\mathrm{overlap} = 1.0$. Figure depicts $\textbf{(a)}$ the initial and $\textbf{(b)}$ the final distribution of the vortex blobs.}
+    \caption{Lagrangian distortion of the vortex blobs after 100 time steps. The initial vorticity field is $\omega\left(\mathbf{x},0\right) = \exp\left(-12\left|\mathbf{x}\right|\right)$ with $\Delta t = 0.1$, $\sigma=0.02$, and $\mathrm{overlap} = 1.0$. Figure depicts $\textbf{(a)}$ the initial distribution of the vortex blobs, and $\textbf{(b)}$ the final distribution of the vortex blobs after 100 time steps.}
     \label{fig:distortion}
 	\end{figure}
 
@@ -353,7 +352,7 @@ where the strengths of the blobs $\tilde{\alpha}_q$ of the distorted Lagrangian 
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.4\textwidth]{figures/lagrangian/interpolationGrid.pdf}
-	\caption{Remeshing of a vortex blob ({\color{plotGreen}{$\bullet$}}, green) on to a uniform grid defined by the $\left(4\times4\right)$ 2-D stencil.}
+	\caption{Remeshing of a single vortex blob ({\color{plotGreen}{$\bullet$}}, green) onto a uniform grid defined by the $\left(4\times4\right)$ 2-D stencil.}
 	\label{fig:interpolationGrid}
 	\end{figure}
 
@@ -380,7 +379,7 @@ is a non-dimensional parameter, relating the position of the particle $x_{\nu}$ 
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.7\textwidth]{figures/lagrangian/interpolationKernel.pdf}
-	\caption{$M'_4$ interpolation kernel, a third-order peicewise smooth B-spline kernel by Monaghan \cite{Monaghan1985}}
+	\caption{$M'_4$ interpolation kernel, a third-order, piecewise smooth, B-spline kernel by Monaghan \cite{Monaghan1985}}
 	\label{fig:interpolationKernel}
 	\end{figure}
 
@@ -406,10 +405,10 @@ with
 	\frac{\mathrm{d}\alpha_p}{\mathrm{d}t} = \nu\Delta\alpha_p.
 	\end{equation}
 
-So in the diffusion step, we fix the position of the vortex blobs, and only modify the strengths of the particles. This process mimics the diffusion of vorticity. Chorin in 1973 \cite{Chorin1973a}, initially employed the \indexAcron{Random Walk Method}{RWM}, which generates and disperse vorticity using pseudo-random number algorithm. However, this method suffers some limitations in accuracy, and since then methods such as \indexAcron{Particle Strength Exchange}{PSE} method \cite{Degond1989}, has been a common approach to treat the diffusion.
+So in the diffusion step, we fix the position of the vortex blobs, and only modify the strengths of the particles. This process mimics the diffusion of vorticity. Chorin in 1973 \cite{Chorin1973a}, initially employed the \indexAcron{Random Walk Method}{RWM}, which generates and disperse vorticity using pseudo-random number algorithm. However, this method suffers some limitations in accuracy, and since then methods such as \indexAcron{Particle Strength Exchange}{PSE} method \cite{Degond1989a}, has been a common approach to treat the diffusion.
 
 \subsubsection*{Particle Strength Exchange}
-The Particle Strength Exchange method, first proposed by Mas-Gallic in 1989 \cite{Degond1989}, showed that diffusion can be treated for a particle method with an isotropic, or an anisotropic viscosity by approximating the diffusion operator (a Laplacian) with an integral operator, and discretize the method with particles \cite{Speck2011a}. %The PSE can be seen as circulation correction method, where during the diffusion step of the viscous splitting algorithm, the strengths of the particle are corrected such that it accounts for the diffusion.
+The Particle Strength Exchange method, first proposed by Mas-Gallic in 1989 \cite{Degond1989a}, showed that diffusion can be treated for a particle method with an isotropic, or an anisotropic viscosity by approximating the diffusion operator (a Laplacian) with an integral operator, and discretize the method with particles \cite{Speck2011a}. %The PSE can be seen as circulation correction method, where during the diffusion step of the viscous splitting algorithm, the strengths of the particle are corrected such that it accounts for the diffusion.
  
 \subsubsection*{Vortex Redistribution Method}
 	\begin{equation}
@@ -468,7 +467,7 @@ The fractions $W_{ki}^n$ are calculated by conserving the vorticity, the center 
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.7\textwidth]{figures/lagrangian/simpleRedistribution.pdf}
-	\caption{One dimensional, Simple redistribution scheme, diffusing the vortex blobs to the four stencil points ($k=i-1,\dots,i+2$) with vortex blob positioned at $x_i \le x_{\nu} \le x_{i+1}$ and nominal blob spacing $h$.}
+	\caption{One dimensional simple redistribution scheme, diffusing the vortex blobs at $x_i \le x_{\nu} \le x_{i+1}$, onto the four stencil points $k=i-1,\dots,i+2$, with a grid spacing $h$.}
 	\label{fig:simpleRedistribution}
 	\end{figure}
 
@@ -536,12 +535,12 @@ However Koumoutsakos, Leonard and Pepin in 1994 \cite{Koumoutsakos1994b}, sugges
 	\mathbf{u}\cdot\mathbf{\hat{s}} = \mathbf{u}_b\cdot\mathbf{\hat{s}}.
 	\end{equation}
 
-Koumoutsakos \cite{Koumoutsakos1993b}, relied only on the vortex sheets to enforce the no-slip velocity. Koumoutsakos, Leonard and Pepin's paper in 1994 \cite{Koumoutsakos1994b} stated that, by satisfying no-slip boundary condition, it directly satisfies the no-through boundary conditions, as these boundary conditions are linked. This was also been stated by Shiels \cite{Shiels1998} and have been further employed by Cooper, Mar and Barba in 2009 \cite{Cooper2009b}. So enforcing the no-slip boundary condition directly satisfies the no-through constraint at the surface.
+Koumoutsakos \cite{Koumoutsakos1993b}, relied only on the vortex sheets to enforce the no-slip velocity. Koumoutsakos, Leonard and Pepin's paper in 1994 \cite{Koumoutsakos1994b} stated that, by satisfying no-slip boundary condition, it directly satisfies the no-through boundary conditions, as these boundary conditions are linked. This was also been stated by Shiels \cite{Shiels1998} and have been further employed by Cooper, Mar and Barba in 2009 \cite{Cooper2009a}. So enforcing the no-slip boundary condition directly satisfies the no-through constraint at the surface.
 
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.6\textwidth]{figures/lagrangian/noSlipVorticityField.pdf}
-	\caption{Extended vorticity field consisting of vorticity in the fluid and vortex sheet distribution around the body.}
+	\caption{Extended vorticity field separated into vorticity in the fluid and the vortex sheet distribution confined to the body.}
 	\label{fig:noSlipVorticityField}
 	\end{figure}
 
@@ -565,7 +564,7 @@ where $\mathbf{u}_{\mathrm{ext}} = \mathbf{u}_{\omega} + \mathbf{u}_{\infty}$ is
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.8\textwidth]{figures/lagrangian/extendedVorticityField.pdf}
-	\caption{Extended vorticity field: Vortex sheet being an extension to the vorticity field (resolved by the vortex blobs) which is able to fully resolve the boundary vorticity}
+	\caption{Extended vorticity field: Vortex sheet being an extension to the vorticity field (resolved by the vortex blobs), capable of capturing the body bounded vorticity distribution.}
 	\label{fig:extendedVorticityField}
 	\end{figure}	
 
@@ -683,17 +682,17 @@ which represents the tangential influence coefficient of $j^{\mathrm{th}}$ panel
         \centering
         \begin{subfigure}[b]{0.5\textwidth}
                 \includegraphics[width=\textwidth]{figures/lagrangian/panelCoordinateDefinition.pdf}
-                \caption{Panel discretization of the body in the global cartesian coordinates system $\left(x,y\right)$ and local panel coordinates rotated by $\alpha_i$.}
+                \caption{Panel discretization of the body in the global cartesian coordinates system $\left(x,y\right)$ with the local panel coordinates system rotated by $\alpha_i$.}
                 \label{fig:panelCoordinateDefinition}
         \end{subfigure}%
         ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
           %(or a blank line to force the subfigure onto a new line)
         \begin{subfigure}[b]{0.5\textwidth}
                 \includegraphics[width=\textwidth]{figures/lagrangian/vortexPanelDefinition.pdf}
-                \caption{Constant strength vortex panel in the local panel coordinate system $\left(x',y'\right)$ inducing velocity on the point $P$.}
+                \caption{Constant-Strength Vortex panel in the local panel coordinate system $\left(x',y'\right)$ inducing the velocity $\mathbf{u}'=(u',v')$ on the point $P$.}
                 \label{fig:vortexPanelDefinition}
         \end{subfigure}
-        \caption{Vortex panel's global \textbf{(a)} and local \textbf{(b)} coordinates system definition as defined by Katz and Plotkins \cite{Katz2001a}.}
+        \caption{The two coordinate system of the panel method problem. The figure depicts \textbf{(a)} the global panel coordinate system, and \textbf{(b)} the local panel coordinates system, as defined by Katz and Plotkins \cite{Katz2001a}.}
         \label{fig:panelDefinitions}
 	\end{figure}	
 	
@@ -722,7 +721,7 @@ where $(x'_1,y'_1)_j$ and $(x'_2,y'_2)_j$ are the coordinates of the panel start
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.6\textwidth]{figures/lagrangian/twoPanelBodies.pdf}
-	\caption{Two panel bodies }
+	\caption{Multi-body panel problem: two bodies with different numbers of panels. The figure depicts a square body with 4 panels ($a_1, a_2, a_3, a_4$), and a triangular body with 3 panels ($b_1, b_2, b_3$). }
 	\label{fig:twoPanelBodies}
 	\end{figure}
 
@@ -806,7 +805,7 @@ To test the solution of the vortex panels with the analytical solution, the prob
 	\begin{figure}[!t]
 	\centering
 	\includegraphics[width=0.7\textwidth]{figures/lagrangian/panelCylinder_velocityField.pdf}
-	\caption{Panel method solution: Potential flow velocity field around unit cylinder. The figure depicts $\left\Vert\mathbf{u}\right\Vert$ with zero velocity inside the body.}
+	\caption{Panel method solution: the potential velocity field around a unit cylinder with $R = 1$, $\mathbf{u}_{\infty} = (1, 0)$, and $N_{\mathrm{panels}}=100$. The figure depicts the magnitude of velocity field $\left\Vert\mathbf{u}\right\Vert$, with a zero velocity inside the body.}
 	\label{fig:panelCylinder_velocityField}
 	\end{figure}
 
@@ -831,10 +830,10 @@ where $u_r$ and $u_{\theta}$ are the radial and the angular velocity respectivel
        %(or a blank line to force the subfigure onto a new line)
      \begin{subfigure}[b]{0.5\textwidth}
              \includegraphics[width=\textwidth]{figures/lagrangian/panelCylinder_error.pdf}
-             \caption{Error in velocity field}
+             \caption{Error in the velocity field}
              \label{fig:panelCylinder_error}
      \end{subfigure}
-     \caption{Comparison of the velocity field along the $y$-axis $0\rightarrow10$. Figure \textbf{(a)} shows both the solutions, the numerical $\left\Vert\mathbf{u}^h\right\Vert$ [solid blue, {\color{plotBlue}{---}}] and the analytical solution [solid black, ---]. Figure \textbf{(b)} shows the relative error $\epsilon$ between the solution, given by equation \ref{eq:panelRelativeError}}
+     \caption{Comparison of the velocity field along the $y$-axis, $0\rightarrow10$. Figure \textbf{(a)} shows both the solutions, the numerical $\left\Vert\mathbf{u}^h\right\Vert$ [{\color{plotBlue}{---}}, solid blue] and the analytical solution [---, solid black]. Figure \textbf{(b)} shows the relative error $\epsilon$ in velocity between the solution, given by equation \ref{eq:panelRelativeError}.}
      \label{fig:panelCylinderComparision}
 	\end{figure}
 
@@ -851,7 +850,7 @@ where $\mathbf{u}$ is the analytical solution and the $\mathbf{u}^h$ is the nume
 	\begin{figure}[!t]
 	\centering
 	\includegraphics[width=0.7\textwidth]{figures/lagrangian/panelCylinder_convergence_compressed.pdf}
-	\caption{Convergence plot of the constant-strength straight vortex panels. The figures depicts the reduction is error at $\mathcal{O}\left(N\right)$.}
+	\caption{Convergence plot of the Constant-Strength Straight Vortex panels. The figures depicts the converges of the relative error $\epsilon$ at an $\mathcal{O}\left(N^{-1}\right)$.}
 	\label{fig:panelCylinder_convergence}
 	\end{figure}
 
@@ -898,7 +897,7 @@ where $u_{\theta}$ is the circumferential velocity, and $u_r$, the radial veloci
                 \caption{Velocity Field}
                 \label{fig:lambOseen_velocityDistribution}
         \end{subfigure}
-        \caption{Lamb-Oseen \textbf{(a)} vorticity distribution, and \textbf{(b)} velocity distribution. $\Gamma_c = 1$, $\tau=\num{2e-3}$.}
+        \caption{Lamb-Oseen Vortex problem with $\Gamma_c = 1$, $\tau=\num{2e-3}$, and $\nu=\num{5e-4}$. The figure depicts \textbf{(a)} the vorticity distribution, and \textbf{(b)} the velocity distribution.}
         \label{fig:lambOseen_distributions}
 	\end{figure}
 
@@ -951,7 +950,7 @@ To verify whether our Lagrangian scheme is function according to theory, we eval
 	\begin{figure}[!t]
 	\centering
 	\includegraphics[width=0.7\textwidth]{figures/lagrangian/lambOseen_convection_errorGrowth_compressed.pdf}
-	\caption{Relative error growth of Lamb-Oseen vortex during the evolution from $t_0=4$ to $t_f=5$. Figure depicts the error in vorticity: maximum relative error [ ---, solid black], .error in $L^2-\mathrm{norm}$ [ - -, dashed black]; and error in velocity: maximum relative error [ {\color{plotBlue}{---}}, solid blue], error in $L^2-\mathrm{norm}$ [ {\color{plotBlue}{- -}}, dashed blue].}
+	\caption{Relative error growth of Lamb-Oseen vortex during the evolution from $t_0=4$ to $t_f=5$. Figure depicts the error in vorticity: maximum relative error [ ---, solid black], and error in $L^2-\mathrm{norm}$ [ - -, dashed black]; and error in velocity: maximum relative error [ {\color{plotBlue}{---}}, solid blue], and error in $L^2-\mathrm{norm}$ [ {\color{plotBlue}{- -}}, dashed blue].}
 	\label{fig:lambOseen_convection_errorGrowth_compressed}
 	\end{figure}
 
@@ -980,7 +979,7 @@ This verification of the diffusion scheme showed that if Wee's MRS diffuses at $
 	\begin{figure}[!t]
 	\centering
 	\includegraphics[width=0.7\textwidth]{figures/lagrangian/lambOseen_diffusionMethod_comparison_compressed.pdf}
-	\caption{Comparison of Tutty's, simple redistribution scheme and Wee's modified interpolation method for treating diffusion. Figure depicts the growth in maximum relative error in vorticity from $t_0=4$ to $t_f=5$ at $\Delta t_c = 0.01$. The Wee diffusion scheme with $\Delta t_d = \Delta t_c = 0.01$ [{\color{plotBlue}{---}}, solid blue], and $\Delta t_d = 2 \Delta t_c = 0.02$ [---, solid black]. The Tutty's diffusion scheme, $c^2 = 1/3$, with $\Delta t_d = \Delta t_c = 0.01$ [ {\color{plotBlue}{- -}}, solid blue], and $\Delta t_d = \Delta t_c = 0.02$ [ - -, dashed black].}
+	\caption{Comparison of Tutty's, simple redistribution scheme and Wee's modified interpolation method for treating diffusion. Figure depicts the growth in maximum relative error in vorticity from $t_0=4$ to $t_f=5$ at $\Delta t_c = 0.01$. The Wee diffusion scheme with $\Delta t_d = \Delta t_c = 0.01$ [{\color{plotBlue}{---}}, solid blue], and $\Delta t_d = 2 \Delta t_c = 0.02$ [---, solid black]. The Tutty's diffusion scheme, $c^2 = 1/3$, with $\Delta t_d = \Delta t_c = 0.01$ [ {\color{plotBlue}{- -}}, dashed blue], and $\Delta t_d = \Delta t_c = 0.02$ [ - -, dashed black].}
 	\label{fig:lambOseen_diffusionMethod_comparison_compressed}
 	\end{figure}
 
@@ -1032,7 +1031,7 @@ The diffusion of the vortex blobs was also import when simulation viscous flows.
 
 To deal the body boundary in the flow, we used the vortex panels to enforce the no-through/no-slip boundary condition. Koumoutsakos, Leonard, and Pepin \cite{Koumoutsakos1994b}, have shown that enforcing no-slip boundary condition is equivalent to a no-through boundary condition, as they are linked. Constant-Strength Vortex panels, based of Katz \cite{Katz2001a}, were used to treat the body boundary condition. This panel method was then verified and validated with the analytical solution of a potential flow around a cylinder. There was one difference between our vortex panel method and the standard boundary element method that is used in a typical VPM. Our panel method cannot be used to determine the vorticity generation at the body, as this is done in our Eulerian method. So we validated our Lagrangian method separately; first ensuring that the no-through boundary condition is satisfied at the vortex panels, second ensuring that the vorticity of the flow is handled properly by the vortex blobs.
 
-To validate the vortex blob, we used the analytical solution of the Lamb-Oseen vortex problem. We verified that the Wee's MRS diffusion method indeed did not perform optimally for all parameters. The validation was done by investigating the error in the vorticity and the velocity field and was able to conclude that the vortex blobs performed according to literature of Barba \ref{Barba2004c}.
+To validate the vortex blob, we used the analytical solution of the Lamb-Oseen vortex problem. We verified that the Wee's MRS diffusion method indeed did not perform optimally for all parameters. The validation was done by investigating the error in the vorticity and the velocity field and was able to conclude that the vortex blobs performed according to literature of Barba \cite{Barba2004c}.
 
 \subsection*{Lagrangian method algorithm}
 
