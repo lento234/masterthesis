@@ -680,29 +680,7 @@ The Constant-Strength vortex method ({\color{darkblue}CSVM}) is based on the fla
 	\end{equation}
 which represents the tangential influence coefficient of $j^{\mathrm{th}}$ panel on the $i^{\textrm{th}}$ panel. The influence coefficient is determined by prescribing the strengths of the vortex panels $\hat{\gamma}_i = 1$, resulting in an induced velocity $\mathbf{\hat{u}}_{ij} = \left(\hat{u},\hat{v}\right)_{ij}$ for a unit strength panel.
 
-In general, the induced velocity of the vortex panels are calculated in the local panel coordinates, figure \ref{fig:panelDefinitions}. This vector has to transformed from the local panel coordinate $(x',y')$ system to the global coordinates $(x,y)$ systems. The transformation is given as, 
-	\begin{equation}
-	\begin{bmatrix}
-	u_{ij}\\
-	v_{ij}\\
-	\end{bmatrix} = \begin{bmatrix}
-	\cos\alpha_j & \sin\alpha_j \\
-	-\sin\alpha_j & \cos\alpha_j
-	\end{bmatrix} \cdot \begin{bmatrix}
-	u'_{ij}\\
-	v'_{ij}
-	\end{bmatrix}
-	\end{equation}
-
-The induced velocity of the vortex panel $j$ on the collocation point $i$ (in the panel coordinate system) is given as,
-	\begin{subequations}
-	\begin{align}
-	u'_{ij} &= \frac{\gamma_j}{2\pi}\left[\tan^{-1}\frac{y'_i-y'_{j,2}}{x'_i-x'_{j,2}} - \tan^{-1}\frac{y'_i-y'_{j,1}}{x'_i -x'_{j,1}}\right],\\
-	v'_{ij} &= -\frac{\gamma_j}{4\pi}\ln\frac{\left(x'_i-x'_{j,1}\right)^2 + \left(y'_i-y'_{j,1}\right)^2}{\left(x'_i-x'_{j,2}\right)^2+\left(y'_i-y'_{j,2}\right)^2}
-	\end{align}
-	\end{subequations}
-
-\begin{figure}[t]
+	\begin{figure}[t]
         \centering
         \begin{subfigure}[b]{0.5\textwidth}
                 \includegraphics[width=\textwidth]{figures/lagrangian/panelCoordinateDefinition.pdf}
@@ -718,18 +696,38 @@ The induced velocity of the vortex panel $j$ on the collocation point $i$ (in th
         \end{subfigure}
         \caption{Vortex panel's global \textbf{(a)} and local \textbf{(b)} coordinates system definition as defined by Katz and Plotkins \cite{Katz2001a}.}
         \label{fig:panelDefinitions}
-\end{figure}	
+	\end{figure}	
 	
-where $(x'_1,y'_1)_j$ and $(x'_2,y'_2)_j$ are the coordinates of the panel start and end point in its local panel coordinate system. Note that when $i=j$, the influence coefficient becomes $a_{ij} = -1/2$, represented by the diagonal terms of equation \ref{eq:vortexSheetSystemofEquations}. 
+Figure \ref{fig:panelCoordinateDefinition} shows the discretization of the body into panels in the global coordinates system, defined by $(x,y)$, where each panel is rotated by an angle $\alpha_i$ w.r.t to the global coordinate system. Rotating the axis $(x,y)$ by $\alpha_i$, we arrive at the local panel coordinate system $(x',y')$, as shown in figure \ref{fig:vortexPanelDefinition}. In general, the induced velocity of the vortex panels are calculated in the local panel coordinate system, where the induced velocity of the vortex panel $j$ on the collocation point $i$ (in the panel coordinate system) is given as,
+	\begin{subequations}
+	\begin{align}
+	u'_{ij} &= \frac{\gamma_j}{2\pi}\left[\tan^{-1}\frac{y'_i-y'_{j,2}}{x'_i-x'_{j,2}} - \tan^{-1}\frac{y'_i-y'_{j,1}}{x'_i -x'_{j,1}}\right],\\
+	v'_{ij} &= -\frac{\gamma_j}{4\pi}\ln\frac{\left(x'_i-x'_{j,1}\right)^2 + \left(y'_i-y'_{j,1}\right)^2}{\left(x'_i-x'_{j,2}\right)^2+\left(y'_i-y'_{j,2}\right)^2}
+	\end{align}
+	\end{subequations}
+
+where $(x'_1,y'_1)_j$ and $(x'_2,y'_2)_j$ are the coordinates of the panel start and end points in its local panel coordinate system, as shown in figure \ref{fig:panelDefinitions}. The transformation of this vector $(u'_{ij}, v'_{ij})$ to the global coordinates is given as,
+	\begin{equation}
+	\begin{bmatrix}
+	u_{ij}\\
+	v_{ij}\\
+	\end{bmatrix} = \begin{bmatrix}
+	\cos\alpha_j & \sin\alpha_j \\
+	-\sin\alpha_j & \cos\alpha_j
+	\end{bmatrix} \cdot \begin{bmatrix}
+	u'_{ij}\\
+	v'_{ij}.
+	\end{bmatrix}
+	\end{equation}
+
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.6\textwidth]{figures/lagrangian/twoPanelBodies.pdf}
-	\caption{twoPanelBodies}
+	\caption{Two panel bodies }
 	\label{fig:twoPanelBodies}
 	\end{figure}
 
-If we are dealing with multiple panel bodies (i.e. multiple geometries), as seen in figure \ref{fig:twoPanelBodies}, the panel problem can be solved by constructing a global influence matrix, 
-
+Note that when $i=j$, the influence coefficient becomes $a_{ij} = -1/2$, represented by the diagonal terms of equation \ref{eq:vortexSheetSystemofEquations}. If we are dealing with multiple panel bodies (i.e. multiple geometries), as seen in figure \ref{fig:twoPanelBodies}, the panel problem can be solved by constructing a global influence matrix, 
 	\begin{equation}
 	\underbrace{\begin{pmatrix}
 		c_{a_1a_1} & \cdots & c_{a_1a_N} & c_{a_1b_1} &\cdots & c_{a_1b_M}\\
@@ -804,7 +802,7 @@ The validation of the panel method was done by performing a convergence study of
 	$\mathbf{u}_{\infty}$	& 1 \si{m.s^{-1}}	& Free-stream velocity\\
 	$N_{\mathrm{panels}}$	& 100				& Number of panels\LL}	
 
-To test the solution of the vortex panels with the analytical solution, the problem was first run for the parameters in the table \ref{tab:panelParams}. The velocity field of the potential flow solution is shown in figure \ref{fig:panelCylinder_velocityField}. The figure shows the magnitude of the velocity, and we see that it shows the velocity field of a potential flow solution, with an infinitely thin boundary layer, stagnating to zero velocity inside the body.
+To test the solution of the vortex panels with the analytical solution, the problem was first ran for the parameters in the table \ref{tab:panelParams}. The velocity field of the potential flow solution is shown in figure \ref{fig:panelCylinder_velocityField}. The figure shows the magnitude of the velocity, and we see that it shows the velocity field of a potential flow solution, with an infinitely thin boundary layer, stagnating to zero velocity inside the body.
 
 	\begin{figure}[!t]
 	\centering
@@ -841,15 +839,7 @@ where $u_r$ and $u_{\theta}$ are the radial and the angular velocity respectivel
      \label{fig:panelCylinderComparision}
 	\end{figure}
 
-
-The velocity field of the vortex panel was compared with this analytical solution along the y-axis from $y=0 \rightarrow 10$. Figure \ref{fig:panelCylinder_versusAnalytical} plots the magnitude of analytical velocity $\left\Vert\mathbf{u}\right\Vert$ and the vortex panel velocity field $\left\Vert\mathbf{u}^h\right\Vert$. Comparing the solutions of the plot we see that the solution of the vortex panels and the analytical potential flow solution matches everywhere except at the surface. This happens because the potential flow solution has a slip velocity (i.e non-zero velocity) at the surface of the body, whereas the vortex panels solves for a no-slip boundary condition at the collocation points of the surface. This explains the sudden drop of the velocity from two to zero at the surface.	
-
-	\begin{figure}[!b]
-	\centering
-	\includegraphics[width=0.7\textwidth]{figures/lagrangian/panelCylinder_convergence_compressed.pdf}
-	\caption{Convergence plot of the constant-strength straight vortex panels. The figures depicts the reduction is error at $\mathcal{O}\left(N\right)$.}
-	\label{fig:panelCylinder_convergence}
-	\end{figure}
+The velocity field of the vortex panel was compared with this analytical solution along the y-axis from $y=0 \rightarrow 10$. Figure \ref{fig:panelCylinder_versusAnalytical} plots the magnitude of analytical velocity $\left\Vert\mathbf{u}\right\Vert$ and the vortex panel velocity field $\left\Vert\mathbf{u}^h\right\Vert$. Comparing the solutions of the plot we see that the solution of the vortex panels and the analytical potential flow solution matches everywhere except at the surface. This happens because the potential flow solution has a slip velocity (i.e non-zero velocity) at the surface of the body, whereas the vortex panels solves for a no-slip boundary condition at the collocation points of the surface. This explains the sudden drop of the velocity from $2\rightarrow0$ at the surface.	
 
 The figure \ref{fig:panelCylinder_error} shows the relative error $\epsilon$ between the numerical and the analytical solution,
 	\begin{equation}
@@ -859,11 +849,18 @@ The figure \ref{fig:panelCylinder_error} shows the relative error $\epsilon$ bet
 	
 where $\mathbf{u}$ is the analytical solution and the $\mathbf{u}^h$ is the numerical (panel method) solution. Ignoring the solution right at the surface ($r=R$), we see that the error between the numerical and the analytical solution reduces from $\epsilon=\num{5e-3}\rightarrow \num{8e-5}$ as we go from $r=1\rightarrow10$. This behavior of the error tells us that the solution of the constant-strength vortex panels gets more accurate as we go further away from the panels; right next to the panels, we have the largest error. This is because the vortex panels discretizes the body using a first-order approximation (straight panels) and also discretizes the vortex sheet strength using a first-order approximation. 
 
+	\begin{figure}[!t]
+	\centering
+	\includegraphics[width=0.7\textwidth]{figures/lagrangian/panelCylinder_convergence_compressed.pdf}
+	\caption{Convergence plot of the constant-strength straight vortex panels. The figures depicts the reduction is error at $\mathcal{O}\left(N\right)$.}
+	\label{fig:panelCylinder_convergence}
+	\end{figure}
+
 The convergence analysis of the vortex panels was done by determine the error of the vortex panel velocity field w.r.t to the analytical solution for the number of panels $N = 10 \rightarrow 1000$, figure \ref{fig:panelCylinder_convergence}. The error of the velocity field was determine at $R = 1.5$, and we see that the error converges at an $\mathcal{O}\left(N\right)$. This validates that the vortex panel that we have used is a $1^{\mathrm{st}}$ order vortex panel.
 
 \subsection{Evolution of the vortex blobs}
 
-In order to verify and validate the vortex blobs, we use the analytical solution of the Lamb-Oseen vortex evolution. The validation of the lagrangian method was done by comparing the results of the Lamb-Oseen vortex.
+In order to verify and validate the vortex blobs, we simulate the evolution of a Lamb-Oseen vortex. The results of the simulation was used to compare against the analytical results, which we used to determine the accuracy of our vortex blobs.
 
 \subsection*{Lamb-Oseen vortex}
 
