@@ -135,7 +135,7 @@
   \item [{\textbf {CFD}}]\begingroup Computional Fluid Dynamic\nomeqref {1.0}
 		\nompageref{3}
   \item [{\textbf {CG}}]\begingroup Continuous Galerkin\nomeqref {3.1}
-		\nompageref{47}
+		\nompageref{48}
   \item [{\textbf {CSVM}}]\begingroup Constant-Strength Vortex Method\nomeqref {2.57}
 		\nompageref{29}
   \item [{\textbf {DG}}]\begingroup Discontinous Galerkin\nomeqref {3.1}
@@ -157,13 +157,13 @@
   \item [{\textbf {HELVPM}}]\begingroup Hybrid Eulerian-Lagrangian Vortex Particle Method\nomeqref {1.0}
 		\nompageref{4}
   \item [{\textbf {IPCS}}]\begingroup Incremental Pressure Correction Scheme\nomeqref {3.15}
-		\nompageref{52}
+		\nompageref{53}
   \item [{\textbf {LHS}}]\begingroup Left Hand Side\nomeqref {2.49}
 		\nompageref{27}
   \item [{\textbf {LSTSQ}}]\begingroup Least-Square solution method\nomeqref {2.61}
 		\nompageref{29}
   \item [{\textbf {MPI}}]\begingroup Message Passing Interface\nomeqref {3.11}
-		\nompageref{51}
+		\nompageref{50}
   \item [{\textbf {MRS}}]\begingroup Modified Remeshing Scheme\nomeqref {2.30}
 		\nompageref{23}
   \item [{\textbf {PC}}]\begingroup Population Control\nomeqref {2.71}

@@ -15,32 +15,32 @@
 %------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------
 %\section{Purpose of eulerian domain}
-Standard \printAcron{Computation Fluid Dynamics}{CFD} method discretizes the fluid into smaller regions, known as grids, and solves the set of Navier-Stokes equations in this region. This type of formulation is referred to as Eulerian method as we are evaluating the change of flow property in a given volume.
+Standard \printAcron{Computation Fluid Dynamics}{CFD} method discretizes the fluid into smaller regions, known as grids, and solves the set of Navier-Stokes equations in this region. This type of formulation is referred to as an Eulerian method, as we are evaluating the change of flow property in a given volume.
 
-For the hybrid method, we use the Navier-Stokes grid formulation in the near-body region. The advantage of using the Eulerian method at this region is that it is much more efficient in resolving the boundary layer than the typical Vortex Particle Method. We can directly enforce the wall boundary condition at the wall boundary of the Eulerian domain, solving the problem of vorticity generation from a body. In the hybrid coupling strategy, we will then interpolate this newly resolved near-wall solution on to the Lagrangian domain, where the vortex blobs will efficiently evolve the particles from the Lagrangian frame point.
+For the hybrid method, we use the Navier-Stokes grid formulation in the near-body region. The advantage of using the Eulerian method at this region is that it is much more efficient in resolving the boundary layer than the Vortex Particle Method. We can directly enforce the wall boundary condition at the wall boundary of the Eulerian domain, solving the problem of vorticity generation of the body. In the hybrid coupling strategy, we can then interpolate this newly resolved near-wall solution on to the Lagrangian domain, where the vortex blobs can efficiently evolve the particles.
 
-The various approaches to solve the fluid dynamics problem from a Eulerian reference frame. \indexAcron{Finite Volume Method }{FVM}, \indexAcron{Finite Difference Method}{FDM}, and \indexAcron{Finite Element Method}{FEM} are the common choice for solving the Navier-Stokes problem and differ by the way they approach to solve the problem. FVM divides the domain into volumes where it enforces the conservation of mass and momentum in each sub-domains. FDM divides the domain into nodes and use local Taylor expansions to approximate the partial differential equations. FEM divides the domain into elements and solves the problem using variational calculus. So, in the end, the choice of Eulerian method does not have a direct impact on the coupling with the Lagrangian method and purpose of the Eulerian method is to efficiently, and accurately resolve the near-body region.
+The various approaches to solve the fluid dynamics problem from a Eulerian reference frame. \indexAcron{Finite Volume Method }{FVM}, \indexAcron{Finite Difference Method}{FDM}, and \indexAcron{Finite Element Method}{FEM} are the common choice for solving the Navier-Stokes problem and differ by the way they approach to solve the problem. FVM divides the domain into volumes where it enforces the conservation of mass and momentum in each sub-domains. FDM divides the domain into nodes and use local Taylor expansions to approximate the partial differential equations. FEM divides the domain into elements and solves the problem using variational calculus. So in the end, the choice of Eulerian method does not have a direct impact on the coupling with the Lagrangian method as the purpose of the Eulerian method is only to efficiently, and accurately resolve the near-body region of the body.
 
-We have decided to use the FEM packages provided by the \fenics project as they have be already implemented efficient, parallelized algorithms for solving differential equation and provide extensive features for future developments such as adaptive mesh refinement, fluid-structure interaction, and efficient computation of turbulence.
+We have decided to use the FEM packages provided by the \fenics project as they have be already implemented efficient, multi-threaded algorithms for solving the partial differential equation. Furthermore, they provide extensive features for future developments such as adaptive mesh refinement, fluid-structure interaction, and efficient computation of turbulent flow.
 
 \section{Introduction to Finite Element Method}
 
-\printAcron{Finite Element Method}{FEM} is numerical method to solve for the solution of a given differential equation. It is solved by describing it as a variation problem, and by minimizing the error we can reach a approximate solution for the boundary value problem \cite{Brenner2008}. So, the FEM approximates the unknown variables and converts the partial differential equations to a set of algebraic equations, which makes them easier to solve. It was traditionally used for solid mechanics, for the analysis of aircraft structures \cite{Rao2005}, but have since then used to solve fluid dynamics problems \cite{Guermond2006} \cite{Johnston2004} \cite{Guermond2003}.
+\printAcron{Finite Element Method}{FEM} is numerical method to solve for the solution of a given partial differential equation. It is solved by describing it as a variation problem, giving us an approximate solution for the boundary value problem \cite{Brenner2002}. So the FEM approximates the unknown variables and converts the partial differential equations to a set of algebraic equations, which makes them easier to solve. It was traditionally used for solid mechanics (e.g for the analysis of aircraft structures \cite{RAO2011}), but have since then used to solve fluid dynamics problems \cite{Guermond2006a} \cite{Johnston2004a} \cite{Guermond2003a}.
 
 \subsection*{Finite element discretization}
 
-Finite Element solves by dividing the domain of interest into small, simple regions known as ``elements". These ``elements" are connected at the joints which are called nodes or nodal points. We use these sets of node and elements to represent the actual variation in the field (such as displacement, velocity, pressure or temperature) using simple functions, known as basis functions. Therefore, we have transformed a domain of infinite \indexAcron{Degrees of Freedom}{DOF} to a finite number of DOFs. We combine this set of equations of element equations into a global system of equations to solve for the final problem.
+Finite Element method solves problem by dividing the domain of interest into smaller, simpler regions known as ``elements". These ``elements" are connected at the joints which are called nodes or nodal points. We use these sets of node and elements to represent the actual variation in the field (such as the displacement, the velocity, the pressure or the temperature) using simple functions, known as the basis functions. Thus, we have transformed the domain of interest into finite number of \indexAcron{Degrees of Freedom}{DOF}. We combine the set of equations of the element into a global system of equations to solve for the unknown.
 
 	\begin{figure}[b]
 	\centering
 	\includegraphics[width=0.4\linewidth]{./figures/eulerian/finiteElementDefinitions.pdf}
-	\caption{A two-dimensional Finite Element geometry. The cell represents the area of the element, and verticies are the edge of the cell.}
+	\caption{A two-dimensional Finite Element geometry. The cell represents the area of the element, and vertices are the edges of the cell.}
 	\label{fig:finiteElementDefinitions}
 	\end{figure}
 
-The discretization of a 2D domain can be observed in figure \ref{fig:finiteElementDefinitions}. The figures shows two connect finite elements. The cells represent the area of the element, and vertices of the cell are the node of the finite element. Therefore, we have divide the domain $\Omega$ into finite sets of cells $\mathcal{T}_h = \{T\}$ and together these cells make the mesh of the Eulerian domain. In 2D, the cells are made of simple geometrical shapes such as triangles, quadrilaterals, and tetrahedrals. There are two approaches to discretize the domain: structured and unstructured mesh. The structured mesh have cells that are of similar shape, such as rectangles and is the simplest approach in discretizing the mesh. The advantage of such discretization is that it has simple data structure and and can perform efficient computation. The downside is that the mesh quality deterioates ws the complexity of the domain increases. The common strategy of discretizing the domain for finite element method is to use an unstructured mesh, figure \ref{fig:cylinderFiniteElementDiscretization}. Even though this mesh data structure is complex, the advantage is that the mesh quality does not deteriorate with the domain complexity.
+A FE discretization in 2-D can be seen in figure \ref{fig:finiteElementDefinitions}. The figures shows two connected elements, where the cells represent the area of the element, and the vertices of the cell represents the nodes of the element. The finite number of cells $\mathcal{T}_h = \{T\}$ of the fluid domain $\Omega$, together makes the mesh of the Eulerian domain. As shown in figure \ref{fig:finiteElementDefinitions}, the cells of the finite element in 2-D, are made of simple geometrical shapes such as triangles or quadrilaterals. There are two approaches to discretize the domain: structured or unstructured mesh. The structured mesh has cells oriented in a structured pattern, and is the simplest approach in discretizing the mesh. The advantage of such a discretization is that it is possible to make a simple data structure which can be used to perform efficient computation. The downside to such discretization is that the mesh quality deteriorates as one increases the complexity of the domain. However, the FEM enables us to perform an unstructured discretization of the domain, as shown in figure \ref{fig:cylinderFiniteElementDiscretization}. The figure shows the unstructured discretization of the fluid domain around the cylinder $\Omega_E$, connecting the rectangular outer boundary of the fluid to the circular no-slip boundary of the body in a simple fashion. This shows that even though the unstructured method formulation is more complicated that the structured formulation, we have the advantage that the mesh quality does not deteriorate as the domain becomes more complex.
 
-There are several algorithms for mesh generation. The standard approach is to employ the Delaunay triangulation method derived from the Voronoi diagram concept \cite{Carey1997}. This divides the domain into arbitrary number of triangles, figure \ref{fig:cylinderFiniteElementDiscretization}. This type of mesh generation allows us to connect shapes of different types in a simple manner. Furthermore, the triangulation method be controlled by predefining the boundary edges.
+There are several algorithms for mesh generation. The standard approach is to employ the Delaunay triangulation method derived from the Voronoi diagram concept \cite{Carey1997}. This divides the domain into a set of triangles, as shown in figure \ref{fig:cylinderFiniteElementDiscretization}. This type of mesh generation allows us to connect different shapes of boundary with each other. Furthermore, this triangulation method be controlled by predefining the boundary element nodes using a transfinite interpolation.
 
 \begin{figure}[t]
         \centering
@@ -62,30 +62,46 @@ There are several algorithms for mesh generation. The standard approach is to em
 
 \subsection*{Finite element function and function space}
 
-When the domain $\Omega$ is divided into cells $T$, we can define the function and the function space of the Finite element problem. For each cell, a local function space $\mathcal{V}$ can be defined to collectively construct the global function space $V$.
+The finite element is defined using a triple ($T, \mathcal{V}, \mathcal{L}$) \cite{Ciarlet1972}, where the domain $\Omega$ is divided into cell $T$, the space $\mathcal{V} = \mathcal{V}(T)$ is a finite dimensional function space on $T$ of dimension $n$, and $\mathcal{L} = \left\{ \ell_1,\ell_2,...,\ell_n \right\}$ is the set of degrees of freedom for the basis.
 
-Any given function $u \in V$ is a expressed in a linear combination of basis functions $\{\phi_1,\phi_2,...,\phi_N\}$  of the function space $V$:
+When the domain $\Omega$ is divided into cells $T$, we can define the function and the function space of the Finite element problem. For each cell, a local function space $\mathcal{V}$ can be defined to collectively construct the global function space $V$.Any given function $u \in V$ is a expressed in a linear combination of basis functions $\{\phi_1,\phi_2,...,\phi_N\}$  of the function space $V$, 
 
 	\begin{equation}
 	u(x) = \sum_{j=1}^N U_j\phi_j(x).
 	\end{equation}
 
-There are several numbers of Finite Element families, such as Brezzi-Douglas-Marini, Crouzeiz-Raviart, Discontinuous Lagrange, Hermite, and Lagrange elements \cite{Logg2012a}. Each has its own advantage such as the Discontinous Lagrange, also referred to as \indexAcron{Discontinous Galerkin}{DG} element consists of functions that are totally discontinuous. Originally introduced for hyperbolic problem by Reed and Hill \cite{Reed1973}, the method ables to conserve mass at each element, and are high-order accuracy and robust in solving advection problem. However, for the current problem, we have relied on the standard Lagrange elements, also known as \indexAcron{Continuous Galerkin}{CG}, which are based on the Lagrange polynomials \cite{Chen2011}.
+There are several types of Finite Element families: the Brezzi-Douglas-Marini, the Crouzeiz-Raviart, the Discontinuous Lagrange, the Hermite, and the Lagrange elements \cite{Logg2012a}. Each has its own advantage such as the Discontinous Lagrange, also referred to as \indexAcron{Discontinous Galerkin}{DG} element consists of discontinuous functions. It was originally introduced for hyperbolic problem by Reed and Hill in 1973 \cite{Reed1973a}. The method is able to conserve mass at each element, has a high-order accuracy, and is robust in solving the advection problem. However for the current problem, we will rely on the standard Lagrange elements, known as the \indexAcron{Continuous Galerkin}{CG}, which are based on the Lagrange polynomials \cite{Chen2011}. 
+
+The Lagrange elements are most used and one of the simplest types of finite element. They reside belong to the space $H^1$, which a Sobolev space containing functions $u$ such that $u^2$ and $\left|\nabla u\right|^2$ have finite integral in the domain $\Omega$. The Lagrange element uses point evaluation for the degrees of the freedom, where a point in space $(x,y)$ denotes the point evaluation of the function $u$ at that point, $\ell(v) = v(x,y)$. We can have Lagrange elements of various orders ($q = 1, 2,...$) resulting in a polynomial $P_q$ of degree $q$ on the domain $T$. For the 2-D case, where the domain is divided into triangles, the dimension of the finite element is determined as,
+	\begin{equation}
+	n(q) = \frac{1}{2}(q + 1)(q + 2).
+	\end{equation}
+	
+Figure \ref{fig:continuousGalerkin} shows the two Lagrange triangles $CG_1$ and $CG_2$ for $q = 1,2$ having $3$ and $6$ degrees of freedom respectively. For the Finite Element problem that we are using for this project, we will only rely on these finite element function spaces. 
+
+	\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.6\linewidth]{./figures/eulerian/continuousGalerkin.pdf}
+	\caption{The Lagrange $CG_q$ triangle for $q = 1, 2$. The triangles have $3$ and $6$ DOFs respectively ({\color{black}{$\bullet$}}, black dot).}
+	\label{fig:continuousGalerkin}
+	\end{figure}
+
+
 
 \subsection*{Variational formulation}
 \label{subsec:variationalProblem}
 
-To solve a basic problem such as a Poisson equation numerically, we need to convert it into a variational problem. The methodology is followed from the \fenics tutorial provide by Langtangen \cite{Langtangen2012}. A 1D Poisson problem is given as,
+To solve a basic problem such as a Poisson equation numerically, we need to convert it into a variational problem. The methodology is followed from the \fenics tutorial provide by Langtangen \cite{Logg2012a}. A 1D Poisson problem is given as,
 
-	\begin{subequations}
-	\begin{align*}
+	\begin{equation}
+	\begin{aligned}
 	- \nabla^2 u(x) &= f(x), \qquad x\ \mathrm{in}\ \Omega,\\
 	u(x) &= u_0(x), \qquad x\ \mathrm{on}\ \partial\Omega.
-	\end{align*}
+	\end{aligned}
 	\label{eq:poissonEq}
-	\end{subequations}
+	\end{equation}
 	
-We can transform equation \ref{eq:poissonEq} into the variational form by multiplying with a test function $v$, and integrating it over the domain $\Omega$,
+We can transform equation \ref{eq:poissonEq} into a variational form by multiplying it with a test function $v$, and integrating it over the domain $\Omega$,
 
 
 	\begin{equation}
@@ -93,7 +109,7 @@ We can transform equation \ref{eq:poissonEq} into the variational form by multip
 	\label{eq:poissonEqVariationFormA}
 	\end{equation}
 
-The function $u$ in variational form, equation \ref{eq:poissonEqVariationFormA}, is known as the trial function and it is the solution that we are trying to approximate. The test function $v$ lies in the test function space $\hat{V}$ and our trial function $u$ lies on the function space $V$. When performing integration by parts, the test function $v$ is required to be zero at regions where $u$ is known. So, the additional terms cancel and we get,
+The function $u$ in variational form equation \ref{eq:poissonEqVariationFormA}, is known as the trial function and it is the function that we are trying to approximate. The trail function $u$ lies in the trail function space $V$, and the test function $v$ lies in the test function space $\hat{V}$. When performing integration by parts, the test function $v$ is required to be zero at regions where $u$ is known. So, the additional terms cancel and we get,
 
 	\begin{equation}
 	- \int_{\Omega} \nabla u \nabla v\ \mathrm{d}x= \int_{\Omega} fv\ \mathrm{d}x \qquad \forall\ v \in \hat{V}
