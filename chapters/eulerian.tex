@@ -62,27 +62,26 @@ There are several algorithms for mesh generation. The standard approach is to em
 
 \subsection*{Finite element function and function space}
 
-The finite element is defined using a triple ($T, \mathcal{V}, \mathcal{L}$) \cite{Ciarlet1972}, where the domain $\Omega$ is divided into cell $T$, the space $\mathcal{V} = \mathcal{V}(T)$ is a finite dimensional function space on $T$ of dimension $n$, and $\mathcal{L} = \left\{ \ell_1,\ell_2,...,\ell_n \right\}$ is the set of degrees of freedom for the basis.
+The finite element is defined using a triple ($T, \mathcal{V}, \mathcal{L}$), as defined Ciarlet \cite{Ciarlet1972b} and used by \fenics Project \cite{Logg2012b}, where the domain $\Omega$ is divided into cell $T$, the space $\mathcal{V} = \mathcal{V}(T)$ is a finite dimensional function space on $T$ of dimension $n$, and $\mathcal{L} = \left\{ \ell_1,\ell_2,...,\ell_n \right\}$ is the set of degrees of freedom for the basis.
 
-When the domain $\Omega$ is divided into cells $T$, we can define the function and the function space of the Finite element problem. For each cell, a local function space $\mathcal{V}$ can be defined to collectively construct the global function space $V$.Any given function $u \in V$ is a expressed in a linear combination of basis functions $\{\phi_1,\phi_2,...,\phi_N\}$  of the function space $V$, 
-
+When the domain $\Omega$ is divided into cells $T$, we can define the function and the function space of the Finite element problem. For each cell, a local function space $\mathcal{V}$ can be defined to collectively construct the global function space $V$. Any given function $u \in V$ is a expressed in a linear combination of basis functions $\{\phi_1,\phi_2,...,\phi_N\}$  of the function space $V$, 
 	\begin{equation}
 	u(x) = \sum_{j=1}^N U_j\phi_j(x).
 	\end{equation}
 
-There are several types of Finite Element families: the Brezzi-Douglas-Marini, the Crouzeiz-Raviart, the Discontinuous Lagrange, the Hermite, and the Lagrange elements \cite{Logg2012a}. Each has its own advantage such as the Discontinous Lagrange, also referred to as \indexAcron{Discontinous Galerkin}{DG} element consists of discontinuous functions. It was originally introduced for hyperbolic problem by Reed and Hill in 1973 \cite{Reed1973a}. The method is able to conserve mass at each element, has a high-order accuracy, and is robust in solving the advection problem. However for the current problem, we will rely on the standard Lagrange elements, known as the \indexAcron{Continuous Galerkin}{CG}, which are based on the Lagrange polynomials \cite{Chen2011}. 
+There are several types of Finite Element families: the Brezzi-Douglas-Marini, the Crouzeiz-Raviart, the Discontinuous Lagrange, the Hermite, and the Lagrange elements \cite{Logg2012b}. Each has its own advantage such as the Discontinous Lagrange, or \indexAcron{Discontinous Galerkin}{DG} element consists of discontinuous functions. It was originally introduced for hyperbolic problem by Reed and Hill in 1973 \cite{Reed1973a}. The method is able to conserve mass at each element, has a high-order accuracy, and is robust in solving the advection problem. However for the current problem, we will rely on the standard Lagrange elements, known as the \indexAcron{Continuous Galerkin}{CG}, which are based on the Lagrange polynomials \cite{Chen2011}. 
 
-The Lagrange elements are most used and one of the simplest types of finite element. They reside belong to the space $H^1$, which a Sobolev space containing functions $u$ such that $u^2$ and $\left|\nabla u\right|^2$ have finite integral in the domain $\Omega$. The Lagrange element uses point evaluation for the degrees of the freedom, where a point in space $(x,y)$ denotes the point evaluation of the function $u$ at that point, $\ell(v) = v(x,y)$. We can have Lagrange elements of various orders ($q = 1, 2,...$) resulting in a polynomial $P_q$ of degree $q$ on the domain $T$. For the 2-D case, where the domain is divided into triangles, the dimension of the finite element is determined as,
+The Lagrange elements are most used and is the simpler types of finite element. They belong to the space $H^1$, which a Sobolev space containing functions $u$ such that $u^2$ and $\left|\nabla u\right|^2$ have finite integral in the domain $\Omega$ \cite{Logg2012b}. The Lagrange element uses point evaluation for the degrees of the freedom, where a DOF in $(x,y)$ denotes the point evaluation of the function $u$, $\ell(u) = u(x,y)$. We can have a Lagrange elements of various orders $q = 1, 2,...$, where $q$ is the degree of the Lagrange polynomial $\mathcal{P}_q$ on the domain at$T$. For the 2-D case, the cells of the finite element are triangles, and the dimension $n$ of the finite element is determined by,
 	\begin{equation}
 	n(q) = \frac{1}{2}(q + 1)(q + 2).
 	\end{equation}
-	
-Figure \ref{fig:continuousGalerkin} shows the two Lagrange triangles $CG_1$ and $CG_2$ for $q = 1,2$ having $3$ and $6$ degrees of freedom respectively. For the Finite Element problem that we are using for this project, we will only rely on these finite element function spaces. 
+
+For $q=1$, we have a simple Lagrange triangle $\mathrm{CG}_1$, known as the Courant triange \cite{Courant1943}, with $3$ DOFs. For a higher order finite element, we can set $q=2$, giving us a Lagrange element $\mathrm{CG}_2$ with $6$ DOFs per cell. Figure \ref{fig:continuousGalerkin} shows the two Lagrange triangles $\mathrm{CG}_1$ and $\mathrm{CG}_2$ for $q = 1$ and $q=2$ respectively. The Courant triangle has the DOFs located at the vertices of the cell, and the higher order $CG_2$ has $3$ additional DOFs, all located midway between the vertices.
 
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.6\linewidth]{./figures/eulerian/continuousGalerkin.pdf}
-	\caption{The Lagrange $CG_q$ triangle for $q = 1, 2$. The triangles have $3$ and $6$ DOFs respectively ({\color{black}{$\bullet$}}, black dot).}
+	\caption{The Lagrange $\mathrm{CG}_q$ triangle for $q = 1, 2$. The triangles have $3$ and $6$ DOFs respectively ({\color{black}{$\bullet$}}, black dot).}
 	\label{fig:continuousGalerkin}
 	\end{figure}
 
@@ -91,8 +90,7 @@ Figure \ref{fig:continuousGalerkin} shows the two Lagrange triangles $CG_1$ and 
 \subsection*{Variational formulation}
 \label{subsec:variationalProblem}
 
-To solve a basic problem such as a Poisson equation numerically, we need to convert it into a variational problem. The methodology is followed from the \fenics tutorial provide by Langtangen \cite{Logg2012a}. A 1D Poisson problem is given as,
-
+To solve a basic problem such as a Poisson equation numerically, we need to convert it into a variational problem. The methodology is followed from the \fenics tutorial provide by Langtangen \cite{Logg2012b}. A 1D Poisson problem is given as,
 	\begin{equation}
 	\begin{aligned}
 	- \nabla^2 u(x) &= f(x), \qquad x\ \mathrm{in}\ \Omega,\\
@@ -102,51 +100,54 @@ To solve a basic problem such as a Poisson equation numerically, we need to conv
 	\end{equation}
 	
 We can transform equation \ref{eq:poissonEq} into a variational form by multiplying it with a test function $v$, and integrating it over the domain $\Omega$,
-
-
 	\begin{equation}
 	- \int_{\Omega} \left(\nabla^2 u\right)v\ \mathrm{d}x= \int_{\Omega} fv\ \mathrm{d}x, \qquad \forall\ v \in \hat{V}.
 	\label{eq:poissonEqVariationFormA}
 	\end{equation}
 
-The function $u$ in variational form equation \ref{eq:poissonEqVariationFormA}, is known as the trial function and it is the function that we are trying to approximate. The trail function $u$ lies in the trail function space $V$, and the test function $v$ lies in the test function space $\hat{V}$. When performing integration by parts, the test function $v$ is required to be zero at regions where $u$ is known. So, the additional terms cancel and we get,
+In variational form equation \ref{eq:poissonEqVariationFormA}, the function $u$ is known as the trial function, and is what we are trying to approximate. The trail function $u$ lies in the trail function space $V$, and the test function $v$ lies in the test function space $\hat{V}$. When performing integration by parts, the test function $v$ is required to be zero at regions where $u$ is known. So, the additional terms cancel and we get,
 
 	\begin{equation}
 	- \int_{\Omega} \nabla u \nabla v\ \mathrm{d}x= \int_{\Omega} fv\ \mathrm{d}x \qquad \forall\ v \in \hat{V}
 	\label{eq:poissonEqVariationFormB}
 	\end{equation}
 
-This form is referred to as the ``weak-form" of the original Poisson equation and is valid for all $v$ in the trial space $\hat{V}$. Note as the inner product of two function $f$ and $g$ is defined as $\langle f,g \rangle = \int_{\Omega}fg\ \mathrm{d}x$, equation \ref{eq:poissonEqVariationFormB} can be summarized as,
-
+This form is referred to as the ``weak-form" of the original Poisson equation and is valid for all $v$ in the trial space $\hat{V}$. The inner product of two function $f$ and $g$ is defined as,
+	\begin{equation}
+	\langle f,g \rangle = \int_{\Omega}fg\ \mathrm{d}x,
+	\end{equation}
+so equation \ref{eq:poissonEqVariationFormB} can be summarized as,
 	\begin{equation}
 	\langle \nabla u,\nabla v \rangle = \langle f,v \rangle, \qquad \forall\ v \in \hat{V}.
 	\end{equation}
 
-In order to solve this continuous problem numerically, we must discretize it first into discrete variational problem,
+In order to solve this continuous problem numerically, we must transform it into discrete variational problem,
 
 	\begin{equation}
 	- \int_{\Omega} \nabla u_h \nabla v\ \mathrm{d}x= \int_{\Omega} fv\ \mathrm{d}x \qquad \forall\ v \in \hat{V}_h \subset \hat{V},
 	\label{eq:poissonEqDiscreteVariational}
 	\end{equation}
 
-where $u_h$ is the discrete function in the discrete space $V_h$ which is a subset of $V$ and the discrete function space $\hat{V}_h$ is a subset of $\hat{V}$. A common choice for the function space is linear triangular element with three nodes, figure \ref{fig:finiteElementDefinitions}, where $\hat{V}_h$ and $V_h$ are described by the piecewise linear functions of the triangles and the functions of this function of the test space is zero at the boundary and the function of the trial space is equal to the boundary condition $u_0$.
-
-The equation \ref{eq:poissonEqDiscreteVariational} can be summarized as follows,
-
+where $u_h$ is the discrete function in the discrete space $V_h$ which is a subset of $V$, and the discrete function space $\hat{V}_h$ is a subset of $\hat{V}$. A common choice for the function space is linear triangular element with three nodes, as shown in figure \ref{fig:continuousGalerkin}, where $\hat{V}_h$ and $V_h$ are described by piecewise linear functions of the triangle. At the boundary, the functions in the test space is zero, whereas the functions in the trail space is equal the boundary condition $u_0$.  The equation \ref{eq:poissonEqDiscreteVariational} can be transformed into,
 	\begin{equation}
 	a\left(u,v\right) = L(v),
 	\label{eq:weakForm}
 	\end{equation}
+where,
+	\begin{equation}
+	a\left(u,v\right) = - \int_{\Omega} \nabla u \nabla v\ \mathrm{d}x,
+	\end{equation}
+and
+	\begin{equation}
+	L(v)=\int_{\Omega}fv\ \mathrm{d}x.
+	\end{equation}
 
-where $a\left(u,v\right) = - \int_{\Omega} \nabla u \nabla v\ \mathrm{d}x$, and $L(v)=\int_{\Omega}fv\ \mathrm{d}x$ and is referred to as bilinear and linear form, respectively. To solve for the discrete solution we substitute,
-	
+The variable $a(u,v)$ and $L(v)$ is the denoted as the bilinear and linear form, respectively. For simplicity, we will ignore the discrete notation (i.e $\{\cdot\}_h \rightarrow \{\cdot\}$). To solve for the discrete solution we substitute,	
 	\begin{equation}
 	u = \sum_{j=1}^{N} U_j \phi_j,
 	\label{eq:trialDiscrete}
 	\end{equation}
-
-a linear combination of the basis function $\phi_j$, spanning the function space $V$, into $a\left(u,v\right)$. The test function is linear combination of the basis function $\hat{\phi}_i$, spanning the test space $\hat{V}$, is defined as
-
+the linear combination of the basis function $\phi_j$, spanning the function space $V$, into $a\left(u,v\right)$. The test function is linear combination of the basis function $\hat{\phi}_i$, spanning the test space $\hat{V}$, which is defined as
 	\begin{equation}
 	v=\sum_{i=1}^{N} \hat{\phi}_i.
 	\label{eq:testDiscrete}
@@ -185,7 +186,7 @@ In order to generate the mesh of the fluid domain, we used \gmsh, a three-dimens
 	\label{fig:dolfinExampleFigure}
 	\end{figure}
 
-The \fenics Project is a collaborative work of various universities, that developed tools to automated Finite Element Methods for solving the solutions of differential equation \cite{FenicsAbout}. It was a project originated in 2003 with the research collaboration of University of Chicago and Chalmers University of Technology with Logg,  Mardal, and Wells \cite{Logg2012a}. Since then, it has been expanded to various institutes such as Royal Institute of Technology, Simula Research Laboratory, Univeristy of Cambridge, and Delft Universty of Technology.
+The \fenics Project is a collaborative work of various universities, that developed tools to automated Finite Element Methods for solving the solutions of differential equation \cite{FenicsAbout}. It was a project originated in 2003 with the research collaboration of University of Chicago and Chalmers University of Technology with Logg,  Mardal, and Wells \cite{Logg2012b}. Since then, it has been expanded to various institutes such as Royal Institute of Technology, Simula Research Laboratory, Univeristy of Cambridge, and Delft Universty of Technology.
 
 	\begin{listing}[p]
 	\inputminted[fontseries=courier,obeytabs,fontsize=\footnotesize,mathescape,linenos,numbersep=5pt,frame=lines,framesep=2mm,xleftmargin=20mm,xrightmargin=20mm]{python}{figures/eulerian/dolfinExample.py}
@@ -242,7 +243,7 @@ The velocity field $\mathbf{u}$ is vector function that lies on the vector-value
 
 The algorithm to solve the Navier-Stokes problem was first demonstrated by Chorin in 1968 \cite{Chorin1968}, nowadays referred to as Chorin's projection method or non-incremental pressure correction scheme. The process relied on first computing a tentative velocity by initially neglecting the pressure in the momentum equation of the Navier-Stokes problem, equation \ref{eq:2Dns}. The velocity field is corrected by determining the pressure field satisfying a divergence free vector field. This method however does not satisfy the discrete incompressibility constraint exactly and so Goda, has introduced a improvement to scheme known as the \indexAcron{Incremental Pressure Correction Scheme}{IPCS}, Goda 1979 \cite{Goda1979a}.
 
-The method computed the viscous term at the incremented time $(t_{n-1} + t_n)/2$ and used the stress formulation determining the corrected pressure \cite{Logg2012a}. The algorithms to the IPCS scheme can be summarized as follows:
+The method computed the viscous term at the incremented time $(t_{n-1} + t_n)/2$ and used the stress formulation determining the corrected pressure \cite{Logg2012b}. The algorithms to the IPCS scheme can be summarized as follows:
 
 	\begin{enumerate}
 	\item \textbf{Compute the tentative velocity:} The tentative velocity given as $\mathbf{u}^{\star}$ is determined by solving
