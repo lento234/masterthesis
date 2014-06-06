@@ -146,8 +146,8 @@
 		\nompageref{45}
   \item [{\textbf {FEM}}]\begingroup Finite Element Method\nomeqref {3.0}
 		\nompageref{45}
-  \item [{\textbf {FE}}]\begingroup Forward Euler\nomeqref {3.22}
-		\nompageref{54}
+  \item [{\textbf {FE}}]\begingroup Forward Euler\nomeqref {3.28}
+		\nompageref{57}
   \item [{\textbf {FMM}}]\begingroup Fast Multipole Method\nomeqref {1.0}
 		\nompageref{3}
   \item [{\textbf {FVM}}]\begingroup Finite Volume Method \nomeqref {3.0}
@@ -156,8 +156,10 @@
 		\nompageref{3}
   \item [{\textbf {HELVPM}}]\begingroup Hybrid Eulerian-Lagrangian Vortex Particle Method\nomeqref {1.0}
 		\nompageref{4}
-  \item [{\textbf {IPCS}}]\begingroup Incremental Pressure Correction Scheme\nomeqref {3.19}
-		\nompageref{53}
+  \item [{\textbf {ICNS}}]\begingroup Incompressible Navier-Stokes\nomeqref {3.22}
+		\nompageref{54}
+  \item [{\textbf {IPCS}}]\begingroup Incremental Pressure Correction Scheme\nomeqref {3.23}
+		\nompageref{55}
   \item [{\textbf {LHS}}]\begingroup Left Hand Side\nomeqref {2.49}
 		\nompageref{27}
   \item [{\textbf {LSTSQ}}]\begingroup Least-Square solution method\nomeqref {2.61}
