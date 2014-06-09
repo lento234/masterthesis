@@ -430,7 +430,10 @@ To validate our Eulerian method, we will first investigate the problem of the La
 		$\mathrm{ID}_{\mathrm{fluid}}$ & $1$ & - & Fluid domain I.D\\
 		$\mathrm{ID}_{\mathrm{ext}}$ & $3$ & - & External Dirichlet velocity boundary I.D\LL}
 
-The Lamb-Oseen vortex is an analytical solution by Lamb and Oseen, describing the diffusion of a vortex core \cite{Tryggeson2007}. We solved the same problem as the one described in the Lagrangian validation problem \ref{subsec:lagrangianLambOseen}. However, Eulerian domain use the primitive variables $\mathbf{u}-p$ for formulating the problem. Therefore, the initial conditions of the problem was the velocity field of Lamb-Oseen vortex,
+The Lamb-Oseen vortex is an analytical solution by Lamb and Oseen, describing the diffusion of a vortex core \cite{Tryggeson2007}. We solved the same problem as the one described in the Lagrangian validation problem \ref{subsec:lagrangianLambOseen}. 
+
+\subsubsection*{Problem Definition}
+In the Lagrangian method, the Lamb-Oseen vortex was initialized using the vorticity field as the vortex blobs carry circulation strengths. However, Eulerian domain use the primitive variables $\mathbf{u}-p$ for formulating the problem. Therefore, we use the Lamb-Oseen velocity field as the initial conditions for the problem. The velocity field is given as,
 	\begin{subequations}
 	\begin{align}
 	u_{\theta} &= \frac{\Gamma_c}{2\pi r} \left[1-\exp\left(-\frac{r^2}{4\tau}\right)\right]\\
@@ -448,23 +451,21 @@ where $\Gamma_c$ is the vortex core strength, $\tau \equiv \nu t$ is the scaled 
 
 Furthermore, the Figure \ref{fig:lambOseenDomainDefinition} also shows the boundary domains $\partial \Omega$ of the fluid domain. For the Lamb-Oseen problem, as we have the analytical solution of the velocity field for all time, we can use this solution to prescribe the external domain boundary condition. So for this problem, we only need an external Dirichlet velocity boundary condition, at the boundary domain identified as, $\mathrm{ID}_{\mathrm{ext}} = 3$. This would imply that we do not need to explicitly apply pressure boundary condition, as we already have a velocity boundary condition. With all the boundary conditions, we can evolve the initial velocity distribution of the Lamb-Oseen vortex from $t_0 = 4$ to $t_f =5$, using the IPCS algorithm described in section \ref{sec}. 
 
-	\begin{figure}[b]
+	\begin{figure}[p]
 	\centering
-	\includegraphics[width=0.8\linewidth]{./figures/eulerian/lambOseen_eulerian_wRelField_compressed.pdf}
+	\includegraphics[width=0.99\linewidth]{./figures/eulerian/lambOseen_eulerian_wRelField_compressed.pdf}
 	\caption{Relative error in vorticity field in logarithmic scale. Figure \textbf{(a)} shows the initial relative error in vorticity at $t=t_0$, and figure \textbf{(b)} shows the relative error in vorticity at the end of the time stepping $t=t_f$.}
 	\label{fig:lambOseen_eulerian_wRelField_compressed}
 	\end{figure}
 	
-We used $CFL$ stability condition equation \ref{eq:cfl}, to determine the time step size, $\Delta t = 0.001$. The Eulerian method time steps using a \printAcron{Forward Euler}{FE} time marching and requires $N_{\mathrm{t-steps}}=1000$ time steps. During the evolution, we evaluated the growth of the error in velocity, and in vorticity between the numerical results and the analytical solution. As mainly we are interested in the error in vorticity, as this is the quantity which will be interpolated onto the Lagrangian domain, figure \ref{fig:lambOseen_eulerian_wRelField_compressed} shows the initial and the final relative error in vorticity over the Eulerian domain. Opposed to the Lagrangian results, figure \ref{fig:lambOseen_convection_vorticityErrorContours_compressed}, we see that initial relative error in the vorticity field is larger. This is so because, the Lagrangian domain was initialized using the vorticity, where as the Eulerian domain was initialized using the velocity. To calculate the vorticity on the Eulerian domain, we had to project curl the velocity onto the function space of vorticity $W$. This process of initialization in the finite element domain and project of the vorticity introduced additional numerical error. However, the pattern of the relative error in vorticity, is similar to the Lagrangian solution, as the highest error is localized to the core center, where we have the highest gradient in vorticity.
-
-	\begin{figure}[t]
+	\begin{figure}[p]
 	\centering
-	\includegraphics[width=0.7\linewidth]{./figures/eulerian/lambOseen_eulerian_wRelEvolution_compressed.pdf}
+	\includegraphics[width=0.6\linewidth]{./figures/eulerian/lambOseen_eulerian_wRelEvolution_compressed.pdf}
 	\caption{Eulerian Lamb-Oseen relative vorticity evolution}
 	\label{fig:lambOseen_eulerian_wRelEvolution}
 	\end{figure}
 
-	\begin{figure}[b]
+	\begin{figure}[p]
         \centering
         \begin{subfigure}[b]{0.5\textwidth}
                 \includegraphics[width=\textwidth]{figures/eulerian/lambOseen_eulerianConvergence_dx_compressed.pdf}
@@ -480,7 +481,15 @@ We used $CFL$ stability condition equation \ref{eq:cfl}, to determine the time s
         \end{subfigure}
         \caption{Lamb-Oseen convergence}
         \label{fig:lambOseen_eulerianConvergence}
-	\end{figure}	
+	\end{figure}		
+	
+
+We used $CFL$ stability condition equation \ref{eq:cfl}, to determine the time step size, $\Delta t = 0.001$. The Eulerian method time steps using a \printAcron{Forward Euler}{FE} time marching and requires $N_{\mathrm{t-steps}}=1000$ time steps. During the evolution, we evaluated the growth of the error in velocity, and in vorticity between the numerical results and the analytical solution. 
+
+\subsubsection*{Results}
+As mainly we are interested in the error in vorticity, as this is the quantity which will be interpolated onto the Lagrangian domain, figure \ref{fig:lambOseen_eulerian_wRelField_compressed} shows the initial and the final relative error in vorticity over the Eulerian domain. Opposed to the Lagrangian results, figure \ref{fig:lambOseen_convection_vorticityErrorContours_compressed}, we see that initial relative error in the vorticity field is larger. This is so because, the Lagrangian domain was initialized using the vorticity, where as the Eulerian domain was initialized using the velocity. To calculate the vorticity on the Eulerian domain, we had to project curl the velocity onto the function space of vorticity $W$. This process of initialization in the finite element domain and project of the vorticity introduced additional numerical error. However, the pattern of the relative error in vorticity, is similar to the Lagrangian solution, as the highest error is localized to the core center, where we have the highest gradient in vorticity.
+
+
 
 
 As the time progress, we see that the error of the problem is stable and does not increase as observed for the Lagrangian domain, figure \ref{fig:lambOseen_eulerian_wRelField_compressed}b. The growth of the relative error in velocity and vorticity can be observed in figure \ref{fig: lambOseen_eulerian_wRelEvolution}. It shows that during the evolution of the Lamb-Oseen vortex, the relative error in velocity, and vorticity is stable. We see that due to the relation of vorticity to velocity, the error in vorticity is higher that velocity. However, the stability in the error of the solution is vital as it verifies that our method is stable and robust for solving the problem.
@@ -490,12 +499,11 @@ In order to have an extensive understanding of the stability of our scheme, we i
 To determine convergence in time, we ran the simulation with various time steps $\Delta t = \num{5e-3}$ to $\Delta t = \num{1e-4}$). As we performed the investigation, we saw that the error in primitive variable $\mathbf{u}$, converged at an order 1, figure \ref{fig:lambOseen_eulerianConvergence}. This is true to the theory, as we are employing a $1^{\mathrm{st}}$-order Forward Euler scheme for the time integration. Thus, we have verified with the analytical solution of the Lamb-Oseen vortex that our Eulerian method is implemented according to the theory, and perform in a robust manner.
 	
 
-
 \subsection{Clercx-Bruneau dipole collison at $Re=625$}
-To validate that our Eulerian method performs according to theory, and to provide a benchmark case for the hybrid coupling scheme, we decided to simulate a flow where the generation of the vorticity from the wall is the main focus. To generate this benchmark case, we used the numerical experiment benchmarked by Clercx and Bruneu in 2005 \cite{}, on  the collison of the dipole with a no-slip boundary. 
+To validate that our Eulerian method performs according to theory, and to provide a benchmark case for the hybrid coupling scheme, we decided to simulate a flow where the generation of the vorticity from the wall is the main focus. To generate this benchmark case, we used the numerical experiment benchmarked by Clercx and Bruneu in 2005 \cite{}, on  the collision of the dipole with a no-slip boundary. 
 
 The reason for using the Clercx-Bruneau dipole for validation is because, it a common practise to use the dipole-wall collision test case to validate the numerical method. Ould-salihi et al \cite{} used this case to validate their Hybrid method that couples vortex particles with finite-difference method. Cottet et al. \cite{} used the collision to tool to validate the vortex method.
-
+\subsubsection*{Problem Definition}
 Clercx and Bruneau have stated that dipole-wall interaction test cases are ideal for methods requiring the well-resolvedness of the thin boundary layer near the no-slip walls. The literature determined the convergence of the numerical solution by investigating quantities like the total kinetic energy, the enstrophy and the total angular momentum of the flow. It mainly focuses on the vorticity distribution and the vorticity flux at the no-slip boundary of the domain. Furthermore, this literature provided well-defined initial and boundary conditions, with smooth vorticity distribution as seen for the Lamb-Oseen vortex case.
 
 The Clercx-Bruneau test case investiated the normal collision of a dipole with a no-slip wall. The parameters of the problem are tabulated in table \ref{tab}. 

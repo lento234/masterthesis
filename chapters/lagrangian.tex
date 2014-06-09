@@ -802,24 +802,14 @@ The validation of the panel method was done by performing a convergence study of
 
 To test the solution of the vortex panels with the analytical solution, the problem was first ran for the parameters in the table \ref{tab:panelParams}. The velocity field of the potential flow solution is shown in figure \ref{fig:panelCylinder_velocityField}. The figure shows the magnitude of the velocity, and we see that it shows the velocity field of a potential flow solution, with an infinitely thin boundary layer, stagnating to zero velocity inside the body.
 
-	\begin{figure}[!t]
+	\begin{figure}[p]
 	\centering
 	\includegraphics[width=0.7\textwidth]{figures/lagrangian/panelCylinder_velocityField.pdf}
 	\caption{Panel method solution: the potential velocity field around a unit cylinder with $R = 1$, $\mathbf{u}_{\infty} = (1, 0)$, and $N_{\mathrm{panels}}=100$. The figure depicts the magnitude of velocity field $\left\Vert\mathbf{u}\right\Vert$, with a zero velocity inside the body.}
 	\label{fig:panelCylinder_velocityField}
 	\end{figure}
 
-The jagged velocity field around the surface of the cylinder is simply due to the sampling resolution of the field, and for a higher sampling resolution, this will vanish. In order to determine the accuracy of the solution, the velocity field of the panel solution was compared with the analytical solution. The analytical velocity field around a cylinder is given as,
-	\begin{subequations}
-	\begin{align}
-	u_r &= u\left(1 - \frac{R^2}{r^2}\right)\cos\theta,\\
-	u_{\theta} &= -u\left(1+\frac{R^2}{r^2}\right)\cos\theta,
-	\end{align}
-	\label{eq:potentialCylinderAnalytical}
-	\end{subequations}	
-where $u_r$ and $u_{\theta}$ are the radial and the angular velocity respectively. The equation \ref{eq:potentialCylinderAnalytical} is a function of the radius from the center of the cylinder (in our case $r_0 = [0, 0]$) and the radius of the cylinder $R$. 
-
-	\begin{figure}[!t]
+	\begin{figure}[p]
      \centering
      \begin{subfigure}[b]{0.5\textwidth}
              \includegraphics[width=\textwidth]{figures/lagrangian/panelCylinder_versusAnalytical.pdf}
@@ -837,6 +827,24 @@ where $u_r$ and $u_{\theta}$ are the radial and the angular velocity respectivel
      \label{fig:panelCylinderComparision}
 	\end{figure}
 
+	\begin{figure}[p]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figures/lagrangian/panelCylinder_convergence_compressed.pdf}
+	\caption{Convergence plot of the Constant-Strength Straight Vortex panels. The figures depicts the converges of the relative error $\epsilon$ at an $\mathcal{O}\left(N^{-1}\right)$.}
+	\label{fig:panelCylinder_convergence}
+	\end{figure}
+
+
+The jagged velocity field around the surface of the cylinder is simply due to the sampling resolution of the field, and for a higher sampling resolution, this will vanish. In order to determine the accuracy of the solution, the velocity field of the panel solution was compared with the analytical solution. The analytical velocity field around a cylinder is given as,
+	\begin{subequations}
+	\begin{align}
+	u_r &= u\left(1 - \frac{R^2}{r^2}\right)\cos\theta,\\
+	u_{\theta} &= -u\left(1+\frac{R^2}{r^2}\right)\cos\theta,
+	\end{align}
+	\label{eq:potentialCylinderAnalytical}
+	\end{subequations}	
+where $u_r$ and $u_{\theta}$ are the radial and the angular velocity respectively. The equation \ref{eq:potentialCylinderAnalytical} is a function of the radius from the center of the cylinder (in our case $r_0 = [0, 0]$) and the radius of the cylinder $R$. 
+
 The velocity field of the vortex panel was compared with this analytical solution along the y-axis from $y=0 \rightarrow 10$. Figure \ref{fig:panelCylinder_versusAnalytical} plots the magnitude of analytical velocity $\left\Vert\mathbf{u}\right\Vert$ and the vortex panel velocity field $\left\Vert\mathbf{u}^h\right\Vert$. Comparing the solutions of the plot we see that the solution of the vortex panels and the analytical potential flow solution matches everywhere except at the surface. This happens because the potential flow solution has a slip velocity (i.e non-zero velocity) at the surface of the body, whereas the vortex panels solves for a no-slip boundary condition at the collocation points of the surface. This explains the sudden drop of the velocity from $2\rightarrow0$ at the surface.	
 
 The figure \ref{fig:panelCylinder_error} shows the relative error $\epsilon$ between the numerical and the analytical solution,
@@ -846,13 +854,6 @@ The figure \ref{fig:panelCylinder_error} shows the relative error $\epsilon$ bet
 	\end{equation}
 	
 where $\mathbf{u}$ is the analytical solution and the $\mathbf{u}^h$ is the numerical (panel method) solution. Ignoring the solution right at the surface ($r=R$), we see that the error between the numerical and the analytical solution reduces from $\epsilon=\num{5e-3}\rightarrow \num{8e-5}$ as we go from $r=1\rightarrow10$. This behavior of the error tells us that the solution of the constant-strength vortex panels gets more accurate as we go further away from the panels; right next to the panels, we have the largest error. This is because the vortex panels discretizes the body using a first-order approximation (straight panels) and also discretizes the vortex sheet strength using a first-order approximation. 
-
-	\begin{figure}[!t]
-	\centering
-	\includegraphics[width=0.7\textwidth]{figures/lagrangian/panelCylinder_convergence_compressed.pdf}
-	\caption{Convergence plot of the Constant-Strength Straight Vortex panels. The figures depicts the converges of the relative error $\epsilon$ at an $\mathcal{O}\left(N^{-1}\right)$.}
-	\label{fig:panelCylinder_convergence}
-	\end{figure}
 
 The convergence analysis of the vortex panels was done by determine the error of the vortex panel velocity field w.r.t to the analytical solution for the number of panels $N = 10 \rightarrow 1000$, figure \ref{fig:panelCylinder_convergence}. The error of the velocity field was determine at $R = 1.5$, and we see that the error converges at an $\mathcal{O}\left(N\right)$. This validates that the vortex panel that we have used is a $1^{\mathrm{st}}$ order vortex panel.
 
@@ -934,11 +935,18 @@ The ``time-shift correction" is derived by determining the diffusion effect caus
 	
 This method was used to investigate the error growth of the vortex blob method. The vortex blobs where convected and diffused according to the parameters in table \ref{tab:lambOseenParams}. For the primary and the main investigation, we used diffusion method proposed by Tutty \cite{Tutty2010a}. The advantage of this approach is that the we can perform diffusion after every convection step. This makes the method less prone to time integration error and eliminates any discontinuous behaviour in the evolution. We will see that when coupling the Lagrangian method and Eulerian method, discontinuity in the problem introduces additional errors.
 
-	\begin{figure}[!t]
+	\begin{figure}[p]
 	\centering
 	\includegraphics[width=0.99\textwidth]{figures/lagrangian/lambOseen_convection_vorticityErrorContours_compressed-crop.pdf}
 	\caption{Relative error growth of Lamb-Oseen vorticity during the evolution (in logarithmic scale). The figure shows \textbf{(a)}, the initial relative error at $t_0=4$, and \textbf{(b)} the final relative error in vorticity at $t_f=5$.}
 	\label{fig:lambOseen_convection_vorticityErrorContours_compressed}
+	\end{figure}
+
+	\begin{figure}[p]
+	\centering
+	\includegraphics[width=0.7\textwidth]{figures/lagrangian/lambOseen_convection_errorGrowth_compressed.pdf}
+	\caption{Relative error growth of Lamb-Oseen vortex during the evolution from $t_0=4$ to $t_f=5$. Figure depicts the error in vorticity: maximum relative error [ ---, solid black], and error in $L^2-\mathrm{norm}$ [ - -, dashed black]; and error in velocity: maximum relative error [ {\color{plotBlue}{---}}, solid blue], and error in $L^2-\mathrm{norm}$ [ {\color{plotBlue}{- -}}, dashed blue].}
+	\label{fig:lambOseen_convection_errorGrowth_compressed}
 	\end{figure}
 
 So, using the Tutty's diffusion method (the simple redistribution scheme, section \ref{subsubsec:srs}), we convect and diffuse the vortex blobs with a $\Delta t_c=\Delta t_d = 0.01$. The time integration of the problem is done using a $4^{\mathrm{th}}$-order Runge-Kutta method ($\mathrm{RK4}$), ensuring accurate convection of the blobs. After the convection process, we will have to treat the Lagrangian distortion of the blobs using the remeshing scheme discussed in section \ref{subsec:remeshing}. Generally, the remeshing is typically done every 10 iterations \cite{Barba2004c}. However, as our diffusion scheme and hybrid method requires structured lattice of vortex blobs for efficient calculations, we will remesh after every step, $f_{\mathrm{redist}}=1$.  
@@ -946,13 +954,6 @@ So, using the Tutty's diffusion method (the simple redistribution scheme, sectio
 In additional, after the evolution process, we can perform a population control on the vortex blobs to keep the simulation as efficient as possible. The \indexAcron{Population Control}{PC} removes vortex blobs that have very small circulation strengths. After the diffusion and remeshing, we will be left with vortex blobs with strengths close to numerical precision, as they have minimal impact on the accuracy of the vorticity field, we can removed them. When performing the population control, we to ensure that the loss of total circulation is at minimal. We place a tolerance on the conservation of circulation, and from literature \cite{Barba2004c}, we see that a cap of $\Gamma_{\mathrm{threshold}}=\num{1e-14}$ is acceptable. 
 
 To verify whether our Lagrangian scheme is function according to theory, we evaluated the error growth of the simulation. Figure \ref{fig:lambOseen_convection_vorticityErrorContours_compressed}, shows the initial and the final relative error in vorticity. We see that initially we have a maximum relative error around \num{e-8}, located at the center of the Lamb-Oseen core. After 100 time integration steps from $t_0=4$ to $t_f=5$, we see that the maximum relative error in vorticity increases from \num{e-8} to \num{e-2}. The error of the vorticity are predominantly localized at the center of the core. This is because, this is where we have the highest gradient in the vorticity, as seen from figure \ref{fig:lambOseen_vorticityDistribution}. Therefore, with the current vortex blob discretization, we are not able to reconstruct this large gradient of the vorticity field. 
-
-	\begin{figure}[!t]
-	\centering
-	\includegraphics[width=0.7\textwidth]{figures/lagrangian/lambOseen_convection_errorGrowth_compressed.pdf}
-	\caption{Relative error growth of Lamb-Oseen vortex during the evolution from $t_0=4$ to $t_f=5$. Figure depicts the error in vorticity: maximum relative error [ ---, solid black], and error in $L^2-\mathrm{norm}$ [ - -, dashed black]; and error in velocity: maximum relative error [ {\color{plotBlue}{---}}, solid blue], and error in $L^2-\mathrm{norm}$ [ {\color{plotBlue}{- -}}, dashed blue].}
-	\label{fig:lambOseen_convection_errorGrowth_compressed}
-	\end{figure}
 
 Figure \ref{fig:lambOseen_convection_errorGrowth_compressed}, shows the error growth of the Lamb-Oseen vortex from $t_0=4$ to $t_f=5$. The figure plots the error growth of the vorticity and the velocity. Due to the relation of the vorticity and the velocity, the error of the vorticity is an order higher that the error in the velocity. The figure shows the both the maximum relative error, and the error in the $L^2-\mathrm{norm}$. The maximum relative error (e.g. for vorticity), is determined as,
 	\begin{equation}
@@ -983,17 +984,7 @@ This verification of the diffusion scheme showed that if Wee's MRS diffuses at $
 	\label{fig:lambOseen_diffusionMethod_comparison_compressed}
 	\end{figure}
 
-\subsection{Convergence study of the viscous vortex method}
-
-Finally, we can perform a converge study, to validate that our scheme works according to the theory. For a scheme that is numerically stable, the error due to discretization must converge as the resolution of the discretization increases. 
-
-First, we investigate the convergence in spatial discretization. As we are dealing with vortex blobs, there are multiple ways of increasing the resolution. The straight forward method would be to increase the density of particles in a given area, i.e. reducing the blob spacing $h$ and maintaining the core spreading $\sigma$. Figure \ref{fig:lambOseen_convergence_dx_sigma0p02_compressed} shows the convergence of the spatial discretization when the core size $\sigma$ is maintained at $\sigma=0.02$. At this case, the overlap ratio changes with the blob spacing, described by equation \ref{eq:overlapRatio}. At small blob spacing $h$, the error in vorticity quickly drops to near machine precision. When investigating the order of converges, we that the error converges in a non-linear fashion and similar results have been obtained by Barba \cite{Barba2004c}.
-
-Figure \ref{fig:lambOseen_convergence_dx_compressed}, shows the convergence of error when the overlap ratio is fixed, $\mathrm{overlap} = 1$. In this test case, the core size scaled with the blob spacing, $h=\sigma$, and when increasing the spatial resolution, the error converges at non-linear fashion.
-	
-To investigate the convergence in temporal discretization, we determined the growth in Lamb-Oseen vorticity field after convecting with various convection step size $\Delta t_c$. Note that to perform this convergence study accurately, we had to rely on the Tutty's SRS diffusion scheme, so that $\Delta t_d = \Delta t_c$. Figure \ref{fig:lambOseen_convergence_dt_compressed} shows the convergence of the error for various temporal discretization. With the combined convection and diffusion scheme, we see that error converges at $\mathcal{O}(\Delta t)$, meaning that the vortex blobs evolution is $1^{\mathrm{st}}$-order in time.
-
-	\begin{figure}[!t]
+	\begin{figure}[p]
 	        \centering
 	        \begin{subfigure}[b]{0.5\textwidth}
 	                \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_convergence_dx_sigma0p02_compressed.pdf}
@@ -1011,12 +1002,25 @@ To investigate the convergence in temporal discretization, we determined the gro
 	        \label{fig:lambOseen_convergence_dx}
 	\end{figure}
 
-	\begin{figure}[!b]
+	\begin{figure}[p]
 	\centering
 	\includegraphics[width=0.6\textwidth]{figures/lagrangian/lambOseen_convergence_dt_compressed.pdf}
 	\caption{Error growth of Lamb-Oseen vorticity field after one-step.}
 	\label{fig:lambOseen_convergence_dt_compressed}
 	\end{figure}
+
+
+\subsection{Convergence study of the viscous vortex method}
+
+Finally, we can perform a converge study, to validate that our scheme works according to the theory. For a scheme that is numerically stable, the error due to discretization must converge as the resolution of the discretization increases. 
+
+First, we investigate the convergence in spatial discretization. As we are dealing with vortex blobs, there are multiple ways of increasing the resolution. The straight forward method would be to increase the density of particles in a given area, i.e. reducing the blob spacing $h$ and maintaining the core spreading $\sigma$. Figure \ref{fig:lambOseen_convergence_dx_sigma0p02_compressed} shows the convergence of the spatial discretization when the core size $\sigma$ is maintained at $\sigma=0.02$. At this case, the overlap ratio changes with the blob spacing, described by equation \ref{eq:overlapRatio}. At small blob spacing $h$, the error in vorticity quickly drops to near machine precision. When investigating the order of converges, we that the error converges in a non-linear fashion and similar results have been obtained by Barba \cite{Barba2004c}.
+
+Figure \ref{fig:lambOseen_convergence_dx_compressed}, shows the convergence of error when the overlap ratio is fixed, $\mathrm{overlap} = 1$. In this test case, the core size scaled with the blob spacing, $h=\sigma$, and when increasing the spatial resolution, the error converges at non-linear fashion.
+	
+To investigate the convergence in temporal discretization, we determined the growth in Lamb-Oseen vorticity field after convecting with various convection step size $\Delta t_c$. Note that to perform this convergence study accurately, we had to rely on the Tutty's SRS diffusion scheme, so that $\Delta t_d = \Delta t_c$. Figure \ref{fig:lambOseen_convergence_dt_compressed} shows the convergence of the error for various temporal discretization. With the combined convection and diffusion scheme, we see that error converges at $\mathcal{O}(\Delta t)$, meaning that the vortex blobs evolution is $1^{\mathrm{st}}$-order in time.
+
+
 
 
 \section{Summary of the Lagrangian method}
