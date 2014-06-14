@@ -1,6 +1,6 @@
 \chapter{Introduction}
 \label{ch:introduction}
-Conventional energy resources such as fossil fuels and nuclear energy are not only limited but also pose adverse effects on the environment. Therefore, we are striving to find a cheap and renewable source of energy. Wind energy is such source of energy and is getting more popular, and have also become more affordable. Novel renewable technologies such as \indexAcron{Vertical-Axis Wind Turbine}{VAWT} are now a promising research field that can satisfy this growing demand.
+Conventional energy resources such as fossil fuels and nuclear energy are not only limited but also pose adverse effects on the environment. Therefore, we are striving to find a cheap and renewable source of energy. Wind energy is such source of energy, getting more popular and more affordable. Novel wind turbine designs such as \indexAcron{Vertical-Axis Wind Turbine}{VAWT} are now a promising research field that can satisfy this growing demand.
 
 	\begin{figure}[!b]
         \centering
@@ -20,36 +20,36 @@ Conventional energy resources such as fossil fuels and nuclear energy are not on
         \label{fig:VAWTvsHAWT}
 	\end{figure}
 
-VAWT are unlike the normal wind turbine, which are mounted on a mast away from the ground and generates energy by spinning perpendicular to the ground, figure \ref{fig:VAWTvsHAWT}. Whereas the VAWT, figure \ref{fig:Darrieus-windmill}, spins parallel to the ground with its hub located at the ground \cite{website:wikiVAWT}. The advantages of the VAWTs are what makes them ideal for a source of renewable energy. As the turbine is located at the ground, it is easily accessible and is easily maintained. The second main advantage of the VAWT is the way it dissipates its wake. Near-wake experiments of Ferreira (2009) \cite{SimaoFerreira2009}, and simulations of Vermeer (2003) \cite{Vermeer2003a} have shown that the fluid past the turbine is more turbulent. Due to this higher mixing, the flow is able to recover much earlier than the convectional wind turbines. This means that it possible to places VAWTs much closer to each other and so a VAWT farm can potentially give more power per area. Furthermore, VAWTs operate independent of the flow direction, and can operate at low wind speeds (i.e. at low tip-speed ratios).
+VAWTs are unlike the normal wind turbines, which are mounted on a mast away from the ground and generate energy by spinning perpendicular to the ground, figure \ref{fig:VAWTvsHAWT}, whereas the \printAcron{Horizontal-Axis Wind Turbine}{VAWT}, spins parallel to the ground with its hub located at the ground, figure \ref{fig:HAWT}. The VAWT has it's generator located at the ground, allowing it to be easily accessible and maintained. However, the main advantage is the early wake dissipation of VAWTs. Near-wake experiments of Ferreira (2009) \cite{SimaoFerreira2009}, and simulations of Vermeer (2003) \cite{Vermeer2003a} have shown that the fluid past the turbine is more turbulent. Due to this higher turbulence, the flow is able to recover much earlier than convectional wind turbines. This allows the turbines to be placed much closer, potentially outputting more power per ground. Furthermore, VAWTs operate independently of the flow direction, and can operate at low wind speeds (i.e. at low tip-speed ratios).
 
-However, there are some limitations that we must take into account. As the blades passes through its own wake, complex wake-body interactions take places, figure \ref{fig:3DunsteadyPanelVAWT}. These have adverse effect on the blade structure, making it more susceptible to fatigue. As the blade is constantly pitching, flow behaviors such as dynamic stall and constant vortex shedding takes place \cite{SimaoFerreira2008a}. This complex fluid behaviors makes it hard to predict the performance of a VAWTs and this is one of the reasons why VAWTs are not widely used. 
+However, there are some limitations that we must take into account. As the blades pass through their own wake, complex wake-body interactions take place, figure \ref{fig:3DunsteadyPanelVAWT}. These have adverse effects on the blade structure, making it more susceptible to fatigue. As the blade is constantly pitching, flow behaviors such as dynamic stall and constant vortex shedding take place \cite{SimaoFerreira2008a}. These complex fluid behaviors makes it hard to predict the performance of a VAWTs and this is one of the reasons why VAWTs are not widely used. 
 
 	\begin{figure}[!t]
 		\centering
 		\includegraphics[width=0.6\linewidth]{figures/introduction/3DunsteadyPanelVAWT.png}
-		\caption{3-D Unsteady Panel simulation of a Straight-bladed VAWT showing the strength of the shed vorticity. The VAWT blades interact with its own wake increasing the complexity of the wake geometry \cite{Dixon2008}}
+		\caption{3-D Unsteady Panel simulation of a Straight-bladed VAWT showing the strength of the shed vorticity. The VAWT blades interact with their own wake increasing the complexity of the wake geometry \cite{Dixon2008}}
 		\label{fig:3DunsteadyPanelVAWT}
 	\end{figure}
 
-In addition, the VAWT operates at large Reynolds number making accurate numerical methods computationally very expensive. So we see that we require a numerical method that can not only reproduce accurate results, but is also efficient at modeling the flow around the turbine.
+In addition, a VAWT operates at a large Reynolds, number making accurate numerical methods computationally very expensive. So we see that we require a numerical method that can not only reproduce accurate results, but is also efficient at modeling the flow around the turbine.
 
 \section{Motivation and Goal}
-The goal of the research is to develop an efficient, reliable, and accurate numerical method for modeling the flow around a \indexAcron{Two-Dimensional}{2-D} VAWT, enabling to deduce its correct performance characteristics. The two approaches of investigating the flow around a turbine is by either using a numerical method to model the flow, or by performing a real-life experimental tests, such as a wind tunnel experiment.
+The goal of this research is to develop an efficient, reliable, and accurate numerical method for modeling the flow around a \indexAcron{Two-Dimensional}{2-D} VAWT, enabling to compute the correct performance characteristics. The two approaches of investigating the flow around a turbine are by either using a numerical method to model the flow, or by performing an experimental test, for example in a wind tunnel.
 
-To understand the unsteady aerodynamic behavior, \indexAcron{Particle Image Velocimetry}{PIV} has been a useful tool to visualize the flow around the turbine. PIV was used by Ferreira et al. (2007) \cite{Ferreira2007a}, have shown that it was possible to acquire flow characteristics around the blade, and the simulations have been useful at validating the numerical methods for the VAWT. The downside to experimental investigation is that is it very expensive to investigate all types of airfoil geometries, blade geometries and VAWT configurations. However, investigation this is vital in understanding the performance characteristics of VAWT. Furthermore, the model sizes are limited by the dimensions of the wind tunnel, and investigations with arrays of VAWTs in a wind tunnel is difficult.
+To understand the unsteady aerodynamic behavior, \indexAcron{Particle Image Velocimetry}{PIV} has been a useful tool to visualize the flow around the turbine. PIV was used by Ferreira et al. (2007) \cite{Ferreira2007a}, showing that it is possible to measure the flow characteristics around the blade. The downside to experimental investigation is that it is very expensive to investigate all types of airfoil geometries, blade geometries and VAWT configurations. However, investigating this is vital in understanding the performance characteristics of VAWT. Furthermore, it is difficult to perform experiments on array of wind turbines in a wind tunnel.
 
-Numerical methods are therefore a popular alternative as the cost of simulation is becoming progressively smaller, and the accuracy of the models are increasing day by day. In the research field, there exists many models with various orders of accuracy. \indexAcron{Actuator Disk}{AD} and \indexAcron{Blade Element Momentum}{BEM} models are the simplest models, built upon satisfying the momentum balance of the turbine with the fluid. The advantage is that they are very quick, however they lack the accuracy that are obtained by experimental simulation. Complex blade-wake interactions such as dynamic stalls and flow separations cannot be modeled by these methods, and therefore we must rely on more powerful tools.
+Numerical methods are therefore a popular alternative as the cost of simulation is becoming progressively smaller, and the accuracy of the models are increasing day by day. \indexAcron{Actuator Disk}{AD} and \indexAcron{Blade Element Momentum}{BEM} models are the simplest models, built upon satisfying the momentum balance of the turbine with the fluid. The advantage is that they are very quick, however they lack the accuracy that are obtained by experimental simulation. Flow phenomenons such as dynamic stalls and flow separations cannot be modeled by these methods, and therefore we must rely on more powerful tools.
 
 	\begin{figure}[!t]
 		\centering
 		\includegraphics[width=0.4\linewidth]{figures/introduction/eulerianRF.pdf}
-		\caption{Eulerian formulation of the fluid. We observe a given volume $\mathbf{V}$ and evaluate the change in properties of the fluid (from incompressible flow: velocity $\mathbf{u}$ and pressure $p$) at time passes.}
+		\caption{Eulerian formulation of the fluid. We observe a given volume $\mathbf{V}$ and evaluate the change in properties of the fluid, velocity $\mathbf{u}$ and pressure $p$ at time passes.}
 		\label{fig:eulerianRF}
 	\end{figure}
 
-To ensure more accuracy, one has to solve the Navier-Stokes equation of the flow around the turbine without large simplifications. \indexAcron{Computional Fluid Dynamic}{CFD} methods discretizes the fluid into smaller regions and solves the Navier-Stokes equation in each region (or grids). This type of formulation is known as an Eulerian formulation as we are evaluating the change in flow property of a given region, figure \ref{fig:eulerianRF}. In order to fully resolve the flow around the turbine, we would have to discretize the fluid very small at the blade where the vortex cores are very small, and we would need large grids far away from the blades where the vortex cores are much larger. Therefore, we would need grid size of various order of magnitudes at various regions of the fluid. This requires a large number of grids, and furthermore as the blades are constantly moving, this introduction additional limitations when defining the problem in Eulerian formulation.
+To ensure more accuracy, one has to solve the Navier-Stokes equation of the flow around the turbine without large simplifications. \indexAcron{Computional Fluid Dynamics}{CFD} methods discretize the fluid into smaller cells (or volumes) and solve the Navier-Stokes equations. This type of formulation is known as an Eulerian formulation as we are evaluating the change in flow property in a given cell/volume, figure \ref{fig:eulerianRF}. In order to fully resolve the flow around the turbine, we would need a fine mesh near the blade where we have small scale vorticies. However, far from the body, where these vorticies dissipated into low frequency vortical structures, we can have lower mesh resolution. This means that at various regions of the flow, we require mesh resolutions of various magnitudes. This becomes a problem when we have moving boundaries as the mesh has to be adapted depending on the location of the body.
 
-An alternative method is to use the vortex formulation of the Navier-Stokes equations, referred to as vorticity equation. This method is ideal because when describing it in Lagrangian formulation, the evolution of the vorticity is resulted from the interaction between vortices in the fluid. The removes the requirement of grids, figure \ref{fig:lagrangianRF}. In addition, using simulation acceleration methods such as \indexAcron{Fast Multipole Method}{FMM} and parallel computation in \indexAcron{Graphical Processing Units}{GPU}, they are much more efficient that typical CFD methods. However, vortex method cannot inherently take in account the solid body. They require additional methods that can describe the effect of the body in the fluid and the vorticity generated from the body.
+An alternative method is to use a Lagrangian formulation of the Navier-Stokes equations, known as vortex methods. These methods employ vorticity transport equations which makes them ideal for describing the evolution of the wake vorticity. Furthermore, they do not require cells/volumes to describe the domain. In addition, they use simulation acceleration methods such as \indexAcron{Fast Multipole Method}{FMM} and parallel computation in \indexAcron{Graphical Processing Units}{GPU} making them orders of magnitude faster than the typical CFD methods. However, vortex method cannot inherently take in account the solid body. They require additional methods that can describe the effect of the body in the fluid and the vorticity generated from the body.
 
 	\begin{figure}[!t]
 		\centering
@@ -58,18 +58,20 @@ An alternative method is to use the vortex formulation of the Navier-Stokes equa
 		\label{fig:lagrangianRF}
 	\end{figure}
 
-So, we see that Eulerian method is accurate when describing the blade-wake interaction but not efficient when describing multi-scale domains. The Lagrangian method is very efficient in evolving the vorticity of the fluid. Due to auto-adaptive nature of the Lagrangian method, it is an ideal choice when describing the multi-scale flow characteristics. However, it is not efficient in resolving the near-body region, where the vorticity is generated. Therefore, in order to use the advantage of both methods, we have decided to use a domain-decomposition method, referred to as \indexAcron{Hybrid Eulerian-Lagrangian Vortex Particle Method}{HELVPM}. In this method, the Eulerian grid method will be used at the region around the blade (i.e. the near-wall region). The Lagrangian vortex method will be used in the wake region of the body. With proper coupling of these methods, we can ensure that this numerical method can capture not only the near-wake phenomenons such as vortex shedding, dynamic stall, and the wake-body interaction, but also the large-scale flow structures such as the evolution of the VAWT wake.
+We see that Eulerian method is accurate when describing the blade-wake interaction but not efficient when describing multi-scale domains. The Lagrangian method is very efficient in evolving the vorticity of the fluid. Due to auto-adaptive nature of the Lagrangian method, it is an ideal choice when describing the multi-scale flow characteristics. However, it is not efficient in resolving the near-body region, where the vorticity is generated. Therefore, in order to use the advantages of both methods, we have decided to use a domain-decomposition method, referred to as \indexAcron{Hybrid Eulerian-Lagrangian Vortex Particle Method}{HELVPM}. 
+
+For the HELVPM, the Eulerian grid method will be used at the near-wall region of the blades, and the Lagrangian vortex method will be used in the wake region of the body. With proper coupling of these methods, we can ensure that this numerical method can capture not only the near-wake phenomena such as vortex shedding, dynamic stall, and the wake-body interaction, but also the large-scale flow structures such as the evolution of the VAWT wake.
 
 \section{Research Aim and Plan}
 
-We have formulated research that can help us accomplish our goal. The research question that are derived from the goal of the project is as follows:
+We have formulated a research that can help us accomplish our goal. The research questions that are derived from the goal of the project is as follows:
 
 \paragraph*{Research Questions:}
 	\begin{itemize}
 	\item \textit{Is it possible to develop an efficient and accurate numerical method by an
 	hybrid approach, with the vortex particle method solving the wake, and the Navier-Stokes grid solver solving the near-body region?}
 	
-	\item \textit{Will it be able to predict similar performance characteristics and flow phenomena as observed from the wind tunnel experimental setup?}
+	\item \textit{Will it be able to predict similar performance characteristics and flow phenomena as observed from the experiments?}
 	
 	\item \textit{Will it be capable of simulating the blade-wake interaction and the dynamic stall?}
 	
@@ -80,27 +82,25 @@ We have formulated research that can help us accomplish our goal. The research q
 %used at the near-body region? Will it be able to simulate real life performance characteristics of a Vertical-Axis Wind Turbine? Will it be able to predict similar performance characteristics and flow phenomena as observed from the wind tunnel experimental setup? Will it be capable of simulating the blade-wake interaction
 %and the dynamic stall? Where are the errors and what are their sources?}
 
-In order to answer the research questions, the goal of the project is the develop an efficient and accurate numerical method that is not only capable of capture the small scale flow phenomena such as the dynamic stall and the vortex shedding, but is also efficient at modeling the evolution of the wake. The investigation will be performed for 2-D geometries and the accuracy of the model needs to established first for simple problems before investigating more we can tackle complicated problems. In other words, the initial goal is to develop the hybrid vortex particle method and verify the approach. During this process, the solver will be verified and validated against test cases starting from simpler problems and gradually developing more complex features.
-
-The investigation is currently possible for 2-D simulations because full 3-D simulations are beyond the scope of the thesis. This is mainly due to the lack of research period that we have at hand. However, 3-D simulation can simply be extended from the accomplishments of the 2-D development work. A final goal would have been to investigate the VAWT performance, however due to time constrictions, it too was beyond the scope of the thesis. Thus we can now summarize the aim and the plan of the research.
+In order to answer the research questions, the goal of the project is to develop an efficient and accurate numerical method that is not only capable of capturing the small scale flow phenomena such as the dynamic stall and the vortex shedding, but is also efficient at modeling the evolution of the wake. Once the model have been developed, we will verify the approach and validate it against cases obtained from literature.
 
 \paragraph*{Research aim and plan:}
 \textit{
 	\begin{itemize}
-	\item Develop the Hybrid method for capturing small-scale phenomenons and large scale phenomenons.
-	\item Ensure this tool is efficient, reliable, and accurate.
-	\item Verify and validate the tools with test cases.
+	\item Develop the hybrid method for capturing small-scale phenomena and large scale phenomena.
+	\item Verify the efficiency, reliability, and the accuracy of the model.
+	\item Verify and validate the model with test cases from literature.
 	\end{itemize}
 }
 The innovativeness of this project is that such hybrid modeling has not been yet applied for the wind energy problem case. Through the parallelization of the vortex particle method in a GPU and employing solver acceleration techniques such as the FMM, this simulation could give an edge in the understanding the flow behavior of a VAWT.
 
 \section{Introduction to Hybrid Eulerian-Lagrangian Vortex Particle Method}
 
-The \printAcron{Hybrid Eulerian-Lagrangian Vortex Particle Method}{HELVPM} is a domain-decomposition method, where the Eulerian method and the Lagrangian method solves different domains of the fluid. The domain decomposition method is simply splitting the domain of interest and using the appropriate methods in each domain. For the problem of VAWT, as the boundary is non-trivial and is the source of vorticity, the full Navier-Stokes model will be used here, and away from the body where only the convection of the vorticity field is interested, the fast and efficient vortex particle method will be used, figure \ref{fig:domainDecomposition}.
+The \printAcron{Hybrid Eulerian-Lagrangian Vortex Particle Method}{HELVPM} is a domain decomposition method, where the Eulerian method and the Lagrangian method solves different regions of the fluid. The domain decomposition method simply splits the domain of interest and uses appropriate method in each domain. The Eulerian formulation will be used at the near-wall region, where we need proper description of the vorticity generation at the boundary, and the Lagrangian formulation is used away from the body, where we only need to evolve the vorticity field. Figure \ref{fig:domainDecomposition} shows the decomposition of the domain in the gridded and the non-gridded region.
 
-Several researches have already been done: Cottet and Koumoutsakos (2000a)\cite{Cottet2000a}, Guermond and Lu (2000) \cite{Guermond2000a} simulated the advection dominated flows; Ould-Salhi et al. (2001) \cite{Ould-Salihi2001a} blended the finite difference and vortex method together; Winckelmans et al. (2005a) \cite{Winckelmans2005} investigated the trailing vorticies; Daeninck (2006) \cite{Daeninck2006} used a simplified coupling strategy, coupling Vortex Particle Method and Finite Diference Method; Stock (2010) \cite{Stock2010a} expanded Daeninck's strategy, coupling Vortex Particle Method and Finite Volume Method and modeled a 3-D rotor.
+Several studies have already been done: Cottet and Koumoutsakos (2000a)\cite{Cottet2000a}, Guermond and Lu (2000) \cite{Guermond2000a} simulated the advection dominated flows; Ould-Salhi et al. (2001) \cite{Ould-Salihi2001a} blended the finite difference and vortex method together; Winckelmans et al. (2005a) \cite{Winckelmans2005} investigated the trailing vorticies; Daeninck (2006) \cite{Daeninck2006} used a simplified coupling strategy, coupling Vortex Particle Method and Finite Diference Method; Stock (2010) \cite{Stock2010a} expanded Daeninck's strategy, coupling Vortex Particle Method and Finite Volume Method and modeled a 3-D rotor.
 
-When evaluating the previous works, we see that not all domain decomposition methods are the same. The main difference between the methods is their coupling strategies. Most works employ the Schwartz alternating method to couple the vortex particle method and the grid solver. The Schwartz alternating method (or sometimes referred to as Schwartz iterative method), couples the vortex particle method and the grid solver by iteratively determining the boundary condition such that the stream functions in both domains, $\psi_L$ and $\psi_E$ in $\Omega_L$ and $\Omega_E$ respectively, match at the overlap region $\Omega_E-\Omega_L$. Figure \ref{fig:domainDecomposition} shows the domain decomposition using the Schwartz alternating method. The summary of a single iteration of the Schwartz alternating method is as follows:
+When evaluating the previous works, we see that not all domain decomposition methods are the same. The main difference between the methods is their coupling strategies. Most works employ the Schwartz alternating method to couple the vortex particle method and the grid solver. The Schwartz alternating method (or sometimes referred to as Schwartz iterative method), couples the vortex particle method and the grid solver by iteratively determining the boundary condition such that the stream functions in both domains, $\psi_L$ and $\psi_E$ in $\Omega_L$ and $\Omega_E$ respectively, match at the overlap region $\Omega_E-\Omega_L$, figure \ref{fig:domainDecomposition}. The summary of a single iteration of the Schwartz alternating method is as follows:
 	\begin{itemize}
 	\item Determine the Eulerian boundary condition, the stream function $\psi_{\Gamma_E}$ at the Eulerian boundary $\Gamma_E$, extracted from the Lagrangian stream function $\psi_L$in the Lagrangian domain $\Omega_L$.
 	\item Solve for the stream function $\psi_E$ in the Eulerian domain $\Omega_E$ with the new boundary condition $\Gamma_E$.
@@ -108,9 +108,9 @@ When evaluating the previous works, we see that not all domain decomposition met
 	\item Solve the stream function $\psi_L$ in the Lagrangian domain with the boundary conditions $\psi_{\Gamma_L}$ at the Lagrangian boundary $\Gamma_L$.
 	\end{itemize}
 	
-This procedure is iterated until the stream functions of both the domains converges \cite{Ould-Salihi2001a}. Onces the stream function is determined in both the domains, the velocity field can be obtained. Using the velocity field, we can evolve the vorticity field in both the domain. 
+This procedure is iterated until the stream functions of both domains converge \cite{Ould-Salihi2001a}. Once the stream function is determined in both the domains, the velocity field can be obtained. Using the velocity field, we can evolve the vorticity field in the Lagrangian domain.
 
-As we realized now, the downside to this procedure is that we have to solve the stream functions in both $\Omega_E$ and $\Omega_L$ iteratively, till we converge to a solution. This makes the computation very expensive, especially when we are dealing with large number of vortex particles. Therefore, for this project, we are using the coupling techniques that is based on the research work of Daeninck (2006) \cite{Daeninck2006} and Stock (2010) \cite{Stock2010a}.
+As we realized now, the downside to this procedure is that we have to solve the stream function in both $\Omega_E$ and $\Omega_L$ iteratively, until we converge to a solution. This makes the computation very expensive, especially when we are dealing with large numbers of vortex particles. Therefore, for this project, we are using the coupling technique that is based on the research work of Daeninck (2006) \cite{Daeninck2006} and Stock (2010) \cite{Stock2010a}. However we had to perform a correction to their scheme to ensure the conservation of circulation is satisfied.
 
 	\begin{figure}[!t]
 		\centering
@@ -120,16 +120,16 @@ As we realized now, the downside to this procedure is that we have to solve the 
 	\end{figure}
 
 \subsection{Simple coupling strategy}
-This approach will be referred to as the \indexAcron{Simple Coupling Strategy}{SCS}. It is simpler that the Schwartz iterative method, as no iteration is needed for the coupling procedure. The basic procedure is to solve the vortex method in the full fluid domain using relatively coarse resolution of the near-wall region. Then we use the grid solver in the near-wall region to capture the detailed features of the boundary layer and transfer the vorticity field at this region to the vortex particles, figure \ref{fig:domainDecomposition_daenick}. Therefore, the grid solver basically acts as the correction for the under-resolved regions of the Lagrangian method. The functionality of this strategy has been demonstrated by Daeninck and was found to be significantly faster than the Schwartz coupling strategy. The features of the simple coupling strategy can summarized as follows:
+This approach will be referred to as the \indexAcron{Simple Coupling Strategy}{SCS}. It is simpler than the Schwartz iterative method, as no iteration is needed for the coupling procedure. The basic algorithm consists of solving the vortex method in the full fluid domain using a relatively coarse resolution on the near-wall region. Then we use the grid solver in the near-wall region to capture the detailed features of the boundary layer and transfer the vorticity field in this region to the vortex particles, figure \ref{fig:domainDecomposition_daenick}. Therefore, the grid solver essentially acts as the correction for the under-resolved regions of the Lagrangian method. The functionality of this strategy has been demonstrated by Daeninck and was found to be significantly faster than the Schwartz coupling strategy. The features of the simple coupling strategy can summarized as follows:
 
 	\begin{itemize}
 	\item Eulerian method is used to resolve the near-wall region, at the Eulerian domain $\Omega_E$, enabling it to capture important features of the boundary layer (such as flow separation) with great accuracy.
 	
-	\item Lagrangian method is used to capture the wake, at the Lagrangian domain $\Omega_L$, and to efficiently evolving the wake.
+	\item Lagrangian method is used to capture the wake, at the Lagrangian domain $\Omega_L$, and to efficiently evolve the wake.
 	
-	\item The accurate solution of the Eulerian domain is transfered to the Lagrangian domain according to the coupling algorithm of Daeninck \cite{Daeninck2006} and Stock \cite{Stock2010a}.
+	\item The accurate solution of the Eulerian domain is transfered to the Lagrangian domain according to the coupling algorithm of Daeninck \cite{Daeninck2006} and Stock \cite{Stock2010a}. In addition to their algorithm, a correction in done on the transfer to ensure conservation of circulation.
 	
-	\item The boundary conditions for the Eulerian domain is retrieved from the Lagrangian domain.
+	\item The boundary conditions for the Eulerian domain are retrieved from the Lagrangian domain.
 	\end{itemize}
 
 	\begin{figure}[!t]
@@ -146,17 +146,17 @@ The algorithm to the \printAcron{Simple Coupling Strategy}{SCS} follows from Dae
 	
 	\item \textbf{Evolve Lagrangian:} With the modified solution, evolve the Lagrangian solution from time step $t_n$ to next time step $t_{n+1}$.
 	
-	\item \textbf{Determine Eulerian boundary conditions:} Use the Lagrangian solution of time $t_n$ and $t_{n+1}$ to determine the boundary conditions of the Eulerian domain.
+	\item \textbf{Determine Eulerian boundary conditions:} Use the Lagrangian solution of time $t_{n+1}$ to determine the boundary conditions of the Eulerian domain at $t_{n+1}$.
 	
 	\item \textbf{Evolve Eulerian:} With the boundary condition, evolve the Eulerian solution from $t_n$ to $t_{n+1}$.
 	\end{enumerate}
 	
 This is the basic approach for coupling the Eulerian method in the Eulerian domain $\Omega_E$ with the Lagrangian method in the Lagrangian domain $\Omega_L$ without the iterative Schwartz algorithm. 
 
-Furthermore, the SCS handles the Lagrangian boundary condition differently from the classic hybrid method. Typically during the evolution process of the Lagrangian domain, the shedding of the vorticity is also defined in the Lagrangian method. However, in our coupling strategy, the Lagrangian method is under-resolved at the boundary and cannot be used to resolve the vorticity flux at the body. Instead, we use the Eulerian method to resolve the boundary, and the Eulerian method acts as the vorticity generator for the Lagrangian method. However, there as some assumptions that we must satisfy, for this coupling strategy to be valid:
+Furthermore, the SCS handles the Lagrangian boundary condition differently from the classic hybrid method. Typically during the evolution process of the Lagrangian domain, the shedding of the vorticity is also defined in the Lagrangian method. However, in our coupling strategy, the Lagrangian method is under-resolved at the boundary and cannot be used to resolve the vorticity flux at the body. Instead, we use the Eulerian method to resolve the boundary, and the Eulerian method acts as the vorticity generator for the Lagrangian method. However, there are some assumptions that we must satisfy, for this coupling strategy to be valid:
 
 	\begin{itemize}
-	\item At $t_n$, before the evolution of both method to $t_{n+1}$, the Lagrangian solution matches Eulerian solution at the near-wall region.
+	\item At $t_n$ before the evolution of both method to $t_{n+1}$, the Lagrangian solution matches Eulerian solution at the boundary of the near-wall region.
 	\item After the evolution to $t_{n+1}$, the deviation of the Lagrangian solution (due to lack of vorticity flux at Lagrangian boundary), should be minimal.
 	\item Even though the Lagrangian domain is under-resolved in the near-wall region, it should be able to provide accurate boundary conditions for the Eulerian external boundary.
 	\end{itemize}
@@ -176,22 +176,22 @@ Furthermore, the SCS handles the Lagrangian boundary condition differently from 
 
 \section{Verification and Validation Test Cases}
 
-The test-cases that are used for this thesis are summarized as given:
+In order to assess the accuracy of this hybrid formulation, the following test cases haven been used:
 
 	\begin{description}
 	\item[Lamb-Oseen vortex] \cite{Lamb1993} \cite{Tryggeson2007} \hfill\\
-	Lamb-Oseen vortex test case is an analytical solution derived from the diffusion equation, and is a test case for unbounded flow (without any wall). This is the first model that will be used to validate the Lagrangian method and Eulerian method separately. This test case focuses on the evolution of the vorticity field and therefore is an ideal test case to verify and validate the convection and diffusion of the vorticity.
+	Lamb-Oseen vortex test case is an analytical solution derived from the NS equation, and is a test case for unbounded flow (without any wall). This is the first model that will be used to validate the Lagrangian method and Eulerian method separately. As it describes an unbounded flow, we do not need to concern with the vorticity generation problem. This helps us focus on just the evolution of the vorticity field.
 	\item[Clercx-Bruneau dipole] \cite{Clercx2006a}\hfill\\
-	The Clercx-Bruneau dipole test case is the simple case of dipole colliding with the wall. This test case will be used to verify and validate the coupling of the Eulerian and the Lagrangian method. This test cases focuses on the generation of vorticity from- the wall making it ideal to verify and validate the proper transfer of vorticity from the Eulerian domain to the Lagrangian domain.
+	The Clercx-Bruneau dipole test case is the simple case of a colliding dipole with a wall. This test case will be used to verify and validate the coupling of the Eulerian and the Lagrangian method in the presence of a solid wall. This test cases focuses on the interaction of vorticity with the wall making it ideal to verify and validate the proper generation of vorticity and its transfer to the Lagrangian domain.
 	\item[Impulsively started cylinder] \cite{Koumoutsakos1995a} \cite{Chang1991} \cite{Braza1986} \cite{Lecointe1984}\hfill\\
 	The impulsively started cylinder test case is used to analyse the forces acting on the cylinder. This test case is used to verify and validate the lift and drag evolution of the cylinder exposed to free-stream flow.
 	\item[Elliptic Airfoil] \cite{Nair1997a}\hfill\\
-	The elliptic airfoil test cases focuses on the flow separation past a lifting body. The elliptic airfoil is pitched at high angle of attack and the flow past the airfoil is comparatively unsteady and undergoes phenomenons such as laminar separation bubble, flow separation and karman vortex shedding from the trailing edge of the airfoil. This helps us ensure the coupling strategy is accurate for complex flow phenomenons.
+	The elliptic airfoil test case focuses on the flow separation past a lifting body. The elliptic airfoil is pitched at high angle of attack and the flow past the airfoil is comparatively unsteady and undergoes phenomena such as laminar separation bubble, flow separation and karman vortex shedding from the trailing edge of the airfoil. This helps us ensure the coupling strategy is accurate for complex flow phenomena.
 	\end{description}
 
 %\todo{add picture here}
 \section{Methodology}
-The initial steps of the development of the hybrid vortex methods is as follows:
+The initial steps of the development of the hybrid vortex method is as follows:
 
 	\begin{enumerate}
 	\item Develop the vortex particle method
@@ -207,11 +207,11 @@ Once all the components have been validated, the methods will be coupled and val
 	\begin{enumerate}
 	\setcounter{enumi}{6}
 	\item Couple vortex particle, vortex panel and grid solver together.
-	\item Validate it with the previous generated test case solution.
-	\item Introduce more complicated phenomenons: multiple geometry (i.e multiple grid meshes) and moving boundaries, if it feasible in the constraints of a master thesis.
+	\item Validate the hybrid method with test cases provide from literature.
+%	\item Introduce more complicated phenomenons: multiple geometry (i.e multiple grid meshes) and moving boundaries, if it feasible in the constraints of a master thesis.
 	\end{enumerate}
 
-If the coupled solver has been validated with the test cases, the final step will be to simulated the flow around a VAWT and investigating the performance vs. numerical and experimental data.
+%If the coupled solver has been validated with the test cases, the final step will be to simulated the flow around a VAWT and investigating the performance vs. numerical and experimental data.
 
 \section{Thesis Outline}
 

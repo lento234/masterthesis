@@ -160,6 +160,8 @@
 		\nompageref{54}
   \item [{\textbf {IPCS}}]\begingroup Incremental Pressure Correction Scheme\nomeqref {3.23}
 		\nompageref{55}
+  \item [{\textbf {ISC}}]\begingroup Impulsively Started Cylinder\nomeqref {3.40}
+		\nompageref{70}
   \item [{\textbf {LHS}}]\begingroup Left Hand Side\nomeqref {2.49}
 		\nompageref{27}
   \item [{\textbf {LSTSQ}}]\begingroup Least-Square solution method\nomeqref {2.61}
