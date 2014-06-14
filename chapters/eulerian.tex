@@ -345,7 +345,7 @@ The detailed algorithms to the IPCS scheme, as demonstrated by the \fenics Proje
 	
 This algorithm was implemented using \textsc{Dolfin}'s Krylov \textsc{Gmres} solver with absolute and relative error tolerance of \num{e-25} and \num{e-12} respectively. The program structure was based on the collection of benchmark and solvers provided by the \fenics examples scripts \cite{nsbench}. The algorithm described above an explicit time marching scheme, also referred to as \indexAcron{Forward Euler}{FE}, which is the simplest time marching scheme. Therefore, for the time marching scheme to be stable, we require the CFL number satisfy the following condition:
 	\begin{equation}
-	\mathrm{CFL} = \Delta t_{\mathrm{max}} \frac{\lVert\mathbf{u}\rVert_{\mathrm{max}}(\nu +  \Delta h_{\mathrm{min}}\lVert\mathbf{u}\rVert_{\mathrm{max}})}{\Delta h_{\mathrm{min}}^2} \le 1.
+	\mathrm{CFL} = \Delta t_{\mathrm{max}} \frac{\lVert\mathbf{u}\rVert_{\mathrm{max}}(\nu +  \Delta h_{\mathrm{min}}\lVert\mathbf{u}\rVert_{\mathrm{max}})}{\Delta h_{\mathrm{min}}^2} \leqslant 1.
 	\label{eq:cfl}
 	\end{equation}
 	
@@ -356,7 +356,7 @@ This algorithm was implemented using \textsc{Dolfin}'s Krylov \textsc{Gmres} sol
 	\label{fig:multiStep}
 	\end{figure}		
 	
-This gives us the direct constraint on the maximum Eulerian time step size $\Delta t_{E,\mathrm{max}}$ which is function of the $\mathrm{CFL}$ number, maximum fluid velocity in the Eulerian domain $\lVert \mathbf{u} \rVert_{\mathrm{max}}$, the fluid viscosity $\nu$ and the minimum mesh cell size $\Delta h_{min}$. When coupling with the Lagrangian method, we will see that $\Delta t_E \le \Delta t_L$ (Lagrangian time step size is ideally larger than Eulerian time step size), meaning that we will have to perform $k_E$ Eulerian sub-steps to reach the Lagrangian step, figure \ref{fig:multiStep}.
+This gives us the direct constraint on the maximum Eulerian time step size $\Delta t_{E,\mathrm{max}}$ which is function of the $\mathrm{CFL}$ number, maximum fluid velocity in the Eulerian domain $\lVert \mathbf{u} \rVert_{\mathrm{max}}$, the fluid viscosity $\nu$ and the minimum mesh cell size $\Delta h_{min}$. When coupling with the Lagrangian method, we will see that $\Delta t_E \leqslant \Delta t_L$ (Lagrangian time step size is ideally larger than Eulerian time step size), meaning that we will have to perform $k_E$ Eulerian sub-steps to reach the Lagrangian step, figure \ref{fig:multiStep}.
 
 \subsection{Determining the body forces}
 
@@ -377,6 +377,7 @@ where $\epsilon$ is the symmetric gradient, equation \ref{eq:symGrad}, and is a 
 	L &= \int_{\partial \Omega} \left[\sigma(\mathbf{u},p) \cdot \hat{\mathbf{n}}\right]\cdot \hat{\mathbf{e}}_y\ \mathrm{d}s,\\
 	D &= \int_{\partial \Omega} \left[\sigma(\mathbf{u},p) \cdot \hat{\mathbf{n}}\right]\cdot \hat{\mathbf{e}}_x\ \mathrm{d}s,
 	\end{align}
+	\label{eq:LiftDragEq}
 	\end{subequations}
 where $\hat{\mathbf{e}}_x$ and $\hat{\mathbf{e}}_y$ are the 2D unit Cartesian vectors,
 	\begin{equation}
@@ -394,6 +395,7 @@ The lift coefficient and the drag coefficient, $C_l$ and $C_d$ respectively, is 
 		\begin{equation}
 		C_l = \frac{L}{\frac{1}{2}\lVert\mathbf{u}\rVert_{\infty}^2 c},\qquad \quad
 		C_d = \frac{D}{\frac{1}{2}\lVert\mathbf{u}\rVert_{\infty}^2 c}.\\
+		\label{eq:LiftDragCoeffEq}
 		\end{equation}
 
 
@@ -704,47 +706,35 @@ and the time $t$ is non-dimensionalized with the radius $R$ of the cylinder,
 	\begin{equation}
 	T = \frac{U}{R}t.
 	\end{equation}
-The domain was discretized with $N_{\mathrm{vert}}=48$, with highest mesh resolutions are found near the surface of the body, and in the wake region of the body, figure \ref{fig:ISCSurfaceMesh}. The simulation was time marched with $\Delta t = 1e-3$ satisfying the CFL condition prescribed. The parameters of the simulation is tabulated in table \ref{tab:ISCParameters}.
+The domain was discretized with $N_{\mathrm{vert}}=48$, with highest mesh resolutions are found near the surface of the body, and in the wake region of the body, figure \ref{fig:ISCSurfaceMesh}. The simulation was time marched with $\Delta t = \num{1e-3}$ satisfying the CFL condition prescribed (all the parameters at tabulated in table \ref{tab:ISCParameters}).
 
 \subsubsection*{Results}
-The simulation was started with an with an impulsively started free-stream boundary condition at dirichlet boundary $\partial \Omega_{\mathrm{dirichlet}}$. The problem was evolved from $t=0$ to $t=100$ with number of time steps $N_{\mathrm{tSteps}}=10000$. To validate the scheme with the reference data of Koumoutsakos \& Leonard, we investigated the evolution of the vorticity field and the evolution of the forces acting on the body.
+The simulation was started with an with an impulsively started free-stream boundary condition at dirichlet boundary $\partial \Omega_{\mathrm{dirichlet}}$. The problem was evolved from $t=0$ to $t=100$ with number of time steps $N_{\mathrm{tSteps}}=100000$. To validate the scheme with the reference data of Koumoutsakos \& Leonard, we investigated the evolution of the vorticity field and the evolution of the forces acting on the body.
 
-Figure \ref{} 
-	
-
-
-	\begin{figure}[b]
+	\begin{figure}[p]
      \centering
-     \begin{subfigure}[t]{0.45\textwidth}
+     \begin{subfigure}[t]{0.49\textwidth}
              \includegraphics[width=\textwidth]{figures/eulerian/ISCDomainDefinition-crop.pdf}
              \caption{Domain definition}
              \label{fig:ISCDomainDefinition-crop}
      \end{subfigure}%
      ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
        %(or a blank line to force the subfigure onto a new line)
-     \begin{subfigure}[t]{0.45\textwidth}
+     \begin{subfigure}[t]{0.49\textwidth}
              \includegraphics[width=\textwidth]{figures/eulerian/ISC_mesh-crop.pdf}
              \caption{Full mesh}
              \label{fig:ISC_mesh-crop}
      \end{subfigure}
-%	 ~
-%     \begin{subfigure}[t]{0.3\textwidth}
-%             \includegraphics[width=\textwidth]{figures/eulerian/ISC_mesh_surface-crop.pdf}
-%             \caption{Mesh near surface}
-%             \label{fig:ISC_mesh_surface-crop}
-%     \end{subfigure}
+
+     \begin{subfigure}[t]{0.3\textwidth}
+             \includegraphics[width=\textwidth]{figures/eulerian/ISC_mesh_surface-crop.pdf}
+             \caption{Mesh near surface}
+             \label{fig:ISC_mesh_surface-crop}
+     \end{subfigure}
 
      \caption{ISC problem definition}
      \label{fig:ISCDomain}
 	\end{figure}
-
-	\begin{figure}[p]
-	\centering
-	\includegraphics[width=0.5\linewidth]{./figures/eulerian/ISC_mesh_surface-crop.pdf}
-	\caption{Near body mesh definition}
-	\label{fig:ISCSurfaceMesh}
-	\end{figure}
-
 
 	\ctable[
 		caption = {Summary of the parameters for the Impulsively started cylinder test case for $Re=550$\cite{}.},
@@ -763,12 +753,120 @@ Figure \ref{}
 		$ \Delta t$ 		    	& $\num{1e-3}$		& \si{s} 	& Time step size\\
 		$ N_{\mathrm{vert}}$ 		& $\sim47k$ 			& -			& Number of mesh vertices\\
 		$ h_{\mathrm{min}}$			& $\sim\num{9.7e-3}$ &\si{m}		& Minimum mesh cell size\\	        
-		$ N_{\mathrm{tsteps}}$ 		& $10,000$				& -	     	& Number of time integration steps\\
-		$\mathrm{ID}_{\mathrm{fluid}}$ & $1$ 				& - 		& Fluid domain I.D\\
-		$\mathrm{ID}_{\mathrm{wall}}$ & $2$ 				& - 		& No-slip boundary I.D\\
-		$\mathrm{ID}_{\mathrm{dirichlet}}$ & $3$ 			& - 		& Dirichlet boundary I.D\\
-		$\mathrm{ID}_{\mathrm{pressure}}$ & $4$ 			& - 		& Pressure boundary I.D\LL}
+		$ N_{\mathrm{tsteps}}$ 		& $100,000$				& -	     	& Number of time integration steps\\
+		$\mathrm{ID}_{\mathrm{fluid}}$ & $1$ 				& - 		& Fluid domain I.D (gray)\\
+		$\mathrm{ID}_{\mathrm{wall}}$ & $2$ 				& - 		& No-slip boundary I.D (blue)\\
+		$\mathrm{ID}_{\mathrm{dirichlet}}$ & $3$ 			& - 		& Dirichlet boundary I.D (red)\\
+		$\mathrm{ID}_{\mathrm{pressure}}$ & $4$ 			& - 		& Pressure boundary I.D (green)\LL}
 
+
+	\begin{figure}[p]
+     \centering
+     \begin{subfigure}[t]{0.45\textwidth}
+             \includegraphics[height=0.2\textheight]{figures/eulerian/ISC_vorticityContours_t1_ref-mod.png}
+             \caption{$t=1$ Reference}
+             \label{fig:ISC_vorticityContours_t1_ref}
+     \end{subfigure}%
+     ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+       %(or a blank line to force the subfigure onto a new line)
+     \begin{subfigure}[t]{0.45\textwidth}
+             \includegraphics[height=0.2\textheight]{figures/eulerian/ISC_vorticityContours_t1-crop.pdf}
+             \caption{$t=1$ Present}
+             \label{fig:ISC_vorticityContours_t1-crop}
+     \end{subfigure}
+     
+     \begin{subfigure}[t]{0.45\textwidth}
+             \includegraphics[height=0.2\textheight]{figures/eulerian/ISC_vorticityContours_t3_ref-mod.png}
+             \caption{$t=3$ Reference}
+             \label{fig:ISC_vorticityContours_t3_ref}
+     \end{subfigure}%
+     ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+       %(or a blank line to force the subfigure onto a new line)
+     \begin{subfigure}[t]{0.45\textwidth}
+             \includegraphics[height=0.2\textheight]{figures/eulerian/ISC_vorticityContours_t3-crop.pdf}
+             \caption{$t=3$ Present}
+             \label{fig:ISC_vorticityContours_t3-crop}
+     \end{subfigure} 
+     
+     
+     \begin{subfigure}[t]{0.45\textwidth}
+             \includegraphics[height=0.2\textheight]{figures/eulerian/ISC_vorticityContours_t5_ref-mod.png}
+             \caption{$t=5$ Reference}
+             \label{fig:ISC_vorticityContours_t5_ref}
+     \end{subfigure}%
+     ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+       %(or a blank line to force the subfigure onto a new line)
+     \begin{subfigure}[t]{0.45\textwidth}
+             \includegraphics[height=0.2\textheight]{figures/eulerian/ISC_vorticityContours_t5-crop.pdf}
+             \caption{$t=5$ Present}
+             \label{fig:ISC_vorticityContours_t5-crop}
+     \end{subfigure}
+     
+     \begin{subfigure}[t]{0.45\textwidth}
+             \includegraphics[height=0.2\textheight]{figures/eulerian/ISC_vorticityContours_t7_ref-mod.png}
+             \caption{$t=7$ Reference}
+             \label{fig:ISC_vorticityContours_t7_ref}
+     \end{subfigure}%
+     ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+       %(or a blank line to force the subfigure onto a new line)
+     \begin{subfigure}[t]{0.45\textwidth}
+             \includegraphics[height=0.2\textheight]{figures/eulerian/ISC_vorticityContours_t7-crop.pdf}
+             \caption{$t=7$ Present}
+             \label{fig:ISC_vorticityContours_t7-crop}
+     \end{subfigure}         
+
+     \caption{Vorticity contours comparison}
+     \label{fig:ISCS_vorticityContours_comparison}
+	\end{figure}
+
+%	\begin{figure}[p]
+%     \centering
+%     \begin{subfigure}[t]{0.49\textwidth}
+%             \includegraphics[width=\textwidth]{figures/eulerian/ISC_dragEvolution.pdf}
+%             \caption{Drag}
+%             \label{fig:ISC_dragEvolution}
+%     \end{subfigure}%
+%     ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+%       %(or a blank line to force the subfigure onto a new line)
+%     \begin{subfigure}[t]{0.45\textwidth}
+%             \includegraphics[width=\textwidth]{figures/eulerian/ISC_LongRun_dragLiftEvolution.pdf}
+%             \caption{Lift}
+%             \label{fig:ISC_LongRun_dragLiftEvolution}
+%     \end{subfigure}
+%
+%     \caption{Evolution of drag and lift. }
+%     \label{fig:evolutionDragLift}
+%	\end{figure}
+	
+	\begin{figure}[p]
+	\centering
+	\includegraphics[width=0.7\linewidth]{./figures/eulerian/ISC_dragEvolution.pdf}
+	\caption{Drag}
+	\label{fig:ISC_dragEvolution}
+	\end{figure}
+	
+	\begin{figure}[p]
+	\centering
+	\includegraphics[width=0.7\linewidth]{./figures/eulerian/ISC_LongRun_dragLiftEvolution.pdf}
+	\caption{Lift Drag}
+	\label{fig:ISC_LongRun_dragLiftEvolution}
+	\end{figure}	
+
+
+Figure \ref{fig:ISC_vorticityContours_t7-crop} depicts the evolution of the vorticity from $t=1\rightarrow7$. The iso-vorticity contours of the present stuyd is compared with the reference data from the literature \cite[]. At $t=1$, negative and positive vorticity is generated at the top and bottom of the cylinder, respectively and is resulted from satisfying the no-slip boundary condition. As time progress, two primary vortices are formed right behind the cylinder, increasing in shape as time progress. Comparing the vorticity contours, we can say that the shape and the geometry of the contour lines match with the literature. 
+
+Using equations \ref{eq:LiftDragEq} to \ref{eq:LiftDragCoeffEq}, we were able to calculate the Lift and the drag force acting on the cylinder as the time progress, which we used to validate against the literature. Figure \ref{fig:ISC_dragEvolution} shows the components of the drag force (friction drag $C_{d_{\mathrm{fric}}}$, pressure drag $C_{d_{\mathrm{pres}}}$) acting on the surface of the body. At $t=0$, we have a singularity in the total drag $C_d$ acting on the body due to the impulsive start of the flow. It then plunges to $C_d=0.75$ at $t=0.8$ and peaks again near $t=3$ at $C_d=1.3$. The dotted line is the data obtained from literature and we see that the results of the simulation matches well with the literature.
+
+A final comparison was done for the evolution of the Lift and the Drag coefficient for larger period ($t=0$ to $t=40$), which was used to determine the oscillatory behavior of the Lift and Drag. For lower Reynolds number, the vorticity field is symmetric across the $x$-axis for a long time. This meant that the oscillatory behavior of the forces starts at a much later time. Therefore, we prescribed an artificial perturbation to the problem to create an asymmetry in the vorticity field. The perturbation was performed according to Leocointe \& Piquet \cite[],
+	\begin{equation}
+	 u_{\mathrm{wall}} = \begin{cases}
+	 0.15 & 3 \leqslant t \leqslant 3.5, \\
+	 -0.25 & 3.5 \leqslant t \leqslant 5.
+	 \end{cases}
+	\label{eq:perturbation}
+	\end{equation}
+	
+With this, we could ensure that we have a controlled behavior for the lift and drag, which we used to determine the amplitude and the frequency of the oscillation. Figure \ref{fig:ISC_LongRun_dragLiftEvolution} compares the evolution of the lift and drag for $t=0$ to $t=40$. We see that our numerical scheme performs very similar to the literature \cite[]. However, there is a slight difference, which is due to the under-resolution of the Eulerian domain downstream of the cylinder.
 
 
 \section{Summary}

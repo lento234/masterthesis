@@ -363,8 +363,8 @@ The $\mathrm{M}^{\prime}_4$ interpolation kernel is an efficient interpolation k
 	{\mathrm{M'}_4}\left( {\xi} \right) =
 	  \begin{cases}
 	   {1 - \frac{{5{\xi ^2}}}{2} + \frac{{3{{\left| \xi  \right|}^3}}}{2}} & {\left| \xi \right|} < 1, \\
-	   \frac{1}{2}{\left( {2 - \left| \xi  \right|} \right)^2}\left( {1 - \left| \xi  \right|} \right) & 1 \le {\left| \xi \right|} < 2,\\
-	   0 & 2 \le \left| \xi \right|,
+	   \frac{1}{2}{\left( {2 - \left| \xi  \right|} \right)^2}\left( {1 - \left| \xi  \right|} \right) & 1 \leqslant {\left| \xi \right|} < 2,\\
+	   0 & 2 \leqslant \left| \xi \right|,
 	  \end{cases}
 	\label{eq:interpKernel}
 	\end{equation}
@@ -429,8 +429,8 @@ Ghoniem and Wee rederived the interpolation kernel that can perform both the rem
 	{{{\rm{M'}}}_4}\left( {\xi ,c} \right) =
 	  \begin{cases}
 	   {1 - \frac{{5{\xi ^2}}}{2} + \frac{{3{{\left| \xi  \right|}^3}}}{2} - {c^2}\left( {2 - 9{\xi ^2} + 6{{\left| \xi  \right|}^3}} \right)} & {\left| \xi \right|} < 1, \\
-	   \frac{1}{2}{\left( {2 - \left| \xi  \right|} \right)^2}\left( {1 - \left| \xi  \right|} \right) - {c^2}{\left( {2 - \left| \xi  \right|} \right)^2}\left( {1 - 2\left| \xi  \right|} \right) & 1 \le {\left| \xi \right|} < 2,\\
-	   0 & 2 \le \left| \xi \right|,
+	   \frac{1}{2}{\left( {2 - \left| \xi  \right|} \right)^2}\left( {1 - \left| \xi  \right|} \right) - {c^2}{\left( {2 - \left| \xi  \right|} \right)^2}\left( {1 - 2\left| \xi  \right|} \right) & 1 \leqslant {\left| \xi \right|} < 2,\\
+	   0 & 2 \leqslant \left| \xi \right|,
 	  \end{cases}
 	\label{eq:modInterpKernel}
 	\end{equation}
@@ -441,7 +441,7 @@ where
 	\end{equation}
 is a non-dimensional number that corresponds to the transfer weight for the diffusion. This additional terms in the interpolation kernel accounts for the diffusion process. When $c \rightarrow 0$, the interpolation kernel simply turns in to the standard remeshing kernel. Ghoniem and Wee also investigated the error growth and the stability properties of the interpolation kernel in the Fourier space and have determined that for a stable diffusion and remeshing, we have to ensure that,
 	\begin{equation}
-	\frac{1}{6} \le c^2 \le \frac{1}{2}.
+	\frac{1}{6} \leqslant c^2 \leqslant \frac{1}{2}.
 	\label{eq:c2stability}
 	\end{equation}
 
@@ -467,7 +467,7 @@ The fractions $W_{ki}^n$ are calculated by conserving the vorticity, the center 
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.7\textwidth]{figures/lagrangian/simpleRedistribution.pdf}
-	\caption{One dimensional simple redistribution scheme, diffusing the vortex blobs at $x_i \le x_{\nu} \le x_{i+1}$, onto the four stencil points $k=i-1,\dots,i+2$, with a grid spacing $h$.}
+	\caption{One dimensional simple redistribution scheme, diffusing the vortex blobs at $x_i \leqslant x_{\nu} \leqslant x_{i+1}$, onto the four stencil points $k=i-1,\dots,i+2$, with a grid spacing $h$.}
 	\label{fig:simpleRedistribution}
 	\end{figure}
 
@@ -496,7 +496,7 @@ and
 	g_{i+2} &= \frac{1}{2}\left(1-g_{i+1}+\xi_1\right)
 	\end{align}
 	\end{subequations}
-where $\xi$ is given by equation \ref{eq:xiEquation}. The $\xi_1 = \xi - 1$ is the distance between the $k^{\mathrm{th}}$ stencil node $x_k$ and the vortex blob that is to be diffused with $x_i \le x_{\nu} \le x_{i+1}$. In the above equation, $h_{\nu}$ is the characteristic diffusion distance during the time $\Delta t_d$, 
+where $\xi$ is given by equation \ref{eq:xiEquation}. The $\xi_1 = \xi - 1$ is the distance between the $k^{\mathrm{th}}$ stencil node $x_k$ and the vortex blob that is to be diffused with $x_i \leqslant x_{\nu} \leqslant x_{i+1}$. In the above equation, $h_{\nu}$ is the characteristic diffusion distance during the time $\Delta t_d$, 
 %We have to note that, $f_k$ and $g_k$ is zero for all the other $k$. 
 	\begin{equation}
 	h_{\nu} = \sqrt{\Delta t_d \cdot \nu}.
