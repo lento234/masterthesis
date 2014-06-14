@@ -509,7 +509,7 @@ Therefore, we decided to use the Clercx-Bruneau dipole collision is a test case 
 
 \subsubsection*{Problem Definition}
 
-Unlike other dipole test cases, Clercx and Bruneau provide well-defined initial and boundary conditions for the dipole vorticity field. Furthermore, they used a vorticity distribution that was continuous, which ensures a smooth velocity field for our Eulerian method using the $\mathbf{u}-p$ formulation. The literature of the Clercx and Bruneau provided results for two different dipole-wall collsion experiments: a normal collision, where there the dipole tranvels perpendicular to the wall, and a second test case of dipole collision at an angle. 
+Unlike other dipole test cases, Clercx and Bruneau provide well-defined initial and boundary conditions for the dipole vorticity field. Furthermore, they used a vorticity distribution that was continuous, which ensures a smooth velocity field for our Eulerian method using the $\mathbf{u}-p$ formulation. The literature of the Clercx and Bruneau provided results for two different dipole-wall collision experiments: a normal collision, where there the dipole tranvels perpendicular to the wall, and a second test case of dipole collision at an angle. 
 
 	\begin{figure}[t]
      \centering
@@ -561,6 +561,8 @@ After initializing the velocity field in the discretized domain, the problem was
 
 The main dipole approaches the bottom boundary, where the no-slip boundary starts to generate vorticity to ensure the no-through flow, figure \ref{fig:dipole_contourLine_portrait}b. As the primary dipole approaches closer, the vorticity filament at the wall rolls up and combines with the primary dipole forming two secondary dipoles that is assymteric across the $y$-axis. Figure \ref{fig:dipole_contourLine_portrait}c shows the state of the vorticity field at $t=0.5$ after the secondary dipoles are generated. This secondary dipole initially travels away from the bottom wall and later on approaches the wall again, colliding for a second time and creating a tertiary vortex, figure \ref{fig:dipole_contourLine_portrait}d. At $Re=625$, the dipole stops convecting any further and diffuses as time progresses ($t = 1$ and $t = 1.25$).
 
+Figure \ref{fig:vorticity_contour_comparison} compares the vorticity contours in a small part of the computation domain ($0\leqslant x \leqslant 0.6$ and $-1 \leqslant y \leqslant -0.4$) at $t = 1$. The positive vortex (solid black) is surrounded by the negative vortex (dashed black). The primary observation tells us that the overall shape of the vorticity contours is very similar to the reference data. However we see that in the present simulation, there are more iso-vorticity lines, meaning that vortex has not lost the strength.
+
 	\begin{figure}[p]
 	\centering
 	\includegraphics[width=\linewidth]{./figures/eulerian/dipole_contourLine_portrait-crop.pdf}
@@ -610,56 +612,164 @@ The main dipole approaches the bottom boundary, where the no-slip boundary start
 	
 To determine the variation of the fluid properties as the time progresses, Clercx and Bruneau investigated the evolution of the total kinetic energy $E(t)$, the total enstrophy $\Omega(T)$, and the total Palinstrophy $P(t)$ of the flow field. The total kinetic energy $E(t)$ of the dipolar field can be determined as,
 	\begin{equation}
-	E(t) = \frac{1}{2} \int\int \mathbf{u}^2(\mathbf{x},t) \mathrm{d}x\mathrm{d}y,
+	E(t) = \frac{1}{2} \int\int \mathbf{u}^2(\mathbf{x},t)\ \mathrm{d}x\mathrm{d}y,
 	\end{equation}
 and at $t=0$, $E(0) = 2$. The total enstrophy of the flow is determined as, 
 	\begin{equation}
-	\Omega(t) = \frac{1}{2}\int\int\omega^2(\mathbf{x},t) \mathrm{d}x\mathrm{d}y,
+	\Omega(t) = \frac{1}{2}\int\int\omega^2(\mathbf{x},t)\ \mathrm{d}x\mathrm{d}y,
 	\end{equation}	
 and can seen as the energy of the vorticity. The change in enstrophy of the field can give an insight to dissipation rate in the fluid. At $t=0$, the enstrophy of the fluid is $\Omega(0)=800$. The total Palinstrophy $P(t)$ of the flow measures the gradient of the vorticity, 
 	\begin{equation}
-	P(t) = \frac{1}{2}\int\int\left[\nabla\omega(\mathbf{x},t)\right]^2 \mathrm{d}x\mathrm{d}y,
+	P(t) = \frac{1}{2}\int\int\left[\nabla\omega(\mathbf{x},t)\right]^2\ \mathrm{d}x\mathrm{d}y,
 	\end{equation}
-and gives an insight to generation of vorticity at the no-slip boundary.
+and gives an insight to generation of vorticity at the no-slip boundary. Figure \ref{fig:dipole_comparison} compare the evolution of these time dependent parameters with the reference data provided by Clercx \& Bruneau (dotted red) for $t=0.25$, $t=0.5$ and $t=0.75$. The kinetic energy, figure \ref{fig:dipole_KineticEnergy_comparison}, reduced from $E(0) = 2$ to $E(2) \approx 0.3$. At $t=0.4$, we have small kink representing the approach of the primary dipole at the wall. When plotting the reference data, we see that the variation in kinetic energy matches perfectly at $t=0.25$, $t=0.5$ and $t=0.75$.
 
+Figure \ref{fig:dipole_Enstrophy_comparison} compares the variation in enstrophy ($\Omega$). During the initial stages, the enstrophy decreases linearly, and at $t=0.37$ there is sharp increase in the total enstrophy of the flow $\Omega(0.37) = 938.58$. This indicates the initial impact of dipole with the no-slip wall. After the impact, the enstrophy quickly drops and peaks again at $t=0.65$ reaching $\Omega = 307.04$. In addition, to the 3 data points, Clercx \& Bruneau determined the peak enstrophy of flow. Table \ref{tab:euleriandipoleCollisionComparison} compares the difference between the present study and literature and we see that there is maximum of $0.3\%$ error in time $t$ and $0.6\%$ error in enstrophy $\Omega$. Therefore, the variation in enstrophy is well represented by our Eulerian method.
+
+Figure \ref{fig:dipole_Palinstrophy_comparison} compares the variation in palinstrophy $P(t)$. Similar to enstrophy, we can observe to peak regions at $t=0.36$ and $t=0.65$, respesenting the two collision of the dipole. During the collision, vorticity is generated from the wall to ensure no-through boundary condition, which results in a sharp increase in the gradient of the vorticity. Table \ref{tab:euleriandipoleCollisionComparison} compares the difference with the addition data provided and we see that there is maximum error of $0.3\%$ in time $t$ and $1.8\%$ in palinstrophy $P$. This is an acceptable error and tells us the generation of vorticity in Eulerian method performs according to theory.
 	
+Figure \ref{fig:VorticityAtBoundary} compares the vorticity along the boundary of the domain at $y=-1$ for $-0.6 \leqslant x \leqslant 0$. The solid lines represents the present data, and is compared with the dotted data obtained from the reference. The comparison is done for various time instances $t=0.4$, $t=0.6$ and $t=1.0$ and we can finally validate that the Eulerian method accurately represents vorticity generation from the wall.
 	
 	\begin{figure}[p]
      \centering
-     \begin{subfigure}[t]{0.5\textwidth}
+     \begin{subfigure}[t]{0.49\textwidth}
              \includegraphics[width=\textwidth]{figures/eulerian/dipole_KineticEnergy_comparison.pdf}
              \caption{Kinetic Energy $E(t)$}
              \label{fig:dipole_KineticEnergy_comparison}
      \end{subfigure}%
      ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
        %(or a blank line to force the subfigure onto a new line)
-     \begin{subfigure}[t]{0.5\textwidth}
+     \begin{subfigure}[t]{0.49\textwidth}
              \includegraphics[width=\textwidth]{figures/eulerian/dipole_Enstrophy_comparison.pdf}
              \caption{Enstrophy $\Omega(t)$}
              \label{fig:dipole_Enstrophy_comparison}
      \end{subfigure}
      
-     \begin{subfigure}[b]{0.6\textwidth}
+     \begin{subfigure}[b]{0.49\textwidth}
              \includegraphics[width=\textwidth]{figures/eulerian/dipole_Palinstrophy_comparison.pdf}
              \caption{Palinstrophy $P(t)$}
              \label{fig:dipole_Palinstrophy_comparison}
+     \end{subfigure}
+     ~
+     \begin{subfigure}[b]{0.48\textwidth}
+		\includegraphics[width=\textwidth]{./figures/eulerian/VorticityAtBoundary.pdf}
+		\caption{Vorticity at the boundary y = -1.}
+		\label{fig:VorticityAtBoundary}
      \end{subfigure}     
+     
      \caption{Comparison Parameters}
      \label{fig:dipole_comparison}
 	\end{figure}
 
-	\begin{figure}[p]
-	\centering
-	\includegraphics[width=0.7\linewidth]{./figures/eulerian/VorticityAtBoundary.pdf}
-	\caption{Vorticity at the boundary y = -1.}
-	\label{fig:VorticityAtBoundary}
-	\end{figure}
+%	\begin{figure}[p]
+%	\centering
+%	\includegraphics[width=0.7\linewidth]{./figures/eulerian/VorticityAtBoundary.pdf}
+%	\caption{Vorticity at the boundary y = -1.}
+%	\label{fig:VorticityAtBoundary}
+%	\end{figure}
+	
+
+	\ctable[
+	    caption = {A summary of the values of the first two maxima of the enstrophy $E$ and palinsotrophy $P$ occurinng at $t_1$ and $t_2$ respectively.},
+	    label   = {tab:euleriandipoleCollisionComparison},
+	    maxwidth = \textwidth,
+	    pos = p,
+	]{ccrrrr}{\tnote{Data provide by Clercx \& Bruneau \cite{Clercx2006a}}}{\FL
+	\multirow{2}{*}{Instant} & 	\multirow{2}{*}{Case} & \multicolumn{2}{c}{Enstrophy $\Omega$} & \multicolumn{2}{c}{Palinstrophy $P$}\\
+	\noalign{\smallskip}\cline{3-6}\noalign{\smallskip}
+			& 			& $t$ & $\Omega$ 	& $t$ & $P$\ML
+	\multirow{2}{*}{$t_1$} 	& Reference\tmark[a] 	& 0.371 & 933.6 	& 0.361 & $1.39\times10^7$\\
+							& Present 		& 0.370 & 938.6 	& 0.360 & $1.40\times10^7$\\
+	\multirow{2}{*}{$t_2$} 	& Reference\tmark[a] 	& 0.648 & 305.2 	& 0.652 & $6.78\times10^{5}$\\
+							& Present 		& 0.650 & 307.0		& 0.650 & $6.90\times10^{5}$\LL}		
+%	\multirow{2}{*}{$t_1$}	& Reference cite 	& 	0.37 & 933.6 & $1.4\times10^7$\\
+%							& Present 			& $\mathrm{CG}_1$ 	& $Q$			& $p$	 		 & $q$\\
+%	\multirow{2}{*}{$t_1$}	& Reference cite 	& 			& $\mathbf{u}$	 & $\mathbf{v}$\\
+%							& Present 			& $\mathrm{CG}_1$ 	& $Q$			& $p$	 		 & $q$\LL}
+
+\subsection{Impulsively started cylinder at $Re=550$}
+
+Finally, we investigated the problem of an impulsively started cylinder at $Re=550$. This validation test ensured that at the end of the simulation, we are able to determine correct forces acting on the body. 
+
+\subsubsection*{Problem Definition}
+The \indexAcron{Impulsively Started Cylinder}{ISC} test case simulates the flow around a cylinder exposed to an impulsively started free-stream flow. The test cases focuses on the unsteady behavior of the separated flow parst the cylinder. Various experimental and numerical investigation have been performed investigating the flow characterstics, and for this project we relied on the widely used and validated results of Koumoutsakos \& Leonard \cite[]. They investigated the flow around the ISC using vortex methods, and provided extensive data on the vorticity profile behind the cylinder and the evolution of the Lift and Drag.
+
+Figure \ref{fig:ISCDomain} shows the domain definition of the ISC problem. Figure \ref{fig:ISCDomainDefinition-crop} shows the fluid domain $\Omega_E$ with an initial conditions $\mathbf{u}=0$, and $p=0$. The domain has the following boundary conditions: the no-slip wall boundary condition at $\partial \Omega_{\mathrm{wall}}$ (solid blue) $\mathbf{u}=0$, the free-stream Dirichlet velocity boundary condition at $\partial \Omega_{\mathrm{dirichlet}}$ (solid red) $\mathbf{u}_{\infty} = [1,0]$, and the pressure outlet $\partial \Omega_{\mathrm{pressure}}$ (solid green). Unlike the previous test cases we now require a pressure outlet boundary condition $\partial p/ \partial \mathbf{n} = 0$, as the velocity field behind the cylinder perturbed and therefore free-stream boundary condition cannot be applied there.
+
+The unsteady simulation has Reynolds number $Re$ of the flow dependent on the diameter of the cylinder $D$,
+	\begin{equation}
+	Re = \frac{UD}{\nu},
+	\end{equation}
+and the time $t$ is non-dimensionalized with the radius $R$ of the cylinder,
+	\begin{equation}
+	T = \frac{U}{R}t.
+	\end{equation}
+The domain was discretized with $N_{\mathrm{vert}}=48$, with highest mesh resolutions are found near the surface of the body, and in the wake region of the body, figure \ref{fig:ISCSurfaceMesh}. The simulation was time marched with $\Delta t = 1e-3$ satisfying the CFL condition prescribed. The parameters of the simulation is tabulated in table \ref{tab:ISCParameters}.
+
+\subsubsection*{Results}
+The simulation was started with an with an impulsively started free-stream boundary condition at dirichlet boundary $\partial \Omega_{\mathrm{dirichlet}}$. The problem was evolved from $t=0$ to $t=100$ with number of time steps $N_{\mathrm{tSteps}}=10000$. To validate the scheme with the reference data of Koumoutsakos \& Leonard, we investigated the evolution of the vorticity field and the evolution of the forces acting on the body.
+
+Figure \ref{} 
 	
 
 
+	\begin{figure}[b]
+     \centering
+     \begin{subfigure}[t]{0.45\textwidth}
+             \includegraphics[width=\textwidth]{figures/eulerian/ISCDomainDefinition-crop.pdf}
+             \caption{Domain definition}
+             \label{fig:ISCDomainDefinition-crop}
+     \end{subfigure}%
+     ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+       %(or a blank line to force the subfigure onto a new line)
+     \begin{subfigure}[t]{0.45\textwidth}
+             \includegraphics[width=\textwidth]{figures/eulerian/ISC_mesh-crop.pdf}
+             \caption{Full mesh}
+             \label{fig:ISC_mesh-crop}
+     \end{subfigure}
+%	 ~
+%     \begin{subfigure}[t]{0.3\textwidth}
+%             \includegraphics[width=\textwidth]{figures/eulerian/ISC_mesh_surface-crop.pdf}
+%             \caption{Mesh near surface}
+%             \label{fig:ISC_mesh_surface-crop}
+%     \end{subfigure}
+
+     \caption{ISC problem definition}
+     \label{fig:ISCDomain}
+	\end{figure}
+
+	\begin{figure}[p]
+	\centering
+	\includegraphics[width=0.5\linewidth]{./figures/eulerian/ISC_mesh_surface-crop.pdf}
+	\caption{Near body mesh definition}
+	\label{fig:ISCSurfaceMesh}
+	\end{figure}
 
 
-\subsection{Impulsively started cylinder at $Re=550$}
+	\ctable[
+		caption = {Summary of the parameters for the Impulsively started cylinder test case for $Re=550$\cite{}.},
+		label   = {tab:ISCParameters},
+		pos = p,]{lcll}{}{\FL
+		Parameters					& Value 				& Unit		& Description \ML
+		$\Omega$               		& $\left[-60,100\right]\times[-60,60]$ &\si{m}		& Eulerian domain bounds \\
+		$Re$  			       		& $550$ 				&-			& Reynolds number \\ 
+		$\mathbf{u}_{\infty}$		& $[1,0]$ 				&\si{m.s^{-1}}& Free-stream velocity\\		
+		$R$			         		& $1$ 					&\si{m}		& Radius of cylinder\\		
+		$D$			         		& $2$ 					&\si{m}		& Diameter of cylinder\\		
+		$\nu$						& $\num{3.6e-3}$ 		&\si{kg.s^{-1}.m^{-1}}& Kinematic viscosity\\
+		$ (t_0,t_f)$ 		    	& $(0,100)$				& \si{s} 	& Initial and final non-dimensional time\\
+		$ \mathrm{CFL}$				& $0.95$ 				& -			& CFL number\\	        	        
+		$ \lVert\mathbf{u}\rVert_{\mathrm{max}}$	& $2.5$	& \si{m.s^{-1}}	& Maximum fluid velocity\\
+		$ \Delta t$ 		    	& $\num{1e-3}$		& \si{s} 	& Time step size\\
+		$ N_{\mathrm{vert}}$ 		& $\sim47k$ 			& -			& Number of mesh vertices\\
+		$ h_{\mathrm{min}}$			& $\sim\num{9.7e-3}$ &\si{m}		& Minimum mesh cell size\\	        
+		$ N_{\mathrm{tsteps}}$ 		& $10,000$				& -	     	& Number of time integration steps\\
+		$\mathrm{ID}_{\mathrm{fluid}}$ & $1$ 				& - 		& Fluid domain I.D\\
+		$\mathrm{ID}_{\mathrm{wall}}$ & $2$ 				& - 		& No-slip boundary I.D\\
+		$\mathrm{ID}_{\mathrm{dirichlet}}$ & $3$ 			& - 		& Dirichlet boundary I.D\\
+		$\mathrm{ID}_{\mathrm{pressure}}$ & $4$ 			& - 		& Pressure boundary I.D\LL}
+
+
 
 \section{Summary}
 
