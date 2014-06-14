@@ -132,7 +132,7 @@
 		\nompageref{3}
   \item [{\textbf {BEM}}]\begingroup Blade Element Momentum\nomeqref {1.0}
 		\nompageref{3}
-  \item [{\textbf {CFD}}]\begingroup Computional Fluid Dynamic\nomeqref {1.0}
+  \item [{\textbf {CFD}}]\begingroup Computional Fluid Dynamics\nomeqref {1.0}
 		\nompageref{3}
   \item [{\textbf {CG}}]\begingroup Continuous Galerkin\nomeqref {3.1}
 		\nompageref{48}
