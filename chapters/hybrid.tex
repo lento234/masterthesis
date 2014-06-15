@@ -22,6 +22,17 @@
 
 \subsection{Eulerian dirichlet boundary condition}
 
+	
+	\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.7\linewidth]{./figures/eulerian/multiStep-crop.pdf}
+	\caption{Eulerian multi-stepping to match the lagrangian $\Delta t_L$. The figures shows $\Delta t_L = 4 \Delta t_E$ and required $k_E = 4$ iterations to time march from $t_n$ to $t_{n+1}$.}
+	\label{fig:multiStep}
+	\end{figure}	
+
+
+When coupling with the Lagrangian method, we will see that $\Delta t_E \leqslant \Delta t_L$ (Lagrangian time step size is ideally larger than Eulerian time step size), meaning that we will have to perform $k_E$ Eulerian sub-steps to reach the Lagrangian step, figure \ref{fig:multiStep}.
+
 \subsection{Vorticity interpolation algorithm}
 
 \section{Introduction to pHyFlow: Hybrid solver}
