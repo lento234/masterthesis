@@ -411,6 +411,7 @@ So in the diffusion step, we fix the position of the vortex blobs, and only modi
 The Particle Strength Exchange method, first proposed by Mas-Gallic in 1989 \cite{Degond1989a}, showed that diffusion can be treated for a particle method with an isotropic, or an anisotropic viscosity by approximating the diffusion operator (a Laplacian) with an integral operator, and discretize the method with particles \cite{Speck2011a}. %The PSE can be seen as circulation correction method, where during the diffusion step of the viscous splitting algorithm, the strengths of the particle are corrected such that it accounts for the diffusion.
  
 \subsubsection*{Vortex Redistribution Method}
+An alternative method to simulate the diffusion is to use the \printAcron{Vortex Redistribution Method}{VRM} \cite{Shankar1996}. The model simulates diffusion by distributing the fraction of circulation of the vortex blobs to each other satisfying the diffusion. The model is based on conserving the moments of the particles by satisfying a linear system of equations. The circulation of the particle are transfer to the nearby particles that are,
 	\begin{equation}
 	h_{\nu} = \sqrt{\nu\Delta t_d}
 	\end{equation}
