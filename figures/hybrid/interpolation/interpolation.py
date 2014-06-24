@@ -32,6 +32,22 @@ colorMapHC = mpl.colors.ListedColormap(zip(colorMapData[:,0],colorMapData[:,1],c
 colorMapCold = mpl.colors.ListedColormap(zip(colorMapData[:64,0],colorMapData[:64,1],colorMapData[:64,2]))
 colorMapHot = mpl.colors.ListedColormap(zip(colorMapData[64:,0],colorMapData[64:,1],colorMapData[64:,2]))
 
+# Daeninck's colormap
+colorMapDaen = {}
+colorMapDaen['levels'] = np.hstack((np.linspace(-20,0,11)[:-1], -0.2, 0.2, np.linspace(0,20,11)[1:]))/20.
+colorMapDaen['colors'] = np.array([[0,1,180],[0,1,180],[0,0,232],[0,27,255],
+                      	        [1,78,254],[0,129,255],[0,180,255],
+                        	        [1,231,255],[26,254,227],[77,255,177],
+                                   [204,204,254],[255,255,255],[254,204,203],
+                                   [180,255,76],[229,255,24],[255,229,0],
+                                   [255,178,0],[255,127,0],[255,76,1],
+                                   [255,25,1],[230,0,0],[179,1,1],[179,1,1]])/255.
+                                   
+# Custom colormap
+clim = 5     
+cmap,norm = mpl.colors.from_levels_and_colors(colorMapDaen['levels']*clim,colorMapDaen['colors'],extend='both')
+                              
+
 # jet Colormap
 colorMap = 'jet'
 jetCM = py.cm.ScalarMappable(cmap=colorMap)
@@ -207,16 +223,20 @@ selected = np.abs(WL)>0.5
 #fig = py.figure(2)
 #ax  = fig.add_subplot(111)
 #
+#clim = 5
+#cmap,norm = mpl.colors.from_levels_and_colors(colorMapDaen['levels']*clim,colorMapDaen['colors'],extend='both')
+#
 ## Plot vorticity
-#py.tripcolor(xFE,yFE,wFE,contourLevelsFE,rasterized=True,zorder=1)
+##py.tripcolor(xFE,yFE,wFE,contourLevelsFE,rasterized=True,zorder=1)
+#py.tripcolor(xFE,yFE,wFE,norm=norm,cmap=cmap,zorder=1,rasterized=True)
 ## Plot mesh
-#py.triplot(xFE,yFE,cellsFE,lw=0.5,color='0.5',zorder=2)
+#py.triplot(xFE,yFE,cellsFE,lw=0.5,color='0.75',zorder=2)
 ## Plot Square
 ##ax.add_patch(mpl.patches.PathPatch(square,fill=True,hatch='///',lw=2,facecolor='w',zorder=3,rasterized=False))
 #ax.add_patch(mpl.patches.PathPatch(square,fill=True,lw=2,facecolor='LightGrey',zorder=3))
 #
 #
-#py.clim(-5,5)
+#py.clim(-clim,clim)
 #py.axis('scaled')
 #py.axis([-5,5,-5,5])
 #py.axis('off')
@@ -228,18 +248,22 @@ selected = np.abs(WL)>0.5
 
 # ----------------------------------------------------------
 # Plot Hybrid Eulerian
-
+#
 #fig = py.figure(3)
 #ax  = fig.add_subplot(111)
 #
+#clim = 5
+#cmap,norm = mpl.colors.from_levels_and_colors(colorMapDaen['levels']*clim,colorMapDaen['colors'],extend='both')
+#
 ## Plot Vorticity
-#py.tripcolor(xFEI,yFEI,wFEI,contourLevelsFE,rasterized=True,zorder=1)
+##py.tripcolor(xFEI,yFEI,wFEI,contourLevelsFE,rasterized=True,zorder=1)
+#py.tripcolor(xFEI,yFEI,wFEI,norm=norm,cmap=cmap,rasterized=True,zorder=1)
 ## Plot mesh
-#py.triplot(xFEI,yFEI,color='0.5',lw=0.5,zorder=2)
+#py.triplot(xFEI,yFEI,color='0.75',lw=0.5,zorder=2)
 ## Plot square
 #ax.add_patch(mpl.patches.PathPatch(square,fill=True,lw=1,facecolor='LightGrey',zorder=3))
 #
-#py.clim(-5,5)
+#py.clim(-clim,clim)
 #py.axis('scaled')
 #py.axis([-5,5,-5,5])
 #py.axis('off')
@@ -250,27 +274,105 @@ selected = np.abs(WL)>0.5
 
 # ----------------------------------------------------------
 # Plot hybrid formation
-
+#
 #fig = py.figure(4)
 #ax  = fig.add_subplot(111)
 #
 ## Plot Eulerian grid
-#py.triplot(xFEI,yFEI,color='0.5',lw=0.5,zorder=1)
+#py.triplot(xFEI,yFEI,color='0.75',lw=0.5,zorder=1)
 ## Plot Eulerian boundary
 #py.plot(rotate(xyFEBoundary)[0],rotate(xyFEBoundary)[1],'k-',lw=0.5,zorder=2)
 ## Plot square
 #ax.add_patch(mpl.patches.PathPatch(square,fill=True,lw=1,facecolor='LightGrey',zorder=3))
 ## Plot blobs
-#py.scatter(xB,yB,s=100,c='w',lw=1,zorder=4)
+#py.scatter(xB+0.075,yB,s=100,c='w',lw=1,zorder=4)
 #
 #py.axis('scaled')
-#py.axis([-5,5,-5,5])
+##py.axis([-5,5,-5,5])
+#py.axis([-4.5,5.2,-4.5,4.5])
 #py.axis('off')
-##py.plot([-5,5,5,-5,-5],[-5,-5,5,5,-5],'k--')
+##py.plot([-4.5,5.2,5.2,-4.5,-4.5],[-4.5,-4.5,4.5,4.5,-4.5],'k--')
+#py.plot(rotate(xySurfacePoly)[0],rotate(xySurfacePoly)[1],'k--',zorder=6)
+#py.plot(rotate(xySquare*1.075)[0],rotate(xySquare*1.075)[1],'0.5',lw=2,zorder=4)
+#
+#
+### Add text
+##ax.annotate(r'$\partial \Omega_{E}$', xy=(-0.60, 3.75),fontsize=20,zorder=20)
+#ax.annotate(r'$\partial \Omega_{E}$', xy=(-1.0, 2.8), xycoords='data',fontsize=20,xytext=(-0.7, 3.75), textcoords='data',
+#           arrowprops=dict(arrowstyle="->", color="k", shrinkA=5, shrinkB=5,
+#                           patchA=None, patchB=None,
+#                           connectionstyle="arc3,rad=0.2",),)
+##ax.annotate(r'$\partial \Omega_{\mathrm{wall}}$', xy=(-2.5, -0.75),fontsize=20,zorder=20)
+#ax.annotate(r'$\partial \Omega_{\mathrm{P}}$', xy=(-1.11, 0.7), xycoords='data',fontsize=20,xytext=(-1, 1.5), textcoords='data',
+#           arrowprops=dict(arrowstyle="->", color="k", shrinkA=5, shrinkB=5,
+#                           patchA=None, patchB=None,
+#                           connectionstyle="arc3,rad=0.2",),)
+#                           
+#ax.annotate(r'$\partial \Omega_{\mathrm{wall}}$', xy=(-1.11, 0.05), xycoords='data',fontsize=20,xytext=(-2.5, -1.25), textcoords='data',
+#           arrowprops=dict(arrowstyle="->", color="k", shrinkA=5, shrinkB=5,
+#                           patchA=None, patchB=None,
+#                           connectionstyle="arc3,rad=-0.2",),)                           
+##ax.annotate(r'$\partial \Omega_{P}$', xy=(-1., 1.5),fontsize=20,zorder=20)
+##ax.annotate(r'$\Omega_{B}$', xy=(-0.7, 1.25),fontsize=25,zorder=20)
+##ax.annotate(r'$\gamma(s)$', xy=(0, 0.575),fontsize=20,zorder=20)
+##ax.annotate(r'$\omega_i$', xy=(0.2, 1.7),fontsize=20,zorder=20)
+##ax.annotate(r'\textsf{body}$', xy=(-0.4, 0.4),fontsize=15,zorder=20,backgroundcolor='w')
+
 
 #py.savefig('./hybrid.pdf')
 
 # ----------------------------------------------------------
+
+# ----------------------------------------------------------
+# Plot hybrid formation
+
+#fig = py.figure(41)
+#ax  = fig.add_subplot(111)
+#
+## Plot Eulerian grid
+#py.triplot(rotate(np.vstack((xFEI,yFEI)),-30)[0],
+#           rotate(np.vstack((xFEI,yFEI)),-30)[1]*0.5,color='0.75',lw=0.5,zorder=1)
+## Plot Eulerian boundary
+#py.plot(xyFEBoundary[0],xyFEBoundary[1]*0.5,'k-',lw=0.5,zorder=2)
+## Plot square
+#ax.add_patch(mpl.patches.PathPatch(squareN,fill=True,hatch='//',lw=1,facecolor='w',zorder=3))
+## Plot blobs
+#xyBlobsTemp = rotate(np.vstack((xB,yB)),-60-30)*0.5
+#xyBlobsTemp[1] *= 0.5
+#xyBlobsTemp[1] -= 0.5
+#xyBlobsTemp = xyBlobsTemp[:,np.abs(xyBlobsTemp[1])>0.7]
+#xyBlobsTemp = xyBlobsTemp[:,xyBlobsTemp[0]>-0.475]
+##xyBlobsTemp[1] -= 0.75
+#py.scatter(xyBlobsTemp[0],
+#           -xyBlobsTemp[1],s=600,c='w',lw=1,zorder=4)
+#
+## Plot lines
+#py.plot([-1,1],[0.7,0.7],'k--',lw=1,zorder=5)
+#
+#py.plot([-1,1],[0.52,0.52],'k-',lw=5,zorder=5)
+#
+## Draw arrow
+#ax.arrow(-0.8,0.7,0,1.0,head_width=0.025,head_length=0.05,fc='k',ec='k',zorder=10)
+#ax.arrow(-0.7,0.5,0,0.15,head_width=0.025,head_length=0.05,fc='k',ec='k',zorder=10)
+#ax.arrow(0.7,1.5,0,-1+0.05,head_width=0.025,head_length=0.05,fc='k',ec='k',zorder=3)
+#
+## Add text
+#ax.annotate(r'$\Omega_{E}$', xy=(0.5, 0.55),fontsize=25,zorder=20)
+#ax.annotate(r'$\Omega_{P}$', xy=(-0.6, 0.55),fontsize=25,zorder=20)
+#ax.annotate(r'$\Omega_{B}$', xy=(-0.7, 1.25),fontsize=25,zorder=20)
+#ax.annotate(r'$\gamma(s)$', xy=(0, 0.575),fontsize=20,zorder=20)
+#ax.annotate(r'$\omega_i$', xy=(0.2, 1.7),fontsize=20,zorder=20)
+#ax.annotate(r'\textsf{body}$', xy=(-0.4, 0.4),fontsize=15,zorder=20,backgroundcolor='w')
+#
+#py.axis('scaled')
+#py.axis([-0.9,0.9,0.35,2])
+#py.axis('off')
+##py.plot([-5,5,5,-5,-5],[-5,-5,5,5,-5],'k--')
+#
+#py.savefig('./hybrid_domains.pdf')
+
+# ----------------------------------------------------------
+
 
 # ----------------------------------------------------------
 # Plot hybrid formation
@@ -296,29 +398,31 @@ py.scatter(xyBlobsTemp[0],
            -xyBlobsTemp[1],s=600,c='w',lw=1,zorder=4)
 
 # Plot lines
-py.plot([-1,1],[0.7,0.7],'k--',lw=1,zorder=5)
+interpRegTemp = mpl.path.Path(np.array([[-1, 1, 1, -1, -1],
+                                        [0.7,0.7,1.3,1.3,0.7]]).T,closed=True)
+
+
+#py.plot([-1,1,1,-1,-1],[0.7,0.7,1.3,1.3,0.7],'k--',lw=1,zorder=5)
+ax.add_patch(mpl.patches.PathPatch(interpRegTemp,fill=True,lw=0,facecolor='LightPink', alpha=0.7,zorder=5))
+py.plot([-1, 1, 1, -1, -1],[0.7,0.7,1.3,1.3,0.7],'r--',zorder=6)
 
 py.plot([-1,1],[0.52,0.52],'k-',lw=5,zorder=5)
 
 # Draw arrow
-ax.arrow(-0.8,0.7,0,1.0,head_width=0.025,head_length=0.05,fc='k',ec='k',zorder=10)
-ax.arrow(-0.7,0.5,0,0.15,head_width=0.025,head_length=0.05,fc='k',ec='k',zorder=10)
-ax.arrow(0.7,1.5,0,-1+0.05,head_width=0.025,head_length=0.05,fc='k',ec='k',zorder=3)
+ax.annotate("",(-0.7,0.5),(-0.7,0.7),arrowprops={'arrowstyle':'<|-|>','fc':'r','ec':'r'},zorder=20)
+ax.annotate("",(-0.7,1.3),(-0.7,1.5),arrowprops={'arrowstyle':'<|-|>','fc':'r','ec':'r'},zorder=20)
 
 # Add text
-ax.annotate(r'$\Omega_{E}$', xy=(0.5, 0.55),fontsize=25,zorder=20)
-ax.annotate(r'$\Omega_{P}$', xy=(-0.6, 0.55),fontsize=25,zorder=20)
-ax.annotate(r'$\Omega_{B}$', xy=(-0.7, 1.25),fontsize=25,zorder=20)
-ax.annotate(r'$\gamma(s)$', xy=(0, 0.575),fontsize=20,zorder=20)
-ax.annotate(r'$\omega_i$', xy=(0.2, 1.7),fontsize=20,zorder=20)
+ax.annotate(r'$\Omega_{P}$', xy=(0.3, 0.55),fontsize=25,zorder=20)
+ax.annotate(r'$d_{\mathrm{surf}}\cdot{h}$', xy=(-0.6, 0.57),fontsize=15,zorder=20)
+ax.annotate(r'$d_{\mathrm{bdry}}\cdot{h}$', xy=(-0.6, 1.37),fontsize=15,zorder=20)
 ax.annotate(r'\textsf{body}$', xy=(-0.4, 0.4),fontsize=15,zorder=20,backgroundcolor='w')
 
 py.axis('scaled')
 py.axis([-0.9,0.9,0.35,2])
 py.axis('off')
-#py.plot([-5,5,5,-5,-5],[-5,-5,5,5,-5],'k--')
 
-py.savefig('./hybrid_domains.pdf')
+#py.savefig('./hybrid_domains_withInterpReg.pdf')
 
 # ----------------------------------------------------------
 
@@ -330,11 +434,13 @@ py.savefig('./hybrid_domains.pdf')
 #fig = py.figure(5)
 #ax  = fig.add_subplot(111)
 #
+#
 ## Plot Vorticity
-#py.tripcolor(xFEI,yFEI,wFEI,contourLevelsFE,rasterized=True,zorder=1)
-#py.clim(-5,5)
+##py.tripcolor(xFEI,yFEI,wFEI,contourLevelsFE,rasterized=True,zorder=1)
+#py.tripcolor(xFEI,yFEI,wFEI,norm=norm,cmap=cmap,rasterized=True,zorder=1)
+#py.clim(-clim,clim)
 ## Plot Eulerian grid
-#py.triplot(xFEI,yFEI,color='0.5',lw=0.5,zorder=2)
+#py.triplot(xFEI,yFEI,color='0.75',lw=0.5,zorder=2)
 ## Plot Eulerian boundary
 #py.plot(rotate(xyFEBoundary)[0],rotate(xyFEBoundary)[1],'k-',lw=0.5,zorder=3)
 ## Plot square
@@ -345,8 +451,14 @@ py.savefig('./hybrid_domains.pdf')
 #py.axis('scaled')
 #py.axis([-5,5,-5,5])
 #py.axis('off')
-##py.plot([-5,5,5,-5,-5],[-5,-5,5,5,-5],'k--')
 #
+## Add text
+#ax.annotate(r'$\partial \Omega_{E}$', xy=(-0.4, 3.75),fontsize=15,zorder=20)
+#ax.annotate(r'$\partial \Omega_{\mathrm{wall}}$', xy=(-0.8, -0.6),fontsize=15,zorder=20)
+#ax.annotate(r'$\Omega_{E}$', xy=(-3, 0.5),fontsize=25,zorder=20)
+#                           
+#
+##py.plot([-5,5,5,-5,-5],[-5,-5,5,5,-5],'k--')
 #py.savefig('./hybridwithData.pdf')
 
 # ----------------------------------------------------------
@@ -376,8 +488,24 @@ py.savefig('./hybrid_domains.pdf')
 #py.axis([-5,5,-5,5])
 #py.axis('off')
 #
+## Draw arrow
+### Add text
+##ax.annotate(r'$\partial \Omega_{E}$', xy=(-0.60, 3.75),fontsize=20,zorder=20)
+#ax.annotate(r'$\partial \Omega_{int}$', xy=(-0.93, 2.5), xycoords='data',fontsize=20,xytext=(-0.8, 3.75), textcoords='data',
+#           arrowprops=dict(arrowstyle="->", color="k", shrinkA=5, shrinkB=5,
+#                           patchA=None, patchB=None,
+#                           connectionstyle="arc3,rad=0.2",),zorder=20)
+##ax.annotate(r'$\partial \Omega_{\mathrm{wall}}$', xy=(-2.5, -0.75),fontsize=20,zorder=20)
+#ax.annotate(r'$\partial \Omega_{\mathrm{P}}$', xy=(-1.11, 0.7), xycoords='data',fontsize=20,xytext=(-1, 1.5), textcoords='data',
+#           arrowprops=dict(arrowstyle="->", color="k", shrinkA=5, shrinkB=5,
+#                           patchA=None, patchB=None,
+#                           connectionstyle="arc3,rad=0.2",),zorder=20)
+#          
+#
+#
+#
 ##py.plot([-5,5,5,-5,-5],[-5,-5,5,5,-5],'k--')
-#py.show()
+#
 #py.savefig('./interpRegion.pdf')
 
 # ----------------------------------------------------------
@@ -479,24 +607,26 @@ py.savefig('./hybrid_domains.pdf')
 
 # ----------------------------------------------------------
 # Interpolate the mesh data from FE to structured grid
-
+#
 #fig = py.figure(10)
 #ax  = fig.add_subplot(111)
 #
 ## Plot Vorticity on FE
-#py.tripcolor(xFEI-5,yFEI,wFEI,contourLevelsFE,rasterized=True,zorder=1,cmap=colorMapHC)
+##py.tripcolor(xFEI-5,yFEI,wFEI,contourLevelsFE,rasterized=True,zorder=1,cmap=colorMapHC)
+#py.tripcolor(xFEI-5,yFEI,wFEI,norm=norm,cmap=cmap,rasterized=True,zorder=1)
 #py.clim(-5,5)
 #
 ## Plot vorticity on structureed
-#py.pcolormesh(xStructured+5,yStructured,wStructured,rasterized=True,zorder=1,cmap=colorMapHC)
+##py.pcolormesh(xStructured+5,yStructured,wStructured,rasterized=True,zorder=1,cmap=colorMapHC)
+#py.pcolormesh(xStructured+5,yStructured,wStructured,rasterized=True,zorder=1,cmap=cmap,norm=norm)
 #py.clim(-5,5)  
 #
 ## Plot mesh
-#py.triplot(xFEI-5,yFEI,'-',color='0.5',lw=0.5,zorder=2)
+#py.triplot(xFEI-5,yFEI,'-',color='0.75',lw=0.5,zorder=2)
 #
 ## Plot the structured grid
-#py.plot(xStructured+5,yStructured,'-',color='0.5',zorder=2,lw=0.5)
-#py.plot(xStructured.T+5,yStructured.T,'-',color='0.5',zorder=2,lw=0.5)
+#py.plot(xStructured+5,yStructured,'-',color='0.75',zorder=2,lw=0.5)
+#py.plot(xStructured.T+5,yStructured.T,'-',color='0.75',zorder=2,lw=0.5)
 #
 ## Plot square
 #ax.add_patch(mpl.patches.PathPatch(squareL,fill=True,facecolor='LightGrey',edgecolor='None',zorder=3))
@@ -521,18 +651,19 @@ py.savefig('./hybrid_domains.pdf')
 # ----------------------------------------------------------
 # Interpolate the mesh data from structured grid to blobs
 
-
-# Plot hybrid eulerian
+#
+## Plot hybrid eulerian
 #fig = py.figure(11)
 #ax  = fig.add_subplot(111)
 #
-### Plot vorticity on structured
-#py.pcolormesh(xStructured-5,yStructured,wStructured,rasterized=True,zorder=1,cmap=colorMapHC)
+## Plot vorticity on structured
+##py.pcolormesh(xStructured-5,yStructured,wStructured,rasterized=True,zorder=1,cmap=colorMapHC)
+#py.pcolormesh(xStructured-5,yStructured,wStructured,rasterized=True,zorder=1,cmap=cmap,norm=norm)
 #py.clim(-5,5)         
 #
 ## Plot the structured grid
-#py.plot(xStructured-5,yStructured,'-',color='0.5',zorder=2,lw=0.5)
-#py.plot(xStructured.T-5,yStructured.T,'-',color='0.5',zorder=2,lw=0.5)
+#py.plot(xStructured-5,yStructured,'-',color='0.75',zorder=2,lw=0.5)
+#py.plot(xStructured.T-5,yStructured.T,'-',color='0.75',zorder=2,lw=0.5)
 #
 ## Plot square
 #ax.add_patch(mpl.patches.PathPatch(squareL,fill=True,facecolor='LightGrey',edgecolor='None',zorder=3))
@@ -543,7 +674,8 @@ py.savefig('./hybrid_domains.pdf')
 #py.scatter(xBO+5,yBO,s=100*0.5,c='w',lw=1,edgecolor='0.75',zorder=4)
 #
 ## Plot the blobs inside
-#py.scatter((XL+5)[selected],YL[selected],s=100*0.5,c=WL[selected],lw=1,zorder=4,cmap=colorMapHC)
+##py.scatter((XL+5)[selected],YL[selected],s=100*0.5,c=WL[selected],lw=1,zorder=4,cmap=colorMapHC)
+#py.scatter((XL+5)[selected],YL[selected],s=100*0.5,c=WL[selected],lw=1,zorder=4,cmap=cmap,norm=norm)
 #py.clim(-5,5)
 #
 ## Add annotation

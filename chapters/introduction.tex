@@ -142,7 +142,7 @@ This approach will be referred to as the \indexAcron{Simple Coupling Strategy}{S
 The algorithm to the \printAcron{Simple Coupling Strategy}{SCS} follows from Daeninck's doctoral thesis, \cite{Daeninck2006}. Figure \ref{fig:flowchart_simpleCoupling} shows the overview to the algorithm and can be summarized as follows:
 
 	\begin{enumerate}
-	\item \textbf{Correct Lagrangian:} Use the solution of the Eulerian domain $\Omega_E$ (in the near-wall region) to correct the solution of the Lagrangian domain $\Omega_L$, that is overlapping the Eulerian domain.  
+	\item \textbf{Correct Lagrangian:} Use the solution of the Eulerian domain $\Omega_E$ (in the near-wall region) to correct the solution of the Lagrangian domain $\Omega_L$, that is overlapping the Eulerian domain, ensuring that the \textit{circulation is conserved}.  
 	
 	\item \textbf{Evolve Lagrangian:} With the modified solution, evolve the Lagrangian solution from time step $t_n$ to next time step $t_{n+1}$.
 	
