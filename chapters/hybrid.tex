@@ -72,6 +72,10 @@ The coupling of the Eulerian solver and the Lagrangian solver is performed by co
 \section{Correction of Lagrangian domain}
 
 The first step of the hybrid coupling scheme is to transfer the highly resolved Eulerian solution to the Lagrangian domain. This is performed by transferring the vorticity in the Eulerian domain $\Omega_E$ onto the vortex blobs that are inside the Eulerian region, $\mathcal{P}: \mathcal{P} \in \Omega_E \cap \Omega_B$.
+				
+\subsection*{Approach from literature}		
+							
+However, as Stock has described \cite{} and shown by Daeninck in figure \ref{fig:daeninck_CylinderVorticity}, the Eulerain solution is assumed to be correct from the body up to ``somewhat inside of the outer Eulerian domain", and the Lagrangian solution is valid outside of the outer Eulerian boundary. 
 
 	\begin{figure}[h]
 	\centering
@@ -79,8 +83,8 @@ The first step of the hybrid coupling scheme is to transfer the highly resolved 
 	\caption{Daeninck artificial vorticity at the boundary}
 	\label{fig:daeninck_CylinderVorticity}
 	\end{figure}
-								
-However, as Stock has described \cite{} and shown by Daeninck in figure \ref{fig:daeninck_CylinderVorticity}, the Eulerain solution is assumed to be correct from the body up to ``somewhat inside of the outer Eulerian domain", and the Lagrangian solution is valid outside of the outer Eulerian boundary. At the boundary of the Eulerian boundary $\partial \Omega_E$, the figure \ref{}, shows artificial vorticity due to slight difference in the solution. To overcome this problem, Stock proposed to interpolate only part of the Eulerian domain onto the Lagrangian domain, as shown in figure \ref{fig:interpRegion}. The interpolation region $\Omega_{int}$ ignores the boundary layer region with the very strong vorticity gradients (which will be resolved by the vortex panel), and part of the outer Eulerian boundary where the Eulerian solution is less accurate. So the interpolation region has the following properties:
+
+At the boundary of the Eulerian boundary $\partial \Omega_E$, the figure \ref{}, shows artificial vorticity due to slight difference in the solution. To overcome this problem, Stock proposed to interpolate only part of the Eulerian domain onto the Lagrangian domain, as shown in figure \ref{fig:interpRegion}. The interpolation region $\Omega_{int}$ ignores the boundary layer region with the very strong vorticity gradients (which will be resolved by the vortex panel), and part of the outer Eulerian boundary where the Eulerian solution is less accurate. So the interpolation region has the following properties:
 
 	\begin{itemize}
 	\item The domain is within the overlap region, $\Omega_{int} \subseteq \Omega_E \cap \Omega_B$,
@@ -110,57 +114,143 @@ However, as Stock has described \cite{} and shown by Daeninck in figure \ref{fig
 The summary of the interpolation algorithm for transferring the Eulerian solution to the vortex blobs used by Stock based on work of Daeninck and Guermond \& Lu is as follows:
 \begin{enumerate}
 \item Interpolate the solution from Eulerian domain onto a temporary structured grid. Ignore very strong vorticity at the boundary layer, $\mathbf{x} \in \Omega_P$.
-\item Determine the particles that are inside the interpolation region, bounded by $\partial \Omega_P$ and $\partial \Omega_{int}$.
-\item Reset the strengths of the particles inside the interpolation region $\mathbf{x} \in \Omega_{int}$, figure \ref{fig:interpRegion}, using the local particle volume and the vorticity interpolated from the grid.
+\item Determine the locations of the particles inside the interpolation region $\Omega_{int}$. Fill gaps in the region with zero-strength particles. 
+\item Reset the strengths of the particles $\mathbf{x}_i$ inside the interpolation region $\Omega_{int}$, figure \ref{fig:interpRegion}, using the local particle volume and the vorticity interpolated from the grid (i.e $\alpha_i = \omega_i\cdot{h^2}$).
 \end{enumerate}
 
-However, this approach does not satisfy the conservation of circulation as
+Though, through our research we have determined that this approach suffers from issues and does not guarantee the conservation of circulation. 
+
+\subsection*{Issues with the coupling algorithm}
+
+The two main issues with the above approach is as follows:
+
 \begin{itemize}
-\item The vorticity bounded to the solid wall was not interpolated to the vortex blobs.
-\item The particle strengths are initialized using standard cell circulation equation, $\alpha_i = \omega \cdot h^2$.
+\item The vorticity bounded to the solid wall was not interpolated to the vortex blobs. 
+\item The second issue is that the particle strengths are initialized using standard cell circulation equation, $\alpha_i = \omega \cdot h^2$. This is the standard approach used by the vortex particle community however, this method does not ensure accurate interpolation of the vorticity field, as described by Barba \& Rossi \cite{Barba2010a}.
 \end{itemize}
 
+\subsubsection*{Vorticity at the solid wall}
 
-\subsection*{Modification to the coupling algorithm}
+%Therefore to overcome this issue we propose to prescribe the total circulation of the panels such that the circulation is conserved globally.
 
-Therefore, we proposed two modifications to the scheme such that we ensure circulation is always conserved.
+%\subsubsection*{Prescribed panel strengths}
 
-\subsubsection*{Prescribed panel strengths}
 
-The first problem that we are concerned is that the vorticity bounded at the solid wall was not transfered to the Lagrangian domain and is especially problematic for our Lagrangian solver. We have implemented a Lagrangian method that under-resolved the wall region, with vortex panel that does not diffuse the vorticity to the nearby vortex blobs. The approach we is different from the ``classical" vortex method, as explained by Daeninck. We require the Eulerian domain to generate the vorticity for the Lagrangian domain. Therefore, ignoring the wall-bounded vorticity will mean that the circulation of the domain $\Omega_P$ will not be introduced to the Lagrangian domain, so  that the circulation is not conserved.
+The first problem that we are concerned is that the vorticity bounded at the solid wall was not transfered to the Lagrangian domain. This is especially problematic in our case as the vortex panel that we have implemented does not diffuse their strength to the vortex blobs. We have implemented the approach used by Daeninck, where the vorticity generated at the wall boundary is introduced from the Eulerian domain. 
 
-Therefore to ensure that circulation is conserved the circulation of the Eulerian domain overlapping with the vortex panel domain $\Gamma_P \in \Omega_E \cap \Omega_P$ should be transfered to the vortex panels of the Lagrangian domain. In the section \ref{} of the Lagrangian chapter, we have determined that in the case of rotating body, we have to take in account of the circulation inside the body,
+To ensure that circulation is conserved, the circulation in the vortex panel domain $\Omega_P$ must be somehow introduced to the Lagrangian domain. Furthermore, if the geometry is at motion, the body itself will have circulation due to the rotation, given as:
 	\begin{equation}
 	\Gamma_{\mathrm{body}} = \iint\limits_{\mathrm{body}} \nabla \times \mathbf{u}_b \ d A.
 	\end{equation}
 
-Therefore, the total circulation assigned to the vortex panel must be:
+Therefore, in order to ensure conservation of the circulation, we proposed to transfer the circulation of the domain $\Omega_P$ and the circulation inside the body $\Omega_{\mathrm{body}}$ to the panels.
+
+
+\subsubsection*{Vorticity Field interpolation error}
+	
+The second issue we must tackle is the interpolation error that arises due to the standard approach of initializing the particles using the local particle volume and the local vorticity,
+	\begin{equation}
+	\alpha_i = \omega_i\cdot{h^2},
+	\end{equation}
+where $i$ corresponds to the vortex blobs $\mathbf{x}_i \in \Omega_{int}$. We summarized this issue in the section \ref{} of the Lagrangian chapter and was extensively investigated by Barba \& Rossi \cite{Barba2010a}. To solve the wake domain of the fluid, we used a vortex particle method that discretizes the vorticity field using $N$ quadrature points,
 \begin{equation}
-\Gamma_{\gamma} = \oint \gamma(s) \ \mathrm{d}s = \Gamma_P + \Gamma_{\mathrm{body}}
-\label{eq:panelCirculationAreaIntegral}
+\omega \approx \omega^h(\mathbf{x}_j) = \sum_{i=1}^N \alpha_i \delta(\mathbf{x}_j - \mathbf{x_i}).
 \end{equation}
 
-where $\Gamma_P$ is the circulation of the wall region ignored in the Eulerian domain,
-\begin{equation}
-\Gamma_P = \iint\limits_{\Omega_P} \omega \ \mathrm{d}A.
-\end{equation} 
+We smoothed the singular kernel $\delta$ by using a Gaussian kernel $\zeta_{\sigma}$. This approach of using vortex blobs is common in the field of vortex particle method and ensures smooth vorticity field. However, the downside to this approach is that on top of the discretization error, we know introduce a so called ``smoothing error" or the ``regularization error" due to the use of gaussian kernel. This is equivalent to blurring the vorticity field, as explained by Barba \& Rossi \cite{Barba2010a}, and the cumulative error in the initialization error is given as
 
-Equation \ref{eq:panelCirculationAreaIntegral} can be simplified using the Stokes' theorem,
+\begin{equation*}
+\mathrm{Initialization\ Error} = \mathrm{Smoothing\  Error} + \mathrm{Discretization\ Error}
+\end{equation*}
+
+To perform accurate interpolation of the vorticity $\omega$ inside the interpolation domain $\Omega_{int}$ onto the particles $\mathbf{x}_j \in \Omega_{int}$, we must satisfy the following interpolation problem:
+	\begin{equation}
+	\omega(\mathbf{x}_j) = \hat{\omega}(\mathbf{x}_j),
+	\end{equation}
+where
+	\begin{equation}
+	\hat{\omega}(\mathbf{x}) = \sum_{i=1}^{N} \alpha_i \zeta_{\sigma}(\mathbf{x}_j - \mathbf{x}_i),
+	\end{equation}
+is the discrete vorticity field represented by the linear combinations of the gaussian basis function $\zeta_{\sigma}$ with the vortex blob strength $\alpha_i$. Therefore, assuming the $\alpha_i = \omega(\mathbf{x}_i)\cdot{h^2}$ is incorrect.
+
+As discussed in the secion \ref{} of the Lagrangian chapter, one would assume that the strengths of the particles can be determined by solving the following linear system of equations:
 \begin{equation}
-\Gamma_{\gamma} = \oint\limits_{\partial \Omega_P} \mathbf{u}\cdot\mathrm{d}\mathbf{s}.
+\mathbf{A}_{ij}\alpha_i = \omega_i,
+\end{equation}
+where 
+\begin{equation}
+\mathbf{A}_{ij} = \zeta_{\sigma}(\mathbf{x}_j-\mathbf{x}_i).
+\label{eq:initialization}
 \end{equation}
 
-\subsubsection*{Modified particle correction}
+However inverting the matrix $\mathbf{A}$ is still an open question, as stated by Koumoutsakos \& Cottet \cite{}. The problem is that the matrix $\mathbf{A}$ is full and badly condition for direct inversion. For a global field interpolation (i.e for unbounded domain), one could use the Beale's iterative method which uses a \printAcron{successive over-relaxation}{SOR} for solving the equation \ref{eq:initialization}. This method relies on iterative correction of all the particles $\mathbf{x}_i \in \Omega_L$, the Lagrangian domain. 
 
-The second problem that we are concerned with is the initialization method to assign the strengths of the particles inside the interpolation region, $\mathbf{x} \in \Omega_{int}$. 
+In our case of initializing the strengths of the particles $\mathbf{x}_i$ in the sub-domain $\Omega_{int}$, it would require us to modify the strength of all the particles $\mathbf{x}_i$ in all $\Omega_B$. This is not feasible not feasible as the size of the problem is very large when the wake is fully developed ($10^5 \leqslant N_{\mathrm{blobs}}$).
 
-We discussed the problem of initializing the strengths of the blobs $\alpha_i$ as
-\begin{equation}
-\alpha_i = \omega_i \cdot h^2
-\end{equation}
-in section \ref{} of the Lagrangian chapter. This is a common assumption used in the field of vortex particle method for initializing the strengths of the particles in the Lagrangian domain. 
+Therefore, currently the best possible way of ensure minimal interpolation error from Eulerian domain onto vortex blobs is to perform the following steps:
+\begin{itemize}
+\item Minimize the smoothing and discretization error by maximizing the particle resolution, achieved by setting $Ov=1$ and reducing $\sigma$ such that the relative error $\epsilon \leqslant 5\%$.
+\item As conservation of circulation is a key requirement in fluid dynamic simulation, we ensure that conservation of circulation is not violated when initializing the particles inside the domain $\Omega_{int}$.
+\end{itemize}
 
-%Therefore, by using Stokes' formulation, we can transfer the ignored circulation of the domain $\Omega_P$ and furthermore, the circulation inside a rotating body.
+
+\subsection{Modified coupling strategy}
+
+The modified version of the hybrid coupling algorithm into five sub-steps
+\begin{enumerate}
+\item \textbf{Probe vorticity}: Interpolate the vorticity from the Eulerian finite element space onto a uniform structured grid.
+\item \textbf{Remove particles}: Remove particles that are inside the interpolation domain $\Omega_{int}$.
+\item \textbf{Generate particles}: Generate zero-strength particle inside 
+\item \textbf{Assign strengths}: Using the local volume and sldada.. assign the strength of the particles
+\item \textbf{Conserve circulation}: Determine the mismatch in the total circulation of the Lagrangian field as determine the strength of the panels such that circulation is conserved.
+\end{enumerate}
+
+\subsubsection*{Probe vorticity}
+
+The first step of the hybrid coupling algorithm is to interpolate the vorticity $\omega$ from the the scalar-value function space $W$ onto a structured grid $\hat{\mathbf{x}}$ that follows and covers the entire Eulerian grid.
+
+
+
+The vorticity of the Finite element space is probed.
+
+\subsubsection*{Remove particles}
+
+Remove particles inside the interpolation domain.
+
+\subsubsection*{Generate particles}
+
+\subsubsection*{Conserve circulation}
+
+Solve for panel strengths
+% of the Eulerian domain overlapping with the vortex panel domain $\Gamma_P \in \Omega_E \cap \Omega_P$ should be transfered to the vortex panels of the Lagrangian domain. In the section \ref{} of the Lagrangian chapter, we have determined that in the case of rotating body, we have to take in account of the circulation inside the body,
+%
+%Therefore, the total circulation assigned to the vortex panel must be:
+%\begin{equation}
+%\Gamma_{\gamma} = \oint \gamma(s) \ \mathrm{d}s = \Gamma_P + \Gamma_{\mathrm{body}}
+%\label{eq:panelCirculationAreaIntegral}
+%\end{equation}
+%
+%where $\Gamma_P$ is the circulation of the wall region ignored in the Eulerian domain,
+%\begin{equation}
+%\Gamma_P = \iint\limits_{\Omega_P} \omega \ \mathrm{d}A.
+%\end{equation} 
+%
+%Equation \ref{eq:panelCirculationAreaIntegral} can be simplified using the Stokes' theorem,
+%\begin{equation}
+%\Gamma_{\gamma} = \oint\limits_{\partial \Omega_P} \mathbf{u}\cdot\mathrm{d}\mathbf{s}.
+%\end{equation}
+
+%\subsubsection*{Modified particle correction}
+%
+%The second problem that we are concerned with is the initialization method to assign the strengths of the particles inside the interpolation region, $\mathbf{x} \in \Omega_{int}$. 
+%
+%We discussed the problem of initializing the strengths of the blobs $\alpha_i$ as
+%\begin{equation}
+%\alpha_i = \omega_i \cdot h^2
+%\end{equation}
+%in section \ref{} of the Lagrangian chapter. This is a common assumption used in the field of vortex particle method for initializing the strengths of the particles in the Lagrangian domain. 
+%
+%%Therefore, by using Stokes' formulation, we can transfer the ignored circulation of the domain $\Omega_P$ and furthermore, the circulation inside a rotating body.
 
 
 
