@@ -1,5 +1,5 @@
+%\documentclass{src/dutmsc}%
 \documentclass{src/dutmsc}%
-%\documentclass[draft]{src/dutmsc}%
 %
 % STARTING FROM VERSION 1.0.8, DIRECT PDF OUTPUT FROM THE LATEX SOURCE IS SUPPORTED.
 % IF YOU WANT TO USE THIS FEATURE, MAKE SURE ALL YOUR OWN FIGURES ARE IN A FORMAT
@@ -111,6 +111,16 @@
   tuborg/.style={decorate},
   tubnode/.style={midway, right=2pt},
 }
+
+
+% Tikz stypes
+\tikzstyle{every node}=[draw=black,thick,anchor=west]
+\tikzstyle{optional}=[dashed,fill=gray!20]
+\tikzstyle{selected}=[draw=red,fill=red!30]
+\tikzstyle{class}=[draw,fill=blue!20]
+\tikzstyle{module}=[draw,fill=orange!50!red!50!white]
+\tikzstyle{script}=[draw,fill=yellow!20]
+\newcommand\mybox[2][]{\tikz[overlay]\node[fill=blue!20,inner sep=2pt, anchor=text, rectangle,#1] {#2};\phantom{#2}}
 
 
 %=================%

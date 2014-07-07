@@ -163,15 +163,15 @@
   \item [{\textbf {ISC}}]\begingroup Impulsively Started Cylinder\nomeqref {3.40}
 		\nompageref{69}
   \item [{\textbf {LHS}}]\begingroup Left Hand Side\nomeqref {2.49}
-		\nompageref{27}
+		\nompageref{28}
   \item [{\textbf {LSTSQ}}]\begingroup Least-Square solution method\nomeqref {2.61}
-		\nompageref{29}
+		\nompageref{30}
   \item [{\textbf {MPI}}]\begingroup Message Passing Interface\nomeqref {3.15}
 		\nompageref{50}
   \item [{\textbf {MRS}}]\begingroup Modified Remeshing Scheme\nomeqref {2.30}
 		\nompageref{23}
   \item [{\textbf {PC}}]\begingroup Population Control\nomeqref {2.71}
-		\nompageref{36}
+		\nompageref{38}
   \item [{\textbf {PIV}}]\begingroup Particle Image Velocimetry\nomeqref {1.0}
 		\nompageref{2}
   \item [{\textbf {PSE}}]\begingroup Particle Strength Exchange\nomeqref {2.29}

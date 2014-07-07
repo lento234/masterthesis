@@ -46,7 +46,7 @@ colorMapDaen['colors'] = np.array([[0,1,180],[0,1,180],[0,0,232],[0,27,255],
 # Custom colormap
 clim = 5     
 cmap,norm = mpl.colors.from_levels_and_colors(colorMapDaen['levels']*clim,colorMapDaen['colors'],extend='both')
-                              
+cmap.set_under('k',1.)
 
 # jet Colormap
 colorMap = 'jet'
@@ -145,6 +145,8 @@ xyBoundaryPoly = rotate(np.array([(0.5*widthFE-dBdry)*np.cos(beta),
 #ellipseFE = mpl.patches.Ellipse(xy=[0.,0.], width=wFE,height=hFE,angle=30.,
                                   #fill=True,lw=0.5,facecolor='None',zorder=3)
 
+
+
 # Ellipse
 ellipse = mpl.path.Path(xyEllipse.T,closed=True)
 
@@ -202,24 +204,29 @@ XL = XLagr.flatten()[insideBoth]
 YL = YLagr.flatten()[insideBoth]
 
 # Generate structured grid
-xStructured = np.arange(xyBoundsFE[0]-hLagr*0.5,xyBoundsFE[1]+hLagr*0.5*1.5,hLagr*0.5)
-yStructured = np.arange(xyBoundsFE[2]-hLagr*0.5,xyBoundsFE[3]+hLagr*0.5*1.5,hLagr*0.5)
+#xStructured = np.arange(xyBoundsFE[0]-hLagr*0.5,xyBoundsFE[1]+hLagr*0.5*1.5,hLagr*0.5)
+#yStructured = np.arange(xyBoundsFE[2]-hLagr*0.5,xyBoundsFE[3]+hLagr*0.5*1.5,hLagr*0.5)
+xStructured = np.arange(xyBoundsFE[0]-hLagr*0.5,xyBoundsFE[1]+hLagr*0.5*1.5,hLagr)
+yStructured = np.arange(xyBoundsFE[2]-hLagr*0.5,xyBoundsFE[3]+hLagr*0.5*1.5,hLagr)
 xStructured, yStructured = np.meshgrid(xStructured,yStructured)
 nStructured = xStructured.shape
 xStructured, yStructured = rotate(np.vstack((xStructured.flatten(),yStructured.flatten()))).reshape(2,nStructured[0],nStructured[1])
 
-## Interpolate data
-#wStructured = spinterp.griddata(np.vstack((xFEI,yFEI)).T, wFEI, 
-#                                np.vstack((xStructured.flatten(),
-#                                           yStructured.flatten())).T,
-#                                method='nearest').reshape(nStructured,nStructured)
-#
-#
-## Interpolate from Structured grid to blobs
-#WL = spinterp.griddata(np.vstack((xStructured.flatten(),yStructured.flatten())).T, wStructured.flatten(),
-#                       np.vstack((XL,YL)).T,method='linear')
-#                       
-#selected = np.abs(WL)>0.5
+# Interpolate daa
+wStructured = spinterp.griddata(np.vstack((xFEI,yFEI)).T, wFEI, 
+                                np.vstack((xStructured.flatten(),
+                                           yStructured.flatten())).T).reshape(nStructured[0],nStructured[1])#method='nearest'                                
+
+#masked_array = np.ma.masked_where(np.isnan(wStructured),wStructured)
+#wTemp = wStructured.copy()
+wStructured[np.isnan(wStructured)] = 0.
+#wTemp[np.isnan(wStructured)] = 0.
+
+# Interpolate from Structured grid to blobs
+WL = spinterp.griddata(np.vstack((xStructured.flatten(),yStructured.flatten())).T, wStructured.flatten(),
+                       np.vstack((XL,YL)).T,method='linear')
+                       
+selected = np.abs(WL)>0.1
 
 # ----------------------------------------------------------
 
@@ -491,7 +498,7 @@ xStructured, yStructured = rotate(np.vstack((xStructured.flatten(),yStructured.f
 
 # ----------------------------------------------------------
 # Plot definition of the interpolation region according to stock
-
+#
 #fig = py.figure(6)
 #ax  = fig.add_subplot(111)
 #
@@ -499,15 +506,23 @@ xStructured, yStructured = rotate(np.vstack((xStructured.flatten(),yStructured.f
 #py.triplot(xFEI,yFEI,color='0.5',lw=0.5,zorder=1)
 ## Plot Eulerian boundary
 #py.plot(xyFEBoundary[0],xyFEBoundary[1],'k-',lw=0.5,zorder=2)
+#
+#
+## Plot the bounding box
+#xyBBOX = np.hstack((np.min(xyBoundaryPoly,axis=1),np.max(xyBoundaryPoly,axis=1)))
+#py.plot([xyBBOX[0],xyBBOX[2],xyBBOX[2],xyBBOX[0],xyBBOX[0]],
+#        [xyBBOX[1],xyBBOX[1],xyBBOX[3],xyBBOX[3],xyBBOX[1]],'g:',lw=2)
+#
 ## Plot square
 #ax.add_patch(mpl.patches.PathPatch(ellipse,fill=True,lw=1,facecolor='LightGrey',zorder=3))
 ## Plot blobs
 #py.scatter(xB,yB,s=100,c='w',lw=1,zorder=4)
 ## Plot interp-region
-#col = mpl.collections.PathCollection([interpRegion], lw=0, color='None',facecolor='LightPink', alpha=0.7, zorder=5)
-#ax.add_collection(col)
+##col = mpl.collections.PathCollection([interpRegion], lw=0, color='None',facecolor='LightPink', alpha=0.7, zorder=5)
+##ax.add_collection(col)
+#ax.add_patch(mpl.patches.PathPatch(boundary, lw=0, facecolor='LightPink', alpha=0.7, zorder=5))
 ## Plot interp region boundary lines
-#py.plot(xySurfacePoly[0],xySurfacePoly[1],'r--',zorder=6)
+##py.plot(xySurfacePoly[0],xySurfacePoly[1],'r--',zorder=6)
 #py.plot(xyBoundaryPoly[0],xyBoundaryPoly[1],'r--',zorder=6)
 #
 #py.axis('scaled')
@@ -517,21 +532,44 @@ xStructured, yStructured = rotate(np.vstack((xStructured.flatten(),yStructured.f
 ## Draw arrow
 ### Add text
 ##ax.annotate(r'$\partial \Omega_{E}$', xy=(-0.60, 3.75),fontsize=20,zorder=20)
-#ax.annotate(r'$\partial \Omega_{p}$', xy=(-0.266, 0.2), xycoords='data',fontsize=20,xytext=(-0.2, 0.6), textcoords='data',
-#           arrowprops=dict(arrowstyle="->", color="k", shrinkA=5, shrinkB=5,
-#                           patchA=None, patchB=None,
-#                           connectionstyle="arc3,rad=0.2",),zorder=20)
+##ax.annotate(r'$\partial \Omega_{p}$', xy=(-0.266, 0.2), xycoords='data',fontsize=20,xytext=(-0.2, 0.6), textcoords='data',
+##           arrowprops=dict(arrowstyle="->", color="k", shrinkA=5, shrinkB=5,
+##                           patchA=None, patchB=None,
+##                           connectionstyle="arc3,rad=0.2",),zorder=20)
 ##ax.annotate(r'$\partial \Omega_{\mathrm{wall}}$', xy=(-2.5, -0.75),fontsize=20,zorder=20)
-#ax.annotate(r'$\partial \Omega_{int}$', xy=(-1., 0.95), xycoords='data',fontsize=20,xytext=(-1, 1.5), textcoords='data',
+##ax.annotate(r'$\partial \Omega_{int}$', xy=(-1.2, -1.3), xycoords='data',fontsize=20,xytext=(-0.4, -0.7), textcoords='data',
+##           arrowprops=dict(arrowstyle="->", color="k", shrinkA=5, shrinkB=5,
+##                           patchA=None, patchB=None,
+##                           connectionstyle="arc3,rad=0.2",),zorder=20)
+#ax.annotate('', xy=(-1.2, -1.3), xycoords='data',fontsize=20,xytext=(-0.4, -0.7), textcoords='data',
 #           arrowprops=dict(arrowstyle="->", color="k", shrinkA=5, shrinkB=5,
 #                           patchA=None, patchB=None,
 #                           connectionstyle="arc3,rad=0.2",),zorder=20)
-#          
-#ax.annotate(r'$\Omega_{int}$', xy=(-0.6, -1.125),fontsize=25,zorder=20)
+#ax.text(-0.45,-0.75,r'$\partial \Omega_{int}$',fontsize=20,zorder=20)
+#
+#
+##          
+##ax.annotate(r'$\{\partial \Omega_{int}\}_{\mathrm{BBOX}}$', xy=(-0.71, 1.57), xycoords='data',fontsize=20,xytext=(-0.25, 2.5), textcoords='data',
+##           arrowprops=dict(arrowstyle="->", color="k", shrinkA=5, shrinkB=5,
+##                           patchA=None, patchB=None,
+##                           connectionstyle="arc3,rad=0.2",),zorder=20)
+#            
+#ax.annotate('', xy=(-0.71, 1.57), xycoords='data',fontsize=20,xytext=(-0.1, 2.), textcoords='data',
+#           arrowprops=dict(arrowstyle="->", color="k", shrinkA=5, shrinkB=5,
+#                           patchA=None, patchB=None,
+#                           connectionstyle="arc3,rad=0.2",),zorder=20)
+#ax.text(-0.1,2.,r'$\{\partial \Omega_{int}\}_{\mathrm{BBOX}}$'   ,fontsize=20,zorder=20)                           
+#ax.text(-1,1.8,r'$1$',fontsize=15,zorder=20)                           
+#ax.add_patch(mpl.patches.Circle((-0.93,1.88),0.15,fc='0.8'))
+#ax.text(-1.4,-0.9,r'$2$',fontsize=15,zorder=20)                           
+#ax.add_patch(mpl.patches.Circle((-1.34,-0.82),0.15,fc='0.8',zorder=19))
+#
+##r     
+##ax.annotate(r'$\Omega_{int}$', xy=(-0.6, -1.125),fontsize=25,zorder=20)
 #
 #
 ##py.plot([-5,5,5,-5,-5],[-5,-5,5,5,-5],'k--')
-#
+##
 #py.savefig('./interpRegion.pdf')
 
 # ----------------------------------------------------------
@@ -540,32 +578,35 @@ xStructured, yStructured = rotate(np.vstack((xStructured.flatten(),yStructured.f
 # ----------------------------------------------------------
 # Plot removing particles in the outer polygon 
 
-#fig = py.figure(7)
-#ax  = fig.add_subplot(111)
-#
-## Plot Eulerian grid
-#py.triplot(xFEI,yFEI,color='0.5',lw=0.5,zorder=1)
-## Plot Eulerian boundary
-#py.plot(xyFEBoundary[0],xyFEBoundary[1],'k-',lw=0.5,zorder=2)
-## Plot square
-#ax.add_patch(mpl.patches.PathPatch(ellipse,fill=True,lw=1,facecolor='LightGrey',zorder=3))
-## Plot blobs
-#py.scatter(xBO,yBO,s=100,c='w',lw=1,zorder=4)
-## Plot interp-region
-##col = mpl.collections.PathCollection([interpRegion], facecolor='LightPink', alpha=0.8, zorder=10, lw=0)
-##ax.add_patch(mpl.patches.PathPatch(interpRegion,fill=True,lw=0,facecolor='Yellow',alpha=0.8,zorder=10)) #Lime, LawnGreen
-##ax.add_collection(col)
-##ax.set_clip_path(mpl.patches.Polygon(xySurfacePoly.T))
-#
-##py.plot(rotate(xySurfacePoly)[0],rotate(xySurfacePoly)[1],'r--',zorder=11)
-#py.plot(xyBoundaryPoly[0],xyBoundaryPoly[1],'r--',zorder=4)
-#
-#py.axis('scaled')
-#py.axis([-3,3,-3,3])
-#py.axis('off')
-#py.plot([-5,5,5,-5,-5],[-5,-5,5,5,-5],'k--')
-#
-#py.savefig('./particleRemoved.pdf')
+fig = py.figure(7)
+ax  = fig.add_subplot(111)
+
+# Plot Eulerian grid
+py.triplot(xFEI,yFEI,color='0.5',lw=0.5,zorder=1)
+# Plot Eulerian boundary
+py.plot(xyFEBoundary[0],xyFEBoundary[1],'k-',lw=0.5,zorder=2)
+# Plot square
+ax.add_patch(mpl.patches.PathPatch(ellipse,fill=True,lw=1,facecolor='LightGrey',zorder=3))
+# Plot blobs
+py.scatter(xBO,yBO,s=100,c='w',lw=1,zorder=4)
+# Plot interp-region
+#col = mpl.collections.PathCollection([interpRegion], facecolor='LightPink', alpha=0.8, zorder=10, lw=0)
+#ax.add_patch(mpl.patches.PathPatch(interpRegion,fill=True,lw=0,facecolor='Yellow',alpha=0.8,zorder=10)) #Lime, LawnGreen
+#ax.add_collection(col)
+#ax.set_clip_path(mpl.patches.Polygon(xySurfacePoly.T))
+
+#py.plot(rotate(xySurfacePoly)[0],rotate(xySurfacePoly)[1],'r--',zorder=11)
+py.plot(xyBoundaryPoly[0],xyBoundaryPoly[1],'r--',zorder=4)
+
+py.axis('scaled')
+py.axis([-3,3,-3,3])
+py.axis('off')
+py.plot([-5,5,5,-5,-5],[-5,-5,5,5,-5],'k--')
+
+ax.text(-1.4+2.75,-0.9+2.75,r'$3$',fontsize=15,zorder=20)                           
+ax.add_patch(mpl.patches.Circle((-1.34+2.75,-0.82+2.75),0.15,fc='0.8',zorder=19))
+
+py.savefig('./particleRemoved.pdf')
 
 # ----------------------------------------------------------
 
@@ -577,8 +618,8 @@ xStructured, yStructured = rotate(np.vstack((xStructured.flatten(),yStructured.f
 #ax  = fig.add_subplot(111)
 #
 ## Plot the lagrangian grid
-#py.plot(XLagr,YLagr,alpha=0.5,color='Lime',zorder=1)
-#py.plot(XLagr.T,YLagr.T,alpha=0.5,color='Lime',zorder=1)
+#py.plot(XLagr,YLagr,alpha=0.5,color='Lime',zorder=1,lw=0.5)
+#py.plot(XLagr.T,YLagr.T,alpha=0.5,color='Lime',zorder=1,lw=0.5)
 ## Plot Eulerian boundary
 #py.plot(xyFEBoundary[0],xyFEBoundary[1],'k-',lw=0.5,zorder=2)
 ## Plot square
@@ -586,7 +627,7 @@ xStructured, yStructured = rotate(np.vstack((xStructured.flatten(),yStructured.f
 ## Plot blobs (outside)
 #py.scatter(xBO,yBO,s=80,c='w',lw=1,zorder=4,edgecolor='0.75')
 ## Plot the blobs inside
-#py.scatter(XL,YL,s=80,c='0.9',lw=1,zorder=4)
+#py.scatter(XL,YL,s=80,c='w',lw=1,zorder=4)
 ## Plot interpolation boundary lines
 #py.plot(xySurfacePoly[0],xySurfacePoly[1],'r--',zorder=5)
 #py.plot(xyBoundaryPoly[0],xyBoundaryPoly[1],'r--',zorder=5)
@@ -633,29 +674,56 @@ xStructured, yStructured = rotate(np.vstack((xStructured.flatten(),yStructured.f
 # ----------------------------------------------------------
 # Interpolate the mesh data from FE to structured grid
 
-fig = py.figure(91)
-ax  = fig.add_subplot(111)
+#fig = py.figure(91)
+#ax  = fig.add_subplot(111)
+#
+## Plot mesh
+#py.triplot(xFEI,yFEI,'-',color='silver',lw=0.5,zorder=1)
+## Plot square
+#ax.add_patch(mpl.patches.PathPatch(ellipse,fill=True,lw=0,facecolor='LightGrey',edgecolor='None',zorder=2))
+## Plot the structured grid
+#py.plot(xStructured,yStructured,'-',color='LightCoral',zorder=1,lw=0.5)
+#py.plot(xStructured.T,yStructured.T,'-',color='LightCoral',zorder=1,lw=0.5)
+#
+## Add annotation
+##ax.annotate("", xy=(2, 1.75), xycoords='data',xytext=(-1.5, 1.75), textcoords='data',
+##            arrowprops=dict(arrowstyle="->", color="k", shrinkA=5, shrinkB=5,
+#                            #patchA=None, patchB=None,
+#                            #connectionstyle="arc3,rad=-0.5",),)
+#
+## Draw xis
+##ax.arrow(xStructured[0,0],yStructured[0,0],rotate([0.,0.5])[0],rotate([0.,0.5])[1],head_width=0.1,head_length=0.1,fc='k',ec='k',zorder=10,lw='0.5')
+##ax.arrow(xStructured[0,0],yStructured[0,0],rotate([0.5,0.])[0],rotate([0.5,0.])[1],head_width=0.1,head_length=0.1,fc='k',ec='k',zorder=10,lw='0.5')
+#
+#ax.arrow(0.,0.,rotate([0.,0.5])[0],rotate([0.,0.5])[1],head_width=0.1,head_length=0.1,fc='k',ec='k',zorder=10,lw='0.5')
+#ax.arrow(0.,0.,rotate([0.5,0.])[0],rotate([0.5,0.])[1],head_width=0.1,head_length=0.1,fc='k',ec='k',zorder=10,lw='0.5')
+#
+#
+#py.axis('scaled')
+#py.axis([-3,3,-3,3])
+#py.axis('off')
+#
+#py.plot(xStructured[0,0],yStructured[0,0],'ko')
+#py.plot([xStructured[0,0], xStructured[0,0]+2.],[yStructured[0,0],yStructured[0,0]],'k--',lw=0.5)
+#
+#
+#ax.annotate(r'$(x_o,y_o)_{str}$', xy=(xStructured[0,0]-0.4, yStructured[0,0]-0.3),fontsize=12,zorder=20)
+#ax.annotate(r'$\theta_{\mathrm{loc}}$', xy=(0.55, -2.2),fontsize=12,zorder=20)
+##ax.annotate(r"$y'$", xy=rotate([-0.25, 0.9])+2.,fontsize=13,zorder=20)
+##ax.annotate(r"$x'$", xy=rotate([0.65, -0.15])+([xStructured[0,0], yStructured[0,0]]),fontsize=13,zorder=20)
+##ax.annotate(r"$y'$", xy=rotate([-0.3, 0.5])+([xStructured[0,0], yStructured[0,0]]),fontsize=13,zorder=20)
+#ax.annotate(r"$x'$", xy=rotate([0.5, -0.15]),fontsize=13,zorder=20)
+#ax.annotate(r"$y'$", xy=rotate([-0.3, 0.5]),fontsize=13,zorder=20)
+#
+#ax.annotate("", xy=(xStructured[0,0]+1.5, yStructured[0,0]), xycoords='data',xytext=(xStructured[0,0]+1.5-0.25, yStructured[0,0]+0.75), textcoords='data',
+#            arrowprops=dict(arrowstyle="<|-|>", color="k", shrinkA=5, shrinkB=5,
+#                            patchA=None, patchB=None,
+#                            connectionstyle="arc3,rad=-0.2",),)
+#
+#
+#py.plot([-3,3,3,-3,-3],[-3,-3,3,3,-3],'k--')
 
-# Plot mesh
-py.triplot(xFEI,yFEI,'-',color='0.5',lw=0.25,zorder=1)
-# Plot square
-ax.add_patch(mpl.patches.PathPatch(ellipse,fill=True,lw=0,facecolor='LightGrey',edgecolor='None',zorder=2))
-# Plot the structured grid
-py.plot(xStructured,yStructured,'-',color='Lime',zorder=1,lw=0.5)
-py.plot(xStructured.T,yStructured.T,'-',color='Lime',zorder=1,lw=0.5)
-
-# Add annotation
-#ax.annotate("", xy=(2, 1.75), xycoords='data',xytext=(-1.5, 1.75), textcoords='data',
-#            arrowprops=dict(arrowstyle="->", color="k", shrinkA=5, shrinkB=5,
-                            #patchA=None, patchB=None,
-                            #connectionstyle="arc3,rad=-0.5",),)
-
-py.axis('scaled')
-py.axis([-3,3,-3,3])
-py.axis('off')
-#py.plot([-10,10,10,-10,-10],[-5,-5,6,6,-5],'k--')
-
-py.savefig('./interpolation_FE2andStructuredGrid.pdf')
+#py.savefig('./interpolation_FE2andStructuredGrid.pdf')
 
 # ----------------------------------------------------------
 
@@ -669,36 +737,53 @@ py.savefig('./interpolation_FE2andStructuredGrid.pdf')
 #
 ## Plot Vorticity on FE
 ##py.tripcolor(xFEI-5,yFEI,wFEI,contourLevelsFE,rasterized=True,zorder=1,cmap=colorMapHC)
-#py.tripcolor(xFEI-5,yFEI,wFEI,norm=norm,cmap=cmap,rasterized=True,zorder=1)
+#py.tripcolor(xFEI-2.5,yFEI,wFEI,norm=norm,cmap=cmap,rasterized=True,zorder=1)
 #py.clim(-5,5)
 #
 ## Plot vorticity on structureed
 ##py.pcolormesh(xStructured+5,yStructured,wStructured,rasterized=True,zorder=1,cmap=colorMapHC)
-#py.pcolormesh(xStructured+5,yStructured,wStructured,rasterized=True,zorder=1,cmap=cmap,norm=norm)
+##wStructuredPlot = np.ma.masked_where(np.isnan(wStructured),wStructured)
+#py.pcolormesh(xStructured+2.5,yStructured,wStructured,rasterized=True,zorder=1,cmap=cmap,norm=norm)
 #py.clim(-5,5)  
 #
 ## Plot mesh
-#py.triplot(xFEI-5,yFEI,'-',color='0.75',lw=0.5,zorder=2)
+#py.triplot(xFEI-2.5,yFEI,'-',color='0.75',lw=0.5,zorder=2)
 #
 ## Plot the structured grid
-#py.plot(xStructured+5,yStructured,'-',color='0.75',zorder=2,lw=0.5)
-#py.plot(xStructured.T+5,yStructured.T,'-',color='0.75',zorder=2,lw=0.5)
+#py.plot(xStructured+2.5,yStructured,'-',color='0.75',zorder=2,lw=0.5)
+#py.plot(xStructured.T+2.5,yStructured.T,'-',color='0.75',zorder=2,lw=0.5)
 #
 ## Plot square
-#ax.add_patch(mpl.patches.PathPatch(squareL,fill=True,facecolor='LightGrey',edgecolor='None',zorder=3))
-#ax.add_patch(mpl.patches.PathPatch(squareR,fill=True,facecolor='LightGrey',edgecolor='None',zorder=3))
+#ax.add_patch(mpl.patches.PathPatch(ellipseL,fill=True,facecolor='LightGrey',edgecolor='None',zorder=3))
+#ax.add_patch(mpl.patches.PathPatch(ellipseR,fill=True,facecolor='LightGrey',edgecolor='None',zorder=3))
 #
 ## Add annotation
-#ax.annotate('', xy=(4, 3.5), xycoords='data',xytext=(-3, 3.5), textcoords='data',
+#ax.annotate("", xy=(2, 1.75), xycoords='data',xytext=(-1.5, 1.75), textcoords='data',
 #            arrowprops=dict(arrowstyle="->", color="k", shrinkA=5, shrinkB=5,
 #                            patchA=None, patchB=None,
 #                            connectionstyle="arc3,rad=-0.5",),)
 #
 #py.axis('scaled')
-#py.axis([-10,10,-5,5])
+#py.axis([-5.5,5.5,-4,4])
 #py.axis('off')
 #
+## Plot Eulerian boundary
+#py.plot(xyFEBoundary[0]+2.5,xyFEBoundary[1],'k-',lw=0.5,zorder=2)
+#py.plot(xyFEBoundary[0]-2.5,xyFEBoundary[1],'k-',lw=0.5,zorder=2)
+## Plot interp region boundary lines
+#py.plot(xySurfacePoly[0]+2.5,xySurfacePoly[1],'r--',zorder=6)
+#py.plot(xySurfacePoly[0]-2.5,xySurfacePoly[1],'r--',zorder=6)
 #
+#py.plot(xyBoundaryPoly[0]+2.5,xyBoundaryPoly[1],'r--',zorder=6)
+#py.plot(xyBoundaryPoly[0]-2.5,xyBoundaryPoly[1],'r--',zorder=6)
+#
+#
+#
+#ax.annotate(r'$\omega$', xy=(-2.2,2),fontsize=20,zorder=20)
+#ax.annotate(r'$\hat{\omega}$', xy=(2.2,2),fontsize=20,zorder=20)
+#ax.annotate(r'$W$', xy=(0.,3),fontsize=20,zorder=20)
+
+
 #py.savefig('./interpolation_FE2StructuredGrid_withData.pdf')
 
 # ----------------------------------------------------------
@@ -713,40 +798,231 @@ py.savefig('./interpolation_FE2andStructuredGrid.pdf')
 #ax  = fig.add_subplot(111)
 #
 ## Plot vorticity on structured
-##py.pcolormesh(xStructured-5,yStructured,wStructured,rasterized=True,zorder=1,cmap=colorMapHC)
-#py.pcolormesh(xStructured-5,yStructured,wStructured,rasterized=True,zorder=1,cmap=cmap,norm=norm)
+#py.pcolormesh(xStructured-2.5,yStructured,wStructured,rasterized=True,zorder=1,cmap=cmap,norm=norm)
 #py.clim(-5,5)         
 #
 ## Plot the structured grid
-#py.plot(xStructured-5,yStructured,'-',color='0.75',zorder=2,lw=0.5)
-#py.plot(xStructured.T-5,yStructured.T,'-',color='0.75',zorder=2,lw=0.5)
+#py.plot(xStructured-2.5,yStructured,'-',color='0.75',zorder=2,lw=0.5)
+#py.plot(xStructured.T-2.5,yStructured.T,'-',color='0.75',zorder=2,lw=0.5)
+#
+## Plot interp region boundary lines
+#py.plot(xySurfacePoly[0]-2.5,xySurfacePoly[1],'r--',zorder=6)
+#py.plot(xyBoundaryPoly[0]-2.5,xyBoundaryPoly[1],'r--',zorder=6)
+#py.plot(xyFEBoundary[0]-2.5,xyFEBoundary[1],'k-',zorder=6)
+#
 #
 ## Plot square
-#ax.add_patch(mpl.patches.PathPatch(squareL,fill=True,facecolor='LightGrey',edgecolor='None',zorder=3))
-##ax.add_patch(mpl.patches.PathPatch(squareR,fill=True,facecolor='LightGrey',edgecolor='None',zorder=3))
-#ax.add_patch(mpl.patches.PathPatch(squareR,fill=True,facecolor='LightGrey',lw=1,zorder=3))
+#ax.add_patch(mpl.patches.PathPatch(ellipseL,fill=True,facecolor='LightGrey',edgecolor='None',zorder=3))
+#ax.add_patch(mpl.patches.PathPatch(ellipseR,fill=True,facecolor='LightGrey',lw=1,zorder=3))
 #
 ## Plot blobs (outside)
-#py.scatter(xBO+5,yBO,s=100*0.5,c='w',lw=1,edgecolor='0.75',zorder=4)
+#py.scatter(xBO+2.5,yBO,s=80*0.5,c='w',lw=1,edgecolor='0.75',zorder=4)
 #
 ## Plot the blobs inside
-##py.scatter((XL+5)[selected],YL[selected],s=100*0.5,c=WL[selected],lw=1,zorder=4,cmap=colorMapHC)
-#py.scatter((XL+5)[selected],YL[selected],s=100*0.5,c=WL[selected],lw=1,zorder=4,cmap=cmap,norm=norm)
+#py.scatter((XL+2.5)[selected],YL[selected],s=80*0.5,c=WL[selected],lw=1,zorder=4,cmap=cmap,norm=norm)
 #py.clim(-5,5)
 #
 ## Add annotation
-#ax.annotate("", xy=(4, 3.5), xycoords='data',xytext=(-3, 3.5), textcoords='data',
+#ax.annotate("", xy=(2, 1.75), xycoords='data',xytext=(-1.5, 1.75), textcoords='data',
 #            arrowprops=dict(arrowstyle="->", color="k", shrinkA=5, shrinkB=5,
 #                            patchA=None, patchB=None,
 #                            connectionstyle="arc3,rad=-0.5",),)
 #
 ## Plot Eulerian boundary
-#py.plot(rotate(xyFEBoundary)[0]+5,rotate(xyFEBoundary)[1],'k-',zorder=2)
+#py.plot(xyFEBoundary[0]+2.5,xyFEBoundary[1],'k-',zorder=2)
 #
 #py.axis('scaled')
-#py.axis([-10,10,-5,5])
+#py.axis([-5.5,5.5,-4,4])
 #py.axis('off')
 #
+## Plot interp region boundary lines
+#py.plot(xySurfacePoly[0]+2.5,xySurfacePoly[1],'r--',zorder=10)
+#py.plot(xyBoundaryPoly[0]+2.5,xyBoundaryPoly[1],'r--',zorder=6)
+#
+#ax.annotate(r'$\hat{\omega}$', xy=(-3.,1.9),fontsize=22,zorder=20)
+#ax.annotate(r'$\hat{\omega}h^2$', xy=(0.,3),fontsize=20,zorder=20)
+#ax.annotate(r'$\alpha_i$', xy=(2.2,1.9),fontsize=22,zorder=20)
+#
+#
 #py.savefig('./interpolation_StructuredGrid2Blobs.pdf')
+
+# ----------------------------------------------------------
+
+# ----------------------------------------------------------
+# Plot the local orientation
+
+#fig = py.figure()
+#ax  = fig.add_subplot(111)
+#
+#py.plot(rotate(xyEllipse,theta=-30.)[0],rotate(xyEllipse,theta=-30.)[1],color='0.5',lw=1.5)
+## Draw arrow
+#ax.arrow(0.,0.,0,1.2,head_width=0.05,head_length=0.05,fc='k',ec='k',zorder=10,lw='0.5')
+#ax.arrow(0.,0.,1.2,0.,head_width=0.05,head_length=0.05,fc='k',ec='k',zorder=10,lw='0.5')
+#py.plot(0.,0.,'ko')
+#ax.annotate(r'$(x_o,y_o)$', xy=(-0.3, -0.15),fontsize=12,zorder=20)
+#ax.annotate(r"$x'$", xy=(-0.2, 1.1),fontsize=15,zorder=20)
+#ax.annotate(r"$y'$", xy=(1.1, -0.2),fontsize=15,zorder=20)
+#
+#py.axis('scaled')
+##py.axis([-1.5,1.5,-1.5,1.5])
+#py.axis([-2,2,-2,2])
+#py.axis('off')
+#
+##py.plot([-2,2,2,-2,-2],[-2,-2,2,2,-2],'k--')
+#
+#py.savefig('./localOrientation.pdf')
+
+#ax.arrow(-0.7,0.5,0,0.15,head_width=0.025,head_length=0.05,fc='k',ec='k',zorder=10)
+#ax.arrow(0.7,1.5,0,-1+0.05,head_width=0.025,head_length=0.05,fc='k',ec='k',zorder=3)
+
+
+# ----------------------------------------------------------
+
+
+# ----------------------------------------------------------
+# Plot the local orientation
+
+#fig = py.figure()
+#ax  = fig.add_subplot(111)
+#
+#py.plot(xyEllipse[0]+2,xyEllipse[1]+2,color='0.5',lw=1.5)
+#py.plot([2., 3.],[2.,2.],'k--',lw=0.5)
+## Draw arrow
+#ax.arrow(2.,2.,rotate([0.,1.])[0],rotate([0.,1.])[1],head_width=0.05,head_length=0.05,fc='k',ec='k',zorder=10,lw='0.5')
+#ax.arrow(2.,2.,rotate([1.2,0.])[0],rotate([1.2,0.])[1],head_width=0.05,head_length=0.05,fc='k',ec='k',zorder=10,lw='0.5')
+#
+#ax.arrow(0.,-0.5,0.,3.5,head_width=0.1,head_length=0.1,fc='k',ec='k',zorder=10,lw='0.5')
+#ax.arrow(-0.5,0.,3.5,0.,head_width=0.1,head_length=0.1,fc='k',ec='k',zorder=10,lw='0.5')
+#
+#ax.arrow(0.,0.,1.9,1.9,head_width=0.075,head_length=0.075,fc='k',ec='k',zorder=10)
+#
+#py.plot(2.,2.,'ko')
+#ax.annotate(r'$(x_o,y_o)$', xy=(2.1, 1.6),fontsize=12,zorder=20)
+#ax.annotate(r'$\theta_{\mathrm{loc}}$', xy=(3.1, 2.2),fontsize=12,zorder=20)
+#ax.annotate(r"$y'$", xy=rotate([-0.25, 0.9])+2.,fontsize=13,zorder=20)
+#ax.annotate(r"$x'$", xy=rotate([1., 0.15])+2.,fontsize=13,zorder=20)
+#ax.annotate(r"$x$", xy=(2.8, -0.2),fontsize=17,zorder=20)
+#ax.annotate(r"$y$", xy=(-0.2, 2.8),fontsize=17,zorder=20)
+#
+#py.axis('scaled')
+#py.axis([-1,4,-1,4])
+#py.axis('off')
+#
+#
+#ax.annotate("", xy=(3., 2.), xycoords='data',xytext=(2.9, 2.5), textcoords='data',
+#            arrowprops=dict(arrowstyle="<|-|>", color="k", shrinkA=5, shrinkB=5,
+#                            patchA=None, patchB=None,
+#                            connectionstyle="arc3,rad=-0.2",),)
+#
+##py.plot([-.5,3.5,3.5,-.5,-.5],[-.5,-.5,3.5,3.5,-.5],'k--')
+#py.savefig('./globalOrientation.pdf')
+
+
+# ----------------------------------------------------------
+
+
+# ----------------------------------------------------------
+# Interpolation
+#
+#
+#fig = py.figure(figsize=(16,8))
+#ax  = fig.add_subplot(111)
+#
+#
+#xGrid = np.arange(0,1+0.2,0.2)
+#xGrid, yGrid = np.meshgrid(xGrid,xGrid)
+#nGrid = xGrid.shape
+#xGrid, yGrid = rotate(np.vstack((xGrid.flatten(),yGrid.flatten()))).reshape(2,nGrid[0],nGrid[1])
+#
+#
+## Plot the structured grid
+#py.plot(xGrid,yGrid,'-',c='k',zorder=1,lw=0.5)
+#py.plot(xGrid.T,yGrid.T,'-',c='k',zorder=1,lw=0.5)
+#
+## Points
+#py.plot(rotate([0.7,0.7])[0],rotate([0.7,0.7])[1],'o',c='royalblue',zorder=1,lw=1,ms=7,)
+##py.plot(rotate([0.6,0.6])[0],rotate([0.6,0.6])[1],'ro',zorder=1,lw=1,mec='r')
+#py.plot(rotate([0.6,0.6])[0],rotate([0.6,0.6])[1],'r.',zorder=1,lw=1)
+#py.plot(rotate([0.,0.6])[0],rotate([0.,0.6])[1],'r.',zorder=1,lw=1)
+#py.plot(0.,0.,'ko',zorder=1,lw=1,ms=5)
+#py.plot(rotate([0.6,0.])[0],rotate([0.6,0.])[1],'r.',zorder=1,lw=1)
+#py.plot(rotate(np.array([[0.6,0.6],[0.,0.6]]))[0],rotate(np.array([[0.6,0.6],[0.,0.6]]))[1],'r--',zorder=1,lw=2)
+#py.plot(rotate(np.array([[0.,0.6],[0.6,0.6]]))[0],rotate(np.array([[0.,0.6],[0.6,0.6]]))[1],'r--',zorder=1,lw=2)
+#py.plot([0., 0.5],[0.,0.],'k--',lw=0.5)
+#
+## Draw axis
+#ax.arrow(0.,0.,rotate([0.,0.4])[0],rotate([0.,0.4])[1],head_width=0.03,head_length=0.03,fc='k',ec='k',zorder=10,lw='0.5')
+#ax.arrow(0.,0.,rotate([0.4,0.])[0],rotate([0.4,0.])[1],head_width=0.03,head_length=0.03,fc='k',ec='k',zorder=10,lw='0.5')
+#
+#
+#ax.add_patch(mpl.patches.Rectangle(rotate([0.6,0.6]),0.2,0.2,ec='None',fc='LightPink',angle=30.,zorder=1))
+#
+#
+## Texts
+#ax.annotate(r'${\mathbf{x}_o}$', xy=(-0.05, -0.1),fontsize=18,zorder=20)
+#ax.annotate(r'${\mathbf{x}_i}$', xy=rotate([0.72, 0.65]),fontsize=18,zorder=20)
+#ax.annotate(r"$\hat{\jmath}$", xy=rotate([-0.075, 0.6]),fontsize=15,zorder=20)
+#ax.annotate(r"$\hat{\jmath}+1$", xy=rotate([-0.15, 0.8]),fontsize=15,zorder=20)
+#ax.annotate(r"$\hat{\imath}$", xy=rotate([0.6, -0.05]),fontsize=15,zorder=20)
+#ax.annotate(r"$\hat{\imath}+1$", xy=rotate([0.8, -0.05]),fontsize=15,zorder=20)
+#ax.annotate(r'$\theta_{\mathrm{loc}}$', xy=(0.32, 0.025),fontsize=18,zorder=20)
+#
+#
+## Arrow
+#ax.annotate("", xy=(0.3, 0.), xycoords='data',xytext=(0.25, 0.16), textcoords='data',
+#            arrowprops=dict(arrowstyle="<|-", color="k", shrinkA=5, shrinkB=5,
+#                            patchA=None, patchB=None,
+#                            connectionstyle="arc3,rad=-0.2",),)
+#
+#
+## Arrow
+#ax.annotate("", xy=(1.5, 1.15), xycoords='data',xytext=rotate([0.8, 0.8]), textcoords='data',
+#            arrowprops=dict(arrowstyle="-|>", color="k", shrinkA=5, shrinkB=5,
+#                            patchA=None, patchB=None,ec='r',fc='r',
+#                            connectionstyle="arc3,rad=-0.5",),)
+#
+## Plot number 2
+#
+## Box
+#py.plot([1.5,2.5,2.5,1.5,1.5],[0.25,0.25,1.25,1.25,0.25],'k')
+#py.plot(2.2,0.8,'.',c='royalblue',zorder=10,ms=20)
+#
+## Points
+#py.plot([1.5,2.5,2.5,1.5,1.5],[0.25,0.25,1.25,1.25,0.25],'k.',ms=10)
+#py.plot([1.5,2.2],[0.8,0.8],'k--',lw=1)
+#py.plot([2.2,2.2],[0.25,0.8],'k--',lw=1)
+#
+## Texts
+#ax.annotate(r'$\hat{x}$', xy=(0.5*(1.5+2.2), 0.85),fontsize=25,zorder=20)
+#ax.annotate(r'$\hat{y}$', xy=(2.25, 0.5*(0.25+0.8)),fontsize=25,zorder=20)
+#ax.annotate(r'$\omega_1$', xy=(1.5-0.1, 0.25-0.1),fontsize=30,zorder=20)
+#ax.annotate(r'$\omega_2$', xy=(2.5+0.025, 0.25-0.1),fontsize=30,zorder=20)
+#ax.annotate(r'$\omega_3$', xy=(2.5+0.025, 1.25+0.05),fontsize=30,zorder=20)
+#ax.annotate(r'$\omega_4$', xy=(1.5-0.1, 1.25+0.05),fontsize=30,zorder=20)
+#ax.annotate(r'$\Delta x$', xy=(2, -0.0),fontsize=20,zorder=25)
+#ax.annotate(r'$\Delta y$', xy=(2.75, 0.5*(0.25+1.25)),fontsize=25,zorder=20)
+#
+## Delta arrows
+#ax.annotate("", xy=(2.5+0.2, 0.25), xycoords='data',
+#                xytext=(2.5+0.2, 1.25), textcoords='data',
+#            arrowprops=dict(arrowstyle="<|-|>",lw=2,
+#                            connectionstyle="arc3",ec='k',fc='k'),
+#            )
+#            
+#ax.annotate("", xy=(1.5, 0.1), xycoords='data',
+#                xytext=(2.5, 0.1), textcoords='data',
+#            arrowprops=dict(arrowstyle="<|-|>",lw=2,
+#                            connectionstyle="arc3",ec='k',fc='k'),
+#            )
+#            
+#
+#py.axis('scaled')
+#py.axis([-0.75,3,-0.25,1.5])
+#py.axis('off')
+#
+#
+##py.plot([-.5,3.5,3.5,-.5,-.5],[-.5,-.5,3.5,3.5,-.5],'k--')
+#py.savefig('./interpolationManual.pdf')
+
 
 # ----------------------------------------------------------
