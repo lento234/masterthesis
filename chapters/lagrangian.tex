@@ -74,33 +74,35 @@
 %------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------
 \section{Introduction to the Vortex Particle Method}
-\indexAcron{Vortex Particle Method}{VPM} is a numerical method employed in of computational fluid dynamics that deals with the evolution of the vorticity of the fluid in a Lagrangian description. In an Eulerian formulation, the fluid is viewed at a fixed window where the change in the fluid properties are evaluated. However, the Lagrangian formulation, regards the fluid as a collection of particles (or elements) carrying properties of the fluid (vorticity, mass, etc.). 
+\indexAcron{Vortex Particle Method}{VPM} is a numerical method employed in computational fluid dynamics, dealing with the evolution of the vorticity in the fluid from a Lagrangian description. In an Eulerian formulation, the fluid is viewed at a fixed window where the change in the fluid properties are evaluated. However, the Lagrangian formulation, regards the fluid as a collection of particles (or elements) carrying properties of the fluid (such as vorticity, mass, etc.). 
 
-Efficient discretization of the fluid domain becomes a difficult task for cases such as \printAcron{Vertical-Axis Wind Turbine}{VAWT}, where the wake geometry is usually unknown and highly unsteady. Discretizing such wake using Eulerian formulation usually becomes inefficient unless one manually adapts the mesh geometry over time. This is one of the advantage of the VPM. The VPM only needs fluid elements where there is vorticity meaning that the method is inherently auto-adaptive when discretizing the fluid domain. Furthermore, with computational acceleration methods such as \printAcron{Fast-Multipole Method}{FMM} and parallel computation in \printAcron{Graphics Processing Units}{GPU} enables an efficient evolution of the vorticity wake. However, the key advantage of the VPM is that it is ideal for capturing the resolving the long-time characteristics of the unsteady compact vortical structures that are shed off from the VAWT blades \cite{Stock2010a}.
+Efficient discretization of the fluid domain becomes a difficult task for cases such as \printAcron{Vertical-Axis Wind Turbine}{VAWT}, where the wake geometry is complex and unsteady. Discretizing such wake using Eulerian formulation becomes difficult as it requires the adaption of the mesh over time for efficient computation. The VPM only needs fluid elements where there is vorticity meaning that the method is inherently auto-adaptive. This is one of the advantage of the VPM. Furthermore, with computational acceleration methods such as \printAcron{Fast-Multipole Method}{FMM} and parallel computation in \printAcron{Graphics Processing Units}{GPU} enables an efficient evolution of the vorticity wake. 
 
-The advantage of the Lagrangian vortex method w.r.t the Eulerian method was summarized by Wee and Ghoniem \cite{Wee2006a}:
+However, the key advantage of the VPM is that it is ideal for capturing the resolving the long-time characteristics of the unsteady compact vortical structures that are shed off from the VAWT blades, as described by Stock \cite{Stock2010a}, providing the motivation for using VPM for modeling the rotor wake.
+
+A summary of the advantage of the Lagrangian vortex method w.r.t the Eulerian method was provided by Wee and Ghoniem \cite{Wee2006a}:
 \begin{itemize}
 \item Eulerian methods introduce dissipation, even in flows with zero velocity gradient. However such error as minimized at the convection of the Lagrangian method.
-\item The numerical stability is not restricted by the CFL condition.
+\item The numerical stability of the Lagrangian method is not restricted by the CFL condition.
 \item The support of the Lagrangian elements are a small fraction of the fluid domain. The support is confined to location of non-zero vorticity, making the method naturally grid adaptive.
 \end{itemize}
 
-The main literature on the VPM (the Lagrangian domain of the hybrid method), is the book of Cottet and Koumoutsakos, Vortex Methods: Theory and Practice \cite{Cottet2000a}. It gives an insight on the fundamentals of the vortex method (specifically VPM) and gives a summary on hybrid methods.
+The main literature on the VPM (the Lagrangian component of the hybrid method), is the book of Cottet and Koumoutsakos, Vortex Methods: Theory and Practice \cite{Cottet2000a}. It gives an insight on the fundamentals of the vortex method (specifically VPM) and gives a summary on hybrid methods.
 
 \subsection{Vorticity}
-The vorticity $\omega$, the governing element of the VPM. It is given by
+The vorticity $\omega$ is the governing element of the VPM. It is given by
 	\begin{equation}
 	\mathbf{\omega} = \nabla \times \mathbf{u},
 	\label{eq:lag_vort}
 	\end{equation}
-where $\mathbf{u}$ is the velocity vector field. The circulation $\Gamma$ is defined by Stokes' theorem,
+where $\mathbf{u}$ is the velocity vector field. In 2D, the circulation $\Gamma$ is defined by Stokes' theorem as,
 
 	\begin{equation}
-	\Gamma = \int_L\mathbf{u}\cdot \mathrm{d}s= \int_A (\nabla \times u) \cdot \mathbf{n}\ \mathrm{d}A = \int_A\omega\cdot\mathbf{n}\ \mathrm{d}A,
+	\Gamma = \int_L\mathbf{u}\cdot \mathrm{d}s= \int_A (\nabla \times \mathbf{u}) \cdot \mathbf{n}\ \mathrm{d}A = \int_A\omega\cdot\mathbf{n}\ \mathrm{d}A,
 	\label{eq:definitionOfCirculation}
 	\end{equation}
 
-and represents the flux integral of vorticity across the surface $A$, having the line $s$ as boundary. Figure \ref{fig:vorticityCirculation} depicts the relation with velocity $\mathbf{u}$, vorticity $\omega$ and the circulation $\Gamma$ in an arbitrary domain.
+and represents the flux integral of vorticity across the surface $A$, contoured by the line $s$. Figure \ref{fig:vorticityCirculation} depicts this relation of velocity $\mathbf{u}$, vorticity $\omega$ and the circulation $\Gamma$.
 
 	\begin{figure}[!h]
 	\centering
@@ -111,26 +113,27 @@ and represents the flux integral of vorticity across the surface $A$, having the
 
  
 \subsection{Velocity-Vorticity formulation of the Navier-Stokes equations}
-The governing equation of the vortex particle method is the velocity-vorticity formulation $\mathbf{u}-\omega$ of the Navier-Stokes equations \cite{Cottet2000a}. The 2-D incompressible Navier-Stokes momentum equation is given as,
+The governing equation of the vortex particle method is the velocity-vorticity formulation $\mathbf{u}-\omega$ of the Navier-Stokes equations, as presented in Cottet and Koumoutsakos \cite{Cottet2000a}. It is derived from the 2D incompressible Navier-Stokes momentum equation, given as,
 	\begin{equation}
 	\frac{\partial \mathbf{u}}{\partial t} + \mathbf{u}\cdot\nabla\mathbf{u} = - \frac{1}{\rho} \nabla p + \nu \nabla^2\mathbf{u},
 	\label{eq:mom}
 	\end{equation}
-relating the velocity field $\mathbf{u}\left(\mathbf{x},t\right)$ to the pressure field $p\left(\mathbf{x},t\right)$, the kinematic viscosity $\nu$ and density $\rho$. Furthermore, the incompressibility constraint given as,
+relating the velocity field $\mathbf{u}\left(\mathbf{x},t\right)$ to the pressure field $p\left(\mathbf{x},t\right)$, the kinematic viscosity $\nu$ and density $\rho$, and satisfied the incompressibility constraint,
 	\begin{equation}
 	\nabla\cdot\mathbf{u} = 0,
 	\label{eq:la_ic}
 	\end{equation}
-must also be satisfied. To obtain the velocity-vorticity formulation, we should take the curl of equation \ref{eq:mom}, 
+The curl of the equation \ref{eq:mom} is take to obtain the velocity-vorticity formulation, 
 	\begin{equation}
 	\frac{\partial \omega}{\partial t} + \mathbf{u}\cdot\nabla\omega = \nu \nabla^2 \omega,
+	\label{eq:la_vteq}
 	\end{equation}
-which only relates the vorticity to the velocity enabling us to remove the pressure term. Note that as we are dealing with 2D flows, 3D terms (such as the stretching term) does not appear.
+relating the vorticity $\omega$ to the velocity $\mathbf{u}$. Note that the pressure term $p$ disappear  from the equality.
 
 \subsection{Viscous splitting algorithm}
 The VPM was initially used to model the evolution of incompressible, inviscid flows. However, in order to simulate a real flow, we must also deal with the viscous behavior of the fluid. Chorin in 1973 \cite{Chorin1973a}, showed that using the viscous splitting algorithm, it is possible to take the viscous effects of the flow into account. 
 
-The viscous splitting algorithm is a fractional step method, where the viscous and the inviscid part of the vorticity transport equation are dealt with in two subsequent sub-steps, 
+The viscous splitting algorithm is a fractional step method, where the viscous and the inviscid part of the vorticity transport equation, equation \ref{eq:la_vteq}, are dealt with in two subsequent sub-steps,
 
 	\begin{enumerate}
 	\item \textbf{Convection} (sub-step 1):
@@ -146,9 +149,9 @@ The viscous splitting algorithm is a fractional step method, where the viscous a
 		\end{equation}
 	\end{enumerate}
 
-The first sub-step of the evolution deals with the convection of vorticity. The diffusion of vorticity field is dealt with in the second sub-step. There are several advantages to this type of evolution. As the convection and diffusion are handled separately, there is minimum dissipation during the convection step and furthermore, there is no restriction of the advection CFL number, see Wee (2006) \cite{Wee2006a}.
+The first sub-step of the evolution deals with the convection of vorticity. The convection step is detailed in section \ref{sec:covb}. The diffusion of vorticity field is dealt with in the second sub-step. The diffusion of the vorticity field is dealt with in section \ref{sec:diffusionVM}
 
-There are many ways of treating the diffusion of the vorticity field. In this work, we initially used the modified interpolation kernel by Wee (2006) \cite{Wee2006a} that simultaneously discretizes diffusion and redistributes the vortex particles. Later, we used a simple redistribution scheme of Tutty (2010) \cite{Tutty2010a}, that did not constraint the minimum time-step size, see section \ref{sec:diffusionVM}.
+%There are many ways of treating the diffusion of the vorticity field. In this work, we initially used the modified interpolation kernel by Wee (2006) \cite{Wee2006a} that simultaneously discretizes diffusion and redistributes the vortex particles. Later, we used a simple redistribution scheme of Tutty (2010) \cite{Tutty2010a}, that did not constraint the minimum time-step size, see section \ref{sec:diffusionVM}.
 
 %------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------
@@ -156,15 +159,17 @@ There are many ways of treating the diffusion of the vorticity field. In this wo
 \section{Spatial Discretization: Generation of Vortex Blobs}
 \label{sec:spatialDiscretization}
 
-The particle in the Vortex Particle Method arises from the discretization of the vorticity field, equation \ref{eq:lag_vort}. 
+The vorticity $\omega$ and the velocity $\mathbf{u}$ in the vorticity transport equation, equation \ref{eq:la_vteq}, describes a continuous field. However, these variables needs to be discretized to perform a numerical integration required for the numerical simulation. 
 
 \subsection{Discrete form of vorticity field}
 \label{subsec:discreteVorticity}
-The vorticity field is discretized using $N$ vortex particles. The discrete vorticity field is given as,
+The vorticity field is discretized by representing the continuous vorticity field by a summation of particle-type elements, as described by Barba \cite{Barba2010a}. The discrete vorticity field $\omega^h$ is represented by a linear combination of $N$ basis function, given as,
 	\begin{equation}
-	\omega\left(\mathbf{x},t\right) \simeq \omega^h\left(\mathbf{x},t\right) = \sum_{p}\alpha_p\left(t\right)\delta \left[\mathbf{x}-\mathbf{x}_p\left(t\right)\right],
+	\omega\left(\mathbf{x},t\right) \simeq \omega^h\left(\mathbf{x},t\right) = \sum_{p}^N\alpha_p\left(t\right)\delta \left[\mathbf{x}-\mathbf{x}_p\left(t\right)\right],
 	\end{equation}
-where $\delta$ is the Dirac delta function, $\alpha_{p}$ is the circulation carried by the particle at $\mathbf{x}_p$. We must note that $\omega^h$ is the discrete vorticity field and therefore in an approximation of the continuous vorticity field $\omega$. 
+where $\delta$ is the Dirac delta function, and $\alpha_{p}$ is the circulation carried by the particle at $\mathbf{x}_p$. We must note that $\omega^h$ is the discrete vorticity field and therefore in an approximation of the continuous vorticity field $\omega$. 
+
+The velocity $\mathbf{u}$ is related to the vorticity $\omega$ using the Biot-Savart Law.
 
 \subsection{Biot-Savart Law}
 A velocity field $\mathbf{u}$ that satisfies the incompressibility constraint, equation \ref{eq:la_ic}, can be decomposed using the Helmholtz decomposition,
@@ -172,11 +177,28 @@ A velocity field $\mathbf{u}$ that satisfies the incompressibility constraint, e
 	\mathbf{u} = \mathbf{u}_{\omega} + \mathbf{u}_{\phi},
 	\label{eq:helmholtz}
 	\end{equation}
-where $\mathbf{u}_{\omega}$ is the rotational component of the velocity and $\mathbf{u}_{\phi}$ is the irrotational component, i.e. the solenoidal and the potential velocity respectively. The irrotational component is equal to the free-stream velocity $\mathbf{u}_{\infty}$ for an incompressible, unbounded flows. Whereas for bounded flows, we must include the presence of the body as the full Helmholtz decomposition becomes,
-\begin{equation}
-\mathbf{u} = \mathbf{u}_{\omega} + \mathbf{u}_{\phi} + \mathbf{u}_{b},
-\end{equation}
-where $\mathbf{u}_b$ is the velocity due to the body, see section \ref{sec:boundaryConditions}. The velocity can be related to the vorticity using the Biot-Savart law given as,
+where $\mathbf{u}_{\omega}$ is the rotational (solenoidal) component of the velocity $\mathbf{u}$, and $\mathbf{u}_{\phi}$ is the irrotational (potential) component, satisfying the equality,
+	\begin{equation}
+	\nabla \cdot \mathbf{u}_{\omega} = \nabla \times \mathbf{u}_{\phi} = 0.
+	\end{equation}
+ 
+This implies that there exists a stream function $\psi$, such that,
+	\begin{equation}
+	\mathbf{u}_{\omega} = \nabla \times \psi,
+	\end{equation} 
+and therefore the vorticity $\omega$ of the velocity $\mathbf{u}$, is given as,
+	\begin{equation}
+	\omega = \nabla \times \mathbf{u} = - \Delta \psi
+	\label{eq:la_vorPois}
+	\end{equation}
+
+Similarly, there must exist a potential $\phi$, such that,
+	\begin{equation}
+	\mathbf{u}_{\phi} = \nabla \phi.
+	\end{equation}
+For the unbounded problem, the potential velocity $\mathbf{u}_{\phi}$ is simply the free-stream velocity $\mathbf{u}_{\infty}$, however in the case of the bounded problem with solid boundaries, the presence of the body must be taken into account, see section \ref{sec:boundaryConditions}. 
+
+From the Poisson equation \ref{eq:la_vorPois}, the velocity is related to the vorticity by the Biot-Savart law, given as,
 	\begin{equation}
 	\mathbf{u}_{\omega} = \mathbf{K}\star\omega,
 	\end{equation}
@@ -191,25 +213,25 @@ From the kernel, we see that as the distance to the kernel center approaches zer
 
 
 \subsection{Mollified vortex kernels}
-
-A mollified vortex particle is called the vortex blob having a non-zero vortex core size $\sigma$. A smoothing function $\zeta$ is used to mollify the kernel $\mathbf{K}$, satisfying the constraint $\int \zeta = 1$, such that the circulation is conserved. An ideal choice for a smoothing function is the Gaussian distribution, given as,
+\label{subsec:mvk}
+A mollified vortex particle is called the vortex blob, and has a non-zero vortex core size $\sigma$. A smoothing function $\zeta$ is used to mollify the kernel $\mathbf{K}$, satisfying the constraint $\int \zeta = 1$, such that the circulation is conserved. An ideal choice for a smoothing function is the Gaussian distribution, given as,
 	\begin{equation}
 	\zeta_{\sigma} = \frac{1}{k\pi\sigma^2}\exp\left(-\frac{\left|\mathbf{x}\right|}{k\sigma^2}\right),
 	\end{equation}
 
-where typically $k$ is either 1, 2 or 4 and determines the width of the kernel, with $\sigma$ being the core-size of the vortex blob. Figure \ref{fig:gaussianDistribution} depicts the smoothing function $\zeta_{\sigma}$ with $k=2$ and $\sigma = 1$, decaying quickly away from the center of the core. The mollified Biot-Savart kernel $\mathbf{K}_{\sigma}$ is given as,	 
-	\begin{equation}
-	\mathbf{K}_{\sigma} = \mathbf{K} \star \zeta_{\sigma}, 
-	\end{equation}
-
-	\begin{figure}[t]
+where typically $k$ is either 1, 2 or 4, determining the width of the kernel, and $\sigma$ being the core-size of the vortex blob.
+	\begin{figure}[!h]
 	\centering
-	\includegraphics[width=0.7\textwidth]{figures/lagrangian/gaussianKernel.pdf}
+	\includegraphics[width=0.6\textwidth]{figures/lagrangian/gaussianKernel.pdf}
 	\caption{The smoothing function $\zeta_{\sigma}$ for a gaussian distribution with $k=2$, $\sigma=1$.}
 	\label{fig:gaussianDistribution}
 	\end{figure}
 
-giving us the discrete mollified vorticity field as,
+Figure \ref{fig:gaussianDistribution} depicts the smoothing function $\zeta_{\sigma}$ with $k=2$ and $\sigma = 1$, showing that the function decays quickly away from the center of the core. The mollified Biot-Savart kernel $\mathbf{K}_{\sigma}$ is given as,	 
+	\begin{equation}
+	\mathbf{K}_{\sigma} = \mathbf{K} \star \zeta_{\sigma}, 
+	\end{equation}
+resulting in the discrete mollified vorticity field as,
 	\begin{equation}
 	\omega^h\left(\mathbf{x},t\right) = \sum_p \alpha_p\left(t\right)\zeta_{\sigma}\left[\mathbf{x}-\mathbf{x}_p\left(t\right)\right],
 	\label{eq:mollifiedVorticityField}
@@ -217,27 +239,28 @@ giving us the discrete mollified vorticity field as,
 and the discrete mollified velocity field as,
 	\begin{equation}
 	\mathbf{u}^h\left(\mathbf{x},t\right) = \sum_p \mathbf{K}_{\sigma}\left[\mathbf{x}-\mathbf{x}_p\left(t\right)\right]\alpha_p\left(t\right).
+	\label{eq:mollifiedVelocityField}	
 	\end{equation}
 
-Koumoutsakos and Chorin \cite{Cottet2000a}, explained that in order to ensure the smoothness of the velocity field, the vortex blobs need to have an overlap with each other. The overlap ratio $Ov$ is defined as,
+Koumoutsakos and Chorin \cite{Cottet2000a}, explained that in order to ensure the smoothness of the velocity field, the vortex blobs need to have an overlap with each other. The overlap ratio $\lambda$ is defined as,
 	\begin{equation}
-	\mathrm{Ov} = \frac{\sigma}{h},
+	\lambda = \frac{h}{\sigma},
 	\label{eq:overlapRatio}
 	\end{equation}
 where $h$ is the nominal particle spacing, and $\sigma$ is the vortex blob core size. Figure \ref{fig:blobOverlap} shows the visual representation of this definition. 
 
-The overlap constraint is violated during the convection of the vortex blobs. Due to the strains in the flow, the vortex blobs cluster together at certain region and disperse at others. This localized clustering effect is seen as a Lagrangian grid distortion, which is dealt with using a remeshing technique, section \ref{subsec:remeshing}.
+The overlap constraint is violated during the convection of the vortex blobs. Due to the strains in the flow, the vortex blobs cluster together at certain regions and disperse at others. This localized clustering effect is seen as a Lagrangian grid distortion, which is dealt with using a remeshing technique, section \ref{subsec:remeshing}.
 
 	\begin{figure}[!t]
 	\centering
 	\includegraphics[width=0.4\textwidth]{figures/lagrangian/blobOverlap.pdf}
-	\caption{Vortex blob with an overlap $Ov = \sigma/h$}
+	\caption{Vortex blob with an overlap ratio $\lambda = h/\sigma$}
 	\label{fig:blobOverlap}
 	\end{figure}
 
 \subsection{Vortex blob initialization}
 \label{subsec:vortexBlobInitialization}
-Now the question arises on how should we initialize the particle's circulation strengths $\alpha_p$. The common approach that is used as a standard is to estimate the particles strength by the local properties,
+Now the question arises on how should we initialize the particle's circulation strengths $\alpha_p$ of equation 	\ref{eq:mollifiedVorticityField}. The common approach, that is used as a standard, is to estimate the particles strength by quadrature,
 	\begin{equation}
 	\alpha_p = \omega_p\cdot h^2,
 	\label{eq:particleCirculationAssignment}
@@ -245,15 +268,21 @@ Now the question arises on how should we initialize the particle's circulation s
 
 	\begin{figure}[!b]
 	\centering
-	\includegraphics[width=0.7\textwidth]{figures/lagrangian/particleInitialization.pdf}
-	\caption{Mollified vorticity field of a gaussian vorticity distribution with $\mathrm{overlap}=1.0$, $\sigma=0.19$, and $h=0.19$. Vortex blob strengths was assigned using equation \ref{eq:particleCirculationAssignment}, sampling the exact vorticity [{\color{plotRed}{$\bullet$}}, red dot]. Figure depicts the exact vorticity distribution $\omega$ [---, solid black], vorticity distribution of each blob $\omega_i$ [{\color{darkgreen}{---}}, dashed green], and the mollified vorticity field from the blobs $\omega^h$ [- -, dashed black].  }
+	\includegraphics[width=0.6\textwidth]{figures/lagrangian/particleInitialization.pdf}
+	\caption{Mollified vorticity field of a Gaussian vorticity distribution by blobs with $\lambda=1.0$, $\sigma=0.19$, and $h=0.19$. Vortex blob strengths were assigned using equation \ref{eq:particleCirculationAssignment}, sampling the exact vorticity [{\color{plotRed}{$\bullet$}}, {\color{plotRed}{\textbf{red}}} dot]. Figure depicts the exact vorticity distribution $\omega$ [---, solid \textbf{black}], the vorticity distribution of each blob $\omega_i$ [{\color{darkgreen}{---}}, solid {\color{plotGreen}{\textbf{green}}}], and the mollified vorticity field from the blobs $\omega^h$ [- -, dashed \textbf{black}].  }
 	\label{fig:particleInitialization}
 	\end{figure}
 
-meaning that the particle carry the circulation of its local area. This might seem like a valid assumption as the circulation of a given area is the integral of the vorticity in the area, given by equation\ \ref{eq:definitionOfCirculation}, and therefore we will be conserving the circulation as all the circulation in the fluid is represented by the blobs.
+meaning that the particle carries the circulation of its local area. This might seem like a valid assumption as the circulation of a given area is the integral of the vorticity in the area, given by equation\ \ref{eq:definitionOfCirculation}, and therefore we will be conserving the circulation as all the circulation in the fluid is represented by the blobs.
 
-However, this type of initialization suffers some accuracy in the vorticity field itself as the vorticity field represented by the blobs is no longer the initial vorticity field, but the mollified vorticity field, equation \ref{eq:mollifiedVorticityField}. Barba and Rossi \cite{Barba2010a}, has described this problem as gaussian blurring of the original vorticity field. Even though the particle have acquired the correct circulation strengths (i.e the local property), when evaluating the mollified vorticity field, we see that there is a mismatch with the original vorticity field, figure \ref{fig:particleInitialization}. 
+Figure \ref{fig:particleInitialization} shows the initialization of the vorticity field using the equation 	\ref{eq:particleCirculationAssignment}. We observed that the mollified vorticity field $\omega^h$, deviates from the original intended vorticity distribution $\omega$. Barba and Rossi \cite{Barba2010a}, have described this problem as Gaussian blurring of the original vorticity field due to use of mollified vortex kernel $\zeta_{\sigma}$ in equation 	\ref{eq:mollifiedVorticityField}. Even though the total circulation is conserved, locally we see that the circulation is not conserved. 
 
+This phenomenon causes issue during the coupling of the Lagrangian method and the Eulerian method, as particle in the overlap region are re-initialized at every step of the hybrid method. This error in initialization posses a challenge in the coupling of the method and is detailed in section \ref{subsec:hy_iwtca}.
+
+A typical strategy for recovering the intended distribution is the Beale's Iterative Method \cite{Beale1988}, as used by Koumoutsakos and Cottet \cite{Cottet2000a}. The method is particle circulation processing scheme where the circulation $\alpha_p$ of the particles are modified iteratively such that the mollified vorticity field $\omega^h$ matches the original distribution $\omega$. However, the Beale's method required the correction of complete vorticity field in fluid domain and cannot be used to correct only part of the fluid domain, as required for our decomposed domain method. Therefore, an alternate method is required to minimized the error in particle initialization.
+
+%################# Beale's Iterative method, removed.
+\begin{comment}
 Another way of viewing this phenomenon is to say that the conservation of circulation is only valid globally (for an infinite domain), but once we try to conserve circulation locally (e.g. in a given sub-domain), is does not satisfy anymore. Figure \ref{fig:particleInitialization} shows this effect for a simple gaussian initial vorticity distribution $\omega$. The mollified vorticity field is given as $\omega^h$ and even though the integral of both function is the same (conservation of circulation is satisfied), the vorticity functions do not match. This is does not cause a lot of issues when we only dealing with vortex particle method, however once we start using domain decomposition methods, this problem is an issue. As the vorticity is the communication between both methods, we must have accurate vorticity distribution.
 
 A common strategy, used by Koumoutsakos, Cottet, and other for recovering the initial vorticity field is to perform the Beale's method \cite{Beale1988} \cite{Cottet2000a}.
@@ -289,76 +318,82 @@ The another downside of using the Beale's correction method that it is only vali
 	\caption{Mollified vorticity field after two Beale's iteration, with $\mathrm{overlap}=1.0$, $\sigma=0.19$, $h=0.19$. Figure depicts exact vorticity distribution $\omega$ [---, solid black], vorticity distribution of each blob $\omega_i$ [{\color{plotGreen}{---}}, dashed green], the mollified vorticity field $\omega^h$ [- -, dashed black], and the corrected blob cell vorticity $\tilde{\omega}=\beta/h^2$ [{\color{plotRed}{$\bullet$}}, red dot].}
 	\label{fig:bealesCorrection}
 	\end{figure}
+\end{comment}
 
-\subsubsection{Convergence of particle discretization}
+
+\subsubsection{Minimization of particle discretization error}
 \label{subsubsec:convergenceInterpolation}
-An alternate method to reduce the gaussian blurring of the vorticity field is to reduce the overlap (i.e. increase the overlap number) of the vortex blobs, and also increase the spatial resolution. This approach does not solve the gaussian blurring problem, but only minimizes its effect.
+An alternate method to reduce the Gaussian blurring of the vorticity field is to modify the overlap ratio $\lambda$, and the nominal particle spacing $h$. This approach does not remove the Gaussian blurring problem, but instead minimizes its discretization error.
 	
-\begin{figure}[t]
+\begin{figure}[!b]
         \centering
         \begin{subfigure}[b]{0.5\textwidth}
                 \includegraphics[width=\textwidth]{figures/lagrangian/betterInitialization_h-crop.pdf}
-                \caption{Convergence of $h$ with $\mathrm{overlap} = 1.0$}
+                \caption{Convergence of $h$ with $\lambda = 1.0$}
                 \label{fig:convergenceOfBlobsH}
         \end{subfigure}%
         ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
           %(or a blank line to force the subfigure onto a new line)
         \begin{subfigure}[b]{0.5\textwidth}
-                \includegraphics[width=\textwidth]{figures/lagrangian/betterInitialization_overlap-crop.pdf}
-                \caption{Convergence of $\mathrm{overlap}$ with $h = 0.08$}
+                \includegraphics[width=\textwidth]{figures/lagrangian/betterInitialization_overlap_cor-crop.pdf}
+                \caption{Convergence of $\lambda$ with $h = 0.08$}
                 \label{fig:convergenceOfBlobsOverlap}
         \end{subfigure}
-        \caption{Convergence of the vorticity initialization by modifying the spatial resolution. Figure depicts exact vorticity field $\omega$ [---, solid black], the initialized vorticity distribution with various parameters.}
+        \caption{Convergence of the spatial discretization $h$ and $\lambda$ of the initial vorticity distribution. Figure depicts the exact vorticity field $\omega$ [---, solid \textbf{black}], and various discretized vorticity distributions.}
         \label{fig:convergenceOfSpatialResolution}
 \end{figure}	
 
 Figure \ref{fig:convergenceOfSpatialResolution} shows mollified vorticity field results from modifying the spatial resolution parameters. Figure \ref{fig:convergenceOfBlobsH} shows the convergence of the mollified vorticity field $\omega^h$ to the exact vorticity field $\omega$ by reducing the nominal particle spacing $h$. The overlap ratio is set to $\mathrm{overlap} = 1$, meaning that the blob core-size $\sigma$ is equal to $h$. We see that by reducing blob core size, and simultaneously increasing the number of particles, the mollified vorticity converges to the exact vorticity. 
 
-The second parameter we can adjust is the $\mathrm{overlap}$ of the blobs, as seen in figure \ref{fig:convergenceOfBlobsOverlap}. The blob spacing $h$ is set to $h = 0.08$, and we see that by increasing the overlap number, the mollified vorticity approaches the exact vorticity field. However, as shown by Koumoutsakos \cite{Cottet2000a}, if the overlap is too low, we lose the smooth recovery of the vorticity field. This can be seen when the $\mathrm{overlap} = 2.0$. We see that the mollified vorticity field has a fluctuating solution. This would results in non-smooth velocity field which is an acceptable solution.
+The second parameter we can adjust is the $\mathrm{overlap}$ of the blobs, as seen in figure \ref{fig:convergenceOfBlobsOverlap}. The blob spacing $h$ is set to $h = 0.08$, and we see that by increasing the overlap ratio $\lambda$, the mollified vorticity approaches the exact vorticity field. However, as shown by Koumoutsakos and Cottett \cite{Cottet2000a}, if the overlap is low, we lose the smooth reconstruction of the vorticity field. This can be seen for $\mathrm{\lambda} = 2.0$. We see that the mollified vorticity field has a fluctuating solution, and will result in non-smooth velocity field.
 
-Therefore, to minimize the error between the mollified vorticity field and the exact vorticity field, we will use an $\mathrm{overlap} = 1.0$, and reduce the nominal blob spacing $h$ to a minimum. The advantage of this approach is that we can employ this correcting in a finite domain unlike the Beale's correction. However, as this correction method only minimizes the effect and not directly solve the problem of mismatched vorticity fields, it is recommended that we find a solution to this problem in future.
+Thus, to minimize the error in initializing the mollified vorticity $\omega^h$ from the vorticity $\omega$, an overlap ratio of $\lambda = 1.0$, and a small nominal blob spacing $h$ is required. In our hybrid method, this means that at the region where we initialize the vortex blobs (i.e inside the Eulerian domain), we require these conditions to be satisfied. 
 
 \section{Convection of vortex blobs}
+\label{sec:covb}
 
-The convection equation \ref{eq:convectionEulerian} of the viscous-splitting algorithm, is solved as system of ODEs, where,
+Convection of the vorticity is the first step of evolution of the vorticity and is given by the first order hyperbolic equation \ref{eq:convectionEulerian}. For a known vorticity field $\omega$, the velocity field $\mathbf{u}$ is equally known from the Biot-Savart Law, equation \ref{eq:mollifiedVelocityField}. Therefore, the convection equation \ref{eq:convectionEulerian}, is solved by the following system of ordinary differential equations,
 	\begin{equation}
 	\frac{\mathrm{d}\mathbf{x}_p}{\mathrm{d}t} = \mathbf{u}\left(\mathbf{x}_p\right),
 	\label{eq:convectionODE}
 	\end{equation}
-with
+where the change in position of vortex blob $\mathbf{x}_p$ is due to the induction velocity $\mathbf{u}\left(\mathbf{x}_p\right)$ acting on it. During the convection step, the following condition must be satisfied,
 	\begin{equation}
 	\frac{\mathrm{d}\alpha_p}{\mathrm{d}t} = 0.
 	\label{eq:conservationODE}
 	\end{equation}
+where $\alpha_p$ is the strength of the particle. The Biot-Savart Law is used to determine the induced velocities acting on each particle and results in an $N$-body problem. The calculation of the $N$-body problem is optimized by parallelizing the calculations in GPU hardware. The calculation is further optimized by using a fast summation method, the \printAcron{Fast Multipole Method}{FMM}, reducing the problem from $\mathcal{O}(N^2)$ to $\mathcal{O}(N)$, in the ideal case.
 
-This problem in now solved using a Lagrangian formulation where the vortex blobs is used to discretize the vorticity field. Using the Biot-Savart law, equation \ref{eq:discreteVelocity}, we can determine the induced velocities acting on each particles. The calculation of the induced velocities an $N$-body problem and is parallelized using GPU hardware and simplified using an FMM approach.
+The time marching of the equation \ref{eq:convectionODE} is discretized using a $4^{\mathrm{th}}$ order explicit Runge-Kutta method. The higher-order time integration ensures an accurate convection of the vortex blobs. However, the downside to employing a multi-stage method is that we require multiple evaluation of the induced velocity $\mathbf{u}\left(\mathbf{x}_p\right)$ during a single step $t_n \rightarrow t^{n+1}$.
 
-Once we determine the induced velocity acting on each vortex blobs, they can be convected using the equation \ref{eq:convectionODE}. To retain accuracy during the convection process, we used a $4^{\mathrm{th}}$ order Runge-Kutta method, an explicit time marching scheme. As the diffusion is done at the next sub-step, the strengths of the particles do not change during the convection process.
+In section \ref{subsubsec:convergenceInterpolation}, we determined that to have an accurate reconstruction of the vorticity field, the vortex blobs must always satisfy the overlap ratio $\lambda$ constraint. As described by Koumoutsakos and Chorin \cite{Cottet2000a}, after several steps of convection of the vortex blobs, the overlap constraint will no longer be satisfied due to strains in the fluid. This introduced the need for remeshing techniques that can restructure the Lagrangian grid to the original overlap ratio $\lambda$.
 
 \subsection{Remeshing scheme: Treating lagrangian grid distortion}
 \label{subsec:remeshing}
 
-	\begin{figure}[t]
+The distortion of the Lagrangian grid is due to the clustering and dispersion of the vortex blobs. This clustering and dispersing effect of the blobs is due to the high strains in the flow. Figure \ref{fig:distortion} depicts the distortion of the Lagrangian grid after 100 convection steps. The final distribution shows gaps in vortex blob distribution and will result in an inaccurate representation of the vorticity field. 
+
+	\begin{figure}[!h]
 	\centering
 	\includegraphics[width=0.9\textwidth]{figures/lagrangian/distortion-crop.pdf}
     \caption{Lagrangian distortion of the vortex blobs after 100 time steps. The initial vorticity field is $\omega\left(\mathbf{x},0\right) = \exp\left(-12\left|\mathbf{x}\right|\right)$ with $\Delta t = 0.1$, $\sigma=0.02$, and $\mathrm{overlap} = 1.0$. Figure depicts $\textbf{(a)}$ the initial distribution of the vortex blobs, and $\textbf{(b)}$ the final distribution of the vortex blobs after 100 time steps.}
     \label{fig:distortion}
 	\end{figure}
 
-During the convection step, the vortex blobs will start to cluster together at certain regions of the flow, where as at the other regions, we see that there are no blobs. This clustering and dispersing effect of the blobs is due to the high strains in the flow, figure \ref{fig:distortion}. This means that the overlap ratio is not satisfied everywhere in the flow. As we have seen before, in figure \ref{fig:convergenceOfBlobsOverlap}, overlap ratio has a large impact on the mollified vorticity field and must be satisfied. In order to treat this Lagrangian grid distortion, we can remesh the vortex blobs on to a uniform grid, regaining our intended overlap ratio.
+	\begin{figure}[!b]
+	\centering
+	\includegraphics[width=0.4\textwidth]{figures/lagrangian/interpolationGrid.pdf}
+	\caption{Remeshing of a single vortex blob [{\color{plotGreen}{$\bullet$}}, green dot] onto a uniform grid defined by the $\left(3\times3\right)$ 2-D stencil.}
+	\label{fig:interpolationGrid}
+	\end{figure}
 
-The remeshing is done by interpolating the strengths of the vortex blobs from distorted lagrangian grid on to a uniform grid. The strengths of the blobs of the new uniform grid is defined as,
+A remeshing (or regridding) of this field is therefore required to retain proper distribution. It is done by interpolating the strengths of the vortex blobs from the distorted Lagrangian grid $\hat{\mathbf{x}}$ onto a uniform grid $\mathbf{x}$. The strengths of the blobs of the new uniform grid $\alpha_p$ is determined by,
 	\begin{equation}
 	\alpha_p = \sum_q\tilde{\alpha}_q W \left(\frac{x_p - \tilde{x}_q}{h}\right),
 	\end{equation}
-where the strengths of the blobs $\tilde{\alpha}_q$ of the distorted Lagrangian grid $\tilde{x}_q$ is transfered to the regular Lagrangian grid $x_p$ using the interpolation kernel $W$. Figure \ref{fig:interpolationGrid} shows the remeshing of one vortex blob of the distorted grid on to the structured uniform grid. During this transfer, we must ensure that the properties of the fluid are conserved. The interpolation kernel is constructed by ensuring that the circulation, the linear impulse, and the angular impulse of the fluid is conserved. For this project, we used the $\mathrm{M}'_4$ interpolation kernel.
+where the strengths of the blobs $\tilde{\alpha}_q$ of the distorted Lagrangian grid $\tilde{x}_q$ are transfered to the regular Lagrangian grid $x_p$ using the interpolation kernel $W$. Figure \ref{fig:interpolationGrid} shows an example of the remeshing of one vortex blob of the distorted grid on to the structured uniform grid with a kernel $W$ with a $3\times3$ stencil. During this transfer, we must ensure that the properties of the fluid are conserved. The interpolation kernel is constructed by ensuring that the circulation, the linear impulse, and the angular impulse of the fluid are conserved. 
 
-	\begin{figure}[t]
-	\centering
-	\includegraphics[width=0.4\textwidth]{figures/lagrangian/interpolationGrid.pdf}
-	\caption{Remeshing of a single vortex blob [{\color{plotGreen}{$\bullet$}}, green dot] onto a uniform grid defined by the $\left(4\times4\right)$ 2-D stencil.}
-	\label{fig:interpolationGrid}
-	\end{figure}
+For the present work, we used the $\mathrm{M}'_4$ interpolation kernel, a widely used kernel by Koumoutsakos and Cottet \cite{Cottet2000a}, Speck \cite{Speck2011a}, and Barba \cite{Barba2004c}. The kernel is continuously differentiable ensuring conservation of total circulation, linear and angular impulse. 
 
 \subsubsection*{$\mathbf{M}^\prime_4$ interpolation kernel}
 
@@ -378,14 +413,17 @@ where
 	\label{eq:xiEquation}
 	\end{equation}
 	
-is a non-dimensional parameter, relating the position of the particle $x_{\nu}$ to the position of the $i^{\mathrm{th}}$ interpolation node $x_i$. The $\mathrm{M'}_4$ is a third-order accurate, piecewise smooth, B-spline kernel, and with the $m = 4$, it has 4 support nodes in each dimension. Figure \ref{fig:interpolationKernel} shows the distribution of the kernel. For the two dimensional problem, the 2-D interpolation kernel is just the tensor product of the 1-D interpolation kernel, and will have a $4^2 = 16$ support nodes, as seen in figure \ref{fig:interpolationGrid}.
+is a non-dimensional parameter, relating the position of the particle $x_{\nu}$ to the position of the $i^{\mathrm{th}}$ interpolation node $x_i$. The $\mathrm{M'}_4$ is a third-order accurate, piecewise smooth, B-spline kernel, and with the $m = 4$, it has 4 support nodes in each dimension. 
 
-	\begin{figure}[t]
+	\begin{figure}[!h]
 	\centering
-	\includegraphics[width=0.7\textwidth]{figures/lagrangian/interpolationKernel.pdf}
+	\includegraphics[width=0.6\textwidth]{figures/lagrangian/interpolationKernel.pdf}
 	\caption{$M'_4$ interpolation kernel, a third-order, piecewise smooth, B-spline kernel by Monaghan \cite{Monaghan1985}}
 	\label{fig:interpolationKernel}
 	\end{figure}
+
+Figure \ref{fig:interpolationKernel} shows the distribution of the kernel. For the two dimensional problem, the 2-D interpolation kernel is just the tensor product of the 1-D interpolation kernel, and will have a $4^2 = 16$ support nodes. With this compact support, the kernel is ideal for an $\mathcal{O}(N)$ remeshing.
+
 
 %Koumoutsakos \cite{Koumoutsakos1997} has investigated the drawback of the employing the remeshing strategy and have shown that there is approximately $4\%$ decay in enstrophy of the flow due to sub-grid dissipation. Note that enstrophy $ \mathcal{E}$, is defined as
 %
@@ -411,6 +449,18 @@ with
 
 So in the diffusion step, we fix the position of the vortex blobs, and only modify the strengths of the particles. This process mimics the diffusion of vorticity. Chorin in 1973 \cite{Chorin1973a}, initially employed the \indexAcron{Random Walk Method}{RWM}, which generates and disperse vorticity using pseudo-random number algorithm. However, this method suffers some limitations in accuracy, and since then methods such as \indexAcron{Particle Strength Exchange}{PSE} method \cite{Degond1989a}, has been a common approach to treat the diffusion.
 
+An alternative method to simulate the diffusion is to use the \printAcron{Vortex Redistribution Method}{VRM} \cite{Shankar1996}. The model simulates diffusion by distributing the fraction of circulation of the vortex blobs to each other satisfying the diffusion. The model is based on conserving the moments of the particles by satisfying a linear system of equations. The circulation of the particle are transfer to the nearby particles that are,
+	\begin{equation}
+	h_{\nu} = \sqrt{\nu\Delta t_d}
+	\end{equation}
+where $h_{\nu}$ is the diffusion distance and is directly related to the kinematic viscosity $\nu$ and the diffusive time-step $\Delta t_d$ of the simulation. This means that the VRM scheme (and also the PSE) requires a search algorithm to determine the particles that are within the zone of influence. A direct evaluation would require an $\mathcal{O}\left(N^2\right)$ evaluation. However, this can be optimized using a search tree algorithm, speeding up the search to an $\mathcal{O}\left(\log N\right)$.
+
+%Not that the diffusive time-step $\Delta t_d$ is equal to the convective time-step $\Delta t_c$ if the diffusion process is done during every time-step. However, we can easily adjust the diffusion time-step and perform diffusion at a multiple step of the convection. Not diffusing at every step can be helpful as 
+
+%The downside of the this approach, as also for the standard remeshing approach is the global remeshing generates large computation data and scales with the number of particles $N$. Therefore for problems with large number of particles, a tree-structured remeshing would be more feasible strategy \cite{Winckelmans1996}.
+
+
+\begin{comment}
 \subsubsection*{Particle Strength Exchange}
 The Particle Strength Exchange method, first proposed by Mas-Gallic in 1989 \cite{Degond1989a}, showed that diffusion can be treated for a particle method with an isotropic, or an anisotropic viscosity by approximating the diffusion operator (a Laplacian) with an integral operator, and discretize the method with particles \cite{Speck2011a}. %The PSE can be seen as circulation correction method, where during the diffusion step of the viscous splitting algorithm, the strengths of the particle are corrected such that it accounts for the diffusion.
  
@@ -425,7 +475,9 @@ where $h_{\nu}$ is the diffusion distance and is directly related to the kinemat
 
 %The downside of the this approach, as also for the standard remeshing approach is the global remeshing generates large computation data and scales with the number of particles $N$. Therefore for problems with large number of particles, a tree-structured remeshing would be more feasible strategy \cite{Winckelmans1996}.
 
-\subsection{Modified remeshing for treating diffusion}
+\end{comment}
+
+\subsection{Wee Remeshing Scheme}
 \label{subsec:modifiedRemeshing}
 From further investigation of the VRM, Ghoniem and Wee saw that the VRM is similar to the remeshing strategy that we used to counter the lagrangian distortion during the convection process. So, Ghoniem and Wee in 2006 \cite{Wee2006a}, proposed to combine the remeshing and the diffusion together in one process. The application of this methodology was later validated by Speck in 2011 \cite{Speck2011a}. This \indexAcron{Modified Remeshing Scheme}{MRS}, performs diffusion by modifying the interpolation kernel of the remeshing scheme. The key advantage of the MRM is that, now we are dealing with a uniform grid, and no longer requires a search algorithm to find the particles in the zone of influence. This significantly reduced the computational cost, making this diffusion scheme practical for a large scale simulations. 
 
@@ -459,7 +511,8 @@ so the diffusion of the vortex blobs will not be done at every step of the evolu
 
 We could minimize this problem by modifying the $\Delta t_c$ such that it matches the diffusion time step (i.e $\Delta t_c = \Delta t_d$), so the diffusion is performed at every step. This was a feasible solution for our initial investigations with low Reynolds number flows, however when had to deal with the high Reynolds number flows, where the convection time step have to be small, we needed a scheme that was not constrained by the minimum diffusion time step.
 
-\subsubsection*{Simple redistribution scheme}
+
+\subsection{Tutty Remeshing Scheme}
 \label{subsubsec:srs}
 The simple redistribution scheme, based on the Shankar and Van Dommelen \cite{Shankar1996}, developed by Tutty in 2010 \cite{Tutty2010a}, makes it possible to remesh and diffuse the vorticity after every convection step. The strengths of the particles after the remeshing and diffusion is given as, 
 	\begin{equation}
