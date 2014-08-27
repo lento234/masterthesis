@@ -6,15 +6,26 @@ Plot the interpolation algorithm
 
 # Import packages
 import numpy as np
-import pylab as py
+#import pylab as py
 import matplotlib as mpl
+mpl.use('PDF')
+
+from matplotlib import pyplot as plt
+
 #from matplotlib.patches import Polygon
 import scipy.interpolate as spinterp
 import scipy.io as sio
 #from mpl.patches import Polygon
 
-py.ion()
-py.close('all')
+backends = ['pdf', 'pgf', 'Qt4Agg', 'GTK', 'GTKAgg', 'ps', 'agg', 'cairo', 
+            'MacOSX', 'GTKCairo', 'WXAgg', 'template', 'TkAgg', 'GTK3Cairo', 
+            'GTK3Agg', 'svg', 'WebAgg', 'CocoaAgg', 'emf', 'gdk', 'WX']
+
+plt.ion()
+#py.switch_backend(backends[0])    
+
+#py.ion()
+#py.close('all')
 
 
 # Rotation function
@@ -50,12 +61,12 @@ cmap.set_under('k',1.)
 
 # jet Colormap
 colorMap = 'jet'
-jetCM = py.cm.ScalarMappable(cmap=colorMap)
+jetCM = plt.cm.ScalarMappable(cmap=colorMap)
 jetCM = jetCM.to_rgba(np.linspace(0,1,256))
 
 # Latex Text
-py.rc('text', usetex=True)
-py.rc('font', family='serif')
+plt.rc('text', usetex=True)
+plt.rc('font', family='serif')
 # ----------------------------------------------------------
 
 
@@ -112,6 +123,7 @@ heigthFE   = 4.*0.75
 xyEllipse = rotate(np.array([0.5*widthSurf*np.cos(beta),
                              0.5*heightSurf*np.sin(beta)]))
 
+
 # FE mesh boundary polygon
 xyBoundsFE = [-2,2,-1.5,1.5]
 xyFEBoundary = rotate(np.array([(0.5+np.spacing(1e12))*widthFE*np.cos(beta),
@@ -130,6 +142,8 @@ xyBoundaryPoly = rotate(np.array([(0.5*widthFE-dBdry)*np.cos(beta),
                                   (0.5*heigthFE-dBdry)*np.sin(beta)]))
 
 
+xyPanel = rotate(np.array([(0.5*widthSurf+0.3*dSurf)*np.cos(beta),
+                           (0.5*heightSurf+0.3*dSurf)*np.sin(beta)]))
 
 
 # ----------------------------------------------------------
@@ -307,44 +321,47 @@ selected = np.abs(WL)>0.1
 
 # ----------------------------------------------------------
 # Plot hybrid formation
-#
+
 #fig = py.figure(4)
 #ax  = fig.add_subplot(111)
 #
 ## Plot Eulerian grid
 #py.triplot(xFEI,yFEI,color='0.75',lw=0.5,zorder=1)
+#
 ## Plot Eulerian boundary
-#py.plot(rotate(xyFEBoundary)[0],rotate(xyFEBoundary)[1],'k-',lw=0.5,zorder=2)
-## Plot square
-#ax.add_patch(mpl.patches.PathPatch(square,fill=True,lw=1,facecolor='LightGrey',zorder=3))
+#py.plot(xyFEBoundary[0],xyFEBoundary[1],'k-',lw=0.5,zorder=2)
+#
+## Plot ellipse
+#ax.add_patch(mpl.patches.PathPatch(ellipse,fill=True,lw=1,facecolor='LightGrey',zorder=3))
+#
 ## Plot blobs
 #py.scatter(xB+0.075,yB,s=100,c='w',lw=1,zorder=4)
 #
 #py.axis('scaled')
-##py.axis([-5,5,-5,5])
-#py.axis([-4.5,5.2,-4.5,4.5])
+#py.axis([-3,3,-3,3])
 #py.axis('off')
+#
 ##py.plot([-4.5,5.2,5.2,-4.5,-4.5],[-4.5,-4.5,4.5,4.5,-4.5],'k--')
-#py.plot(rotate(xySurfacePoly)[0],rotate(xySurfacePoly)[1],'k--',zorder=6)
-#py.plot(rotate(xySquare*1.075)[0],rotate(xySquare*1.075)[1],'0.5',lw=2,zorder=4)
+#py.plot(xySurfacePoly[0],xySurfacePoly[1],'k--',zorder=6)
+#py.plot(xyPanel[0],xyPanel[1],'0.5',lw=2,zorder=4)
 #
 #
 ### Add text
 ##ax.annotate(r'$\partial \Omega_{E}$', xy=(-0.60, 3.75),fontsize=20,zorder=20)
-#ax.annotate(r'$\partial \Omega_{E}$', xy=(-1.0, 2.8), xycoords='data',fontsize=20,xytext=(-0.7, 3.75), textcoords='data',
-#           arrowprops=dict(arrowstyle="->", color="k", shrinkA=5, shrinkB=5,
+#ax.annotate(r'$\partial \Omega_{E}$', xy=(0.3, 1.6), xycoords='data',fontsize=20,xytext=(1., 2.2), textcoords='data',
+#           arrowprops=dict(arrowstyle="-|>", color="k", shrinkA=5, shrinkB=5,
 #                           patchA=None, patchB=None,
 #                           connectionstyle="arc3,rad=0.2",),)
 ##ax.annotate(r'$\partial \Omega_{\mathrm{wall}}$', xy=(-2.5, -0.75),fontsize=20,zorder=20)
-#ax.annotate(r'$\partial \Omega_{\mathrm{P}}$', xy=(-1.11, 0.7), xycoords='data',fontsize=20,xytext=(-1, 1.5), textcoords='data',
-#           arrowprops=dict(arrowstyle="->", color="k", shrinkA=5, shrinkB=5,
+#ax.annotate(r'$\partial \Omega_{\mathrm{P}}$', xy=(-0.54, 0.04), xycoords='data',fontsize=20,xytext=(-0.234, 0.84), textcoords='data',
+#           arrowprops=dict(arrowstyle="-|>", color="k", shrinkA=5, shrinkB=5,
 #                           patchA=None, patchB=None,
 #                           connectionstyle="arc3,rad=0.2",),)
 #                           
-#ax.annotate(r'$\partial \Omega_{\mathrm{wall}}$', xy=(-1.11, 0.05), xycoords='data',fontsize=20,xytext=(-2.5, -1.25), textcoords='data',
-#           arrowprops=dict(arrowstyle="->", color="k", shrinkA=5, shrinkB=5,
+#ax.annotate(r'$\partial \Omega_{body}$', xy=(-0.4,-0.4), xycoords='data',fontsize=20,xytext=(-1.328, -1.20), textcoords='data',
+#           arrowprops=dict(arrowstyle="-|>", color="k", shrinkA=5, shrinkB=5,
 #                           patchA=None, patchB=None,
-#                           connectionstyle="arc3,rad=-0.2",),)                           
+#                           connectionstyle="arc3,rad=0.2",),zorder=100)                           
 ##ax.annotate(r'$\partial \Omega_{P}$', xy=(-1., 1.5),fontsize=20,zorder=20)
 ##ax.annotate(r'$\Omega_{B}$', xy=(-0.7, 1.25),fontsize=25,zorder=20)
 ##ax.annotate(r'$\gamma(s)$', xy=(0, 0.575),fontsize=20,zorder=20)
@@ -352,7 +369,7 @@ selected = np.abs(WL)>0.1
 ##ax.annotate(r'\textsf{body}$', xy=(-0.4, 0.4),fontsize=15,zorder=20,backgroundcolor='w')
 #
 #
-##py.savefig('./hybrid.pdf')
+#py.savefig('./hybrid.pdf')
 
 # ----------------------------------------------------------
 
@@ -577,36 +594,36 @@ selected = np.abs(WL)>0.1
 
 # ----------------------------------------------------------
 # Plot removing particles in the outer polygon 
-
-fig = py.figure(7)
-ax  = fig.add_subplot(111)
-
-# Plot Eulerian grid
-py.triplot(xFEI,yFEI,color='0.5',lw=0.5,zorder=1)
-# Plot Eulerian boundary
-py.plot(xyFEBoundary[0],xyFEBoundary[1],'k-',lw=0.5,zorder=2)
-# Plot square
-ax.add_patch(mpl.patches.PathPatch(ellipse,fill=True,lw=1,facecolor='LightGrey',zorder=3))
-# Plot blobs
-py.scatter(xBO,yBO,s=100,c='w',lw=1,zorder=4)
-# Plot interp-region
-#col = mpl.collections.PathCollection([interpRegion], facecolor='LightPink', alpha=0.8, zorder=10, lw=0)
-#ax.add_patch(mpl.patches.PathPatch(interpRegion,fill=True,lw=0,facecolor='Yellow',alpha=0.8,zorder=10)) #Lime, LawnGreen
-#ax.add_collection(col)
-#ax.set_clip_path(mpl.patches.Polygon(xySurfacePoly.T))
-
-#py.plot(rotate(xySurfacePoly)[0],rotate(xySurfacePoly)[1],'r--',zorder=11)
-py.plot(xyBoundaryPoly[0],xyBoundaryPoly[1],'r--',zorder=4)
-
-py.axis('scaled')
-py.axis([-3,3,-3,3])
-py.axis('off')
-py.plot([-5,5,5,-5,-5],[-5,-5,5,5,-5],'k--')
-
-ax.text(-1.4+2.75,-0.9+2.75,r'$3$',fontsize=15,zorder=20)                           
-ax.add_patch(mpl.patches.Circle((-1.34+2.75,-0.82+2.75),0.15,fc='0.8',zorder=19))
-
-py.savefig('./particleRemoved.pdf')
+#
+#fig = py.figure(7)
+#ax  = fig.add_subplot(111)
+#
+## Plot Eulerian grid
+#py.triplot(xFEI,yFEI,color='0.5',lw=0.5,zorder=1)
+## Plot Eulerian boundary
+#py.plot(xyFEBoundary[0],xyFEBoundary[1],'k-',lw=0.5,zorder=2)
+## Plot square
+#ax.add_patch(mpl.patches.PathPatch(ellipse,fill=True,lw=1,facecolor='LightGrey',zorder=3))
+## Plot blobs
+#py.scatter(xBO,yBO,s=100,c='w',lw=1,zorder=4)
+## Plot interp-region
+##col = mpl.collections.PathCollection([interpRegion], facecolor='LightPink', alpha=0.8, zorder=10, lw=0)
+##ax.add_patch(mpl.patches.PathPatch(interpRegion,fill=True,lw=0,facecolor='Yellow',alpha=0.8,zorder=10)) #Lime, LawnGreen
+##ax.add_collection(col)
+##ax.set_clip_path(mpl.patches.Polygon(xySurfacePoly.T))
+#
+##py.plot(rotate(xySurfacePoly)[0],rotate(xySurfacePoly)[1],'r--',zorder=11)
+#py.plot(xyBoundaryPoly[0],xyBoundaryPoly[1],'r--',zorder=4)
+#
+#py.axis('scaled')
+#py.axis([-3,3,-3,3])
+#py.axis('off')
+#py.plot([-5,5,5,-5,-5],[-5,-5,5,5,-5],'k--')
+#
+#ax.text(-1.4+2.75,-0.9+2.75,r'$3$',fontsize=15,zorder=20)                           
+#ax.add_patch(mpl.patches.Circle((-1.34+2.75,-0.82+2.75),0.15,fc='0.8',zorder=19))
+#
+#py.savefig('./particleRemoved.pdf')
 
 # ----------------------------------------------------------
 
@@ -731,41 +748,42 @@ py.savefig('./particleRemoved.pdf')
 
 # ----------------------------------------------------------
 # Interpolate the mesh data from FE to structured grid
-#
-#fig = py.figure(10)
-#ax  = fig.add_subplot(111)
-#
-## Plot Vorticity on FE
+
+fig = plt.figure(10)
+ax  = fig.add_subplot(111)
+
+# Plot Vorticity on FE
 ##py.tripcolor(xFEI-5,yFEI,wFEI,contourLevelsFE,rasterized=True,zorder=1,cmap=colorMapHC)
-#py.tripcolor(xFEI-2.5,yFEI,wFEI,norm=norm,cmap=cmap,rasterized=True,zorder=1)
-#py.clim(-5,5)
-#
-## Plot vorticity on structureed
-##py.pcolormesh(xStructured+5,yStructured,wStructured,rasterized=True,zorder=1,cmap=colorMapHC)
-##wStructuredPlot = np.ma.masked_where(np.isnan(wStructured),wStructured)
-#py.pcolormesh(xStructured+2.5,yStructured,wStructured,rasterized=True,zorder=1,cmap=cmap,norm=norm)
-#py.clim(-5,5)  
-#
+plt.tripcolor(xFEI-2.5,yFEI,wFEI,norm=norm,cmap=cmap,rasterized=True,zorder=1,shading='gouraud')
+plt.clim(-5,5)
+
+# Plot vorticity on structureed
+#py.pcolormesh(xStructured+5,yStructured,wStructured,rasterized=True,zorder=1,cmap=colorMapHC)
+#wStructuredPlot = np.ma.masked_where(np.isnan(wStructured),wStructured)
+plt.pcolormesh(xStructured+2.5,yStructured,wStructured,rasterized=True,zorder=1,cmap=cmap,norm=norm,shading='gouraud')
+#py.pcolor(xStructured+2.5,yStructured,wStructured,rasterized=True,zorder=1,cmap=cmap,norm=norm,edgecolor=wStructured.flatten(),shading='gouraud')
+plt.clim(-5,5)  
+
 ## Plot mesh
-#py.triplot(xFEI-2.5,yFEI,'-',color='0.75',lw=0.5,zorder=2)
+plt.triplot(xFEI-2.5,yFEI,'-',color='0.75',lw=0.5,zorder=2)
 #
 ## Plot the structured grid
-#py.plot(xStructured+2.5,yStructured,'-',color='0.75',zorder=2,lw=0.5)
-#py.plot(xStructured.T+2.5,yStructured.T,'-',color='0.75',zorder=2,lw=0.5)
+plt.plot(xStructured+2.5,yStructured,'-',color='0.75',zorder=2,lw=0.5)
+plt.plot(xStructured.T+2.5,yStructured.T,'-',color='0.75',zorder=2,lw=0.5)
 #
 ## Plot square
-#ax.add_patch(mpl.patches.PathPatch(ellipseL,fill=True,facecolor='LightGrey',edgecolor='None',zorder=3))
-#ax.add_patch(mpl.patches.PathPatch(ellipseR,fill=True,facecolor='LightGrey',edgecolor='None',zorder=3))
+ax.add_patch(mpl.patches.PathPatch(ellipseL,fill=True,facecolor='LightGrey',edgecolor='None',zorder=3))
+ax.add_patch(mpl.patches.PathPatch(ellipseR,fill=True,facecolor='LightGrey',edgecolor='None',zorder=3))
 #
 ## Add annotation
-#ax.annotate("", xy=(2, 1.75), xycoords='data',xytext=(-1.5, 1.75), textcoords='data',
-#            arrowprops=dict(arrowstyle="->", color="k", shrinkA=5, shrinkB=5,
-#                            patchA=None, patchB=None,
-#                            connectionstyle="arc3,rad=-0.5",),)
+ax.annotate("", xy=(2, 1.75), xycoords='data',xytext=(-1.5, 1.75), textcoords='data',
+            arrowprops=dict(arrowstyle="->", color="k", shrinkA=5, shrinkB=5,
+                            patchA=None, patchB=None,
+                            connectionstyle="arc3,rad=-0.5",),)
 #
-#py.axis('scaled')
-#py.axis([-5.5,5.5,-4,4])
-#py.axis('off')
+plt.axis('scaled')
+plt.axis([-5.5,5.5,-4,4])
+plt.axis('off')
 #
 ## Plot Eulerian boundary
 #py.plot(xyFEBoundary[0]+2.5,xyFEBoundary[1],'k-',lw=0.5,zorder=2)
@@ -792,8 +810,8 @@ py.savefig('./particleRemoved.pdf')
 # ----------------------------------------------------------
 # Interpolate the mesh data from structured grid to blobs
 
-#
-## Plot hybrid eulerian
+
+# Plot hybrid eulerian
 #fig = py.figure(11)
 #ax  = fig.add_subplot(111)
 #
@@ -843,8 +861,60 @@ py.savefig('./particleRemoved.pdf')
 #ax.annotate(r'$\hat{\omega}h^2$', xy=(0.,3),fontsize=20,zorder=20)
 #ax.annotate(r'$\alpha_i$', xy=(2.2,1.9),fontsize=22,zorder=20)
 #
-#
+
 #py.savefig('./interpolation_StructuredGrid2Blobs.pdf')
+
+# ----------------------------------------------------------
+
+# ----------------------------------------------------------
+# Plot mesh
+#
+#fig = py.figure(991)
+#ax  = fig.add_subplot(111)
+#
+## Determine the cells inside
+#outside = boundary.contains_points(np.vstack((xFEI,yFEI)).T)
+#xFEO   = xFEI[~outside]
+#yFEO   = yFEI[~outside]
+#wFEO   = wFEI[~outside]
+#
+#
+#py.plot(xFEO,yFEO,'r.',zorder=3,label=r'FE boundary nodes')
+##py.legend(loc=2,numpoints=1)#r'$\mathbf{x} \in \partial \Omega_E$'
+#
+## Plot mesh
+#py.triplot(xFEI,yFEI,'-',color='silver',lw=0.5,zorder=1)
+#
+## Plot square
+#ax.add_patch(mpl.patches.PathPatch(ellipse,fill=True,lw=0,facecolor='LightGrey',edgecolor='None',zorder=2))
+#
+#
+#
+#vy = np.random.randn(1,xFEO.shape[0])
+#vx = np.ones(xFEO.shape)
+#vy *= 0.25
+##py.quiver(xFEO,yFEO,vx-np.abs(wFEO),wFEO*0.25,lw=(0.01,),headaxislength=2)
+#
+#
+## Plot interp region boundary lines
+##py.plot(xySurfacePoly[0],xySurfacePoly[1],'r--',zorder=6)
+##py.plot(xyBoundaryPoly[0],xyBoundaryPoly[1],'r--',zorder=6)
+#py.plot(xyFEBoundary[0],xyFEBoundary[1],'k-',lw=0.5,zorder=2)
+## Plot blobs (outside)
+#py.scatter(xBO,yBO,s=80*0.5,c='w',lw=1,zorder=4,label=r'')
+#
+## Plot the blobs inside
+##py.scatter((XL)[selected],YL[selected],s=80*0.5,c=WL[selected],lw=1,zorder=4,cmap=cmap,norm=norm)
+#py.scatter((XL)[selected],YL[selected],s=80*0.5,c='w',lw=1,zorder=4)
+#py.clim(-5,5)
+#
+#
+#
+#py.axis('scaled')
+#py.axis([-3,3,-3,3])
+#py.axis('off')
+#
+##py.savefig('eulerianDirichletBC.pdf')
 
 # ----------------------------------------------------------
 

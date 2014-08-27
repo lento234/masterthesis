@@ -105,7 +105,7 @@ xySurfacePoly = np.array([[-1,1,1,-1,-1],
 		      	  [-1,-1,1,1,-1]])*1.2
 
 xyBoundaryPoly = np.array([[-1,1,1,-1,-1],
-		           [-1,-1,1,1,-1]])*2.8
+		                [-1,-1,1,1,-1]])*2.8
 
 # Define the FE mesh boundary
 xyFEBoundary = np.array([[-1,1,1,-1,-1],
@@ -274,7 +274,7 @@ selected = np.abs(WL)>0.5
 
 # ----------------------------------------------------------
 # Plot hybrid formation
-#
+
 #fig = py.figure(4)
 #ax  = fig.add_subplot(111)
 #
@@ -317,15 +317,71 @@ selected = np.abs(WL)>0.5
 ##ax.annotate(r'$\gamma(s)$', xy=(0, 0.575),fontsize=20,zorder=20)
 ##ax.annotate(r'$\omega_i$', xy=(0.2, 1.7),fontsize=20,zorder=20)
 ##ax.annotate(r'\textsf{body}$', xy=(-0.4, 0.4),fontsize=15,zorder=20,backgroundcolor='w')
-
-
-#py.savefig('./hybrid.pdf')
+#
+#
+##py.savefig('./hybrid.pdf')
 
 # ----------------------------------------------------------
 
 # ----------------------------------------------------------
 # Plot hybrid formation
+#
+#fig = py.figure(41)
+#ax  = fig.add_subplot(111)
+#
+## Plot Eulerian grid
+#py.triplot(rotate(np.vstack((xFEI,yFEI)),-30)[0],
+#           rotate(np.vstack((xFEI,yFEI)),-30)[1]*0.5,color='0.75',lw=0.5,zorder=1)
+## Plot Eulerian boundary
+#py.plot(xyFEBoundary[0],xyFEBoundary[1]*0.5,'k-',lw=0.5,zorder=2)
+## Plot square
+#ax.add_patch(mpl.patches.PathPatch(squareN,fill=True,hatch='//',lw=1,facecolor='w',zorder=3))
+## Plot blobs
+#xyBlobsTemp = rotate(np.vstack((xB,yB)),-60-30)*0.5
+#xyBlobsTemp[1] *= 0.5
+#xyBlobsTemp[1] -= 0.5
+#xyBlobsTemp = xyBlobsTemp[:,np.abs(xyBlobsTemp[1])>0.7].copy()
+#xyBlobsTemp = xyBlobsTemp[:,xyBlobsTemp[0]>-0.475].copy()
+#xyBlobsTemp = xyBlobsTemp[:,xyBlobsTemp[0]<0.9].copy()
+#
+##xyBlobsTemp[1] -= 0.75
+#py.scatter(xyBlobsTemp[0],
+#           -xyBlobsTemp[1],s=600,c='w',lw=1,zorder=4)
+#
+## Plot lines
+#py.plot([-1,1],[0.7,0.7],'k--',lw=1,zorder=5)
+#
+#py.plot([-1,1],[0.52,0.52],'k-',lw=5,zorder=5)
+#
+## Draw arrow
+#ax.arrow(-0.7,0.5,0,1.2,head_width=0.05,head_length=0.05,fc='#5DA5DA',ec='#5DA5DA',lw=2,zorder=10)
+#ax.arrow(-0.55,0.7,0,1.0,head_width=0.025,head_length=0.025,fc='#4D4D4D',ec='#4D4D4D',lw=0.5,zorder=10)
+#ax.arrow(-0.5,0.5,0,0.15,head_width=0.025,head_length=0.025,fc='#4D4D4D',ec='#4D4D4D',lw=0.5,zorder=10)
+#ax.arrow(0.7,1.5,0,-1+0.05,head_width=0.05,head_length=0.05,fc='#F15854',ec='#F15854',lw=2,zorder=10)
+#
+## Add text
+##ax.annotate(r'$\Omega_{E}$', xy=(0.5, 0.55),fontsize=25,zorder=20)
+#ax.annotate(r'$\Omega_{L}$', xy=(-0.88, 1.3),fontsize=25,zorder=20)
+#ax.annotate(r'$\Omega_{E}$', xy=(0.75, 1.3),fontsize=25,zorder=20)
+#ax.annotate(r'$\Omega_{P}$', xy=(-0.45, 0.55),fontsize=20,zorder=20)
+#ax.annotate(r'$\Omega_{B}$', xy=(-0.5, 1.25),fontsize=20,zorder=20)
+#ax.annotate(r'$\gamma(s)$', xy=(0, 0.575),fontsize=18,zorder=20)
+#ax.annotate(r'$\omega_i$', xy=(0.2, 1.7),fontsize=20,zorder=20)
+#ax.annotate(r'\textsf{body}$', xy=(-0.4, 0.4),fontsize=15,zorder=20,backgroundcolor='w')
+#
+#py.axis('scaled')
+#py.axis([-0.9,0.9,0.35,2])
+#py.axis('off')
+##py.plot([-5,5,5,-5,-5],[-5,-5,5,5,-5],'k--')
+#
+#py.savefig('./hybrid_domains.pdf')
 
+# ----------------------------------------------------------
+
+
+# ----------------------------------------------------------
+# Plot hybrid formation
+#
 #fig = py.figure(41)
 #ax  = fig.add_subplot(111)
 #
@@ -347,80 +403,29 @@ selected = np.abs(WL)>0.5
 #           -xyBlobsTemp[1],s=600,c='w',lw=1,zorder=4)
 #
 ## Plot lines
-#py.plot([-1,1],[0.7,0.7],'k--',lw=1,zorder=5)
+#interpRegTemp = mpl.path.Path(np.array([[-1, 1, 1, -1, -1],
+#                                        [0.7,0.7,1.3,1.3,0.7]]).T,closed=True)
+#
+#
+##py.plot([-1,1,1,-1,-1],[0.7,0.7,1.3,1.3,0.7],'k--',lw=1,zorder=5)
+#ax.add_patch(mpl.patches.PathPatch(interpRegTemp,fill=True,lw=0,facecolor='LightPink', alpha=0.7,zorder=5))
+#py.plot([-1, 1, 1, -1, -1],[0.7,0.7,1.3,1.3,0.7],'r--',zorder=6)
 #
 #py.plot([-1,1],[0.52,0.52],'k-',lw=5,zorder=5)
 #
 ## Draw arrow
-#ax.arrow(-0.8,0.7,0,1.0,head_width=0.025,head_length=0.05,fc='k',ec='k',zorder=10)
-#ax.arrow(-0.7,0.5,0,0.15,head_width=0.025,head_length=0.05,fc='k',ec='k',zorder=10)
-#ax.arrow(0.7,1.5,0,-1+0.05,head_width=0.025,head_length=0.05,fc='k',ec='k',zorder=3)
+#ax.annotate("",(-0.7,0.5),(-0.7,0.7),arrowprops={'arrowstyle':'<|-|>','fc':'r','ec':'r'},zorder=20)
+#ax.annotate("",(-0.7,1.3),(-0.7,1.5),arrowprops={'arrowstyle':'<|-|>','fc':'r','ec':'r'},zorder=20)
 #
 ## Add text
-#ax.annotate(r'$\Omega_{E}$', xy=(0.5, 0.55),fontsize=25,zorder=20)
-#ax.annotate(r'$\Omega_{P}$', xy=(-0.6, 0.55),fontsize=25,zorder=20)
-#ax.annotate(r'$\Omega_{B}$', xy=(-0.7, 1.25),fontsize=25,zorder=20)
-#ax.annotate(r'$\gamma(s)$', xy=(0, 0.575),fontsize=20,zorder=20)
-#ax.annotate(r'$\omega_i$', xy=(0.2, 1.7),fontsize=20,zorder=20)
+#ax.annotate(r'$\Omega_{P}$', xy=(0.3, 0.55),fontsize=25,zorder=20)
+#ax.annotate(r'$d_{\mathrm{surf}}\cdot{h}$', xy=(-0.6, 0.57),fontsize=15,zorder=20)
+#ax.annotate(r'$d_{\mathrm{bdry}}\cdot{h}$', xy=(-0.6, 1.37),fontsize=15,zorder=20)
 #ax.annotate(r'\textsf{body}$', xy=(-0.4, 0.4),fontsize=15,zorder=20,backgroundcolor='w')
 #
 #py.axis('scaled')
 #py.axis([-0.9,0.9,0.35,2])
 #py.axis('off')
-##py.plot([-5,5,5,-5,-5],[-5,-5,5,5,-5],'k--')
-#
-#py.savefig('./hybrid_domains.pdf')
-
-# ----------------------------------------------------------
-
-
-# ----------------------------------------------------------
-# Plot hybrid formation
-
-fig = py.figure(41)
-ax  = fig.add_subplot(111)
-
-# Plot Eulerian grid
-py.triplot(rotate(np.vstack((xFEI,yFEI)),-30)[0],
-           rotate(np.vstack((xFEI,yFEI)),-30)[1]*0.5,color='0.75',lw=0.5,zorder=1)
-# Plot Eulerian boundary
-py.plot(xyFEBoundary[0],xyFEBoundary[1]*0.5,'k-',lw=0.5,zorder=2)
-# Plot square
-ax.add_patch(mpl.patches.PathPatch(squareN,fill=True,hatch='//',lw=1,facecolor='w',zorder=3))
-# Plot blobs
-xyBlobsTemp = rotate(np.vstack((xB,yB)),-60-30)*0.5
-xyBlobsTemp[1] *= 0.5
-xyBlobsTemp[1] -= 0.5
-xyBlobsTemp = xyBlobsTemp[:,np.abs(xyBlobsTemp[1])>0.7]
-xyBlobsTemp = xyBlobsTemp[:,xyBlobsTemp[0]>-0.475]
-#xyBlobsTemp[1] -= 0.75
-py.scatter(xyBlobsTemp[0],
-           -xyBlobsTemp[1],s=600,c='w',lw=1,zorder=4)
-
-# Plot lines
-interpRegTemp = mpl.path.Path(np.array([[-1, 1, 1, -1, -1],
-                                        [0.7,0.7,1.3,1.3,0.7]]).T,closed=True)
-
-
-#py.plot([-1,1,1,-1,-1],[0.7,0.7,1.3,1.3,0.7],'k--',lw=1,zorder=5)
-ax.add_patch(mpl.patches.PathPatch(interpRegTemp,fill=True,lw=0,facecolor='LightPink', alpha=0.7,zorder=5))
-py.plot([-1, 1, 1, -1, -1],[0.7,0.7,1.3,1.3,0.7],'r--',zorder=6)
-
-py.plot([-1,1],[0.52,0.52],'k-',lw=5,zorder=5)
-
-# Draw arrow
-ax.annotate("",(-0.7,0.5),(-0.7,0.7),arrowprops={'arrowstyle':'<|-|>','fc':'r','ec':'r'},zorder=20)
-ax.annotate("",(-0.7,1.3),(-0.7,1.5),arrowprops={'arrowstyle':'<|-|>','fc':'r','ec':'r'},zorder=20)
-
-# Add text
-ax.annotate(r'$\Omega_{P}$', xy=(0.3, 0.55),fontsize=25,zorder=20)
-ax.annotate(r'$d_{\mathrm{surf}}\cdot{h}$', xy=(-0.6, 0.57),fontsize=15,zorder=20)
-ax.annotate(r'$d_{\mathrm{bdry}}\cdot{h}$', xy=(-0.6, 1.37),fontsize=15,zorder=20)
-ax.annotate(r'\textsf{body}$', xy=(-0.4, 0.4),fontsize=15,zorder=20,backgroundcolor='w')
-
-py.axis('scaled')
-py.axis([-0.9,0.9,0.35,2])
-py.axis('off')
 
 #py.savefig('./hybrid_domains_withInterpReg.pdf')
 

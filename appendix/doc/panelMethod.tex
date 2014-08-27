@@ -1,0 +1,199 @@
+\section{\texttt{panels}}
+The main structure of the panel method class \texttt{panels}. This class contains all the functions related to the calculation of panels.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[%
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+  \node {\texttt{hybrid}}
+    child { node {\texttt{vortexMethod}}
+    	child {node {\texttt{vortexBlobs}}}
+    	child {node [selected] {\texttt{panels}}}  	
+    }
+    child [missing] {}				
+    child [missing] {}				
+    child { node {\texttt{navierStokes}}};
+    %child { node [selected] {tex}
+    %  child { node {generic}}
+    %  child { node [optional] {latex}}
+    %  child { node {plain}}
+    %}
+    %child [missing] {}
+    %child { node {texdoc}};
+\end{tikzpicture}
+\end{figure}
+
+
+\subsection*{Class structure:}
+\begin{figure}[h]
+\begin{tikzpicture}[%
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+  \node [selected] {\texttt{panels}}
+    child { node {\texttt{1. \_\_init\_\_}}}
+    child { node {\texttt{2. solve}}}
+    child { node {\texttt{3. updateBody}}}    
+    child { node {\texttt{4. evaluteVelocity}}}                    
+    child { node {\texttt{5. plotPanels}}}                        
+    child { node {\texttt{6. plotVelocity}}}                        
+    child { node {\texttt{7. save}}}                        
+    child { node {\texttt{8. savePanels}}}                                        
+    child { node {\texttt{9. saveVelocity}}};                                            
+	%  child { node [selected] {tex}
+    %  child { node {generic}}
+    %  child { node [optional] {latex}}
+    %  child { node {plain}}
+    %}
+    %child { node {texdoc}};
+\end{tikzpicture}
+\end{figure}
+
+\subsection{\texttt{\_\_init\_\_}}
+	\begin{tabular}{l|lp{7cm}}
+		\multicolumn{2}{l}{\textbf{Input Parameters}} & \\ \hline
+		\textit{File Name} & \multicolumn{2}{l}{Containing all the parameters to re-initalize the class.} \\ \hline
+		\multirow{2}{*}{\textit{Parameters}} & Panel coordinates &: \{\texttt{xCP, yCP, xPanel, yPanel, cmGlobal, thetaLocal}\}\\ \cline{2-3}
+		& External velocity &: \texttt{externVel} \\ \cline{2-3}
+	\end{tabular}
+	\paragraph{Description:} Initialize the \texttt{panels} class with the given input parameters. In the case of a multibody problem, a list of panel coordinates can be given and internally it takes care of the inter-coupling.\\
+	\\
+	\begin{tabular}{lp{10cm}}
+				\textit{Panel coordinates} & \\ \hline
+				\texttt{xCP,yCP} &:  the local $x,y$-coordinates of the panel collocation points.\\ 
+				\texttt{xPanel,yPanel} &: the local coordinate of the panel edges. \textit{Note}: Should have a closed loop (end with initial point coordinates).\\ 
+				\texttt{cmGlobal} &:  the position of reference points of a given panel body.\\
+				\texttt{thetaLocal} &:  the rotational angles of the panel body axes w.r.t to the global $x$-axis.\\
+	\end{tabular}\\ 
+    \\ \\
+	\begin{tabular}{lp{10cm}}
+				\textit{External velocity} & \\ \hline
+				\texttt{externVel} &:  Reference to an external velocity \textbf{function} acting of the panels. For the panel case, the external velocity will the induced velocity of the blobs + freestream \texttt{vortexBlob.evaluateVelocity}.\\
+	\end{tabular}\\
+	
+		\begin{tabular}{lp{10cm}}
+			\textbf{Input parameters} &: \texttt{xCP,yCP}\\ 
+			\textbf{Assigns} &: \texttt{-}\\ 			
+			\textbf{Returns} &: \texttt{vxCP,vyCP}\\ 					
+		\end{tabular}\\
+
+		
+\subsection{\texttt{solve}}
+	\paragraph{Description:} Function to solve the panel strength to satisfy no-slip condition.\\
+	
+		\begin{tabular}{lp{10cm}}
+			\textit{Parameters} & \\ \hline
+			\texttt{sPanel} &: the new strength of the panels, satisfying the no-through b.c of the body (no-slip with vortex panels.).\\
+		\end{tabular} \vspace{5 mm}
+		\\		
+		\begin{tabular}{lp{10cm}}
+			\textbf{Input parameters} &: \texttt{-}\\ 
+			\textbf{Assigns} &: \texttt{sPanel}\\ 			
+			\textbf{Returns} &: \texttt{-}\\ 					
+		\end{tabular}		
+			
+		
+\subsection{\texttt{updateBody}}
+	\paragraph{Description:} Function to update all the panel body coordinates. This function will internally calculate the new panel coordinates \texttt{xPanel,yPanel,xCP,yCP} and rebuild the inter-induction matrix \texttt{A}.\\
+	
+		\begin{tabular}{lp{10cm}}
+			\textit{Parameters} & \\ \hline
+			\texttt{xPanel,yPanel} &: the $x,y$ panel coordinates in global.\\
+			\texttt{xCP,yCP} &: the $x,y$ coordinates of the collocation point in global.\\
+			\texttt{A} &: the panel self-induction matrix.
+		\end{tabular} \vspace{5 mm}
+		\\		
+		\begin{tabular}{lp{10cm}}
+			\textbf{Input parameters} &: \texttt{thetaLocals,cmGlobals}\\ 
+			\textbf{Assigns} &: \texttt{A, xPanel, yPanel, xCP, yCP}\\ 			
+			\textbf{Returns} &: \texttt{-}\\ 					
+		\end{tabular}	
+
+\subsection{\texttt{evaluateVelocity}}
+	\paragraph{Description:} Function to evaluate the total induced velocity due to the panels and free-stream velocity (\textit{optional}).\\
+	
+	    \begin{tabular}{lp{10cm}}
+			\textit{Parameters} & \\ \hline
+			 \texttt{xTarget,yTarget} &: the $x,y$ coordinate of the target location, where the total velocity is to be evaluated.\\
+			\texttt{vxTarget,vyTarget} &: the $x,y$ induced velocity of the target points in global coordinate system.\\
+		\end{tabular} \vspace{5 mm}
+	\\		
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{xTarget,yTarget}\\ 
+		\textbf{Assigns} &: \texttt{-}\\ 			
+		\textbf{Returns} &: \texttt{vxTarget,vyTarget}\\ 					
+	\end{tabular}					
+
+		
+\subsection{plots \ldots}
+	\paragraph{Description:} Function to plot and save (\textit{optional}) all the results in a given region or set of points.\\
+	
+		\begin{tabular}{lp{10cm}}
+			\textit{Plot variables:} & \\ \hline
+			\texttt{plotPanels} &:plot the panel coordinates at the current time instant.\\
+			\texttt{plotVelocity} &: plot the velocity field.\\ 
+			\texttt{plotVorticity} &: plot the vorticity field.\\ 
+		\end{tabular} \vspace{5 mm}
+		
+		\begin{tabular}{lp{10cm}}
+			\textit{Parameters:} & \\ \hline
+			\texttt{xBounds,yBounds} &: $x,y$ bounds of the grid, where the data is to be evaluated and saved.\\ 
+			\texttt{nGrid} &: $x,y$ number of evaluation grid points.\\ 
+			\texttt{xEval,yEval} &: $x,y$ coordinates of the location where the data is to be evaluated and saved.\\ 
+		\end{tabular} \vspace{5 mm}\\
+	\\
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{xBounds,yBounds,hGrid} or \texttt{xEval,yEval}\\ 
+		\textbf{Assigns} &: \texttt{-}\\ 			
+		\textbf{Returns} &: \texttt{figureHandle} and/or \texttt{.pvd}\\ 					
+	\end{tabular}	
+
+\subsection{save data \ldots}
+	\paragraph{Description:} Function to save the data in a given region or at given set of points.\\
+
+		\begin{tabular}{lp{10cm}}
+			\textit{Save variables:} & \\ \hline
+			\texttt{save} &: all the data of the \texttt{panels} class, to be used to restart later.\\ 			
+			\texttt{savePanels} &: the function to save the panel data at the current time instant.\\ 			
+			\texttt{saveVelocity} &: save the velocity field of the given region or the given set of points.\\ 
+			\texttt{saveVorticity} &: save the vorticity field of the given region or the given set of points.\\ 
+		\end{tabular} \vspace{5 mm}
+	
+		\begin{tabular}{lp{10cm}}
+			\textit{Parameters:} & \\ \hline
+			\texttt{xBounds,yBounds} &: $x,y$ bounds of the grid, where the data is to be evaluated and saved.\\ 
+			\texttt{nGrid} &: $x,y$ number of grid points.\\ 
+			\texttt{xEval,yEval} &: $x,y$ coordinates of the location where the data is the be evaluated and saved.\\ 
+		\end{tabular} \vspace{5 mm}\\
+	\\
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{xBounds,yBounds,hGrid} or \texttt{xEval,yEval}\\ 
+		\textbf{Assigns} &: \texttt{-}\\ 			
+		\textbf{Returns} &: \texttt{.npz}\\ 					
+	\end{tabular}
+
+%
+%
+%\subsection{save plots \ldots}
+%	\paragraph{Description:} Function to save the plots of a region or a given set of points as scientific visualization format \texttt{.pvd}.\\
+%	
+%		\begin{tabular}{lp{10cm}}
+%			\textit{Save variables:} & \\ \hline
+%			\texttt{saveVelocityPlot} &: save the velocity $\mathbf{V}$ plot.\\ 
+%			\texttt{saveVorticityPlot} &: save the vorticity $\mathbf{\omega}$ plot.\\ 
+%		\end{tabular} \vspace{5 mm}
+%		
+%		\begin{tabular}{lp{10cm}}
+%			\textit{Parameters:} & \\ \hline
+%			\texttt{xBounds,yBounds} &: $x,y$ bounds of the grid, where the data is to be evaluated and saved.\\ 
+%			\texttt{hGrid} &: $x,y$ spacing of the evaluation grid.\\ 
+%			\texttt{xEval,yEval} &: $x,y$ coordinates of the location where the data is the be evaluated and saved.\\ 
+%		\end{tabular} \vspace{5 mm}\\
+%	\\
+%	\begin{tabular}{lp{10cm}}
+%		\textbf{Input parameters} &: \texttt{xBounds,yBounds,hGrid} or \texttt{xEval,yEval} \\ 
+%		\textbf{Assigns} &: \texttt{-}\\ 			
+%		\textbf{Returns} &: \texttt{.pvd}\\ 					
+%	\end{tabular}

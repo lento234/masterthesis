@@ -1,0 +1,186 @@
+\section{\texttt{hybrid}}
+The main structure for the hybrid class \texttt{hybrid}. This class contains all the functions related to computation of the hybrid problem.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[%
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+  \node [selected] {\texttt{hybrid}}
+    child { node {\texttt{vortexMethod}}
+    	child {node {\texttt{vortexBlobs}}}
+    	child {node {\texttt{panels}}}  	
+    }
+    child [missing] {}				
+    child [missing] {}				
+    child { node {\texttt{navierStokes}}};
+    %child { node [selected] {tex}
+    %  child { node {generic}}
+    %  child { node [optional] {latex}}
+    %  child { node {plain}}
+    %}
+    %child [missing] {}
+    %child { node {texdoc}};
+\end{tikzpicture}
+\end{figure}
+
+\subsection*{Class structure:}
+\begin{figure}[h]
+\begin{tikzpicture}[%
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+  \node [selected] {\texttt{hybrid}}
+    child { node {\texttt{1. \_\_init\_\_}}}
+    child { node {\texttt{2. evolve}}}
+    child { node {\texttt{3. plotGeometry}}}
+    child { node {\texttt{4. plotVelocity}}}
+    child { node {\texttt{5. save}}}
+    child { node {\texttt{6. saveVelocity}}}
+	child [missing] {}	
+    child { node {+ \texttt{vortexMethod} functions}}
+    child { node {+ \texttt{navierStokes} functions}};
+    
+	%  child { node [selected] {tex}
+    %  child { node {generic}}
+    %  child { node [optional] {latex}}
+    %  child { node {plain}}
+    %}
+    %child { node {texdoc}};
+\end{tikzpicture}
+\end{figure}
+%
+%\subsection*{Class structure:}
+%\begin{table}[h]
+%\begin{tabular}{rl}
+%	\texttt{navierStokes}: &  \\ \hline
+%	-- & \texttt{\_\_init\_\_} \\
+%	& \\
+%	-- & \texttt{evolve} \\ 
+%	-- & \texttt{plotGeometry} \\ 	
+%	-- & \texttt{plotVelocity} \\ 		
+%	-- & \texttt{plotPressure} \\ 		
+%	-- & \texttt{plotVorticity} \\ 			
+%	-- & \texttt{saveClass} \\
+%	-- & \texttt{saveGeometry} \\ 	 					
+%	-- & \texttt{saveVelocity} \\ 		
+%	-- & \texttt{savePressure} \\ 		
+%	-- & \texttt{saveVorticity} \\ 
+%	-- & \texttt{saveGeometryPlot} \\ 	
+%	-- & \texttt{saveVelocityPlot} \\ 		
+%	-- & \texttt{savePressurePlot} \\ 		
+%	-- & \texttt{saveVorticityPlot} \\ 	
+%\end{tabular}
+%\end{table}
+
+
+\subsection{\texttt{\_\_init\_\_}}
+	\begin{tabular}{l|lp{7cm}}
+		\multicolumn{2}{l}{\textbf{Input Parameters}} & \\ \hline
+		\textit{File Name} & \multicolumn{2}{l}{Containing all the parameters to re-initalize the class.} \\ \hline
+		\multirow{4}{*}{\textit{Parameters}} & \texttt{vortexMethod} &: \{\texttt{vortexMethod}\} class.\\ \cline{2-3}
+		& \texttt{navierStokes} &: \texttt{navierStokes} class. \\ \cline{2-3}
+		& Interpolation region &: \texttt{xPolygon, yPolygon}\\ \cline{2-3}
+		& Motion functions &: \texttt{T, cmGlobal, thetaGlobal, cmDotGlobal, thetaDotGlobal}\\ \cline{2-3}
+	\end{tabular}\\
+	
+	\paragraph{Description:} Initialize the \texttt{hybrid} class using \textbf{vortexMethod} + \texttt{navierStokes} classes.
+	\paragraph{Input parameters:}
+	\begin{list}{\quad}{}
+	\item \texttt{vortexMethod}: the vortex method containing \texttt{vortexBlob} and \textbf{panelMethod} classes which can already handle the multi-body problem.
+	\item \texttt{navierStokes}: the navier stokes class (if multiple: list of \texttt{navierStokes} classes). The number of navier-stokes class has to be same as the number of vortex panels.
+	\item \textbf{Interpolation Region}: the navier stokes class (if multiple: list of \texttt{navierStokes} classes). Should be equal to number of navier-stokes classes. The interpolation region should be defined as list of $x,y$ coordinates of the polygon of the interpolation region.
+	\item \textbf{Motion function}: the function describing the motion of all the geometries in the hybrid class.
+	\end{list}
+	
+	\begin{tabular}{lp{10cm}}
+		\textit{Interpolation Regions} & \\ \hline
+		\texttt{xPolygon,yPolygon}: & the new $x,y$ coordinate of the polygons description the interpolation region. The polygon should have a closed loop (end  with starting coordinates) before continuing to the next polygon. In the case of multiple polygons, a list of \texttt{xPolygon,yPolygon} should be given and should be as many as the number of navier-stokes domain.\\ 
+	\end{tabular} \vspace{5 mm}
+
+	\begin{tabular}{lp{10cm}}
+		\textit{Motion function} & \\ \hline
+		\texttt{T} &: the current time.\\ 
+		\texttt{cmGlobal} &: a list of new positions of the geometries in the hybrid problem.\\ 
+		\texttt{thetaGlobal} &: a list of new rotational angle of the geometries in the hybrid problem.\\ 		
+		\texttt{cmDotGlobal} &: a list of current displacement velocity of the geometries in the hybrid problem.\\ 				
+		\texttt{thetaDotGlobal} &: a list of current rotational velocity of the geometries in the hybrid problem.\\ 						
+	\end{tabular} \vspace{5 mm}
+
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{T}\\ 
+		\textbf{Assigns} &: \texttt{-}\\ 			
+		\textbf{Returns} &: \texttt{cmGlobal,thetaGlobal,cmDotGlobal,thetaDotGlobal}\\ 					
+	\end{tabular}
+
+\subsection{\texttt{evolve}}
+	\paragraph{Description:} Function to evolve the complete hybrid problem. During the evolution, it also updated the coordinates of the geometries. The function takes care of the inter-coupling during the time-stepping.\\
+	
+	    \begin{tabular}{p{5cm}p{10cm}}
+			\textit{Parameters} & \\ \hline
+             \texttt{cmGlobal, thetaGlobal, cmDotGlobal, thetaDotGlobal} &: the position and the inclination of all the geometries.\\
+			 \texttt{xBlobNew,yBlobNew,wBlobNew} &: the new $x,y$ coordinate and the new circulation $\Gamma_i$ of the blob at the new time instant.\\
+			\texttt{xPanelNew, yPanelNew, sPanelNew} &: the new $x,y$ coordinates of the panel and its new strength at the new time instant.\\
+			\texttt{vGrid,pGrid} &: the new velocity and the pressure field in the navier-stokes domain.\\
+		\end{tabular} \vspace{5 mm}
+	\\		
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{cmGlobal, thetaGlobal, cmDotGlobal, thetaDotGlobal}\\ 
+		\textbf{Assigns} &: \texttt{xBlob,yBlob,gBlob,xPanel,yPanel,sPanelNew,vGrid,pGrid}\\ 			
+		\textbf{Returns} &: \texttt{-}\\ 					
+	\end{tabular}
+
+
+
+\subsection{plots \ldots}
+	\paragraph{Description:} Function to plot and/or save (\textit{optional}) all the results.\\
+	
+		\begin{tabular}{lp{10cm}}
+			\textit{Plot variables} & \\ \hline
+			\texttt{plotBlobs/plotPanels/plotGrid} &: the function to plot all the geometries in the hybrid class, such as panel location, navier-stokes location and blob location.\\
+			\texttt{plotVelocity} &: the velocity $\mathbf{V}$ of the navier-stokes domain, \texttt{u1}.\\ 
+			\texttt{plotPressure} &: the pressure $\mathbf{p}$ of the navier-stokes domain, \texttt{p1}\\ 
+			\texttt{plotVorticity} &: the vorticity $\mathbf{\omega}$ of the navier-stokes domain, \texttt{w1}.\\ 
+		\end{tabular} \vspace{5 mm}
+	\\
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{-}\\ 
+		\textbf{Assigns} &: \texttt{-}\\ 			
+		\textbf{Returns} &: \texttt{figureHandle} or \texttt{saveFile}\\ 					
+	\end{tabular}
+
+\subsection{save datas \ldots}
+	\paragraph{Description:} Function to save the data as binaries.\\
+	
+		\begin{tabular}{lp{10cm}}
+			\textit{Save variables} & \\ \hline
+			\texttt{save} & : all the data of the \texttt{navierStokes} class, to be used to restart later.\\
+			\texttt{saveBlobs/savePanels/saveGrid} &: the function to save all the geometrical parameters such as panel coordinate, blob coordinates.\\
+			\texttt{saveVelocity} &: the velocity $\mathbf{V}$ of the navier-stokes domain, \texttt{u1}.\\ 
+			\texttt{savePressure} &: the pressure $\mathbf{p}$ of the navier-stokes domain, \texttt{p1}\\ 
+			\texttt{saveVorticity} &: the vorticity $\mathbf{\omega}$ of the navier-stokes domain, \texttt{w1}.\\ 
+		\end{tabular} \vspace{5 mm}
+	\\
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{-}\\ 
+		\textbf{Assigns} &: \texttt{-}\\ 			
+		\textbf{Returns} &: \texttt{.npz} or ...\\ 					
+	\end{tabular}
+
+%\subsection{save plots \ldots}
+%	\paragraph{Description:} Function to save plots as scientific visualization format \texttt{.pvd}.\\
+%	
+%		\begin{tabular}{lp{10cm}}
+%			\textit{Save variables} & \\ \hline
+%			\texttt{saveGeometryPlot} &: the function to save the plot of all the geometries in the hybrid class, such as panel location, the navier-stokes location and the blob location.\\			
+%			\texttt{saveVelocityPlot} &: the velocity $\mathbf{V}$ plot of the navier-stokes domain, \texttt{u1}.\\ 
+%			\texttt{savePressurePlot} &: the pressure $\mathbf{p}$ plot of the navier-stokes domain, \texttt{p1}\\ 
+%			\texttt{saveVorticityPlot} &: the vorticity $\mathbf{\omega}$ plot of the navier-stokes domain, \texttt{w1}.\\ 
+%		\end{tabular} \vspace{5 mm}
+%	\\
+%	\begin{tabular}{lp{10cm}}
+%		\textbf{Input parameters} &: \texttt{-}\\ 
+%		\textbf{Assigns} &: \texttt{-}\\ 			
+%		\textbf{Returns} &: \texttt{.pvd}\\ 					
+%	\end{tabular}

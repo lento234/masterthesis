@@ -1,15 +1,16 @@
 \chapter{Eulerian Domain: Finite Element Method}
 \label{ch:eulerian}
-	\lsymb[f]{$\mathcal{T}_h$}{Finite Element mesh}{-}{th}		
-	\lsymb[f]{$T$}{Cell of Finite Element mesh}{-}{t}			
-	
-	\lsymb[f]{$v$}{Test function}{-}{v}				
-	\lsymb[f]{$V$}{Trial vector function space}{-}{vte}				
-	\lsymb[f]{$\hat{V}$}{Test vector function space}{-}{vtr}					
-	\gsymb[f]{$\Omega$}{Fluid domain}{-}{x}	
-	\gsymb[f]{$\Omega_E$}{Eulerian fluid domain}{-}{xe}	
-	\gsymb[f]{$\Omega_L$}{Lagrangian fluid domain}{-}{xl}	
-	\gsymb[f]{$\partial \Omega$}{Boundary of the domain $\Omega$}{-}{xdd}	
+
+%	\lsymb[f]{$\mathcal{T}_h$}{Finite Element mesh}{-}{th}		
+%	\lsymb[f]{$T$}{Cell of Finite Element mesh}{-}{t}			
+%	
+%	\lsymb[f]{$v$}{Test function}{-}{v}				
+%	\lsymb[f]{$V$}{Trial vector function space}{-}{vte}				
+%	\lsymb[f]{$\hat{V}$}{Test vector function space}{-}{vtr}					
+%	\gsymb[f]{$\Omega$}{Fluid domain}{-}{x}	
+%	\gsymb[f]{$\Omega_E$}{Eulerian fluid domain}{-}{xe}	
+%	\gsymb[f]{$\Omega_L$}{Lagrangian fluid domain}{-}{xl}	
+%	\gsymb[f]{$\partial \Omega$}{Boundary of the domain $\Omega$}{-}{xdd}	
 
 %------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------
@@ -192,6 +193,7 @@ We used the \dolfin library wrapped in \python to solve the finite element probl
 at $\partial \Omega$. The finite element code generation is automated with \textsc{Dolfin}, leaving only the explicit expression of the problem in python, see source code listing \ref{lst:pycode-poisson}.
 
 \subsection{Mesh generation using GMSH}
+\label{subsec:mgugmsh}
 %The proper generation of the fluid mesh is an important aspect of the Finite Element method. It is an important process, as an ill-construct mesh can be computationally very expensive, or might even problem with convergence. There have been literatures dedicated just to improve the mesh generation, for example by Hansen \cite{Hansen2005}. It focused on mesh enhancement techniques for elliptical methods, which enables to increase the quality of the data, and also the robustness of the simulation.
 
 The generation of the mesh is achieved by \textsc{Gmsh}, an open-source software developed by Geuzaine \& Remacle \cite{Geuzaine2009b}, which has implemented a user-friendly interface and fast algorithms. The \gmsh implemented kernels that use \textsc{BLAS} and LAPACK linear algebra packages in C++ for fast computation. Furthermore, it allows for scriptability making it ideal to integrate it with our current \python code project for future automation.
@@ -221,7 +223,7 @@ The Cauchy stress tensor is a function of pressure $p$, the fluid kinematic visc
 describing the stresses in fluid due to the velocity gradient and the pressure. The incompressible 2-D Navier-Stokes equations have two unknowns, the vector velocity field $\mathbf{u}$, that lies on the vector-valued function space $V$, and the scalar pressure field $p$, which lies on the scalar-valued function space $Q$. Onces we solve these we can determine the vorticity field, which we will transfer to the Lagrangian domain. 
 
 \subsection{Determining the vorticity field}
-
+\label{subsec:dtvf}
 	\begin{listing}[t]
 	\inputminted[fontseries=courier,obeytabs,fontsize=\footnotesize,mathescape,linenos,numbersep=5pt,frame=lines,framesep=2mm,xleftmargin=20mm,xrightmargin=20mm]{python}{figures/eulerian/vorticity.py}
 	\caption{The \textsc{python} implementation of the vorticity calculation}
@@ -377,7 +379,7 @@ The lift coefficient and the drag coefficient, $C_l$ and $C_d$ respectively, is 
 To validate our Eulerian method, we will first investigate the problem of the Lamb-Oseen vortex. Then we will compare the results of the Clercx-Bruneau dipole collision at $Re=625$. Finally, we will investigate the problem of the Impulsively started cylinder at $Re=550$, which we can use to validate the evolution of lift and drag.
 
 \subsection{Lamb-Oseen Vortex}
-
+\label{subsec:eulerianLambOseen}
 	\ctable[
 		caption = {Summary of the parameters for the Lamb-Oseen vortex evolution.},
 		label   = {tab:eulerianLambOseenParams},
@@ -402,12 +404,14 @@ To validate our Eulerian method, we will first investigate the problem of the La
 The Lamb-Oseen vortex is an analytical solution by Lamb and Oseen, describing the diffusion of a vortex core \cite{Tryggeson2007}. We solved the same problem as the one described in the Lagrangian validation problem \ref{subsec:lagrangianLambOseen}. 
 
 \subsubsection*{Problem Definition}
+
 In the Lagrangian method, the Lamb-Oseen vortex was initialized using the vorticity field as the vortex blobs carry circulation strengths. However, Eulerian domain use the primitive variables $\mathbf{u}-p$ for formulating the problem. Therefore, we use the Lamb-Oseen velocity field as the initial conditions for the problem. The velocity field is given as,
 	\begin{subequations}
 	\begin{align}
 	u_{\theta} &= \frac{\Gamma_c}{2\pi r} \left[1-\exp\left(-\frac{r^2}{4\tau}\right)\right]\\
 	u_r &= 0,
 	\end{align}
+	\label{eq:eLO_veq}
 	\end{subequations}
 where $\Gamma_c$ is the vortex core strength, $\tau \equiv \nu t$ is the scaled viscous time, and $r$ is the distance from the core center. The parameters of the simulation is tabulated in table \ref{tab:eulerianLambOseenParams}. To ease the comparison of the Eulerian to the Lagrangian method, we performed ensure similar spatial resolution. The figure \ref{fig:lambOseenDomainDefinition} shows the domain of the problem, discretized the domain $\Omega = \left[-1,1\right]^2$ in a structure grid with the number of finite element cells $N_{\mathrm{cells}}=200^2$ in $x$ and $y$ direction, minimum cell size $h=\sqrt{2}/100$. 
 
@@ -562,7 +566,7 @@ Figure \ref{fig:vorticity_contour_comparison} compares the vorticity contours in
      ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
        %(or a blank line to force the subfigure onto a new line)
      \begin{subfigure}[t]{0.5\textwidth}
-             \includegraphics[width=\textwidth]{figures/eulerian/dipole_contourLine_t1p0-crop.pdf}
+             \includegraphics[width=\textwidth]{figures/eulerian/dipole_contourLine_t1p0_corrected-crop.pdf}
              \caption{Present study}
              \label{fig:dipole_contourLine_t1p0}
      \end{subfigure}
@@ -611,7 +615,7 @@ and gives an insight to generation of vorticity at the no-slip boundary. Figure 
 		\label{fig:VorticityAtBoundary}
      \end{subfigure}     
      
-     \caption{Comparison of the fluid parameters. Figure \textbf{(a)}, \textbf{(b)}, \textbf{(c)} compares the evolution of the fluid properties from $t=0$ to $t=2$. Figure \textbf{d} compares the vorticity generated at the bottom-left wall ($y=-1$, $-0.6\leqslant x \leqslant 0$) at $t=0.4$ [{\color{plotBlue}{---}}, solid blue], $t=0.6$ [{\color{plotRed}{---}}, solid red] and $t=1$ [{\color{plotGreen}{---}}, solid green].}
+     \caption{Comparison of the fluid parameters. Figure \textbf{(a)}, \textbf{(b)}, \textbf{(c)} compares the evolution of the fluid properties from $t=0$ to $t=2$. Figure \textbf{(d)} compares the vorticity generated at the bottom-left wall ($y=-1$, $-0.6\leqslant x \leqslant 0$) at $t=0.4$ [{\color{plotBlue}{---}}, solid blue], $t=0.6$ [{\color{plotRed}{---}}, solid red] and $t=1$ [{\color{plotGreen}{---}}, solid green].}
      \label{fig:dipole_comparison}
 	\end{figure}
 
@@ -715,7 +719,7 @@ The domain was discretized with $N_{\mathrm{vert}}=48$, with the highest mesh re
      ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
        %(or a blank line to force the subfigure onto a new line)
      \begin{subfigure}[t]{0.45\textwidth}
-             \includegraphics[height=0.2\textheight]{figures/eulerian/ISC_vorticityContours_t1-crop.pdf}
+             \includegraphics[height=0.2\textheight]{figures/eulerian/ISC_vorticityContours_t1_fliped-crop.pdf}
              \caption{$t=1$ Present}
              \label{fig:ISC_vorticityContours_t1-crop}
      \end{subfigure}
@@ -760,21 +764,21 @@ The domain was discretized with $N_{\mathrm{vert}}=48$, with the highest mesh re
              \label{fig:ISC_vorticityContours_t7-crop}
      \end{subfigure}         
 
-     \caption{Comparison of the vorticity contours for $t=1$, $t=3$, $t=5$ and $t=7$ with contour levels [$-30,...,-2,-1,-0.5,-0.1,0.1,0.5,1,2,...,30$]. The figures on left are obtained from the literature \cite{Koumoutsakos1995a} and the figures on right are from the present study.}
+     \caption{Comparison of the vorticity contours for $t=1$, $t=3$, $t=5$ and $t=7$ with contour levels [$-30,...,-2,-1,-0.5,-0.1,0.1,0.5,1,2,...,30$]. The figures on left are obtained from the literature, Koumoutsakos and Leonard \cite{Koumoutsakos1995a}, and the figures on right are from the present study.}
      \label{fig:ISCS_vorticityContours_comparison}
 	\end{figure}
 	
 	\begin{figure}[p]
 	\centering
 	\includegraphics[width=0.7\linewidth]{./figures/eulerian/ISC_dragEvolution.pdf}
-	\caption{Evolution of drag force. The figure depicts the total drag coefficient $C_d$ [{\color{plotBlue}{---}}, solid blue], the pressure drag coefficient $C_{d_{\mathrm{pres}}}$ [{\color{plotRed}{---}}, solid red] and the friction drag coefficient $C_{d_{\mathrm{fric}}}$ [{\color{plotGreen}{---}}, solid green]. The dotted lines indicated the data obtained from literature \cite{Koumoutsakos1995a}.}
+	\caption{Evolution of drag force. The figure depicts the total drag coefficient $C_d$ [{\color{plotBlue}{---}}, solid blue], the pressure drag coefficient $C_{d_{\mathrm{pres}}}$ [{\color{plotRed}{---}}, solid red] and the friction drag coefficient $C_{d_{\mathrm{fric}}}$ [{\color{plotGreen}{---}}, solid green]. The dotted lines indicated the data obtained from literature, Koumoutsakos and Leonard \cite{Koumoutsakos1995a}.}
 	\label{fig:ISC_dragEvolution}
 	\end{figure}
 	
 	\begin{figure}[p]
 	\centering
 	\includegraphics[width=0.7\linewidth]{./figures/eulerian/ISC_LongRun_dragLiftEvolution.pdf}
-	\caption{Evolution of the lift and drag coefficient from $t=0$ to $t=40$ with artificial perturbation \cite{Lecointe1984}. The figure depicts the total drag coefficient $C_d$ [{\color{plotBlue}{---}}, solid blue] and the lift coefficient [{\color{plotRed}{---}}, solid red]. The dotted lines represent the data obtained from literature \cite{MosheRosenFeldDochanKwak1991}}
+	\caption{Evolution of the lift and drag coefficient from $t=0$ to $t=40$ with artificial perturbation \cite{Lecointe1984}. The figure depicts the total drag coefficient $C_d$ [{\color{plotBlue}{---}}, solid blue] and the lift coefficient [{\color{plotRed}{---}}, solid red]. The dotted lines represent the data obtained from literature, RosenFeld et al. \cite{MosheRosenFeldDochanKwak1991}}
 	\label{fig:ISC_LongRun_dragLiftEvolution}
 	\end{figure}	
 
@@ -824,3 +828,79 @@ The algorithm for the Eulerian method can be summarized as follows:
 	\end{enumerate}
 
 Once we have the well-resolved vorticity $\omega$ of the near-body region, we use it to couple it with the Lagrangian method with our Hybrid coupling scheme.
+
+\section{Chapter Nomenclature}
+
+{\textbf{\textsf{Latin Symbols}}}
+
+{\renewcommand{\arraystretch}{1.2} %<- modify value to suit your needs
+\begin{longtable}{p{1.5cm}p{10.5cm}p{1.5cm}}
+	
+	$c $ & Reference length (chord) & \si{m}\\
+	$C_d$ & Drag coefficient & -\\
+	$C_l$ & Lift coefficient & -\\
+	$\mathrm{CFL}$ & CFL number & -\\
+	
+	
+	$\hat{\mathbf{e}}$ & Cartesian unit vector & -\\
+	$E$ & Kinetic Energy & ?? \\
+
+	$f$ & Source terms & -\\
+	
+	$\mathbf{I}$ & Identity matrix & -\\
+
+	$\hat{\mathbf{n}}$ & Unit normal vector & -\\
+	$p$ & \vtop{\hbox{\strut Pressure}\hbox{\strut Trial function for pressure}} & \vtop{\hbox{\strut \si{Pa}}\hbox{\strut -}}\\
+	
+	$\mathcal{P}$ & Lagrange polynomial & -\\
+
+	$q$ & \vtop{\hbox{\strut Degree of Lagrange polynomial $\mathcal{P}_q$}\hbox{\strut Test function for pressure}} & \vtop{\hbox{\strut - }\hbox{\strut -}}\\
+	 %$q$ & Degree of Lagrange polynomial $\mathcal{P}_q$; Test function for pressure & -\\
+	 
+	 $Q$ & Scalar-valued function space for pressure $p$& -\\	
+	
+	 $t_n$ & Simulation time at $n^{\mathrm{th}}$ step & \si{s}\\	
+	
+	$\mathcal{T}_h$ & Finite Element mesh & -\\
+
+ 	$T$ & Cell of Finite Element mesh & -\\	
+ 	
+ 	$\mathbf{u}$ & \vtop{\hbox{\strut Velocity }\hbox{\strut Trial function for velocity}} & \vtop{\hbox{\strut \si{m.s^{-1}} }\hbox{\strut - }}\\
+ 	
+ 	$\mathbf{u}^{\star}$ & Tentative velocity & \si{m.s^{-1}}\\
+ 		
+ 	$v$ & Test function for velocity& -\\				
+ 	$V$ & Trial vector function space for velocity& - \\
+ 	$\hat{V}$ & Test vector function space for velocity& -\\
+ 
+
+	 $w$ & Trial function for vorticity & -\\
+	 
+	 $x$ & Test function for vorticity & -\\
+	 $X$ & Scalar-valued function space for vorticity $\omega$ & -\\
+\end{longtable}}
+
+{\textbf{\textsf{Greek Symbols}}}
+
+{\renewcommand{\arraystretch}{1.2} %<- modify value to suit your needs
+\begin{longtable}{p{1.5cm}p{10.5cm}p{1.5cm}}
+
+	$\Delta h$ & Mesh cell size & \si{m} \\
+	$\Delta t_E$ & Eulerian time step size & \si{s} \\
+	
+	$\epsilon$ & Symmetric gradient & ??\\
+	
+	$\nu$ & Kinematic viscosity & ??\\
+
+	$\omega$ & Vorticity & ?\\
+	$\Omega$ & Fluid domain & -\\	
+	$\Omega_E$ & Eulerian fluid domain & -\\	
+	$\Omega_L$ & Lagrangian fluid domain & -\\
+	$\partial \Omega$ & Boundary of the domain $\Omega$ & -\\
+	
+	$psi$ & Basis function & -\\
+	$\rho$ & Fluid density & ??\\
+	
+	$\sigma$ & Cauchy stress tensor & ??\\
+\end{longtable}}
+					

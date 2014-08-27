@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+    xmlns:latexdraw="http://latexdraw.sourceforge.net/namespaces/latexdraw"
+    version="1.1" baseProfile="full">
+    <defs/>
+    <g>
+        <g latexdraw:type="text" id="id814"
+            font-family="Times New Roman" fill="black" font-size="44" latexdraw:x="371.0">
+            <text x="371.0" y="211.0"><![CDATA[$\omega$]]></text>
+        </g>
+        <g latexdraw:type="text" id="id817"
+            font-family="Times New Roman" fill="black" font-size="18" latexdraw:x="437.0">
+            <text x="437.0" y="334.0"><![CDATA[$S$]]></text>
+        </g>
+        <g latexdraw:type="text" id="id820"
+            font-family="Times New Roman" fill="black" font-size="30" latexdraw:x="356.0">
+            <text x="356.0" y="74.0"><![CDATA[$\Gamma$]]></text>
+        </g>
+        <g latexdraw:type="drawing" id="id822">
+            <g latexdraw:type="drawing" id="id823">
+                <g latexdraw:type="akinPoints" id="id824"
+                    latexdraw:pathType="1" latexdraw:interval="5" latexdraw:points="345.38917216563516 343.9924994987405 345.38917216563516 341.0273125230907 346.2250436277092 335.0969385717912 347.06091508978403 328.1781689619405 349.5685294760069 315.3290254007916 352.9120153243042 301.4914861810911 357.0913726346759 283.7003643271912 357.0913726346759 268.8744294489406 358.76311555882535 245.15293364374168 362.1066014071227 223.40822915564138 362.1066014071227 203.64031598464214 360.43485848297354 187.82598544784219 358.76311555882535 178.9304245208923 356.25550117260144 167.06967661829225 352.07614386223037 157.185720032792 345.38917216563516 146.3133677887423 339.53807193111453 136.4294112032423 335.3587146207426 128.52224593484243 331.17935731037096 124.56866330064241 327.0 119.62668500789243 ">
+                    <path
+                        d="M 345.38916015625 343.99249267578125 L 349.15057373046875 322.74200439453125 C 351.03131103515625 312.11676025390625 355.2106628417969 277.0286865234375 357.5093078613281 252.56590270996094 C 359.8079528808594 228.10311889648438 357.92724609375 189.30857849121094 353.74786376953125 174.97683715820312 C 349.5685119628906 160.64511108398438 340.7918701171875 139.64169311523438 327.0 119.62668500789243 "
+                        stroke-width="2.0" stroke="black" fill="none" latexdraw:rotationAngle="0.0"/>
+                </g>
+                <g latexdraw:type="akinPoints" id="id825"
+                    latexdraw:pathType="1" latexdraw:interval="5" latexdraw:points="328.0 120.0 333.04721030042913 117.0625 341.4592274678113 114.125 351.5536480686694 110.20833333333331 363.33047210300424 103.35416666666666 381.83690987124453 98.45833333333331 396.13733905579386 93.5625 417.1673819742489 90.625 439.03862660944196 86.70833333333326 459.22746781115893 82.79166666666671 476.0515021459224 79.85416666666669 493.71673819742523 78.875 511.38197424892724 75.9375 524.0 73.0 ">
+                    <path
+                        d="M 328.0 120.0 L 354.91845703125 109.22917175292969 C 368.377685546875 103.84375 405.39056396484375 93.80729675292969 428.9442138671875 89.15625 C 452.49786376953125 84.50520324707031 488.03863525390625 78.140625 524.0 73.0 "
+                        stroke-width="2.0" stroke="black" fill="none" latexdraw:rotationAngle="0.0"/>
+                </g>
+                <g latexdraw:type="akinPoints" id="id826"
+                    latexdraw:pathType="1" latexdraw:interval="5" latexdraw:points="539.0685084723926 296.9999881311369 539.0685084723926 294.02642000605647 539.7534406756832 288.07928375589483 540.438372878974 281.14095813070435 542.4931694888458 268.255496255354 545.232898302008 254.37884500497466 548.657559318461 236.537436254488 548.657559318461 221.6695956290821 550.0274237250429 197.88105062843374 552.7671525382053 176.0748843778386 552.7671525382053 156.25109687729855 551.3972881316238 140.3920668768656 550.0274237250429 131.4713625016222 547.9726271151704 119.57709000129779 544.5479660987179 109.66519625102728 539.0685084723926 98.76211312572985 534.2739830493583 88.85021937545957 530.8493220329051 80.92070437524316 527.4246610164523 76.95594687513517 524.0 72.0 ">
+                    <path
+                        d="M 539.0684814453125 297.0 L 542.1506958007812 275.6894226074219 C 543.6917724609375 265.03411865234375 547.116455078125 229.84690856933594 549.0 205.31497192382812 C 550.883544921875 180.7830352783203 549.342529296875 141.87884521484375 545.9178466796875 127.50660705566406 C 542.4931640625 113.13436126708984 535.3013916015625 92.07158660888672 524.0 72.0 "
+                        stroke-width="2.0" stroke="black" fill="none" latexdraw:rotationAngle="0.0"/>
+                </g>
+                <g latexdraw:type="akinPoints" id="id827"
+                    latexdraw:pathType="1" latexdraw:interval="5" latexdraw:points="343.0 343.0 348.04721030042913 340.0625 356.4592274678113 337.125 366.5536480686694 333.2083333333333 378.33047210300424 326.35416666666663 396.83690987124453 321.4583333333333 411.13733905579386 316.5625 432.1673819742489 313.625 454.03862660944196 309.70833333333326 474.22746781115893 305.79166666666674 491.0515021459224 302.8541666666667 508.71673819742523 301.875 526.3819742489272 298.9375 539.0 296.0 ">
+                    <path
+                        d="M 343.0 343.0 L 369.91845703125 332.22918701171875 C 383.377685546875 326.84375 420.39056396484375 316.80731201171875 443.9442138671875 312.15625 C 467.49786376953125 307.50518798828125 503.03863525390625 301.140625 539.0 296.0 "
+                        stroke-width="2.0" stroke="black" fill="none" latexdraw:rotationAngle="0.0"/>
+                </g>
+            </g>
+            <g latexdraw:type="polygon" id="id829">
+                <polygon
+                    points="345.0,342.0 248.0,307.0 353.0,284.0 351.0,304.0 347.0,330.0 "
+                    stroke-width="0.20000000298023224" stroke="#969696" fill="#969696"/>
+            </g>
+        </g>
+        <g latexdraw:type="akinPoints" id="id831" latexdraw:pathType="1"
+            latexdraw:interval="5" latexdraw:points="448.0 311.0 447.0 311.0 446.0 309.0 444.0 308.0 443.0 307.0 442.0 307.0 441.0 306.0 440.0 305.0 439.0 304.0 438.0 304.0 ">
+            <path
+                d="M 448.0 311.0 L 445.0 309.0 C 443.5 308.0 441.0 306.25 438.0 304.0 "
+                stroke-width="2.0" stroke="black" fill="none" latexdraw:rotationAngle="0.0"/>
+        </g>
+        <g latexdraw:type="akinPoints" id="id832" latexdraw:pathType="1"
+            latexdraw:interval="5" latexdraw:points="439.0 320.0 440.0 320.0 441.0 319.0 441.0 318.0 442.0 318.0 444.0 317.0 444.0 316.0 445.0 316.0 446.0 316.0 446.0 315.0 447.0 314.0 447.0 313.0 448.0 313.0 448.0 312.0 ">
+            <path
+                d="M 439.0 320.0 L 441.5 318.5 C 442.75 317.75 444.75 316.25 445.5 315.5 C 446.25 314.75 447.25 313.5 448.0 312.0 "
+                stroke-width="2.0" stroke="black" fill="none" latexdraw:rotationAngle="0.0"/>
+        </g>
+    </g>
+    <metadata>
+        <latexdraw:metadata>
+            <latexdraw:displayBorders>false</latexdraw:displayBorders>
+            <latexdraw:autoAdjust>true</latexdraw:autoAdjust>
+            <latexdraw:ppc>50</latexdraw:ppc>
+            <latexdraw:zoom>1.25</latexdraw:zoom>
+            <latexdraw:unit>cm</latexdraw:unit>
+            <latexdraw:classicGrid>false</latexdraw:classicGrid>
+            <latexdraw:gridGap>10</latexdraw:gridGap>
+            <latexdraw:code>0</latexdraw:code>
+            <latexdraw:displayGrid>true</latexdraw:displayGrid>
+            <latexdraw:magneticGrid>false</latexdraw:magneticGrid>
+            <latexdraw:autoUpdate>false</latexdraw:autoUpdate>
+            <latexdraw:version>2.0.8</latexdraw:version>
+            <latexdraw:size>
+                <latexdraw:width>1371</latexdraw:width>
+                <latexdraw:height>691</latexdraw:height>
+            </latexdraw:size>
+            <latexdraw:position>
+                <latexdraw:x>109</latexdraw:x>
+                <latexdraw:y>250</latexdraw:y>
+            </latexdraw:position>
+            <latexdraw:dividerPosition>0.6156090444930707</latexdraw:dividerPosition>
+            <latexdraw:displayCodePanel>true</latexdraw:displayCodePanel>
+            <latexdraw:displayXScale>true</latexdraw:displayXScale>
+            <latexdraw:displayYScale>true</latexdraw:displayYScale>
+            <latexdraw:delimitorOpacity>130</latexdraw:delimitorOpacity>
+        </latexdraw:metadata>
+    </metadata>
+</svg>

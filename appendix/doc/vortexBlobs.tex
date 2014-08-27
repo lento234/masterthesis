@@ -1,0 +1,390 @@
+\section{\texttt{vortexBlobs}}
+The main structure of the \texttt{vortexBlobs} class. This class contains all the function related to the calculation of the vortex blobs.
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[%
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+  \node {\texttt{hybrid}}
+    child { node {\texttt{vortexMethod}}
+    	child {node [selected] {\texttt{vortexBlobs}}}
+    	child {node {\texttt{panels}}}  	
+    }
+    child [missing] {}				
+    child [missing] {}				
+    child { node {\texttt{navierStokes}}};
+    %child { node [selected] {tex}
+    %  child { node {generic}}
+    %  child { node [optional] {latex}}
+    %  child { node {plain}}
+    %}
+    %child [missing] {}
+    %child { node {texdoc}};
+\end{tikzpicture}
+\end{figure}
+
+\subsection*{Class structure:}
+\begin{figure}[h]
+\begin{tikzpicture}[%
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+  \node [selected] {\texttt{vortexBlobs}}
+    child { node {\texttt{1. \_\_init\_\_}}}
+    child { node {\texttt{2. setDeltaTc}}}
+    child { node {\texttt{3. setVInf}}}    
+    child { node {\texttt{4. setPopulationControl}}}
+    child { node {\texttt{5. addBlobs}}}
+    child { node {\texttt{6. removeBlobs}}}    
+    child { node {\texttt{7. modifyBlobs}}}    
+    child { node {\texttt{8. evolve}}}    
+    child { node {\texttt{9. remesh}}}    
+    child { node {\texttt{10. evaluteVelocity}}}                    
+    child { node {\texttt{11. evaluteVorticity}}}                        
+    child { node {\texttt{12. plotBlobs}}}                        
+    child { node {\texttt{13. plotVelocity}}}                        
+    child { node {\texttt{14. plotVorticity}}}                            
+    child { node {\texttt{15. save}}}                        
+    child { node {\texttt{16. saveBlobs}}}                                        
+    child { node {\texttt{17. saveVelocity}}}                                            
+    child { node {\texttt{18. saveVorticity}}};
+%    child { node [optional] {19. \texttt{\_generateBlobs}}}
+%    child { node [optional] {20. \texttt{\_populationControl}}};        
+        %child { node [selected] {tex}
+    %  child { node {generic}}
+    %  child { node [optional] {latex}}
+    %  child { node {plain}}
+    %}
+    %child { node {texdoc}};
+\end{tikzpicture}
+\end{figure}
+
+%\subsection*{Structure:}
+%\begin{table}[h]
+%\begin{tabular}{rl}
+%	\texttt{vortexBlobs}: &  \\ \hline
+%	-- & \texttt{\_\_init\_\_} \\
+%	& \\
+%	-- & \texttt{set\_deltaTc} \\ 
+%	-- & \texttt{set\_popControlParameters} \\ 
+%	-- & \texttt{addBlobs} \\ 
+%	-- & \texttt{removeBlobs} \\ 
+%	-- & \texttt{modifyBlobs} \\ 
+%	-- & \texttt{evolve} \\ 
+%	-- & \texttt{remesh} \\ 
+%	-- & \texttt{evaluteVelocity} \\ 
+%	-- & \texttt{evaluteVorticity} \\ 
+%	-- & \texttt{plotBlobs} \\	
+%	-- & \texttt{plotVelocity} \\
+%	-- & \texttt{plotVorticity} \\
+%	-- & \texttt{saveClass} \\ 
+%	-- & \texttt{saveBlob} \\ 
+%	-- & \texttt{saveVelocity} \\ 	
+%	-- & \texttt{saveVorticity} \\ 
+%	-- & \texttt{saveBlobPlot} \\ 
+%	-- & \texttt{saveVelocityPlot} \\ 	
+%	-- & \texttt{saveVorticityPlot} \\ 		
+%	& \\
+%	-- & \texttt{\_generateParticles} \\ 
+%	-- & \texttt{\_popControl} \\
+%\end{tabular}
+%\end{table}
+
+\newpage
+
+
+
+\subsection{\texttt{\_\_init\_\_}}
+	\paragraph{Description:} Initialize the \texttt{vortexBlobs} class with either the given input parameters or by a reading a \texttt{file} containing all the necessary parameters.\\
+	
+	\begin{tabular}{l|lp{7cm}}
+		\multicolumn{2}{l}{\textbf{Input Parameters}} & \\ \hline
+		\textit{File Name} & \multicolumn{2}{l}{Containing all the parameters to re-initalize the class.} \\ \cline{2-3}
+		\multicolumn{3}{c}{--- or ---} \\ \cline{2-3}
+		\multirow{4}{*}{\textit{Parameters}} & Vorticity Field &: \{\texttt{xBlob, yBlob, gBlob}\} or \{\texttt{wFunction, xBounds, yBounds}\}\\ \cline{2-3}
+		& Blob parameters &: \texttt{overlap, h} \\ \cline{2-3}
+		& Time Step parameters &: \texttt{deltaTc, nu, stepRedistribution, integrationMethod, computationMethod}\\ \cline{2-3}
+		& Population control parameters &: \texttt{stepPopulationControl, gThreshold}\\ \cline{2-3}
+	\end{tabular}\\
+	
+	\subsubsection*{Descriptions of the parameters:}
+	\begin{tabular}{p{3.5cm}p{9cm}p{1cm}}
+				\textit{Vorticity field} & & \textit{Default}\\ \hline
+				\texttt{xBlob,yBlob} &:  the $x,y$ blob coordinates. & - \\
+				\texttt{gBlob} &: the circulation $\Gamma_i$ associated to each of the vortex blobs. & - \\
+				& & \\
+				\multicolumn{2}{c}{\textit{--- or ---}} & \\
+				& & \\
+				\texttt{wExactFunction} &: the function that returns the exact value of vorticity $\omega$ at any given $x,y$ coordinates. &\\
+				& 	\begin{tabular}{lp{10cm}}
+						\textbf{Input parameters} &: \texttt{xEval,yEval}\\ 
+						\textbf{Assigns} &: \texttt{-}\\ 			
+						\textbf{Returns} &: \texttt{wEval}\\ 					
+					\end{tabular} & - \\
+				\texttt{xBounds, yBounds} &: the $x,y$ bounds of the domain where the particles was originally distributed. & - \\		 
+	\end{tabular}\\
+	\\ \\
+	%	\begin{tabular}{lp{10cm}}
+	%		\textbf{Input parameters} &: \texttt{xEval,yEval}\\ 
+	%		\textbf{Assigns} &: \texttt{-}\\ 			
+	%		\textbf{Returns} &: \texttt{vortEval}\\ 					
+	%	\end{tabular}\\
+	\begin{tabular}{p{3.5cm}p{9cm}p{1cm}}
+				\multicolumn{2}{l}{\textit{Blob parameters}} & \textit{Default} \\ \hline				
+				\texttt{overlap} &: the overlap ratio $h/\sigma$. & 1.0\\
+				\texttt{h} &: the size of the cell $h$ associated to the blobs. \textit{Note:} Cells are square. & -\\
+	\end{tabular}\\
+	\\ \\
+	\begin{tabular}{p{3.5cm}p{9cm}p{1cm}}
+				\multicolumn{2}{l}{\textit{Time step parameters}} & \textit{Default}\\ \hline
+				\texttt{deltaTc} &:  the size of the convective time step $\Delta t_c$. & - \\
+				\texttt{nu} &: the fluid kinematic viscosity $\nu$, used to calculate the diffusion coefficient $c^2$ and diffusion time step size $\Delta T_d$.& - \\
+				\texttt{stepRedistribution} &: the redistribution step frequency. & 1 \\
+				\texttt{integrationMethod} &: the time integration method (\texttt{FE}: Forward euler , \texttt{RK4}: $4^{th}$ order Runge-Kutta). & RK4 \\
+				\texttt{computationMethod} &: the calculation method to evolve the blobs, (\texttt{Direct}: Direct Method, \texttt{FMM}: Fast-Multipole Method) using (\texttt{CPU}, \texttt{GPU}). & \{FMM, GPU\}.\\
+	\end{tabular}\\ 
+    \\ \\ 
+	\begin{tabular}{p{3.5cm}p{9cm}p{1cm}}
+				\multicolumn{2}{l}{\textit{Population control parameters}} & \textit{Default} \\ \hline
+				\texttt{stepPopulationControl} &: population control step frequency & 1.\\
+				\texttt{gThreshold} &: the tuple with minimum \textbf{and} maximum value of the circulation $\Gamma_{min}$. & - \\
+	\end{tabular}\\ 
+    \\ \\  
+	\begin{tabular}{p{3.5cm}p{9cm}p{1cm}}
+				\multicolumn{2}{l}{\textit{Free stream velocity}} & \textit{Default}\\ \hline
+				\texttt{vInf} &: The free-stream velocity function, returning the velocity action on the vortex blobs. & -\\		
+				&		\begin{tabular}{lp{10cm}}
+							\textbf{Input parameters} &: \texttt{t}\\ 
+							\textbf{Assigns} &: \texttt{-}\\ 			
+							\textbf{Returns} &: \texttt{vx,vy}\\ 					
+						\end{tabular} & - \\
+				
+	\end{tabular}\\
+
+
+\subsection{\texttt{setDeltaTc}}
+	\paragraph{Description:} Function change the convective time step size $\Delta t_c$.\\
+	
+	 \begin{tabular}{p{3.5cm}p{10cm}p{1cm}}
+				\multicolumn{2}{l}{\textit{Parameters}} & \textit{Default} \\ \hline
+		   		\texttt{deltaTc} &: the new convection time step size $\Delta t_c$. & - \\
+		\end{tabular} \vspace{5 mm}\\
+	\\		
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{deltaTcNew}\\
+		\textbf{Assigns} &:  \texttt{deltaTc}\\
+		\textbf{Returns} &: \texttt{-}\\
+	\end{tabular}
+
+\subsection{\texttt{setPopulationControl}}
+	\paragraph{Description:} function to modify the population control parameters.\\
+	
+	 \begin{tabular}{lp{10cm}}
+				\textit{Parameters} & \\ \hline
+		   		\texttt{gThresholdNew} &: the minimum and maximum circulation of the blobs, $\Gamma_{min}$\\
+		   		\texttt{stepPopulationControlNew} &: the step number (frequency) of the population control.\\
+		\end{tabular} \vspace{5 mm}\\
+	\\		
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{gThresholdNew, stepPopulationControlNew}\\
+		\textbf{Assigns} &:  \texttt{gThreshold, stepPopulationControl}\\
+		\textbf{Returns} &: \texttt{-}\\
+	\end{tabular}
+
+		
+\subsection{\texttt{addBlobs}}
+	\paragraph{Description:} adds vortex particles by appending to the current set of particles.\\
+	
+	 \begin{tabular}{lp{10cm}}
+				\textit{Parameters} & \\ \hline
+		   		\texttt{xBlobNew,yBlobNew,gBlobNew} &: the coordinates and the strength of the new set of particles.\\
+		\end{tabular} \vspace{5 mm}\\
+	\\		
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{xBlobNew,yBlobNew,gBlobNew}\\
+		\textbf{Assigns} &: \texttt{xBlob,yBlob,gBlob}\\
+		\textbf{Returns} &: \texttt{-}\\
+	\end{tabular}
+
+
+\subsection{\texttt{removeBlobs}}
+	\paragraph{Description:} removes vortex particles from the current set of particles. Using, the particle index, the associated $x,y$ and $\Gamma_i$ will be removed.\\
+	
+	 \begin{tabular}{lp{10cm}}
+				\textit{Parameters} & \\ \hline
+		   		\texttt{iBlob} &: the list of blob indices that is to be removed.\\
+		\end{tabular} \vspace{5 mm}\\
+	\\		
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{iBlob}\\
+		\textbf{Assigns} &: \texttt{xBlob,yBlob,gBlob}\\
+		\textbf{Returns} &: \texttt{-}\\
+	\end{tabular}
+	
+	
+\subsection{\texttt{modifyBlobs}}
+	\paragraph{Description:} Replace the vortex particle strengths with the new strength.\\
+	
+	 \begin{tabular}{lp{10cm}}
+				\textit{Parameters} & \\ \hline
+		   		\texttt{iBlob} &: the list of blob indices that is to be modified.\\
+		   		\texttt{gBlobNew} &: the new strength of the blobs.\\		   		
+		\end{tabular} \vspace{5 mm}\\
+	\\		
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{iBlob,gBlobNew}\\
+		\textbf{Assigns} &: \texttt{gBlob}\\
+		\textbf{Returns} &: \texttt{-}\\
+	\end{tabular}	
+
+\subsection{\texttt{evolve}}
+	\paragraph{Description:} Evolves the vortex blobs according to the \texttt{\_\_init\_\_} definition. The \texttt{evolve} function, knows when (has a counter) to redistribute and perform population control. Depending on the diffusion time step $\Delta t_d$, the evolve function will also perform the diffusion process (modified interpolation).\\
+	
+	 \begin{tabular}{lp{10cm}}
+				\textit{Parameters} & \\ \hline
+		   		\texttt{xBlobNew,yBlobNew,gBlobNew} &: the new set of particle after the evolution process.\\
+		\end{tabular} \vspace{5 mm}\\
+	\\		
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{-}\\
+		\textbf{Assigns} &: \texttt{xBlob,yBlob,gBlob}\\	
+		\textbf{Returns} &: \texttt{-}\\
+	\end{tabular}			
+
+
+\subsection{\texttt{remesh}}
+	\paragraph{Description:}  Function to remesh the particles on to the remeshing grid. When $c=0$, the remeshing will be done without diffusion. If $c>0$, the modified interpolation will perform the diffusion.
+	\\
+	\\		
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{c}\\ 
+		\textbf{Assigns} &: \texttt{xBlob,yBlob,wBlob}\\ 			
+		\textbf{Returns} &: \texttt{-}\\ 					
+	\end{tabular}
+
+
+\subsection{\texttt{evaluateVelocity}}
+	\paragraph{Description:} Function to evaluate the total induced velocity due to the blobs, and the external velocity at a given target locations.\\
+	
+	    \begin{tabular}{lp{10cm}}
+			\textit{Parameters} & \\ \hline
+			 \texttt{xTarget,yTarget} &: the $x,y$ coordinate of the target location, where the total velocity is to be evaluated.\\
+			\texttt{vxTarget,vyTarget} &: the $x,y$ induced velocity at the target points in global coordinate system.\\
+		\end{tabular} \vspace{5 mm}
+	\\		
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{xTarget,yTarget}\\ 
+		\textbf{Assigns} &: \texttt{-}\\ 			
+		\textbf{Returns} &: \texttt{vxTarget,vyTarget}\\ 					
+	\end{tabular}	
+
+\subsection{\texttt{evaluateVorticity}}
+	\paragraph{Description:} Function to evaluate the total induced vorticity due to the blobs, and the external velocity at a given target coordinates.\\
+	
+	    \begin{tabular}{lp{10cm}}
+			\textit{Parameters} & \\ \hline
+			 \texttt{xTarget,yTarget} &: the $x,y$ coordinate of the target location, where the total velocity is to be evaluated.\\
+			\texttt{wTarget} &: the $x,y$ induced vorticity at the target points in global coordinate system.\\
+		\end{tabular} \vspace{5 mm}
+	\\		
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{xTarget,yTarget}\\ 
+		\textbf{Assigns} &: \texttt{-}\\ 			
+		\textbf{Returns} &: \texttt{wTarget}\\ 					
+	\end{tabular}
+
+
+		
+\subsection{plots \ldots}
+	\paragraph{Description:} functions to plot and/or save all the results in a given region. The data should be store for scientific visualization (paraview format)\\
+	
+		\begin{tabular}{lp{10cm}}
+			\textit{Plot variables:} & \\ \hline
+			\texttt{plotBlob} &: plot the coordinates and the circulation of the blobs.\\
+			\texttt{plotVelocity} &: plot the velocity field.\\ 
+			\texttt{plotVorticity} &: plot the vorticity field.\\ 
+		\end{tabular} \vspace{5 mm}
+		
+		\begin{tabular}{lp{10cm}}
+			\textit{Parameters:} & \\ \hline
+			\texttt{xBounds,yBounds} &: $x,y$ bounds of the grid, where the data is to be evaluated.\\ 
+			\texttt{nGrid} &: $x,y$ number of grid points.\\
+		\end{tabular} \vspace{5 mm}\\
+	\\
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{xBounds,yBounds,nGrid}\\
+		\textbf{Assigns} &: \texttt{-}\\ 			
+		\textbf{Returns} &: \texttt{figureHandle} or \texttt{.pvd}\\ 					
+	\end{tabular}	
+
+\subsection{save data \ldots}
+	\paragraph{Description:} functions to save the data. The data file will be in compressed, binary format to store efficiently.\\
+
+		\begin{tabular}{lp{10cm}}
+			\textit{Save variables:} & \\ \hline
+			\texttt{save} &: all the data of the \texttt{vortexBlob} class is saved. This can be used later to restart the problem, i.e the parameter to init the problem.\\
+			\texttt{saveBlobs} &: the function to save the blob data at the current time instant. List of numpy array.\\ 			
+			\texttt{saveVelocity} &: save the velocity field of a given region or a given set of points.\\ 
+			\texttt{saveVorticity} &: save the vorticity field of the given region or the given set of points.\\ 
+		\end{tabular} \vspace{5 mm}
+	
+		\begin{tabular}{lp{10cm}}
+			\textit{Parameters:} & \\ \hline
+			\texttt{xBounds,yBounds} &: $x,y$ bounds of the grid, where the data is to be evaluated and saved.\\ 
+			\texttt{nGrid} &: $x,y$ number of grid points.\\
+			\texttt{xEval,yEval} &: $x,y$ coordinates of the location where the data is to be evaluated and saved.\\ 
+		\end{tabular} \vspace{5 mm}\\
+	\\
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{xBounds,yBounds,hGrid} or \texttt{xEval,yEval}\\ 
+		\textbf{Assigns} &: \texttt{-}\\ 			
+		\textbf{Returns} &: \texttt{.npz, .bin or similar}\\ 					
+	\end{tabular}
+
+
+
+%\subsection{save plots \ldots}
+%	\paragraph{Description:} Function to save the plots as scientific visualization format \texttt{.pvd}.\\
+%	
+%		\begin{tabular}{lp{10cm}}
+%			\textit{Save variables:} & \\ \hline
+%			\texttt{saveBlobPlot} &: save the particle position and strengths as glyphs.\\
+%			\texttt{saveVelocityPlot} &: save the velocity plot of a given region.\\ 
+%			\texttt{saveVorticityPlot} &: save the vorticity of a given region.\\ 
+%		\end{tabular} \vspace{5 mm}
+%		
+%		\begin{tabular}{lp{10cm}}
+%			\textit{Parameters:} & \\ \hline
+%			\texttt{xBounds,yBounds} &: $x,y$ bounds of the grid, where the data is to be evaluated and saved.\\ 
+%			\texttt{hGrid} &: $x,y$ spacing of the evaluation grid.\\
+%		\end{tabular} \vspace{5 mm}\\
+%	\\
+%	\begin{tabular}{lp{10cm}}
+%		\textbf{Input parameters} &: \texttt{xBounds,yBounds,hGrid}\\
+%		\textbf{Assigns} &: \texttt{-}\\ 			
+%		\textbf{Returns} &: \texttt{.pvd}\\ 					
+%	\end{tabular}
+	
+
+
+%\subsection{\texttt{\_generateParticles}}
+%	\paragraph{Description:} \textit{Internal} function to generate/initialize the particles.\\
+%	\\
+%	\\
+%		\begin{tabular}{lp{10cm}}
+%			\textbf{Input parameters} &: \texttt{wExactFunction, xBounds, yBounds}\\ 
+%			\textbf{Assigns} &: \texttt{xBlob,yBlob,wBlob}\\ 			
+%			\textbf{Returns} &: \texttt{-}\\ 					
+%		\end{tabular}	
+%
+%
+%\subsection{\texttt{\_popControl}}
+%	\paragraph{Description:} \textit{Internal} function to perform population control on the current set of particles.\\
+%	\\
+%	\\	
+%		\begin{tabular}{lp{10cm}}
+%			\textbf{Input parameters} &: \texttt{-}\\ 
+%			\textbf{Assigns} &: \texttt{xBlob,yBlob,wBlob}\\ 			
+%			\textbf{Returns} &: \texttt{-}\\ 					
+%		\end{tabular}	

@@ -1,0 +1,343 @@
+\section{\texttt{navierStokes}}
+The main structure for the Navier-stokes class \texttt{navierStokes}. This class contains all the functions related to computation of the Navier-stokes problem. Below is set of functions that acts as the interface to the class.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[%
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+  \node {\texttt{hybrid}}
+    child { node {\texttt{vortexMethod}}
+    	child {node {\texttt{vortexBlobs}}}
+    	child {node {\texttt{panels}}}  	
+    }
+    child [missing] {}				
+    child [missing] {}				
+    child { node [selected] {\texttt{navierStokes}}};
+    %child { node [selected] {tex}
+    %  child { node {generic}}
+    %  child { node [optional] {latex}}
+    %  child { node {plain}}
+    %}
+    %child [missing] {}
+    %child { node {texdoc}};
+\end{tikzpicture}
+\end{figure}
+
+
+\subsection*{Class structure:}
+\begin{figure}[h]
+\begin{tikzpicture}[%
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+  \node [selected] {\texttt{navierStokes}}
+    child { node {\texttt{1. \_\_init\_\_}}}
+    child {node  {\texttt{2. getCoordinates}}}
+    child { node {\texttt{3. setVelocity}}}
+    child { node {\texttt{4. setPressure}}}
+    child { node {\texttt{5. getBoundaryCoordinates}}}                        
+    child { node {\texttt{6. evolve}}}
+    child { node {\texttt{7. getVorticity}}}                        
+    child { node {\texttt{8. getMeshPosition}}}                        
+    child { node {\texttt{9. getProbeGridParameters}}}                        
+    child { node {\texttt{10. plotVelocity}}}                        
+    child { node {\texttt{11. plotPressure}}}                        
+    child { node {\texttt{12. plotVorticity}}}                        
+    child { node {\texttt{13. save}}}                        
+    child { node {\texttt{14. saveVelocity}}}                                            
+    child { node {\texttt{15. savePressure}}}                                            
+    child { node {\texttt{16. saveVorticity}}}
+    child { node [optional]{\texttt{17. \_moveMesh}}};
+	%  child { node [selected] {tex}
+    %  child { node {generic}}
+    %  child { node [optional] {latex}}
+    %  child { node {plain}}
+    %}
+    %child { node {texdoc}};
+\end{tikzpicture}
+\end{figure}
+
+%\subsection*{Class structure:}
+%\begin{table}[h]
+%\begin{tabular}{rl}
+%	\texttt{navierStokes}: &  \\ \hline
+%	-- & \texttt{\_\_init\_\_} \\
+%	& \\
+%	-- & \texttt{initialConditions} \\ 
+%	-- & \texttt{evolve} \\ 
+%	-- & \texttt{boundaryCoordinates} \\ 
+%	-- & \texttt{updateMesh} \\ 
+%	-- & \texttt{moveMesh} \\ 
+%	-- & \texttt{computeVorticity} \\ 
+%	-- & \texttt{meshPosition}\\
+%	-- & \texttt{probeGridParameters} \\ 	
+%	-- & \texttt{plotVelocity} \\ 		
+%	-- & \texttt{plotPressure} \\ 		
+%	-- & \texttt{plotVorticity} \\ 			
+%	-- & \texttt{saveClass} \\ 					
+%	-- & \texttt{saveVelocity} \\ 		
+%	-- & \texttt{savePressure} \\ 		
+%	-- & \texttt{saveVorticity} \\ 	
+%	-- & \texttt{saveVelocityPlot} \\ 		
+%	-- & \texttt{savePressurePlot} \\ 		
+%	-- & \texttt{saveVorticityPlot} \\ 	
+%\end{tabular}
+%%\caption{\texttt{navierStokes} class structure}
+%\end{table}
+
+\newpage
+
+\subsection{\texttt{\_\_init\_\_}}
+	\paragraph{Description:} Initialize the \texttt{navierStokes} class either using a \texttt{fileName} containing all the necessary parameter for initialization or by explicitly inputing the parameters.\\
+
+	\begin{tabular}{l|lp{7cm}}
+		\multicolumn{2}{l}{\textbf{Input Parameters}} & \\ \hline
+		\textit{File Name} & \multicolumn{2}{l}{Containing all the parameters to re-initalize the class.} \\ \hline
+		\multicolumn{3}{c}{-- or --} \\ \hline
+		\multirow{5}{*}{\textit{Parameters}} & Mesh data &: \texttt{mesh, boundaryDomains}\\ \cline{2-3}
+		& Geometry position &: \texttt{cmGlobal, thetaLocal} \\ \cline{2-3}
+		& Fluid parameters &: \texttt{uMax, nu}\\ \cline{2-3}
+		& Solver options &: \texttt{cfl}\\ \cline{2-3}
+		& Probe grid parameters &: \texttt{x0, y0, Lx, Ly, hx, hy}\\ \cline{2-3}
+
+	\end{tabular}\\
+	\subsubsection*{Descrition of the parameters:}
+	
+	\begin{tabular}{lp{10cm}}
+				\textit{Mesh data} & \\ \hline
+				\texttt{mesh} &: the mesh data file.\\ 
+				\texttt{boundaryDomains} &: the boundary mesh domain data file.\\ 			
+	\end{tabular}\\ 
+    \\ \\
+	\begin{tabular}{lp{10cm}}
+				\textit{Geometry position} & \\ \hline
+				\texttt{cmGlobal} &: the $x,y$ position of the geometry in global coordinates.\\ 
+				\texttt{thetaGlobal} &: the rotation angle (in $rad$) of the geometry in global coordinate system.\\ 			
+	\end{tabular}\\
+    \\ \\
+	\begin{tabular}{lp{10cm}}
+				\textit{Fluid parameters} & \\ \hline
+				\texttt{uMax} &: the maximum fluid velocity $U_{max}$. Used to determine the maximum time step size $\Delta t_{max}$.\\ 
+				\texttt{nu} &: the fluid kinematic viscosity $\nu$, for incompressible navier-stokes problem.\\ 			
+	\end{tabular}\\	
+    \\ \\
+	\begin{tabular}{lp{10cm}}
+				\textit{Solver options} & \\ \hline
+				\texttt{cfl} &: the $CFL$ stability parameter. If explicit time marching scheme, $CFL<1$.\\ 		
+	\end{tabular}\\	
+    \\ \\
+	\begin{tabular}{lp{10cm}}
+				\textit{Probe grid parameters} & \\ \hline
+				\texttt{x0,y0} &: the $x,y$ coordinate of the origin of the probe grid.\\ 
+				\texttt{Lx,Ly} &: the $x,y$ size (width and height) of the probing grid.\\ 			
+				\texttt{hx,hy} &: the $x,y$ spacing of the probe grid cell.\\ 							
+	\end{tabular}\\	
+
+\subsection{\texttt{getCoordinates}}
+	\paragraph{Description:} Function to get all the coordinates of the velocity function spaces $\mathbf{V}$. With the returned coordinates, one could calculate the velocity field in the navier-stokes domain. \textit{Note}: The coordinates and just a list of DOF coordinate of the vector function space and is given in the same order as the data that is to be stored.\\
+	
+	    \begin{tabular}{lp{10cm}}
+			\textit{Parameters} & \\ \hline
+			\texttt{xCoordinates,yCoordinates} &: the $x,y$ coordinates of the velocity vector function space $\mathbf{V}$. \\		
+		\end{tabular} \vspace{5 mm}
+	\\		
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{-}\\ 
+		\textbf{Assigns} &: \texttt{-}\\ 			
+		\textbf{Returns} &: \texttt{xCoordinates,yCoordinates}\\ 					
+	\end{tabular}
+
+\subsection{\texttt{setVelocity}}
+	\paragraph{Description:} Function to apply the current velocity field.\\
+	
+	    \begin{tabular}{lp{10cm}}
+			\textit{Parameters} & \\ \hline
+			\texttt{vFieldNew} &: the \textit{new} velocity at the navier-stokes DOF coordinates of the vector function space $\mathbf{V}$.\\		
+		\end{tabular} \vspace{5 mm}
+	\\		
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{vFieldNew}\\ 
+		\textbf{Assigns} &: \texttt{vField}\\ 			
+		\textbf{Returns} &: \texttt{-}\\ 					
+	\end{tabular}
+	
+\subsection{\texttt{setPressure}}
+	\paragraph{Description:} Function to apply the current pressure field.\\
+	
+	    \begin{tabular}{lp{10cm}}
+			\textit{Parameters} & \\ \hline
+			\texttt{pFieldNew} &: the \textit{new} pressure field at the navier-stokes DOF coordinates of the scalar function space $\mathbf{V}$.\\ 
+		\end{tabular} \vspace{5 mm}
+	\\		
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{pFieldNew}\\ 
+		\textbf{Assigns} &: \texttt{pField}\\ 			
+		\textbf{Returns} &: \texttt{-}\\ 					
+	\end{tabular}
+
+\subsection{\texttt{getBoundaryCoordinates}}
+	\paragraph{Description:} Function to return the boundary DOF coordinates \texttt{xBoundary,yBoundary} of the vector function space $\mathbf{V}$.\\
+	
+		\begin{tabular}{lp{10cm}}
+			\textit{Parameters} & \\ \hline
+			\texttt{xBoundary,yBoundary} &: $x,y$ boundary coordinates of the vector function space  $\mathbf{V}$. \\ 
+		\end{tabular} \vspace{5 mm}
+	\\
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{-}\\ 
+		\textbf{Assigns} &: \texttt{-}\\ 			
+		\textbf{Returns} &: \texttt{xBoundary,yBoundary}\\ 					
+	\end{tabular}	
+
+\subsection{\texttt{evolve}}
+	\paragraph{Description}: Function to evolve the Navier-stokes by one step with the $x,y$ velocity boundary condition \texttt{vxBoundary,vyBoundary} at the Navier-stokes finite element mesh boundary \texttt{xBoundary,yBoundary}. The function will calculate the new velocity and the pressure fields. The \textit{new} mesh position is used to update the mesh position, whereas the \textit{current} mesh velocity is used to calculate the modified convective term to take in account of the rigid mesh motion.\\
+	
+		\begin{tabular}{lp{10cm}}
+			\textit{Parameters} & \\ \hline
+			\texttt{vxBoundary,vyBoundary} &: $x,y$ velocity at the navier-stokes dof boundary coordinates as described by \texttt{xBoundary,yBoundary}.\\ 
+			\texttt{xBoundary,yBoundary} &: $x,y$ boundary coordinates of the vector function space.\\ 
+			\texttt{cmGlobalNew,thetaGlobalNew} &: the \textit{new} mesh position and the global mesh rotational angle\\
+			\texttt{cmDotGlobal, thetaDotGlobal} &: the \textit{current} mesh velocities (displacement velocity and rotational velocity) in the global reference frame.\\
+		\end{tabular} \vspace{5 mm}
+	\\	
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{vxBoundary,vyBoundary, cmGlobalNew,thetaGlobalNew, cmDotGlobal, thetaDotGlobal}\\ 
+		\textbf{Assigns} &: \texttt{vField, pField}\\ 			
+		\textbf{Returns} &: \texttt{-}\\ 					
+	\end{tabular}	
+
+
+	
+
+%
+%\subsection{\texttt{moveMesh}}
+%	\paragraph{Description:} Function to move the mesh using body displacement and rotational velocities. This function can be then used to calculate the mesh velocity of the current instant.\\
+%	
+%		\begin{tabular}{lp{10cm}}
+%			\textit{Parameters} & \\ \hline
+%			\texttt{cmDotGlobal} &: the $x,y$ global mesh coordinate displacement velocity.\\ 
+%			\texttt{thetaDotGlobal} &: the polar rotational velocity of the navier-stokes domain w.r.t global coordintes.\\ 			
+%			\texttt{vMesh} &: the mesh velocity w.r.t to global $x,y$-axis\\	
+%		\end{tabular} \vspace{5 mm}
+%	\\
+%	\begin{tabular}{lp{10cm}}
+%		\textbf{Input parameters} &: \texttt{cmDotGlobal,thetaDotGlobal}\\ 
+%		\textbf{Assigns} &: \texttt{xBoundary,yBoundary,vMesh}\\ 			
+%		\textbf{Returns} &: \texttt{-}\\ 					
+%	\end{tabular}
+	
+	
+\subsection{\texttt{getVorticity}}
+	\paragraph{Description:} Function to evaluate the vorticity at probe coordinates defined by the probe mesh.\\
+	
+		\begin{tabular}{lp{10cm}}
+			\textit{Parameters} & \\ \hline
+			\texttt{vortProbeGrid} &: the vorticity $\omega$ at the probe grid coordinates \texttt{xProbeGrid, yProbeGrid}.\\ 
+		\end{tabular} \vspace{5 mm}
+	\\
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{-}\\ 
+		\textbf{Assigns} &: \texttt{-}\\ 			
+		\textbf{Returns} &: \texttt{wProbeGrid}\\ 					
+	\end{tabular}
+
+
+\subsection{\texttt{getMeshPosition}}
+
+	\paragraph{Description:} Function to return the current mesh position and rotational angle.\\
+	
+		\begin{tabular}{lp{10cm}}
+			\textit{Parameters} & \\ \hline
+			\texttt{cmGlobal} &: the $x,y$ position of the mesh in global coordinates.\\ 
+			\texttt{thetaGlobal} &: the rotational angle of the mesh w.r.t the global $x$ axis.\\
+		\end{tabular} \vspace{5 mm}
+	\\
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{-}\\ 
+		\textbf{Assigns} &: \texttt{-}\\ 			
+		\textbf{Returns} &: \texttt{cmGlobal,thetaGlobal}\\ 					
+	\end{tabular}
+
+\subsection{\texttt{getProbeGridParameters}}
+
+	\paragraph{Description:} Function to return the probe grid parameters.\\
+	
+		\begin{tabular}{lp{10cm}}
+			\textit{Parameters} & \\ \hline
+			\texttt{x0,y0} &: the global $x,y$ coordinates of the probe mesh origin.\\ 
+			\texttt{Lx,Ly} &: the local width and height of the probe mesh.\\
+			\texttt{hx,hy} &: the probe spacing of the structure probe mesh.\\			
+		\end{tabular} \vspace{5 mm}
+	\\
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{-}\\ 
+		\textbf{Assigns} &: \texttt{-}\\ 			
+		\textbf{Returns} &: \texttt{x0,y0,Lx,Ly,hx,hy}\\ 					
+	\end{tabular}
+
+\subsection{plots \ldots}
+	\paragraph{Description:} Function to plot and/or save (\textit{optional}) all the results.\\
+	
+		\begin{tabular}{lp{10cm}}
+			\textit{Plot variables} & \\ \hline
+			\texttt{plotVelocity} &: the velocity $\mathbf{V}$ of the navier-stokes domain, \texttt{u1}.\\ 
+			\texttt{plotPressure} &: the pressure $\mathbf{p}$ of the navier-stokes domain, \texttt{p1}\\ 
+			\texttt{plotVorticity} &: the vorticity $\mathbf{\omega}$ of the navier-stokes domain, \texttt{w1}.\\ 
+		\end{tabular} \vspace{5 mm}
+	\\
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{-}\\ 
+		\textbf{Assigns} &: \texttt{-}\\ 			
+		\textbf{Returns} &: \texttt{figureHandle} or \texttt{saveFile}\\ 					
+	\end{tabular}
+
+\subsection{save datas \ldots}
+	\paragraph{Description:} Function to save the navier-stokes data as binaries.\\
+	
+		\begin{tabular}{lp{10cm}}
+			\textit{Save variables} & \\ \hline
+			\texttt{save} & : all the data of the \texttt{navierStokes} class, to be used to restart later.\\
+			\texttt{saveVelocity} &: the velocity $\mathbf{V}$ of the navier-stokes domain, \texttt{u1}.\\ 
+			\texttt{savePressure} &: the pressure $\mathbf{p}$ of the navier-stokes domain, \texttt{p1}\\ 
+			\texttt{saveVorticity} &: the vorticity $\mathbf{\omega}$ of the navier-stokes domain, \texttt{w1}.\\ 
+		\end{tabular} \vspace{5 mm}
+	\\
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{-}\\ 
+		\textbf{Assigns} &: \texttt{-}\\ 			
+		\textbf{Returns} &: \texttt{.npz}\\ 					
+	\end{tabular}
+
+\subsection{\texttt{\_moveMesh}}
+	\paragraph{Description:} \textit{Internal} function to update the mesh coordinates using the new global position and rotational angle of the body. The function will be called through \texttt{evolve}.\\
+	
+		\begin{tabular}{lp{10cm}}
+			\textit{Parameters} & \\ \hline
+			\texttt{cmGlobal} &: the $x,y$ global coordinates of the body.\\ 
+			\texttt{thetaGlobal} &: the polar rotational angle of the navier-stokes domain w.r.t global $x$-coordinate axis.\\ 			
+		\end{tabular} \vspace{5 mm}
+	\\
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{cmGlobal,thetaGlobal}\\ 
+		\textbf{Assigns} &: \texttt{xBoundary,yBoundary}\\ 			
+		\textbf{Returns} &: \texttt{-}\\ 					
+	\end{tabular}
+
+
+%\subsection{save plots \ldots}
+%	\paragraph{Description:} Function to save the navier-stokes plots are scientific visualization format \texttt{.pvd}.\\
+%	
+%		\begin{tabular}{lp{10cm}}
+%			\textit{Save variables} & \\ \hline
+%			\texttt{saveVelocityPlot} &: the velocity $\mathbf{V}$ plot of the navier-stokes domain, \texttt{u1}.\\ 
+%			\texttt{savePressurePlot} &: the pressure $\mathbf{p}$ plot of the navier-stokes domain, \texttt{p1}\\ 
+%			\texttt{saveVorticityPlot} &: the vorticity $\mathbf{\omega}$ plot of the navier-stokes domain, \texttt{w1}.\\ 
+%		\end{tabular} \vspace{5 mm}
+%	\\
+%	\begin{tabular}{lp{10cm}}
+%		\textbf{Input parameters} &: \texttt{-}\\ 
+%		\textbf{Assigns} &: \texttt{-}\\ 			
+%		\textbf{Returns} &: \texttt{.pvd}\\ 					
+%	\end{tabular}

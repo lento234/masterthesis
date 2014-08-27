@@ -1,0 +1,662 @@
+
+\chapter{\texttt{pHyFlow} Code Structure}
+\label{app:code}%
+
+% Tikz stypes
+\tikzstyle{every node}=[draw=black,thick,anchor=west]
+\tikzstyle{optional}=[dashed,fill=gray!20]
+\tikzstyle{selected}=[draw=red,fill=red!30]
+
+
+%\title{pHyFlow Code Structure}
+%\author{Artur Palha, Lento Manickathan}
+
+%\begin{document}
+%\maketitle
+%\begin{abstract}
+The document outlines the \texttt{pHyFlow} code structure. The \texttt{pHyFlow} functions are organized into several classes. The functions related to the vortex particles are placed inside the \texttt{Blobs} class. The functions related to the panel problem are inside \texttt{Panels} class. The \texttt{LagrangianSolver} class is made to couple the functions of the vortex blobs and the vortex panel together. The functions of the Eulerian domain are placed inside the \texttt{EulerianSolver} class, where the Navier-stokes grid problem is solved. Finally, coupling of all the problems are done with the \texttt{HybridSolver} class. Note, all the classes are capable of handling multi-body / multi-domain problem within them and \texttt{LagrangianSolver} class and the \texttt{HybridSolver} class only couples methods together.\\
+
+\underline{\texttt{pHyFlow} Structure:}
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[%
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+  \node {\texttt{HybridSolver}}
+    child { node {\texttt{LagrangianSolver}}
+    	child {node {\texttt{Blobs}}}
+    	child {node {\texttt{Panels}}}  	
+    }
+    child [missing] {}				
+    child [missing] {}				
+    child { node {\texttt{EulerianSolver}}};
+    %child { node [selected] {tex}
+    %  child { node {generic}}
+    %  child { node [optional] {latex}}
+    %  child { node {plain}}
+    %}
+    %child [missing] {}
+    %child { node {texdoc}};
+\end{tikzpicture}
+\end{figure}
+%\end{abstract}
+\newpage
+
+\section*{\texttt{Blobs} Class}
+The main structure of the \texttt{Blobs} class. This class contains all the function related to the calculation of the vortex blobs.
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[%
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+  \node {\texttt{HybridSolver}}
+    child { node {\texttt{LagrangianSolver}}
+    	child {node [selected] {\texttt{Blobs}}}
+    	child {node {\texttt{Panels}}}  	
+    }
+    child [missing] {}				
+    child [missing] {}				
+    child { node {\texttt{EulerianSolver}}};
+    %child { node [selected] {tex}
+    %  child { node {generic}}
+    %  child { node [optional] {latex}}
+    %  child { node {plain}}
+    %}
+    %child [missing] {}
+    %child { node {texdoc}};
+\end{tikzpicture}
+\end{figure}
+
+\subsection*{Class structure:}
+\begin{figure}[h]
+\begin{tikzpicture}[%
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+  \node [selected] {\texttt{Blobs}}
+    child { node {\texttt{1. \_\_init\_\_}}}
+    child { node {\texttt{2. addBlobs}}}
+    child { node {\texttt{3. evaluateVelocity}}}                    
+    child { node {\texttt{4. evaluateVorticity}}}   
+    child { node {\texttt{5. evolve}}}    
+    child { node {\texttt{6. populationControl}}}   
+    child { node {\texttt{7. redistribute}}}    
+	child { node {\texttt{8. removeBlobs}}}  
+	child { node {\texttt{9. \_advanceTime}}}  	
+	child { node {\texttt{10. \_diffusion}}};	
+\end{tikzpicture}
+\end{figure}
+
+\subsection*{Attributes:}
+\begingroup
+\footnotesize
+\begin{longtable}{|l|p{12cm}|}
+	\hline
+	\textbf{Attributes} & \textbf{Description}\\
+	\toprule
+    \texttt{blobControlParams} 		& The diffusion parameters. It is a dictionary containing all the parameters of the diffusion method used for the simulation. Contains: \texttt{stepRedistribution}, \texttt{stepPopulationControl}, \texttt{gThresholdLocal}, \texttt{gThresholdGlobal}.\\\hline
+    \texttt{computationMethod} 		&\texttt{computationMethod} (tuple) with the type of Biot-Savart solver (\texttt{direct}, \texttt{fmm}) and the type of hardware to use (\texttt{cpu}, \texttt{gpu}).\\\hline
+    \texttt{deltaTc} & The size of the convective time step $\Delta t_c$\\\hline
+    \texttt{deltaTd} & The size of the convective time step $\Delta t_d$\\\hline
+    \texttt{diffusionParams} & A dictionary containing all the parameters related to the computation of the diffusion step. Specifies the diffusion scheme and other specific parameters. Contains: \texttt{method}, \texttt{c2}.\\\hline
+    \texttt{g} & The strength of the vortex blobs $\alpha$.\\          \hline
+    \texttt{gThresholdGlobal} & Maximum value of variation of total vorticity due to the removal of blobs during population control.\\\hline
+    \texttt{gThresholdLocal} & Minimum value of circulation to consider for each vortex blob when selecting blobs to remove during population control.\\    \hline      
+    \texttt{h} & The size of the cell associated to the vortex blobs. Corresponds to the minimum spacing between the core of two neighboring cells. It is related to the core size of the blob, $\sigma$, and to the spacing $h$ by the expression $Ov = h/\sigma$.\\\hline          
+    \texttt{integrationMethod} & \texttt{integrationMethod} (\texttt{fe}, \texttt{rk4}) the type of time integrator used: \texttt{fe} forward Euler, \texttt{rk4} Runge-Kutta $4^{th}$ order.\\ \hline
+    \texttt{nu} & The fluid kinematic viscosity, used to calculate the diffusion coefficient: \texttt{c2} and diffusion time step \texttt{deltaTd}, $\Delta t_{d}$.\\          \hline
+	\texttt{numBlobs} & The number of blobs.\\          \hline
+	\texttt{overlap} & The overlap ratio between neighboring blobs.\\          \hline
+	\texttt{plotVelocity} & A flag that defines if velocity is to be plotted or not.\\          \hline
+	\texttt{sigma} & The core size of the vortex blobs.\\          \hline
+	\texttt{stepDiffusion} & The frequency of diffusion steps.\\          \hline
+	\texttt{stepPopulationControl} & The frequency of population control.\\          \hline
+	\texttt{stepRedistribution} & The frequency of redistribution of blobs.\\          \hline
+	\texttt{timeIntegrationParams} & A dictionary containing all time integration parameters of the simulation. Contains the definition of the time integration scheme possibly additional parameters specific to the scheme.\\ \hline
+	\texttt{t} & The current time of the simulation.\\          \hline
+	\texttt{tStep} & The current time step of the simulation.\\          \hline
+	\texttt{velocityComputationParams} & A dictionary containing all the parameters related to the computation of induced velocities. Specifies computation scheme (direct or fmm) and hardware to use (cpu or gpu).\\          \hline
+	\texttt{vInf} & The free stream velocity.\\          \hline
+	\texttt{x} & The $x$ coordinates of the vortex blobs.\\          \hline
+	\texttt{y} & The $y$ coordinates of the vortex blobs.\\          \hline	                                
+    
+                       
+    \caption{Attributes of \texttt{Blobs} class and their description.}
+    \label{tab:attributeBlobs}
+\end{longtable}
+\endgroup
+
+\subsection*{\texttt{\_\_init\_\_}}
+	\paragraph{Description:} Initialize the \texttt{Blobs} class with either the given input parameters or by a reading a \texttt{file} containing all the necessary parameters.\\
+	
+	\begin{tabular}{l|lp{7cm}}
+		\multicolumn{2}{l}{\textbf{Input Parameters}} & \\ \hline
+		\textit{File Name} & \multicolumn{2}{l}{Containing all the parameters to re-initalize the class.} \\ \cline{2-3}
+		\multicolumn{3}{c}{--- or ---} \\ \cline{2-3}
+		\multirow{4}{*}{\textit{Parameters}} & Vorticity Field &: \{\texttt{xBlob, yBlob, gBlob}\} or \{\texttt{wFunction, xBounds, yBounds}\}\\ \cline{2-3}
+		& Blob parameters &: \texttt{overlap, h} \\ \cline{2-3}
+		& Time Step parameters &: \texttt{deltaTc, nu, stepRedistribution, integrationMethod, computationMethod}\\ \cline{2-3}
+		& Population control parameters &: \texttt{stepPopulationControl, gThreshold}\\ \cline{2-3}
+	\end{tabular}\\
+	
+	\subsubsection*{Descriptions of the parameters:}
+	\begin{tabular}{p{3.5cm}p{9cm}p{1cm}}
+				\textit{Vorticity field} & & \textit{Default}\\ \hline
+				\texttt{xBlob,yBlob} &:  the $x,y$ blob coordinates. & - \\
+				\texttt{gBlob} &: the circulation $\Gamma_i$ associated to each of the vortex blobs. & - \\
+				& & \\
+				\multicolumn{2}{c}{\textit{--- or ---}} & \\
+				& & \\
+				\texttt{wExactFunction} &: the function that returns the exact value of vorticity $\omega$ at any given $x,y$ coordinates. &\\
+				& 	\begin{tabular}{lp{10cm}}
+						\textbf{Input parameters} &: \texttt{xEval,yEval}\\ 
+						\textbf{Assigns} &: \texttt{-}\\ 			
+						\textbf{Returns} &: \texttt{wEval}\\ 					
+					\end{tabular} & - \\
+				\texttt{xBounds, yBounds} &: the $x,y$ bounds of the domain where the particles was originally distributed. & - \\		 
+	\end{tabular}\\
+	\\ \\
+	%	\begin{tabular}{lp{10cm}}
+	%		\textbf{Input parameters} &: \texttt{xEval,yEval}\\ 
+	%		\textbf{Assigns} &: \texttt{-}\\ 			
+	%		\textbf{Returns} &: \texttt{vortEval}\\ 					
+	%	\end{tabular}\\
+	\begin{tabular}{p{3.5cm}p{9cm}p{1cm}}
+				\multicolumn{2}{l}{\textit{Blob parameters}} & \textit{Default} \\ \hline				
+				\texttt{overlap} &: the overlap ratio $h/\sigma$. & 1.0\\
+				\texttt{h} &: the size of the cell $h$ associated to the blobs. \textit{Note:} Cells are square. & -\\
+	\end{tabular}\\
+	\\ \\
+	\begin{tabular}{p{3.5cm}p{9cm}p{1cm}}
+				\multicolumn{2}{l}{\textit{Time step parameters}} & \textit{Default}\\ \hline
+				\texttt{deltaTc} &:  the size of the convective time step $\Delta t_c$. & - \\
+				\texttt{nu} &: the fluid kinematic viscosity $\nu$, used to calculate the diffusion coefficient $c^2$ and diffusion time step size $\Delta T_d$.& - \\
+				\texttt{stepRedistribution} &: the redistribution step frequency. & 1 \\
+				\texttt{integrationMethod} &: the time integration method (\texttt{FE}: Forward euler , \texttt{RK4}: $4^{th}$ order Runge-Kutta). & RK4 \\
+				\texttt{computationMethod} &: the calculation method to evolve the blobs, (\texttt{Direct}: Direct Method, \texttt{FMM}: Fast-Multipole Method) using (\texttt{CPU}, \texttt{GPU}). & \{FMM, GPU\}.\\
+	\end{tabular}\\ 
+    \\ \\ 
+	\begin{tabular}{p{3.5cm}p{9cm}p{1cm}}
+				\multicolumn{2}{l}{\textit{Population control parameters}} & \textit{Default} \\ \hline
+				\texttt{stepPopulationControl} &: population control step frequency & 1.\\
+				\texttt{gThreshold} &: the tuple with minimum \textbf{and} maximum value of the circulation $\Gamma_{min}$. & - \\
+	\end{tabular}\\ 
+    \\ \\  
+	\begin{tabular}{p{3.5cm}p{9cm}p{1cm}}
+				\multicolumn{2}{l}{\textit{Free stream velocity}} & \textit{Default}\\ \hline
+				\texttt{vInf} &: The free-stream velocity function, returning the velocity action on the vortex blobs. & -\\		
+				&		\begin{tabular}{lp{10cm}}
+							\textbf{Input parameters} &: \texttt{t}\\ 
+							\textbf{Assigns} &: \texttt{-}\\ 			
+							\textbf{Returns} &: \texttt{vx,vy}\\ 					
+						\end{tabular} & - \\
+				
+	\end{tabular}\\
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{\texttt{Panels} class}
+The main structure of the panel method class \texttt{Panels}. This class contains all the functions related to the calculation of panels.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[%
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+  \node {\texttt{HybridSolver}}
+    child { node {\texttt{LagrangianSolver}}
+    	child {node {\texttt{Blobs}}}
+    	child {node [selected] {\texttt{Panels}}}  	
+    }
+    child [missing] {}				
+    child [missing] {}				
+    child { node {\texttt{EulerianSolver}}};
+    %child { node [selected] {tex}
+    %  child { node {generic}}
+    %  child { node [optional] {latex}}
+    %  child { node {plain}}
+    %}
+    %child [missing] {}
+    %child { node {texdoc}};
+\end{tikzpicture}
+\end{figure}
+
+
+\subsection*{Class structure:}
+\begin{figure}[h]
+\begin{tikzpicture}[%
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+  \node [selected] {\texttt{Panels}}
+    child { node {\texttt{1. \_\_init\_\_}}}
+    child { node {\texttt{2. evaluteVelocity}}}                    
+    child { node {\texttt{3. updateBody}}}                    
+    child { node {\texttt{4. solve}}}                                        
+    child { node {\texttt{5. \_advanceTime}}};
+\end{tikzpicture}
+\end{figure}
+
+
+\subsection*{Attributes:}
+\begingroup
+\footnotesize
+\begin{longtable}{|l|p{12cm}|}
+	\hline
+	\textbf{Attributes} & \textbf{Description}\\
+	\toprule
+    \texttt{A} 		& The inter-induction matrix $\mathbf{A}$, the LHS of the problem. \\ \hline
+    \texttt{cmGlobal} & The global position vector for each of the $\mathbf{N}$
+                       body, refining the position of the local panel $(0,0)$ in the
+                       global coordinate system. \\\hline
+    \texttt{deltaT} & The simulation time step size $\Delta T$\\ \hline
+    \texttt{geometryKeys} & The dictionary containing all the parameters of the geometry. Contains: \texttt{xPanel} (the $x$ coordinate of the $\mathbf{M}$ panel corners.), \texttt{yPanel} (The $y$ coordinate of the $\mathbf{M}$ panel corners), \texttt{cmGlobal}, \texttt{thetaLocal}, \texttt{dPanel} (The off-set of the panel collocation point from the panel mid-point).  \\ \hline
+    \texttt{nBodies} & The number of panel bodies.\\\hline
+    \texttt{norm} & The $x$, $y$ normal vector of each panel.\\\hline
+    \texttt{normCat} & The global concatenated $x$, $y$ component of the panel normal vector at each collocation points.\\          \hline
+    \texttt{nPanels} & The number of panels in each body/geometry. \\ \hline
+    \texttt{nPanelsTotal} & The total number of panels.\\    \hline      
+    \texttt{panelKernel} & A string defining panel kernel type. \\\hline          
+    \texttt{problemType} & A string defining the panel problem is of a \texttt{moving} type or of a \texttt{fixed} type.\\ \hline
+    \texttt{solverCompParams} & The dictionary containing solver computation parameters.\\          \hline
+	\texttt{sPanel} & The vortex sheet strengths $\gamma$ of $\mathbf{M}$ panels. \\          \hline
+	\texttt{t} & The current time $t$ of the simulation.\\          \hline
+	\texttt{tang} & The $x$, $y$ tangent vector of each panel.\\          \hline
+	\texttt{tangCat} & The global concatenated $x$, $y$ component of the panel
+	                  normal vector at each collocation points.\\          \hline
+	\texttt{thetaLocal} & The local rotation angle $\theta$ w.r.t to the local
+	                     coordinate system. The rotational will be performed around
+	                     the local reference point $(0,0)$, i.e around the global center of rotation point \texttt{cmGlobal}.\\          \hline
+	\texttt{tStep} & The current step of the simulation.\\          \hline
+	\texttt{velCompParams} & A dictionary containing the velocity computation parameters, method and hardware.\\          \hline
+	\texttt{xyCPGlobal} & The global $x$, $y$ coordinate of the panel collocation
+	                     points.\\ \hline
+	\texttt{xyCPGlobalCat} & The global concatenated $x$, $y$ coordinate of the
+	                        panel collocation points.\\          \hline
+	\texttt{xyPanelGlobal} & The global $x$, $y$ coordinate of the panel bodies.\\          \hline
+	\texttt{xyPanelGlobalCat} & The global concatenated $x$, $y$ coordinate of the
+	                           panel bodies.\\          \hline
+	\texttt{xyPanelLocal} & The local $x$, $y$ coordinate of the panel bodies.\\          \hline
+                       
+    \caption{Attributes of \texttt{Panels} class and their description.}
+    \label{tab:attributesPanels}
+\end{longtable}
+\endgroup
+
+
+\subsection*{\texttt{\_\_init\_\_}}
+	\begin{tabular}{l|lp{7cm}}
+		\multicolumn{2}{l}{\textbf{Input Parameters}} & \\ \hline
+		\textit{File Name} & \multicolumn{2}{l}{Containing all the parameters to re-initalize the class.} \\ \hline
+		\multirow{2}{*}{\textit{Parameters}} & Panel coordinates &: \{\texttt{xCP, yCP, xPanel, yPanel, cmGlobal, thetaLocal}\}\\ \cline{2-3}
+		& External velocity &: \texttt{externVel} \\ \cline{2-3}
+	\end{tabular}
+	\paragraph{Description:} Initialize the \texttt{panels} class with the given input parameters. In the case of a multibody problem, a list of panel coordinates can be given and internally it takes care of the inter-coupling.\\
+	\\
+	\begin{tabular}{lp{10cm}}
+				\textit{Panel coordinates} & \\ \hline
+				\texttt{xCP,yCP} &:  the local $x,y$-coordinates of the panel collocation points.\\ 
+				\texttt{xPanel,yPanel} &: the local coordinate of the panel edges. \textit{Note}: Should have a closed loop (end with initial point coordinates).\\ 
+				\texttt{cmGlobal} &:  the position of reference points of a given panel body.\\
+				\texttt{thetaLocal} &:  the rotational angles of the panel body axes w.r.t to the global $x$-axis.\\
+	\end{tabular}\\ 
+    \\ \\
+	\begin{tabular}{lp{10cm}}
+				\textit{External velocity} & \\ \hline
+				\texttt{externVel} &:  Reference to an external velocity \textbf{function} acting of the panels. For the panel case, the external velocity will the induced velocity of the blobs + freestream \texttt{vortexBlob.evaluateVelocity}.\\
+	\end{tabular}\\
+	
+		\begin{tabular}{lp{10cm}}
+			\textbf{Input parameters} &: \texttt{xCP,yCP}\\ 
+			\textbf{Assigns} &: \texttt{-}\\ 			
+			\textbf{Returns} &: \texttt{vxCP,vyCP}\\ 					
+		\end{tabular}\\
+
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{\texttt{LagrangianSolver} Class}
+The main structure of the \texttt{Blobs} + \texttt{Panels} (LagrangianSolver) class. This class contains all the function related to the calculations of panel with vortex blobs.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[%
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+  \node {\texttt{HybridSolver}}
+    child { node [selected] {\texttt{LagrangianSolver}}
+    	child {node {\texttt{Blobs}}}
+    	child {node {\texttt{Panels}}}  	
+    }
+    child [missing] {}				
+    child [missing] {}				
+    child { node {\texttt{EulerianSolver}}};
+    %child { node [selected] {tex}
+    %  child { node {generic}}
+    %  child { node [optional] {latex}}
+    %  child { node {plain}}
+    %}
+    %child [missing] {}
+    %child { node {texdoc}};
+\end{tikzpicture}
+\end{figure}
+
+\subsection*{Class structure:}
+\begin{figure}[h]
+\begin{tikzpicture}[%
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+  \node [selected] {\texttt{LagrangianSolver}}
+    child { node {\texttt{1. \_\_init\_\_}}}
+    child { node {\texttt{2. evaluateVelocity}}}
+    child { node {\texttt{3. evolve}}}
+    child { node {\texttt{4. \_solve\_panelStrength}}}                        
+    child { node {\texttt{5. \_\_advanceTime}}}                        
+    child { node {\texttt{6. \_\_coupled\_convection}}};                       
+
+\end{tikzpicture}
+\end{figure}
+
+\subsection*{Attributes:}
+\begingroup
+\footnotesize
+\begin{longtable}{|l|p{12cm}|}
+	\hline
+	\textbf{Attributes} & \textbf{Description}\\
+	\toprule
+    \texttt{deltaT}     & The inter-induction matrix $\mathbf{A}$, the LHS of the problem. \\ \hline
+    \texttt{gTotal}     & The total circulation of the Lagrangian domain. \\ \hline    
+	\texttt{t} & The current time $t$ of the simulation.\\          \hline
+	\texttt{tStep} & The current step of the simulation.\\          \hline
+	\texttt{vInf} & The $x$, $y$ component of the free-stream velocity.\\          \hline	
+	\texttt{Blobs} & The vortex blobs class \texttt{Blobs}.\\          \hline	
+	\texttt{Panels} & The vortex panels class \texttt{Panels}.\\          \hline			
+                      
+    \caption{Attributes of \texttt{LagrangianSolver} class and their description.}
+    \label{tab:attributesLagrangianSolver}
+\end{longtable}
+\endgroup
+
+
+\subsection*{\texttt{\_\_init\_\_}}
+	\begin{tabular}{l|lp{7cm}}
+		\multicolumn{2}{l}{\textbf{Input Parameters}} & \\ \hline
+		\textit{File Name} & \multicolumn{2}{l}{Containing all the parameters to re-initalize the class.} \\ \hline
+		\multirow{2}{*}{\textit{Parameters}} & \texttt{vortexBlobs} &: \{\texttt{vortexBlobs}\} class. \\ \cline{2-3}
+		& \texttt{panels} &: \texttt{panels} class. \\ \cline{2-3}
+	\end{tabular}
+	\paragraph{Description:} Initialize the \texttt{vortexMethod} class using \textbf{vortexBlob}+\textbf{panelMethod} classes.
+	\paragraph{Input parameters:}
+	\begin{list}{\quad}{}
+	\item \texttt{Blobs}: vortex particle class
+	\item \texttt{Panels}: panel method class				
+	\end{list}
+
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{\texttt{EulerianSolver}}
+The main structure for the Navier-stokes class \texttt{EulerianSolver}. This class contains all the functions related to computation of the Navier-stokes problem. Below is set of functions that acts as the interface to the class.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[%
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+  \node {\texttt{HybridSolver}}
+    child { node {\texttt{LagrangianSolver}}
+    	child {node {\texttt{Blobs}}}
+    	child {node {\texttt{Panels}}}  	
+    }
+    child [missing] {}				
+    child [missing] {}				
+    child { node [selected] {\texttt{EulerianSolver}}};
+    %child { node [selected] {tex}
+    %  child { node {generic}}
+    %  child { node [optional] {latex}}
+    %  child { node {plain}}
+    %}
+    %child [missing] {}
+    %child { node {texdoc}};
+\end{tikzpicture}
+\end{figure}
+
+
+
+\subsection*{Class structure:}
+\begin{figure}[h]
+\begin{tikzpicture}[%
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+  \node [selected] {\texttt{EulerianSolver}}
+    child { node {\texttt{1. \_\_init\_\_}}}
+    child { node {\texttt{2. evolve}}}
+    child { node {\texttt{3. Forces}}}
+    child { node {\texttt{4. FrictionalForces}}}
+    child { node {\texttt{5. getBoundaryCoordinates}}}                            
+    child { node {\texttt{6. getBoundaryVelocity}}}                    
+    child {node  {\texttt{7. getCoordinates}}}            
+    child { node {\texttt{8. getVorticity}}}                                   
+    child { node {\texttt{9. PressureForces}}}
+    child { node {\texttt{10. setVelocity}}}
+    child { node {\texttt{11. \_\_advanceTime}}};
+\end{tikzpicture}
+\end{figure}
+
+
+\subsection*{Attributes:}
+\begingroup
+\footnotesize
+\begin{longtable}{|l|p{12cm}|}
+	\hline
+	\textbf{Attributes} & \textbf{Description}\\
+	\toprule
+    \texttt{deltaT} 		& The time step size $\Delta t$. \\ \hline
+    \texttt{deltaTMax} 		& The maximum allowable time step size $\max\{\Delta t\}$.\\ \hline
+    \texttt{cfl} 			& The Courant–Friedrichs–Lewy condition stability number CFL. \\ \hline        
+    \texttt{cmGlobal} 		& The $x$, $y$ position of the mesh local reference point $(0,0)$ in the global coordinates. \\ \hline        
+    \texttt{hMin} 			& The minimum mesh cell size. \\ \hline        
+    \texttt{nu} 			& The fluid kinematic viscosity $\nu$.  \\ \hline        
+    \texttt{probeGridMesh} 	& The \textit{local} $x$, $y$ coordinates of the probe grid mesh. \\ \hline            
+    \texttt{probeGridParams}& The dictionary containing all the parameters of the probe grid for extracting the vorticity data. \\ \hline            
+    \texttt{solverParams} 	& The dictionary file containing all the solver parameters.  \\ \hline                
+    \texttt{t} 				& The current time of the simulation. \\ \hline                    
+    \texttt{thetaLocal} 	& The local rotational angle $\theta$ of the mesh domain. Therefore, the rotation will be done about local reference  point $(0,0)$, i.e \texttt{cmGlobal} in the global coordinate system.\\ \hline                            
+    \texttt{tStep} 			& The current step of the simulation. \\ \hline                    
+    \texttt{uMax} 			& The maximum fluid velocity $\max\{\mathbf{u}\}$. \\ \hline
+    
+    \caption{Attributes of \texttt{EulerianSolver} class and their description.}
+    \label{tab:attributeEulerian}
+\end{longtable}
+\endgroup
+
+
+\subsection*{\texttt{\_\_init\_\_}}
+	\paragraph{Description:} Initialize the \texttt{navierStokes} class either using a \texttt{fileName} containing all the necessary parameter for initialization or by explicitly inputing the parameters.\\
+
+	\begin{tabular}{l|lp{7cm}}
+		\multicolumn{2}{l}{\textbf{Input Parameters}} & \\ \hline
+		\textit{File Name} & \multicolumn{2}{l}{Containing all the parameters to re-initalize the class.} \\ \hline
+		\multicolumn{3}{c}{-- or --} \\ \hline
+		\multirow{5}{*}{\textit{Parameters}} & Mesh data &: \texttt{mesh, boundaryDomains}\\ \cline{2-3}
+		& Geometry position &: \texttt{cmGlobal, thetaLocal} \\ \cline{2-3}
+		& Fluid parameters &: \texttt{uMax, nu}\\ \cline{2-3}
+		& Solver options &: \texttt{cfl}\\ \cline{2-3}
+		& Probe grid parameters &: \texttt{x0, y0, Lx, Ly, hx, hy}\\ \cline{2-3}
+
+	\end{tabular}\\
+	\subsubsection*{Description of the parameters:}
+	
+	\begin{tabular}{lp{10cm}}
+				\textit{Mesh data} & \\ \hline
+				\texttt{mesh} &: the mesh data file.\\ 
+				\texttt{boundaryDomains} &: the boundary mesh domain data file.\\ 			
+	\end{tabular}\\ 
+    \\ \\
+	\begin{tabular}{lp{10cm}}
+				\textit{Geometry position} & \\ \hline
+				\texttt{cmGlobal} &: the $x,y$ position of the geometry in global coordinates.\\ 
+				\texttt{thetaGlobal} &: the rotation angle (in $rad$) of the geometry in global coordinate system.\\ 			
+	\end{tabular}\\
+    \\ \\
+	\begin{tabular}{lp{10cm}}
+				\textit{Fluid parameters} & \\ \hline
+				\texttt{uMax} &: the maximum fluid velocity $U_{max}$. Used to determine the maximum time step size $\Delta t_{max}$.\\ 
+				\texttt{nu} &: the fluid kinematic viscosity $\nu$, for incompressible navier-stokes problem.\\ 			
+	\end{tabular}\\	
+    \\ \\
+	\begin{tabular}{lp{10cm}}
+				\textit{Solver options} & \\ \hline
+				\texttt{cfl} &: the $CFL$ stability parameter. If explicit time marching scheme, $CFL<1$.\\ 		
+	\end{tabular}\\	
+    \\ \\
+	\begin{tabular}{lp{10cm}}
+				\textit{Probe grid parameters} & \\ \hline
+				\texttt{x0,y0} &: the $x,y$ coordinate of the origin of the probe grid.\\ 
+				\texttt{Lx,Ly} &: the $x,y$ size (width and height) of the probing grid.\\ 			
+				\texttt{hx,hy} &: the $x,y$ spacing of the probe grid cell.\\ 							
+	\end{tabular}\\	
+
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section*{\texttt{HybridSolver} Class}
+The main structure for the hybrid class \texttt{HybridSolver}. This class contains all the functions related to computation of the hybrid problem.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[%
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+  \node [selected] {\texttt{HybridSolver}}
+    child { node {\texttt{LagrangianSolver}}
+    	child {node {\texttt{Blobs}}}
+    	child {node {\texttt{Panels}}}  	
+    }
+    child [missing] {}				
+    child [missing] {}				
+    child { node {\texttt{EulerianSolver}}};
+    %child { node [selected] {tex}
+    %  child { node {generic}}
+    %  child { node [optional] {latex}}
+    %  child { node {plain}}
+    %}
+    %child [missing] {}
+    %child { node {texdoc}};
+\end{tikzpicture}
+\end{figure}
+
+\subsection*{Class structure:}
+\begin{figure}[h]
+\begin{tikzpicture}[%
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+  \node [selected] {\texttt{HybridSolver}}
+    child { node {\texttt{1. \_\_init\_\_}}}
+    child { node {\texttt{2. \_\_correctBlobs}}}
+    child { node {\texttt{2. \_\_generateBlobCoordinates}}}
+    child { node {\texttt{2. \_\_interpolateVorticity\_structuredProbes\_manual}}}
+    child { node {\texttt{2. \_\_multiStep\_eulerian}}}
+    child { node {\texttt{2. \_\_removeBlobs}}}
+    child { node {\texttt{2. \_\_set\_deltaTEulerian}}}    
+    child { node {\texttt{2. \_\_set\_eulerianInitialConditions}}}        
+    child { node {\texttt{2. \_\_updatePosition\_interpolationRegions}}};
+\end{tikzpicture}
+\end{figure}
+
+
+\subsection*{Attributes:}
+\begingroup
+\footnotesize
+\begin{longtable}{|l|p{12cm}|}
+	\hline
+	\textbf{Attributes} & \textbf{Description}\\
+	\toprule
+    \texttt{deltaTEulerian} 		& The time step size of the Eulerian sub-domain $\Delta t_E$. \\ \hline
+    \texttt{deltaTLagrangian} 		& The time step size of the Lagrangian sub-domain $\Delta t_L$.\\ \hline
+	\texttt{nu} 			& The fluid kinematic viscosity $\nu$.  \\ \hline        
+    \texttt{t} 				& The current time $t$ of the simulation. \\ \hline                    
+    \texttt{tStep} 			& The current step of the simulation. \\ \hline                    
+    \texttt{vInf} 			& The $x$, $y$ component of the free-stream velocity. \\ \hline
+    \texttt{interpolationRegion} & The dictionary containing the \texttt{surfacePolygon} and \texttt{boundaryPolygon} defining the boundaries of the interpolation region for each Eulerian sub-domains. The geometry is identified by the keys of the Eulerian sub-domain found in \texttt{multiEulerian}. The coordinates are defined in local coordinate system of the Eulerian grid and will be transformed (rotated + moved) during the evolution step. \\ \hline
+    \texttt{lagrangian} 	& The Lagrangian solver class contains all the parameters related to simulation the flow in lagrangian sub-domain. \\ \hline
+    \texttt{multiEulerian} 	& The \texttt{multiEulerian} is solver class containing all the Eulerian sub-domains of the hybrid problem. \\ \hline
+    
+    \caption{Attributes of \texttt{HybridSolver} class and their description.}
+    \label{tab:attributeHybrid}
+\end{longtable}
+\endgroup
+
+
+\subsection*{\texttt{\_\_init\_\_}}
+	\begin{tabular}{l|lp{7cm}}
+		\multicolumn{2}{l}{\textbf{Input Parameters}} & \\ \hline
+		\textit{File Name} & \multicolumn{2}{l}{Containing all the parameters to re-initalize the class.} \\ \hline
+		\multirow{4}{*}{\textit{Parameters}} & \texttt{vortexMethod} &: \{\texttt{vortexMethod}\} class.\\ \cline{2-3}
+		& \texttt{navierStokes} &: \texttt{navierStokes} class. \\ \cline{2-3}
+		& Interpolation region &: \texttt{xPolygon, yPolygon}\\ \cline{2-3}
+		& Motion functions &: \texttt{T, cmGlobal, thetaGlobal, cmDotGlobal, thetaDotGlobal}\\ \cline{2-3}
+	\end{tabular}\\
+	
+	\paragraph{Description:} Initialize the \texttt{hybrid} class using \texttt{LagrangianSolver} + \texttt{EulerianSolver} classes.
+	\paragraph{Input parameters:}
+	\begin{list}{\quad}{}
+	\item \texttt{LagrangianSolver}: The vortex method containing \texttt{Blobs} and \textbf{Panels} classes which can already handle the multi-body problem.
+	\item \texttt{EulerianSolver}: The Navier-Stokes grid solver class (if multiple: list of \texttt{EulerianSolver} classes). The number of navier-stokes class has to be same as the number of vortex panels.
+	\item \textbf{Interpolation Region}: the Navier-Stokes class (if multiple: list of \texttt{EulerianSolver} classes). Should be equal to number of Navier-Stokes classes. The interpolation region should be defined as list of $x,y$ coordinates of the polygon of the interpolation region.
+	\item \textbf{Motion function}: the function describing the motion of all the geometries in the hybrid class.
+	\end{list}
+	
+	\begin{tabular}{lp{10cm}}
+		\textit{Interpolation Regions} & \\ \hline
+		\texttt{xPolygon,yPolygon}: & the new $x,y$ coordinate of the polygons description the interpolation region. The polygon should have a closed loop (end  with starting coordinates) before continuing to the next polygon. In the case of multiple polygons, a list of \texttt{xPolygon,yPolygon} should be given and should be as many as the number of navier-stokes domain.\\ 
+	\end{tabular} \vspace{5 mm}
+
+	\begin{tabular}{lp{10cm}}
+		\textit{Motion function} & \\ \hline
+		\texttt{T} &: the current time.\\ 
+		\texttt{cmGlobal} &: a list of new positions of the geometries in the hybrid problem.\\ 
+		\texttt{thetaGlobal} &: a list of new rotational angle of the geometries in the hybrid problem.\\ 		
+		\texttt{cmDotGlobal} &: a list of current displacement velocity of the geometries in the hybrid problem.\\ 				
+		\texttt{thetaDotGlobal} &: a list of current rotational velocity of the geometries in the hybrid problem.\\ 						
+	\end{tabular} \vspace{5 mm}
+
+	\begin{tabular}{lp{10cm}}
+		\textbf{Input parameters} &: \texttt{T}\\ 
+		\textbf{Assigns} &: \texttt{-}\\ 			
+		\textbf{Returns} &: \texttt{cmGlobal,thetaGlobal,cmDotGlobal,thetaDotGlobal}\\ 					
+	\end{tabular}
+
+
+
+% Include all the documents
+%\include{doc/vortexBlobs}
+%\input{doc/vortexBlobs}
+%\include{doc/panelMethod}
+%\include{doc/vortexMethod}
+%\include{doc/navierStokes}
+%\include{doc/hybrid}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+

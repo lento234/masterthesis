@@ -76,7 +76,8 @@
 \usepackage{minted} % for source codes
 \usepackage{multirow}
 \usepackage[section]{placeins} % put barriers for the floats
-
+\usepackage{longtable}
+%\usepackage{appendix}
 
 
 % Flowchart definition
@@ -199,7 +200,7 @@
     %\include{chapters/diffusion}
    	%\include{chapters/validation}
 	%\include{chapters/application}
-
+	
     % Chapter 1: Introduction
     \include{chapters/introduction}%
 
@@ -211,6 +212,8 @@
 
     % Chapter 4: Hybrid Eulerian-Lagrangian Vortex Particle Method
    	\include{chapters/hybrid}
+   	
+   	\include{chapter/phyflow}
 
    	% Chapter 5: Validation of Hybrid Method
 	\include{chapters/validation}   
@@ -222,15 +225,24 @@
     \printbib{bibliography/library,bibliography/others}
     
     % and some appendices here
-    \appendix%
-    %\include{appendix/mathModel}%
+	 %\addcontentsline{toc}{chapter}{Appendix}
+     \appendix  
+     \include{appendix/pHyFlow_codeStructure}%
+    	
+%    \appendix  
+%    \addcontentsline{toc}{chapter}{Appendix}
+%   	\include{appendix/pHyFlow_codeStructure}%
+    %\addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
     %\include{appendix/cascade}
+	%\appendixpage
+    %\addcontentsline{toc}{chapter}{Appendices}
+	%\appendix
+	%\addcontentsline{toc}{chapter}{Appendix}
+	%\input{appendices/main}
 
 \backmatter%
 
     % index file here (not needed for a MSc thesis)
 	%\printindex
-	
-	
 	
 \end{document}
