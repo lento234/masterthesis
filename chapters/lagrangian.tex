@@ -1,4 +1,4 @@
-\chapter{Lagrangian Domain: Vortex Particle Method}
+\chapter{Lagrangian Method: Vortex Particle Method}
 \label{ch:lagrangian}
 
 	
@@ -131,6 +131,7 @@ The curl of the equation \ref{eq:mom} is take to obtain the velocity-vorticity f
 relating the vorticity $\omega$ to the velocity $\mathbf{u}$. Note that the pressure term $p$ disappear  from the equality.
 
 \subsection{Viscous splitting algorithm}
+\label{subsec:vsa}
 The VPM was initially used to model the evolution of incompressible, inviscid flows. However, in order to simulate a real flow, we must also deal with the viscous behavior of the fluid. Chorin in 1973 \cite{Chorin1973a}, showed that using the viscous splitting algorithm, it is possible to take the viscous effects of the flow into account. 
 
 The viscous splitting algorithm is a fractional step method, where the viscous and the inviscid part of the vorticity transport equation, equation \ref{eq:la_vteq}, are dealt with in two subsequent sub-steps,
@@ -149,14 +150,14 @@ The viscous splitting algorithm is a fractional step method, where the viscous a
 		\end{equation}
 	\end{enumerate}
 
-The first sub-step of the evolution deals with the convection of vorticity. The convection step is detailed in section \ref{sec:covb}. The diffusion of vorticity field is dealt with in the second sub-step. The diffusion of the vorticity field is dealt with in section \ref{sec:diffusionVM}
+The first sub-step of the evolution deals with the convection of vorticity. The convection step is described in section \ref{sec:covb}. The diffusion of vorticity field is dealt with in the second sub-step. The diffusion of the vorticity field is dealt with in section \ref{sec:diffusionVM}
 
 %There are many ways of treating the diffusion of the vorticity field. In this work, we initially used the modified interpolation kernel by Wee (2006) \cite{Wee2006a} that simultaneously discretizes diffusion and redistributes the vortex particles. Later, we used a simple redistribution scheme of Tutty (2010) \cite{Tutty2010a}, that did not constraint the minimum time-step size, see section \ref{sec:diffusionVM}.
 
 %------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------
-\section{Spatial Discretization: Generation of Vortex Blobs}
+\section{Spatial discretization: Introduction to vortex blobs}
 \label{sec:spatialDiscretization}
 
 The vorticity $\omega$ and the velocity $\mathbf{u}$ in the vorticity transport equation, equation \ref{eq:la_vteq}, describes a continuous field. However, these variables needs to be discretized to perform a numerical integration required for the numerical simulation. 
@@ -214,7 +215,7 @@ From the kernel, we see that as the distance to the kernel center approaches zer
 
 \subsection{Mollified vortex kernels}
 \label{subsec:mvk}
-A mollified vortex particle is called the vortex blob, and has a non-zero vortex core size $\sigma$. A smoothing function $\zeta$ is used to mollify the kernel $\mathbf{K}$, satisfying the constraint $\int \zeta = 1$, such that the circulation is conserved. An ideal choice for a smoothing function is the Gaussian distribution, given as,
+A mollified (or a regularized) vortex particle is called the vortex blob, and has a non-zero vortex core size $\sigma$. A smoothing function $\zeta$ is used to mollify the kernel $\mathbf{K}$, satisfying the constraint $\int \zeta = 1$, such that the circulation is conserved. An ideal choice for a smoothing function is the Gaussian distribution, given as,
 	\begin{equation}
 	\zeta_{\sigma} = \frac{1}{k\pi\sigma^2}\exp\left(-\frac{\left|\mathbf{x}\right|}{k\sigma^2}\right),
 	\end{equation}
@@ -277,7 +278,7 @@ meaning that the particle carries the circulation of its local area. This might 
 
 Figure \ref{fig:particleInitialization} shows the initialization of the vorticity field using the equation 	\ref{eq:particleCirculationAssignment}. We observed that the mollified vorticity field $\omega^h$, deviates from the original intended vorticity distribution $\omega$. Barba and Rossi \cite{Barba2010a}, have described this problem as Gaussian blurring of the original vorticity field due to use of mollified vortex kernel $\zeta_{\sigma}$ in equation 	\ref{eq:mollifiedVorticityField}. Even though the total circulation is conserved, locally we see that the circulation is not conserved. 
 
-This phenomenon causes issue during the coupling of the Lagrangian method and the Eulerian method, as particle in the overlap region are re-initialized at every step of the hybrid method. This error in initialization posses a challenge in the coupling of the method and is detailed in section \ref{subsec:hy_iwtca}.
+This phenomenon causes issue during the coupling of the Lagrangian method and the Eulerian method, as particle in the overlap region are re-initialized at every step of the hybrid method. This error in initialization posses a challenge in the coupling of the method and is described in section \ref{subsec:hy_iwtca}.
 
 A typical strategy for recovering the intended distribution is the Beale's Iterative Method \cite{Beale1988}, as used by Koumoutsakos and Cottet \cite{Cottet2000a}. The method is particle circulation processing scheme where the circulation $\alpha_p$ of the particles are modified iteratively such that the mollified vorticity field $\omega^h$ matches the original distribution $\omega$. However, the Beale's method required the correction of complete vorticity field in fluid domain and cannot be used to correct only part of the fluid domain, as required for our decomposed domain method. Therefore, an alternate method is required to minimized the error in particle initialization.
 
@@ -352,21 +353,21 @@ Thus, to minimize the error in initializing the mollified vorticity $\omega^h$ f
 \section{Convection of vortex blobs}
 \label{sec:covb}
 
-Convection of the vorticity is the first step of evolution of the vorticity and is given by the first order hyperbolic equation \ref{eq:convectionEulerian}. For a known vorticity field $\omega$, the velocity field $\mathbf{u}$ is equally known from the Biot-Savart Law, equation \ref{eq:mollifiedVelocityField}. Therefore, the convection equation \ref{eq:convectionEulerian}, is solved by the following system of ordinary differential equations,
-	\begin{equation}
-	\frac{\mathrm{d}\mathbf{x}_p}{\mathrm{d}t} = \mathbf{u}\left(\mathbf{x}_p\right),
+Convection of the vorticity is the first step of evolution of the vorticity from viscous splitting algorithm, from section \ref{subsec:vsa}. The convection of the vorticity is described by the first order hyperbolic equation, equation \ref{eq:convectionEulerian}. The convection equation \ref{eq:convectionEulerian}, is solved by the following system of ordinary differential equations,
+	\begin{subequations}
+	\begin{align}
+	\frac{\mathrm{d}\mathbf{x}_p}{\mathrm{d}t} &= \mathbf{u}\left(\mathbf{x}_p\right),\\
+	\frac{\mathrm{d}\alpha_p}{\mathrm{d}t} &= 0,
+	\end{align}
 	\label{eq:convectionODE}
-	\end{equation}
-where the change in position of vortex blob $\mathbf{x}_p$ is due to the induction velocity $\mathbf{u}\left(\mathbf{x}_p\right)$ acting on it. During the convection step, the following condition must be satisfied,
-	\begin{equation}
-	\frac{\mathrm{d}\alpha_p}{\mathrm{d}t} = 0.
-	\label{eq:conservationODE}
-	\end{equation}
-where $\alpha_p$ is the strength of the particle. The Biot-Savart Law is used to determine the induced velocities acting on each particle and results in an $N$-body problem. The calculation of the $N$-body problem is optimized by parallelizing the calculations in GPU hardware. The calculation is further optimized by using a fast summation method, the \printAcron{Fast Multipole Method}{FMM}, reducing the problem from $\mathcal{O}(N^2)$ to $\mathcal{O}(N)$, in the ideal case.
+	\end{subequations}
+where the change in position of vortex blob $\mathbf{x}_p$ is due to the induction velocity $\mathbf{u}\left(\mathbf{x}_p\right)$ acting on it, and the strengths of the particles $\alpha_p$ is conserved.
 
-The time marching of the equation \ref{eq:convectionODE} is discretized using a $4^{\mathrm{th}}$ order explicit Runge-Kutta method. The higher-order time integration ensures an accurate convection of the vortex blobs. However, the downside to employing a multi-stage method is that we require multiple evaluation of the induced velocity $\mathbf{u}\left(\mathbf{x}_p\right)$ during a single step $t_n \rightarrow t^{n+1}$.
+The Biot-Savart Law, equation \ref{eq:mollifiedVelocityField}, is used to determine the induced velocities acting on each particle, resulting in an $N$-body problem. The calculation of the $N$-body problem is optimized by parallelizing the calculations in GPU hardware. The calculation is further optimized by using a fast summation method, the \printAcron{Fast Multipole Method}{FMM}, reducing the problem from $\mathcal{O}(N^2)$ to $\mathcal{O}(N)$ (in the ideal case).
 
-In section \ref{subsubsec:convergenceInterpolation}, we determined that to have an accurate reconstruction of the vorticity field, the vortex blobs must always satisfy the overlap ratio $\lambda$ constraint. As described by Koumoutsakos and Chorin \cite{Cottet2000a}, after several steps of convection of the vortex blobs, the overlap constraint will no longer be satisfied due to strains in the fluid. This introduced the need for remeshing techniques that can restructure the Lagrangian grid to the original overlap ratio $\lambda$.
+The time integration of equation \ref{eq:convectionODE} is performed using a $4^{\mathrm{th}}$ order explicit Runge-Kutta method. The higher-order time integration ensures an accurate convection of the vortex blobs, resulting in minimum dissipation. However, the downside to employing a multi-stage method is that we require multiple evaluation of the induced velocity $\mathbf{u}\left(\mathbf{x}_p\right)$, when stepping from a given time $t_n$ to the next time $t_{n+1}$.
+
+After several steps of the convection of the vortex blobs, the overlap ratio $\lambda$ will no longer be satisfied due to strains in the fluid, as described by Koumoutsakos and Chorin \cite{Cottet2000a}. In section \ref{subsubsec:convergenceInterpolation}, we determined that to have an accurate reconstruction of the vorticity field, the vortex blobs must satisfy the overlap ratio $\lambda$ at all times $t$. This introduced the need for a remeshing (or a regridding) scheme that can reconstruct the vortex blobs distribution to the original overlap ratio $\lambda$.
 
 \subsection{Remeshing scheme: Treating lagrangian grid distortion}
 \label{subsec:remeshing}
@@ -390,14 +391,15 @@ The distortion of the Lagrangian grid is due to the clustering and dispersion of
 A remeshing (or regridding) of this field is therefore required to retain proper distribution. It is done by interpolating the strengths of the vortex blobs from the distorted Lagrangian grid $\hat{\mathbf{x}}$ onto a uniform grid $\mathbf{x}$. The strengths of the blobs of the new uniform grid $\alpha_p$ is determined by,
 	\begin{equation}
 	\alpha_p = \sum_q\tilde{\alpha}_q W \left(\frac{x_p - \tilde{x}_q}{h}\right),
+	\label{eq:la_remeshingKernel}
 	\end{equation}
-where the strengths of the blobs $\tilde{\alpha}_q$ of the distorted Lagrangian grid $\tilde{x}_q$ are transfered to the regular Lagrangian grid $x_p$ using the interpolation kernel $W$. Figure \ref{fig:interpolationGrid} shows an example of the remeshing of one vortex blob of the distorted grid on to the structured uniform grid with a kernel $W$ with a $3\times3$ stencil. During this transfer, we must ensure that the properties of the fluid are conserved. The interpolation kernel is constructed by ensuring that the circulation, the linear impulse, and the angular impulse of the fluid are conserved. 
+where the strengths of the blobs $\tilde{\alpha}_q$ of the distorted Lagrangian grid $\tilde{x}_q$ are transfered to the regular Lagrangian grid $x_p$ using the interpolation kernel $W$. Figure \ref{fig:interpolationGrid} shows an example of the remeshing of one vortex blob of the distorted grid on to the structured uniform grid with a kernel $W$ with a $3\times3$ stencil. During this transfer, we must ensure that the properties of the fluid are conserved. The interpolation kernel is constructed by ensuring that the total circulation, the linear impulse, and the angular impulse of the fluid are conserved. 
 
-For the present work, we used the $\mathrm{M}'_4$ interpolation kernel, a widely used kernel by Koumoutsakos and Cottet \cite{Cottet2000a}, Speck \cite{Speck2011a}, and Barba \cite{Barba2004c}. The kernel is continuously differentiable ensuring conservation of total circulation, linear and angular impulse. 
+For the present work, the widely used $\mathrm{M}'_4$ interpolation kernel, such as by Koumoutsakos and Cottet \cite{Cottet2000a}, Speck \cite{Speck2011a}, and Barba \cite{Barba2004c}. The kernel is continuously differentiable ensuring conservation of total circulation, linear and angular impulse. 
 
 \subsubsection*{$\mathbf{M}^\prime_4$ interpolation kernel}
 
-The $\mathrm{M}^{\prime}_4$ interpolation kernel is an efficient interpolation kernel that has been used to reconstruct a smooth distribution, and was introduced by Monaghan in 1985 \cite{Monaghan1985}. For a \indexAcron{One-Dimensional}{1-D} problem, the $\mathrm{M}'_4$ interpolation kernel is given as,
+The $\mathrm{M}^{\prime}_4$ interpolation kernel is an efficient interpolation kernel that has been used to reconstruct a smooth distribution, and was introduced by Monaghan in 1985 \cite{Monaghan1985}. For a 1D problem, the $\mathrm{M}'_4$ interpolation kernel is defined as,
 	\begin{equation}
 	{\mathrm{M'}_4}\left( {\xi} \right) =
 	  \begin{cases}
@@ -413,7 +415,7 @@ where
 	\label{eq:xiEquation}
 	\end{equation}
 	
-is a non-dimensional parameter, relating the position of the particle $x_{\nu}$ to the position of the $i^{\mathrm{th}}$ interpolation node $x_i$. The $\mathrm{M'}_4$ is a third-order accurate, piecewise smooth, B-spline kernel, and with the $m = 4$, it has 4 support nodes in each dimension. 
+is a non-dimensional parameter, relating the position of the particle $x_{\nu}$ to the position of the $i^{\mathrm{th}}$ interpolation node $x_i$. The $\mathrm{M'}_4$ is a third-order accurate, piecewise smooth, B-spline kernel. The kernel with the $m = 4$, has a 4 support nodes in each dimension. 
 
 	\begin{figure}[!h]
 	\centering
@@ -422,7 +424,7 @@ is a non-dimensional parameter, relating the position of the particle $x_{\nu}$ 
 	\label{fig:interpolationKernel}
 	\end{figure}
 
-Figure \ref{fig:interpolationKernel} shows the distribution of the kernel. For the two dimensional problem, the 2-D interpolation kernel is just the tensor product of the 1-D interpolation kernel, and will have a $4^2 = 16$ support nodes. With this compact support, the kernel is ideal for an $\mathcal{O}(N)$ remeshing.
+Figure \ref{fig:interpolationKernel} shows the distribution of the kernel. For the 2D problem, the 2D interpolation kernel is the tensor product of the 1D interpolation kernel, thus having a $4^2 = 16$ support nodes. The kernel has a compact support, making it ideal for an efficient $\mathcal{O}(N)$ remeshing.
 
 
 %Koumoutsakos \cite{Koumoutsakos1997} has investigated the drawback of the employing the remeshing strategy and have shown that there is approximately $4\%$ decay in enstrophy of the flow due to sub-grid dissipation. Note that enstrophy $ \mathcal{E}$, is defined as
@@ -438,22 +440,33 @@ Figure \ref{fig:interpolationKernel} shows the distribution of the kernel. For t
 \section{Diffusion of Vortex Methods}
 \label{sec:diffusionVM}
 
-So far, we have ignored the viscous effect of the flow, and in order to simulate a real flow, we must perform the diffusion of the vorticity field. Chorin simulated a viscous flow using the viscous splitting algorithm. The flow is segregated to inviscid and viscous component and during the second sub-step we deal with the diffusion of the vorticity, as show in equation \ref{eq:vsa2}. The diffusion term of the viscous splitting algorithm can be solved as a system of ODEs, similar to the convection step, given as,
-	\begin{equation}
-	\frac{\mathrm{d}\mathbf{x}_p}{\mathrm{d}t} = 0,
-	\end{equation}
-with
-	\begin{equation}
-	\frac{\mathrm{d}\alpha_p}{\mathrm{d}t} = \nu\Delta\alpha_p.
-	\end{equation}
+Chorin \cite{Chorin1973a}, simulated the viscous flow using the viscous splitting algorithm, described in section \ref{subsec:vsa}. The viscous splitting algorithm segregated the vorticity transport equation, equation \ref{eq:la_vteq}, to the inviscid and the viscous components, equation \ref{eq:convectionEulerian} and equation \ref{eq:vsa2} respectively. 
 
-So in the diffusion step, we fix the position of the vortex blobs, and only modify the strengths of the particles. This process mimics the diffusion of vorticity. Chorin in 1973 \cite{Chorin1973a}, initially employed the \indexAcron{Random Walk Method}{RWM}, which generates and disperse vorticity using pseudo-random number algorithm. However, this method suffers some limitations in accuracy, and since then methods such as \indexAcron{Particle Strength Exchange}{PSE} method \cite{Degond1989a}, has been a common approach to treat the diffusion.
+The flow is convected during the first sub-step, whereas in the second sub-step, we have to deal with the diffusion of the vorticity field, equation \ref{eq:vsa2}. The diffusion problem is solved using the following system of ODEs, 
+	\begin{subequations}
+	\begin{align}
+	\frac{\mathrm{d}\mathbf{x}_p}{\mathrm{d}t} &= 0,\\
+	\frac{\mathrm{d}\alpha_p}{\mathrm{d}t} &= \nu\Delta\alpha_p,
+	\end{align}
+	\label{eq:la_sysODEsDiff}
+	\end{subequations}
+where the position of the particles $\mathbf{x}_p$ is fixed, whereas the change in strengths of the particles $\alpha_p$ as depended on the kinematic viscous $\nu$. Thus the diffusion of the vortex blobs requires only the modification to the strengths $\alpha_p$ of the particles. 
 
-An alternative method to simulate the diffusion is to use the \printAcron{Vortex Redistribution Method}{VRM} \cite{Shankar1996}. The model simulates diffusion by distributing the fraction of circulation of the vortex blobs to each other satisfying the diffusion. The model is based on conserving the moments of the particles by satisfying a linear system of equations. The circulation of the particle are transfer to the nearby particles that are,
+Chorin in 1973 \cite{Chorin1973a}, initially employed the \indexAcron{Random Walk Method}{RWM}, which generates and disperses vorticity using a pseudo-random number algorithm. However, this method suffered some limitations in accuracy, and since then methods such as \indexAcron{Particle Strength Exchange}{PSE} method \cite{Degond1989a}, and \printAcron{Vortex Redistribution Method}{VRM} \cite{Shankar1996} become a popular choice for treating diffusion of the particles.
+
+The VRM simulates the diffusion of the particles by redistributing fractions of circulations of the vortex blobs to each other, such that diffusion is appropriately modeled. These redistribution fractions $f_{ij}^n$ are determined by solving a linear system of equations, that conserves the moments of the particles (such as the total circulation, linear and angular impulse) and the diffusion of the flow. 
+
+The redistribution fractions $f_{ij}^n$, transfers portion of circulation $\alpha_p$ of the particle $p$ to others within the diffusion radius, defined as,
 	\begin{equation}
 	h_{\nu} = \sqrt{\nu\Delta t_d}
+	\label{eq:la_diffDis}
 	\end{equation}
-where $h_{\nu}$ is the diffusion distance and is directly related to the kinematic viscosity $\nu$ and the diffusive time-step $\Delta t_d$ of the simulation. This means that the VRM scheme (and also the PSE) requires a search algorithm to determine the particles that are within the zone of influence. A direct evaluation would require an $\mathcal{O}\left(N^2\right)$ evaluation. However, this can be optimized using a search tree algorithm, speeding up the search to an $\mathcal{O}\left(\log N\right)$.
+where $h_{\nu}$ is the diffusion distance and is directly related to the kinematic viscosity $\nu$ and the diffusive time step size $\Delta t_d$ of the simulation.
+
+For this work, we investigate two methods that employ this approach. The Wee-Ghoniem Remeshing Scheme \cite{Wee2006a} implemented the VRM into the remeshing process, section \ref{subsec:modifiedRemeshing}. The advantage was that diffusion and remeshing can be performed simultaneously in a single process. However for some flow cases, this approach had undesirable constraint on the diffusion time step size $\Delta t_d$. Therefore, the approach of Tutty \cite{Tutty2010a}, the Tutty Remeshing Scheme, was employed which had a desirable constraint on the diffusion time step size $\Delta t_d$, section \ref{subsubsec:srs}. The scheme was used to perform diffusion at every step of the evolution, which is important for proper coupling of the Eulerian and the Lagrangian method.
+
+
+%This means that the VRM scheme (and also the PSE) requires a search algorithm to determine the particles that are within the zone of influence. A direct evaluation would require an $\mathcal{O}\left(N^2\right)$ evaluation. However, this can be optimized using a search tree algorithm, speeding up the search to an $\mathcal{O}\left(\log N\right)$.
 
 %Not that the diffusive time-step $\Delta t_d$ is equal to the convective time-step $\Delta t_c$ if the diffusion process is done during every time-step. However, we can easily adjust the diffusion time-step and perform diffusion at a multiple step of the convection. Not diffusing at every step can be helpful as 
 
@@ -479,9 +492,12 @@ where $h_{\nu}$ is the diffusion distance and is directly related to the kinemat
 
 \subsection{Wee Remeshing Scheme}
 \label{subsec:modifiedRemeshing}
-From further investigation of the VRM, Ghoniem and Wee saw that the VRM is similar to the remeshing strategy that we used to counter the lagrangian distortion during the convection process. So, Ghoniem and Wee in 2006 \cite{Wee2006a}, proposed to combine the remeshing and the diffusion together in one process. The application of this methodology was later validated by Speck in 2011 \cite{Speck2011a}. This \indexAcron{Modified Remeshing Scheme}{MRS}, performs diffusion by modifying the interpolation kernel of the remeshing scheme. The key advantage of the MRM is that, now we are dealing with a uniform grid, and no longer requires a search algorithm to find the particles in the zone of influence. This significantly reduced the computational cost, making this diffusion scheme practical for a large scale simulations. 
 
-Ghoniem and Wee rederived the interpolation kernel that can perform both the remeshing and the diffusion simultaneously. The kernel transfers the correct fraction of circulation during the remeshing such that it satisfies the diffusion equation. The $\mathrm{M'}_4$ kernel for treating the diffusion is given as,
+Ghoniem and Wee \cite{Wee2006a}, observed the similarities between the VRM and the standard remeshing strategy described in section \ref{subsec:remeshing}. They proposed to combine the remeshing and the diffusion of the vortex blobs together in one single process. The application of this methodology was later investigated by Speck \cite{Speck2011a}. This approach, referred to as the \indexAcron{Wee-Ghoniem Remeshing Scheme}{WRS}, implements the diffusion of the vortex blobs in the interpolation kernel $W$ of equation \ref{eq:la_remeshingKernel}.
+
+The key advantage of the WRS is that, now we are dealing with a uniform grid, and does not require a search algorithm to find the particles in the zone of influence, equation \ref{eq:la_diffDis}. This significantly reduces the computational cost, making this diffusion scheme practical for large scale simulations. 
+
+The modified $\mathrm{M'}_4$ kernel for treating the diffusion is given as,
 	\begin{equation}
 	{{{\rm{M'}}}_4}\left( {\xi ,c} \right) =
 	  \begin{cases}
@@ -496,52 +512,58 @@ where
 	c^2 = \frac{\nu \Delta t_d}{h^2},
 	\label{eq:c2}
 	\end{equation}
-is a non-dimensional number that corresponds to the transfer weight for the diffusion. This additional terms in the interpolation kernel accounts for the diffusion process. When $c \rightarrow 0$, the interpolation kernel simply turns in to the standard remeshing kernel. Ghoniem and Wee also investigated the error growth and the stability properties of the interpolation kernel in the Fourier space and have determined that for a stable diffusion and remeshing, we have to ensure that,
+is a non-dimensional number that corresponds to the transfer weight for the diffusion. The constant $c^2$ is a function of the kinematic viscosity $\nu$, diffusion time step size $\Delta t_d$ and the remeshing grid spacing $h$. This additional term in the interpolation kernel accounts for the diffusion process. When $c \rightarrow 0$, the interpolation kernel simply turns into the standard remeshing kernel, equation \ref{eq:interpKernel}. 
+
+Ghoniem and Wee also investigated the error growth and the stability properties of the interpolation kernel in the Fourier space and have determined that for a stable diffusion and remeshing, the following constraint has to be satisfied,
 	\begin{equation}
 	\frac{1}{6} \leqslant c^2 \leqslant \frac{1}{2}.
 	\label{eq:c2stability}
 	\end{equation}
 
 %to minimize the error growth amplification factor and the phase error. With this, we will ensure the stability of the problem and suppress any spurious oscillations and ensure that it is a non-negative interpolation kernel with non-negative redistribution fractions. 
-However, we see that this $c^2$ constraint imposes a direct constraint on the maximum and the minimum $\Delta t_d$. This would mean that the diffusion time step size $\Delta t_d$ will be a multiple of the convection step $\Delta t_c$,
+However, we see that this $c^2$ constraint imposes a direct constraint not only on the maximum diffusion time step size $\Delta t_d$, but also imposes a constraint on the minimum step size. This would mean that the diffusion time step size $\Delta t_d$ will be sometimes larger than the convection step $\Delta t_c$,
 	\begin{equation}
-	\Delta t_d = k_d \cdot \Delta t_c,
+	\Delta t_d \geqslant \Delta t_c.
+	\label{eq:la_dtcts}
 	\end{equation}
-so the diffusion of the vortex blobs will not be done at every step of the evolution process. This is a problem for hybrid method as we couple the Lagrangian and the Eulerian method at every step. If the Lagrangian method does not perform diffusion at every step, from the Eulerian method's point of view, it would seem that the Lagrangian vorticity diffuses in a discontinuous fashion. This discontinuous behavior of the Lagrangian method (w.r.t. the Eulerian method), can cause stability issues during the coupling process, and should take care of.
+This is a problem for the hybrid method as the Lagrangian method and the Eulerian method are coupled at every step. If the Lagrangian method does not perform diffusion at every step, from the Eulerian method's point of view, it would seem that the Lagrangian vorticity diffuses in a discontinuous fashion. This discontinuous behavior of the Lagrangian method (w.r.t. the Eulerian method), can cause stability issues during the coupling process, and therefore should be avoided.
 
-We could minimize this problem by modifying the $\Delta t_c$ such that it matches the diffusion time step (i.e $\Delta t_c = \Delta t_d$), so the diffusion is performed at every step. This was a feasible solution for our initial investigations with low Reynolds number flows, however when had to deal with the high Reynolds number flows, where the convection time step have to be small, we needed a scheme that was not constrained by the minimum diffusion time step.
-
+We could minimize this problem by modifying the $\Delta t_c$ such that it matches the diffusion time step (i.e $\Delta t_c = \Delta t_d$), so that the diffusion is performed at every step. This was a feasible solution for low Reynolds number flows, however for high Reynolds number $Re$ flows, where the convection time step has to be small, we need a scheme that is not constrained by the minimum diffusion time step.
 
 \subsection{Tutty Remeshing Scheme}
 \label{subsubsec:srs}
-The simple redistribution scheme, based on the Shankar and Van Dommelen \cite{Shankar1996}, developed by Tutty in 2010 \cite{Tutty2010a}, makes it possible to remesh and diffuse the vorticity after every convection step. The strengths of the particles after the remeshing and diffusion is given as, 
+The \printAcron{Tutty Remeshing Scheme}{TRS}, developed by Tutty in 2010 \cite{Tutty2010a}, was based on the VRM of Shankar and Van Dommelen \cite{Shankar1996}. The scheme it possible to remesh and diffuse the vorticity after every convection step. The strengths of the particles after the remeshing and diffusion $\alpha_i^{n+1}$, are given as, 
 	\begin{equation}
 	\alpha_i^{n+1} = \sum_k \alpha_k^n W_{ki}^n, 
 	\end{equation}
-where $W_{ki}^n$ is the fraction of circulation from vortex blob $k$ transferred to vortex blob $i$ by the redistribution during the time step $n$. Like the MRS for treating diffusion, section \ref{subsec:modifiedRemeshing}, this \indexAcron{Simple Redistribution Scheme}{SRS} works by transferring the strengths of the particles to a fixed nodes rather than the neighboring nodes, figure \ref{fig:simpleRedistribution}. Therefore, if we use a uniform nodes, we do not need to employ a search algorithm to determine the neighboring nodes of the interpolation kernel. This makes the scheme as efficient as the MRS.
-
-The fractions $W_{ki}^n$ are calculated by conserving the vorticity, the center of the vorticity, the linear, and the angular momentum of the vortex blobs \cite{Tutty2010a}. For the two dimensional problem, the redistribution fractions are simple tensors products of the $x,y$ one dimensional redistribution fractions, given as,
-
-	\begin{figure}[t]
-	\centering
-	\includegraphics[width=0.7\textwidth]{figures/lagrangian/simpleRedistribution.pdf}
-	\caption{One dimensional simple redistribution scheme, diffusing the vortex blobs at $x_i \leqslant x_{\nu} \leqslant x_{i+1}$, onto the four stencil points $k=i-1,\dots,i+2$, with a grid spacing $h$.}
-	\label{fig:simpleRedistribution}
-	\end{figure}
-
-	\begin{equation}
-	W_{kl} = F_k G_l, \quad k = i-1,\cdots,i+2, \quad \l = j-1,\dots,j+2,
-	\end{equation}
-giving it a 16 point stencil. The one-dimension redistribution fractions for $x$-direction is a linear combination of the two basis solution for a conservative redistribution,
-	\begin{equation}
-	F_k = \left(1-\Delta\right)\cdot f_k + \Delta\cdot g_k, \quad k = i-1,\dots,i+2,
-	\end{equation}
-having a four point stencil, as show in figure \ref{fig:simpleRedistribution}. The basis solution of redistribution are 
+where $W_{ki}^n$ is the fraction of circulation transferred from vortex blob $k$ (old) to the new vortex blob $i$ (new), figure \ref{fig:interpolationGrid}. Tutty \cite{Tutty2010a}, explained that the fractions $W_{ki}^n$ are calculated by imposing a conservation of vorticity, center of vorticity, linear, and angular momentum of the vortex blobs, given as,
 	\begin{subequations}
 	\begin{align}
-	f_{i-1} &= \frac{1}{2}\left(1-f_i-\xi\right)\\
-	f_i &= 1 - 2\left(\frac{h_{\nu}}{h}\right)^2 - \xi^2\\
-	f_{i+1} &= \frac{1}{2}\left(1-f_i+\xi\right)\\
+	\sum_k W_{ki}^n &= 1, \\
+	\sum_k W_{ki}^n(x_i - x_k) = \sum_k W_{ki}^n(y_i - y_k) &= 0, \\
+	\sum_k W_{ki}^n(x_i - x_k)^2 = \sum_k W_{ki}^n(y_i - y_k)^2 &= 2h_{\nu}^2, \\
+	\sum_k W_{ki}^n(x_i - x_k)(y_i - y_k) &= 0,	
+	\end{align}
+	\label{eq:la_VRMredistributions}
+	\end{subequations}
+where $h_{\nu}$ is the characteristic diffusion distance associated to the time $\Delta t_d$, 
+	\begin{equation}
+	h_{\nu} = \sqrt{\Delta t_d \cdot \nu}.
+	\end{equation}	
+
+	\begin{figure}[!b]
+	\centering
+	\includegraphics[width=0.7\textwidth]{figures/lagrangian/simpleRedistribution.pdf}
+	\caption{1D \printAcron{Tutty Remeshing Scheme}{TRS}, diffusing the vortex blobs at $x_i \leqslant x_{\nu} \leqslant x_{i+1}$, onto the four stencil points $k=i-1,\dots,i+2$, with a grid spacing $h$.}
+	\label{fig:simpleRedistribution}
+	\end{figure}
+	
+Similar to the the TRS, described in section \ref{subsec:modifiedRemeshing}, the TRS transfers the strengths to known set of new nodes rather than the neighboring nodes (removing the requirement for a search algorithm). Figure \ref{fig:simpleRedistribution} shows the 1D redistribution of the vortex blob $x_i \leqslant x_{\nu} \leqslant x_{n+1}$ to the stencil nodes $x_k$, where $k=i-1,\cdots,i+2$. The solution to the redistribution is given by the following equations,
+	\begin{subequations}
+	\begin{align}
+	f_{i-1} &= \frac{1}{2}\left(1-f_i-\Delta\right)\\
+	f_i &= 1 - 2\left(\frac{h_{\nu}}{h}\right)^2 - \Delta^2\\
+	f_{i+1} &= \frac{1}{2}\left(1-f_i+\Delta\right)\\
 	f_{i+2} &= 0
 	\end{align}
 	\end{subequations}
@@ -549,32 +571,61 @@ and
 	\begin{subequations}
 	\begin{align}
 	g_{i-1} &= 0\\
-	g_{i} &= \frac{1}{2}\left(1-g_{i+1}-\xi_1\right)\\
-	g_{i+1} &= 1 - 2\left(\frac{h_{\nu}}{h}\right)^2 - \xi_1^2\\
-	g_{i+2} &= \frac{1}{2}\left(1-g_{i+1}+\xi_1\right)
+	g_{i} &= \frac{1}{2}\left(1-g_{i+1}-\Delta_1\right)\\
+	g_{i+1} &= 1 - 2\left(\frac{h_{\nu}}{h}\right)^2 - \Delta_1^2\\
+	g_{i+2} &= \frac{1}{2}\left(1-g_{i+1}+\Delta_1\right)
 	\end{align}
 	\end{subequations}
-where $\xi$ is given by equation \ref{eq:xiEquation}. The $\xi_1 = \xi - 1$ is the distance between the $k^{\mathrm{th}}$ stencil node $x_k$ and the vortex blob that is to be diffused with $x_i \leqslant x_{\nu} \leqslant x_{i+1}$. In the above equation, $h_{\nu}$ is the characteristic diffusion distance during the time $\Delta t_d$, 
-%We have to note that, $f_k$ and $g_k$ is zero for all the other $k$. 
+where $\Delta$ is defined as,
 	\begin{equation}
-	h_{\nu} = \sqrt{\Delta t_d \cdot \nu}.
+	\Delta = \frac{x_{\nu}-x_i}{h},
 	\end{equation}
-		
-The only constraint imposed for a positive redistribution fraction is,
+as depicted in figure \ref{fig:simpleRedistribution}. Note that $\xi_1 = \xi - 1$. The total redistribution fractions $F_k$, are the linear combinations of the functions $f_k$ and $g_k$,
+	\begin{equation}
+	F_k = \left(1-\Delta\right)\cdot f_k + \Delta\cdot g_k, \quad k = i-1,\dots,i+2,
+	\end{equation}
+
+For the 2D, the redistribution fractions are simple tensors product of the $x$ and $y$ 1D redistribution fractions,
+	\begin{equation}
+	W_{kl} = F_k G_l, \quad k = i-1,\cdots,i+2, \quad \l = j-1,\dots,j+2,
+	\end{equation}
+with a 16 point stencil when $\xi=1/2$.
+
+The stability of the redistribution requires a positive redistribution fraction, $W_{kl}^n > 0$, imposing a direct constraint on the diffusive distance,
 	\begin{equation}
 	\frac{h_{\nu}}{h} < \frac{1}{\sqrt{2}}.
 	\end{equation}
-giving us the maximum time step size constraint of,
+as explained by Tutty \cite{Tutty2010a}. A resulting constraint is imposed on the maximum diffusion time step size $\Delta t_d$,
 	\begin{equation}
 	\Delta t_d < \frac{h^2}{2\nu}.
 	\end{equation}
+
+
+%The one-dimension redistribution fractions for $x$-direction is a linear combination of the two basis solution for a conservative redistribution,
+%	\begin{equation}
+%	F_k = \left(1-\Delta\right)\cdot f_k + \Delta\cdot g_k, \quad k = i-1,\dots,i+2,
+%	\end{equation}
+%having a four point stencil, as show in figure \ref{fig:simpleRedistribution}.  
+
+%In the above equation, $h_{\nu}$ is the characteristic diffusion distance during the time $\Delta t_d$, 
+%We have to note that, $f_k$ and $g_k$ is zero for all the other $k$. 
+%	\begin{equation}
+%	h_{\nu} = \sqrt{\Delta t_d \cdot \nu}.
+%	\end{equation}
+		
+%The only constraint imposed for a positive redistribution fraction is,
+%
+%giving us the maximum time step size constraint of,
+%	\begin{equation}
+%	\Delta t_d < \frac{h^2}{2\nu}.
+%	\end{equation}
 	
-So we see that, this scheme only posses a constraint on the maximum diffusion time step size. For high Reynolds number flows, the convection time step is usually much smaller than the diffusion time step, meaning that now we can ensure that diffusion is performed with every convection step (i.e $k_d = 1$).
+Therefore, we observe that this scheme only poses a constraint on the maximum diffusion time step size $\Delta t_d$, enabling us to perform the diffusion at every step of the evolution, equation \ref{eq:la_dtcts}.
 
 \section{Boundary conditions at solid boundary}
 \label{sec:boundaryConditions}
 
-So far, we have only dealt with unbounded flow. During bounded flow simulation, we must impose an addition constraint for the boundary, to simulate the flow with a geometry. Using the Helmholtz decomposition, we can have decompose the velocity field in to the rotational and the irrotational components, equation \ref{eq:helmholtz}. We can use the potential component to prescribe the boundary conditions at the solid wall boundary,
+So far, we have only dealt with unbounded flow. For bounded flow simulation, we must impose an additional constraint for the boundary. Using the Helmholtz decomposition, we can have decompose the velocity field in to the rotational and the irrotational components, equation \ref{eq:helmholtz}. We can use the potential component to prescribe the boundary conditions at the solid wall boundary,
 	\begin{equation}
 	\mathbf{u}_{\phi} = \nabla\Phi.
 	\end{equation}
