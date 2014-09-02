@@ -2,8 +2,6 @@
 
  \nomgroup{Y}
 
-  \item [{\textbf {1-D}}]\begingroup One-Dimensional\nomeqref {2.25}
-		\nompageref{21}
   \item [{\textbf {2-D}}]\begingroup Two-Dimensional\nomeqref {1.0}
 		\nompageref{2}
   \item [{\textbf {AD}}]\begingroup Actuator Disk\nomeqref {1.0}
@@ -13,56 +11,54 @@
   \item [{\textbf {CFD}}]\begingroup Computional Fluid Dynamics\nomeqref {1.0}
 		\nompageref{3}
   \item [{\textbf {CG}}]\begingroup Continuous Galerkin\nomeqref {3.1}
-		\nompageref{50}
-  \item [{\textbf {CSVM}}]\begingroup Constant-Strength Vortex Method\nomeqref {2.57}
-		\nompageref{29}
-  \item [{\textbf {DG}}]\begingroup Discontinous Galerkin\nomeqref {3.1}
-		\nompageref{49}
-  \item [{\textbf {DOF}}]\begingroup Degrees of Freedom\nomeqref {3.0}
 		\nompageref{48}
+  \item [{\textbf {CSVM}}]\begingroup Constant-Strength Vortex Method\nomeqref {2.49}
+		\nompageref{27}
+  \item [{\textbf {DG}}]\begingroup Discontinous Galerkin\nomeqref {3.1}
+		\nompageref{47}
+  \item [{\textbf {DOF}}]\begingroup Degrees of Freedom\nomeqref {3.0}
+		\nompageref{46}
   \item [{\textbf {FDM}}]\begingroup Finite Difference Method\nomeqref {3.0}
-		\nompageref{47}
+		\nompageref{45}
   \item [{\textbf {FEM}}]\begingroup Finite Element Method\nomeqref {3.0}
-		\nompageref{47}
+		\nompageref{45}
   \item [{\textbf {FE}}]\begingroup Forward Euler\nomeqref {3.28}
-		\nompageref{58}
+		\nompageref{56}
   \item [{\textbf {FMM}}]\begingroup Fast Multipole Method\nomeqref {1.0}
 		\nompageref{3}
   \item [{\textbf {FVM}}]\begingroup Finite Volume Method \nomeqref {3.0}
-		\nompageref{47}
+		\nompageref{45}
   \item [{\textbf {GPU}}]\begingroup Graphical Processing Units\nomeqref {1.0}
 		\nompageref{3}
   \item [{\textbf {HELVPM}}]\begingroup Hybrid Eulerian-Lagrangian Vortex Particle Method\nomeqref {1.0}
 		\nompageref{4}
   \item [{\textbf {ICNS}}]\begingroup Incompressible Navier-Stokes\nomeqref {3.22}
-		\nompageref{55}
+		\nompageref{53}
   \item [{\textbf {IPCS}}]\begingroup Incremental Pressure Correction Scheme\nomeqref {3.23}
-		\nompageref{56}
+		\nompageref{54}
   \item [{\textbf {ISC}}]\begingroup Impulsively Started Cylinder\nomeqref {3.40}
-		\nompageref{71}
-  \item [{\textbf {LHS}}]\begingroup Left Hand Side\nomeqref {2.49}
+		\nompageref{69}
+  \item [{\textbf {lhs}}]\begingroup left hand side\nomeqref {2.48}
+		\nompageref{27}
+  \item [{\textbf {LSTSQ}}]\begingroup Least-Square solution method\nomeqref {2.53}
 		\nompageref{28}
-  \item [{\textbf {LSTSQ}}]\begingroup Least-Square solution method\nomeqref {2.61}
-		\nompageref{30}
   \item [{\textbf {MPI}}]\begingroup Message Passing Interface\nomeqref {3.15}
-		\nompageref{52}
-  \item [{\textbf {MRS}}]\begingroup Modified Remeshing Scheme\nomeqref {2.30}
-		\nompageref{23}
-  \item [{\textbf {PC}}]\begingroup Population Control\nomeqref {2.71}
-		\nompageref{38}
+		\nompageref{50}
+  \item [{\textbf {PC}}]\begingroup Population Control\nomeqref {2.63}
+		\nompageref{36}
   \item [{\textbf {PIV}}]\begingroup Particle Image Velocimetry\nomeqref {1.0}
 		\nompageref{2}
-  \item [{\textbf {PSE}}]\begingroup Particle Strength Exchange\nomeqref {2.29}
-		\nompageref{22}
-  \item [{\textbf {RWM}}]\begingroup Random Walk Method\nomeqref {2.29}
-		\nompageref{22}
+  \item [{\textbf {PSE}}]\begingroup Particle Strength Exchange\nomeqref {2.26}
+		\nompageref{21}
+  \item [{\textbf {RWM}}]\begingroup Random Walk Method\nomeqref {2.26}
+		\nompageref{21}
   \item [{\textbf {SCS}}]\begingroup Simple Coupling Strategy\nomeqref {1.0}
 		\nompageref{6}
-  \item [{\textbf {SRS}}]\begingroup Simple Redistribution Scheme\nomeqref {2.35}
-		\nompageref{24}
   \item [{\textbf {VAWT}}]\begingroup Vertical-Axis Wind Turbine\nomeqref {1.0}
 		\nompageref{1}
   \item [{\textbf {VPM}}]\begingroup Vortex Particle Method\nomeqref {2.0}
 		\nompageref{11}
+  \item [{\textbf {WRS}}]\begingroup Wee-Ghoniem Remeshing Scheme\nomeqref {2.27}
+		\nompageref{22}
 
 \end{thenomenclature}
