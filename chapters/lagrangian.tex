@@ -74,6 +74,7 @@
 %------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------
 \section{Introduction to the Vortex Particle Method}
+\label{sec:introtovpm}
 \indexAcron{Vortex Particle Method}{VPM} is a numerical method employed in computational fluid dynamics, dealing with the evolution of the vorticity in the fluid from a Lagrangian description. In an Eulerian formulation, the fluid is viewed at a fixed window where the change in the fluid properties are evaluated. However, the Lagrangian formulation, regards the fluid as a collection of particles (or elements) carrying properties of the fluid (such as vorticity, mass, etc.). 
 
 Efficient discretization of the fluid domain becomes a difficult task for cases such as \printAcron{Vertical-Axis Wind Turbine}{VAWT}, where the wake geometry is complex and unsteady. Discretizing such wake using Eulerian formulation becomes difficult as it requires the adaption of the mesh over time for efficient computation. The VPM only needs fluid elements where there is vorticity meaning that the method is inherently auto-adaptive. This is one of the advantage of the VPM. Furthermore, with computational acceleration methods such as \printAcron{Fast-Multipole Method}{FMM} and parallel computation in \printAcron{Graphics Processing Units}{GPU} enables an efficient evolution of the vorticity wake. 
@@ -521,10 +522,11 @@ Ghoniem and Wee also investigated the error growth and the stability properties 
 %to minimize the error growth amplification factor and the phase error. With this, we will ensure the stability of the problem and suppress any spurious oscillations and ensure that it is a non-negative interpolation kernel with non-negative redistribution fractions. 
 However, we see that this $c^2$ constraint imposes a direct constraint not only on the maximum diffusion time step size $\Delta t_d$, but also imposes a constraint on the minimum step size. This would mean that the diffusion time step size $\Delta t_d$ will be sometimes larger than the convection step $\Delta t_c$,
 	\begin{equation}
-	\Delta t_d \geqslant \Delta t_c.
+	\Delta t_d = k_d \cdot \Delta t_c.
 	\label{eq:la_dtcts}
 	\end{equation}
-This is a problem for the hybrid method as the Lagrangian method and the Eulerian method are coupled at every step. If the Lagrangian method does not perform diffusion at every step, from the Eulerian method's point of view, it would seem that the Lagrangian vorticity diffuses in a discontinuous fashion. This discontinuous behavior of the Lagrangian method (w.r.t. the Eulerian method), can cause stability issues during the coupling process, and therefore should be avoided.
+
+where $k_d \geqslant 1$ and is an integer. This is a problem for the hybrid method as the Lagrangian method and the Eulerian method are coupled at every step. If the Lagrangian method does not perform diffusion at every step, from the Eulerian method's point of view, it would seem that the Lagrangian vorticity diffuses in a discontinuous fashion. This discontinuous behavior of the Lagrangian method (w.r.t. the Eulerian method), can cause stability issues during the coupling process, and therefore should be avoided.
 
 We could minimize this problem by modifying the $\Delta t_c$ such that it matches the diffusion time step (i.e $\Delta t_c = \Delta t_d$), so that the diffusion is performed at every step. This was a feasible solution for low Reynolds number flows, however for high Reynolds number $Re$ flows, where the convection time step has to be small, we need a scheme that is not constrained by the minimum diffusion time step.
 
@@ -597,6 +599,7 @@ The stability of the redistribution requires a positive redistribution fraction,
 as explained by Tutty \cite{Tutty2010a}. A resulting constraint is imposed on the maximum diffusion time step size $\Delta t_d$,
 	\begin{equation}
 	\Delta t_d < \frac{h^2}{2\nu}.
+	\label{eq:TRS_difftimeconstr}
 	\end{equation}
 
 Therefore, we observe that this scheme only poses a constraint on the maximum diffusion time step size $\Delta t_d$, enabling us to perform the diffusion at every step of the evolution, equation \ref{eq:la_dtcts}.
@@ -973,7 +976,9 @@ body $b$ on body $a$ and body $a$ on body $b$, respectively. The final two rows 
 
 \section{Evolution of the Lagrangian method}
 
-	\begin{figure}[!t]
+The algorithm of the full Lagrangian method is summarized in this section. The full or complete	Lagrangian method is the coupled vortex blobs and the vortex panels. Note that for our hybrid scheme, the panel does not act as the source of the vorticity in the Lagrangian method (which is done by the Eulerian method), but instead simply enforces the \emph{no-slip} boundary condition for the vortex blobs.
+	
+	\begin{figure}[!h]
 		\centering
 		\begin{tikzpicture}
 			[node distance=.8cm, start chain=going below,]
@@ -983,24 +988,24 @@ body $b$ on body $a$ and body $a$ on body $b$, respectively. The final two rows 
 		    \node[punktchain, join] (remesh) 	  {Remesh the Lagrangian field};
 		    \node[punktchain, join] (diffuse)     {Diffuse the vortex blobs};		    
 		\end{tikzpicture}
-		\caption{Flowchart of the Lagrangian method. The flowchart shows coupling between vortex panels and vortex blobs to evolve from $t_n$ to $t_{n+1}$.}
+		\caption{Flowchart of the Lagrangian method. The flowchart shows coupling between vortex panels and vortex blobs to evolve from $t_n$ to $t_{n+1}$ (without taking into account of the vorticity generation at the boundary).}
 		\label{fig:flowchart_lagrangian}
-	\end{figure}
+	\end{figure}	
 	
-The flowchart to one time step of the Lagrangian method is given by figure \ref{fig:flowchart_lagrangian}.The algorithm to the Lagrangian method can be summarized as follows:
+The flowchart of one time step of the Lagrangian method is given by figure \ref{fig:flowchart_lagrangian}.The algorithm to the Lagrangian method can be summarized as follows:
 	\begin{enumerate}
-	\item \textbf{Solve for panels:} Determine the strengths of the vortex panels $\gamma$, such that the no-slip boundary condition at the collocation points of the vortex panels is enforced. When determining the strengths, we also have to ensure that the total circulation of the vortex panels satisfied the conservation of circulation, equation \ref{eq:circulationNet}.
+	\item \textbf{Solve for panels:} Determine the strengths of the vortex panels $\gamma$, such that the no-slip boundary condition at the collocation points of the vortex panels is enforced. When determining the strengths, we also have to ensure that the total circulation of the vortex panels satisfies the conservation of circulation, equation \ref{eq:circulationConstraintonPanels}, which we investigate during the hybrid coupling, section \ref{subsubsec:cc}.
 	\item \textbf{Evaluate the total velocity field:} Evaluate the total velocity field $\mathbf{u}$, which is the sum of velocity field induced by the vortex blobs $\mathbf{u}_{\omega}$, the velocity field induced by the vortex panels $\mathbf{u}_{\gamma}$, and the free-stream velocity field $\mathbf{u}_{\infty}$. 
-	\item \textbf{Convect the vortex blobs:} Use the velocity field to time step the vortex blobs from $t_n$ to $t_{n+1}$ to the new position with a convection time step $\Delta t_c$.
-	\item \textbf{Remesh the Lagrangian field:} Remesh the vortex blobs onto a structured square lattices using the $\mathrm{M}'_4$ interpolation kernel.
-	\item \textbf{Diffuse the vortex blobs:} Diffuse the vortex blobs using the $\Delta t_d$ diffusion time step, by modifying the strengths of the vortex blobs according to Wee's MRS or Tutty's SRS method.
+	\item \textbf{Convect the vortex blobs:} Use the velocity field to convect the vortex blobs from $t_n$ to $t_{n+1}$ to the new position.
+	\item \textbf{Remesh the Lagrangian field:} Remesh the vortex blobs onto a structured square lattice using the $\mathrm{M}'_4$ interpolation kernel.
+	\item \textbf{Diffuse the vortex blobs:} Diffuse the vortex blobs using the $\Delta t_d$ diffusion time step, by modifying the strengths of the vortex blobs according to Wee's WRS or Tutty's TRS method.
 	\end{enumerate}
 
-The generation of the vorticity is dealt with in the Eulerian domain, which is explained in chapter \ref{ch:eulerian}. The vorticity is then transfered into the Lagrangian domain using the Hybrid coupling scheme, which was summarized in the introduction, chapter \ref{ch:introduction}, and full elaborated in chapter \ref{ch:hybrid}.
+The generation of the vorticity is dealt with in the Eulerian domain, which is explained in chapter \ref{ch:eulerian}. The vorticity is then transfered into the Lagrangian domain using the Hybrid coupling scheme, which was summarized in the introduction, chapter \ref{ch:introduction}, and fully elaborated in chapter \ref{ch:hybrid}.
 
 %
 \section{Validation of Lagrangian method}
-
+\label{sec:volm}
 In this chapter, we have investigated the Lagrangian component of the Hybrid method. The Lagrangian method is used to just evolve the vorticity field, where as the Eulerian method is used to properly formulate the vorticity generation at the boundary. The resolved boundary solution of the Eulerian method is then transfered onto our Lagrangian method. Therefore, the Lagrangian method that is implemented here does not require the generation of the vorticity from the boundary. 
 
 Thus, during the validation of the Lagrangian method, we focus on two test cases: Potential flow around a cylinder and Lamb-Oseen vortex evolution. The potential flow around a cylinder test case is used to verify and validate the vortex panel solver that is used enforcing the no-through flow for the vortex blobs. The Lamb-Oseen vortex evolution test cases is used to verify and validate the convection method and the diffusion methods implemented for the evolution of the vortex blobs.
@@ -1103,34 +1108,59 @@ The velocity field, corresponding to equation \ref{eq:lo_voeq}, in cylindrical c
 	\label{eq:lo_veeq}
 	\end{subequations}
 
-where $u_{\theta}$ is the circumferential velocity, and $u_r$, the radial velocity is zero. Figure \ref{fig:lambOseen_distributions} shows the vorticity distribution, and the velocity field of the Lamb-Oseen vortex with a unit core strength $\Gamma_c=1$, at $\tau=4$. As the time progresses, the core of the Lamb-Oseen vortex will diffuse and we use this analytical solution to valid our vortex blobs method.
+where $u_{\theta}$ is the circumferential velocity, and $u_r$, the radial velocity is zero. Figure \ref{fig:lambOseen_distributions} shows the vorticity distribution $\omega$ for various initial time constant $\tau$. We see that for small $\tau$, the distribution approaches a Dirac delta distribution. Therefore, for this investigation we decided on $\tau=4$ ensuring a non-peaky distribution, which was also investigated by Barba \cite{Barba2004c}.  Therefore the literature of Barba \cite{Barba2004c} will serve as the validation data for our Lamb-Oseen investigation.
+
+
+%	\begin{figure}[!t]
+%        \centering
+%        \begin{subfigure}[b]{0.5\textwidth}
+%                \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_vorticityDistribution_compressed.pdf}
+%                \caption{Vorticity field}
+%                \label{fig:lambOseen_vorticityDistribution}
+%        \end{subfigure}%
+%        ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+%          %(or a blank line to force the subfigure onto a new line)
+%        \begin{subfigure}[b]{0.5\textwidth}
+%                \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_velocityDistribution_compressed.pdf}
+%                \caption{Velocity Field}
+%                \label{fig:lambOseen_velocityDistribution}
+%        \end{subfigure}
+%        
+%        
+%        \caption{Lamb-Oseen Vortex problem with $\Gamma_c = 1$, $\tau=\num{2e-3}$, and $\nu=\num{5e-4}$. The figure depicts \textbf{(a)} the vorticity distribution, and \textbf{(b)} the velocity distribution.}
+%        \label{fig:lambOseen_distributions}
+%	\end{figure}
 
 	\begin{figure}[!t]
         \centering
-        \begin{subfigure}[b]{0.5\textwidth}
-                \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_vorticityDistribution_compressed.pdf}
-                \caption{Vorticity field}
-                \label{fig:lambOseen_vorticityDistribution}
+        \begin{subfigure}[b]{0.3\textwidth}
+                \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_definition_tau=1-crop.pdf}
+                \caption{$\tau = 1$}
+                \label{fig:lambOseen_tau1}
         \end{subfigure}%
         ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
           %(or a blank line to force the subfigure onto a new line)
-        \begin{subfigure}[b]{0.5\textwidth}
-                \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_velocityDistribution_compressed.pdf}
-                \caption{Velocity Field}
-                \label{fig:lambOseen_velocityDistribution}
+        \begin{subfigure}[b]{0.3\textwidth}
+                \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_definition_tau=4-crop.pdf}
+                \caption{$\tau = 4$}
+                \label{fig:lambOseen_tau4}
         \end{subfigure}
-        \caption{Lamb-Oseen Vortex problem with $\Gamma_c = 1$, $\tau=\num{2e-3}$, and $\nu=\num{5e-4}$. The figure depicts \textbf{(a)} the vorticity distribution, and \textbf{(b)} the velocity distribution.}
+		~
+        \begin{subfigure}[b]{0.3\textwidth}
+                \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_definition_tau=10-crop.pdf}
+                \caption{$\tau = 10$}
+                \label{fig:lambOseen_tau10}
+        \end{subfigure}        
+        
+        \caption{The vorticity $\omega$ distribution of the Lamb-Oseen vortex problem with $\Gamma_c = 1$ and $\nu=\num{5e-4}$ in the domain $[-0.5,0.5]\times[-0.5,0.5]$. The figure depicts distribution for various initial time constant $\tau$, determining the peakiness of the distribution.}
         \label{fig:lambOseen_distributions}
 	\end{figure}
-
-The lagrangian method was applied to the Lamb-Oseen vortex test case with parameters tabulated in table \ref{tab:lambOseenParams}. The vorticity field was discretized over the domain $[x,y]$ - domain $\left[-0.5,0.5\right]\times\left[-0.5,0.5\right]$. This was adequate as the circulation outside this domain was less that the threshold $\Gamma_{loc}\le\num{e-14}$. The spatial discretization was performed according to the standard initialization method of vortex blobs, described in section \ref{subsec:vortexBlobInitialization}.
-
-However as explained in section \ref{subsec:vortexBlobInitialization}, we have to take in account of the Gaussian blurring of the original vorticity field due to the initialization process. This poses a problem when evaluating the error between the numerical and the analytical solution. This problem has also been encountered by Barba \cite{Barba2004c}, when investigating the Lamb-Oseen vortex. The solution to the problem was to apply a ``time-shift correction", to compensate for the Gaussian blurring, solving the problem of this very particular discretization of the Navier-Stokes equation. Therefore, this is a special method and this approach can only be used for the Lamb-Oseen vortex problem.
-
+	
+	
 	\ctable[
 		caption = {Summary of the parameters for the Lamb-Oseen vortex evolution. This table shows also the parameters of Tutty's diffusion method},
 		label   = {tab:lambOseenParams},
-		pos = t,]{lcll}{}{\FL
+		pos = !b,]{lcll}{}{\FL
 		
 		Parameters 					& Value 	& Unit					& Description \ML
 		$\Gamma_c$\T               	& 1 &\si{m^2.s^{-1}} 				& Core strength\\
@@ -1142,11 +1172,15 @@ However as explained in section \ref{subsec:vortexBlobInitialization}, we have t
 		$ \Delta t_c = \Delta t_d$ 	& $0.01$ &\si{s}						& Diffusion and convection time step size\\
 		$ N_{\mathrm{t-steps}}$ 	& 100 & -						& Number of time integration steps\\		
 		$ \sigma$ 					& $0.01$ &\si{m}						& Vortex blob core size\\	        
-		$ \mathrm{overlap}$			& $1$	& -							& Overlap ratio\\	        	        
+		$ \lambda$			& $1$	& -							& Overlap ratio\\	        	        
 		$ k$						& $2$	& -							& Gaussian kernel width spreading\\
 		$ f_{redis}$		& $1$ 	& -							& Redistribution frequency\\	        	        
 		$ f_{pc}$		& $1$  & -							& Population control frequency\\	        	        
-		$ (\Gamma_{loc},\Gamma_{glob})$ & $(\num{1e-14},\num{1e-14})$ &\si{m^2.s^{-1}} & Population control thresholds\LL}
+		$ (\Gamma_{loc},\Gamma_{glob})$ & $(\num{1e-14},\num{1e-14})$ &\si{m^2.s^{-1}} & Population control thresholds\LL}	
+
+The Lagrangian method was applied to the Lamb-Oseen vortex test case with parameters tabulated in table \ref{tab:lambOseenParams}. The vorticity field was discretized over the domain $[x,y]$ - domain $\left[-0.5,0.5\right]\times\left[-0.5,0.5\right]$. This was adequate as the circulation outside this domain was less that the threshold $\Gamma_{loc}\le\num{e-14}$. The spatial discretization was performed according to the standard initialization method of vortex blobs, described in section \ref{subsec:vortexBlobInitialization}.
+
+However as explained in section \ref{subsec:vortexBlobInitialization}, we have to take in account of the Gaussian blurring of the original vorticity field due to the initialization process. This poses a problem when evaluating the error between the numerical and the analytical solution. This problem has also been encountered by Barba \cite{Barba2004c}, when investigating the Lamb-Oseen vortex. The solution to the problem was to apply a ``time-shift correction", to compensate for the Gaussian blurring, solving the problem of this very particular discretization of the Navier-Stokes equation. Therefore, this is a special method and this approach can only be used for the Lamb-Oseen vortex problem.
 
 The ``time-shift correction" is derived by determining the diffusion effect caused by the discretization of the diffusion equation using the Gaussian vortex blobs (with $k=2$). Barba \cite{Barba2004c}, determined that the discretization of the diffusion equation (i.e. the Lamb-Oseen vortex) reconstructs the vorticity field that has been diffused by a time $\sigma^2/2\nu$. So when initializing the particles with a certain strength, we will have to reverse the time by $\sigma^2/2\nu$. Thus, the corrected initial particles strengths $\alpha_i^o$ of vortex blobs from the Lamb-Oseen vorticity field is given as,
 
@@ -1157,29 +1191,43 @@ The ``time-shift correction" is derived by determining the diffusion effect caus
 	
 This method was used to investigate the error evolution of the vortex blob method. The vortex blobs where convected according to the procedures in section \ref{sec:covb}. The diffusion of the vortex blobs was performed using the schemes described in section \ref{sec:diffusionVM}. We investigated the accuracy of the Tutty's scheme (TRS) and Wee-Ghoniem scheme (WRS) in section \ref{subsubsec:comp_wrs_trs}. For the general investigation however, we employed the Tutty's diffusion method. The advantage of this approach is that the we can perform diffusion after every convection step. This makes the method less prone to time integration error and eliminates any discontinuous behavior in the evolution. We will see that when coupling the Lagrangian method and Eulerian method, discontinuity in the problem introduces additional errors.
 
-	\begin{figure}[p]
-	\centering
-	\includegraphics[width=0.99\textwidth]{figures/lagrangian/lambOseen_convection_vorticityErrorContours_compressed-crop.pdf}
-	\caption{Relative error growth of Lamb-Oseen vorticity during the evolution (in logarithmic scale). The figure shows \textbf{(a)}, the initial relative error at $t_0=4$, and \textbf{(b)} the final relative error in vorticity at $t_f=5$.}
-	\label{fig:lambOseen_convection_vorticityErrorContours_compressed}
-	\end{figure}
+%	\begin{figure}[p]
+%	\centering
+%	\includegraphics[width=0.99\textwidth]{figures/lagrangian/lambOseen_convection_vorticityErrorContours_compressed-crop.pdf}
+%	\caption{Relative error growth of Lamb-Oseen vorticity during the evolution (in logarithmic scale). The figure shows \textbf{(a)}, the initial relative error at $t_0=4$, and \textbf{(b)} the final relative error in vorticity at $t_f=5$.}
+%	\label{fig:lambOseen_convection_vorticityErrorContours_compressed}
+%	\end{figure}
+%	
+	
 
-	\begin{figure}[p]
-	\centering
-	\includegraphics[width=0.7\textwidth]{figures/lagrangian/lambOseen_convection_errorGrowth_compressed.pdf}
-	\caption{Relative error growth of Lamb-Oseen vortex during the evolution from $t=0$ to $t=1$ according to parameters in table \ref{tab:lambOseenParams}. Figure depicts the error in vorticity: maximum relative error [ ---, solid black], and the error in $L^2-\mathrm{norm}$ [ - -, dashed black]; and error in velocity: maximum relative error [ {\color{plotBlue}{---}}, solid blue], and error in $L^2-\mathrm{norm}$ [ {\color{plotBlue}{- -}}, dashed blue].}
-	\label{fig:lambOseen_convection_errorGrowth_compressed}
-	\end{figure}
 
 The convection and diffusion was performed according to the time integration parameters tabulated in table \ref{tab:lambOseenParams}. The vortex blobs where convected using a $4^{\mathrm{th}}$-order Runge-Kutta method ($\mathrm{RK4}$) for a high order time integration. After the convection sub-steps, the Lagrangian distortion was treated using the remeshing scheme discussed in section \ref{subsec:remeshing}. Generally, the remeshing is typically done every 10 iterations \cite{Barba2004c}. However, as our diffusion scheme and hybrid method requires structured lattice of vortex blobs for efficient calculations, we will remesh after every step, $f_{\mathrm{redist}}=1$.  
 
+
 In addition to the evolution of the vortex blobs, we performed a population control to minimized the number of vortex blobs, as described by Barba \cite{Barba2004c}. The \indexAcron{Population Control}{PC} removes vortex blobs that have very small circulation strengths. After the diffusion and remeshing, we will be left with vortex blobs with strengths close to the numerical precision, as they have minimal impact on the accuracy of the vorticity field, we can removed them. When performing population control, we need to ensure that the loss of total circulation is below the acceptable global threshold, $\Gamma_{glob}$. We used $\Gamma_{glob}=\num{e-14}$ as used by Barba \cite{Barba2004c} for the similar investigation. 
 
-To verify whether our Lagrangian scheme is performs according to theory, we evaluated the error evolution of the simulation. Figure \ref{fig:lambOseen_convection_vorticityErrorContours_compressed}, shows the initial and the final relative error in vorticity. We see that initially we have a maximum relative error around \num{e-8}, located at the center of the Lamb-Oseen core. After 100 time integration steps from $t=0$ to $t=1$, we see that the maximum relative error in vorticity increases from \num{e-8} to \num{e-2}. The errors of the vorticity are predominantly localized at the center of the core, where we have maximum vorticity, figure \ref{fig:lambOseen_vorticityDistribution}.
+	\begin{figure}[!h]
+     \centering
+     \begin{subfigure}[b]{0.5\textwidth}
+             \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_intialError_wRel.pdf}
+             \caption{Vorticity field}
+             \label{fig:lambOseen_convection_vorticityErrorContours_initial}
+     \end{subfigure}%
+     ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+       %(or a blank line to force the subfigure onto a new line)
+     \begin{subfigure}[b]{0.5\textwidth}
+             \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_finalErrorEvolution_wRel.pdf}
+             \caption{Velocity Field}
+             \label{fig:lambOseen_convection_vorticityErrorContours_final}
+     \end{subfigure}
+     
+     \caption{Relative error growth of Lamb-Oseen vorticity during the evolution (in logarithmic scale) using the parameters tabulated in table \ref{tab:lambOseenParams}. The figure shows \textbf{(a)}, the initial relative error at $t=0$, and \textbf{(b)} the final relative error in vorticity at $t=1$.}
+     \label{fig:lambOseen_convection_vorticityErrorContours}
+	\end{figure}
 
-Figure \ref{fig:lambOseen_convection_errorGrowth_compressed}, shows the maximum relative error and the $L^2-\mathrm{norm}$ error evolution of vorticity and velocity from $t=0$ to $t=1$. Similar investigation was performed by Barba \cite{Barba2004c} and Speck \cite{Speck2011a}.
+To verify whether our Lagrangian scheme is performs according to theory, we evaluated the error evolution of the simulation. Figure \ref{fig:lambOseen_convection_vorticityErrorContours}, shows the initial and the final relative error in vorticity. We see that initially we have a maximum relative error around \num{e-8}, located at the center of the Lamb-Oseen core. After 100 time integration steps from $t=0$ to $t=1$, we see that the maximum relative error in vorticity increases from \num{e-8} to \num{e-2}. The errors of the vorticity are predominantly localized at the center of the core, where we have maximum vorticity, figure \ref{fig:lambOseen_convection_vorticityErrorContours}.
 
-Due to the relation of the vorticity and the velocity, equation \ref{eq:lag_vort}, the error of the vorticity is higher that the error in the velocity. The figure shows the both the maximum relative error, and the error in the $L^2-\mathrm{norm}$. The maximum relative error (e.g. for vorticity), is defined as,
+Figure \ref{fig:lambOseen_convection_errorGrowth_compressed}, shows the maximum relative error, equation \ref{eq:maxRelErrorDef}, and the $L^2-\mathrm{norm}$, equation \ref{eq:l2normeq}, error evolution of vorticity and velocity from $t=0$ to $t=1$. Similar investigation was performed by Barba \cite{Barba2004c} and Speck \cite{Speck2011a}. Due to the relation of the vorticity and the velocity, equation \ref{eq:lag_vort}, the error of the vorticity is higher that the error in the velocity. The figure shows both the maximum relative error, and the error in the $L^2-\mathrm{norm}$. The maximum relative error (e.g. for vorticity), is defined as,
 	\begin{equation}
 	\left\Vert \omega^{\mathrm{exact}} - \omega^{\mathrm{discrete}} \right\Vert_{\infty} = \frac{\max\{\left|\omega^{\mathrm{exact}} - \omega^{\mathrm{discrete}}\right|\}}{\max\{\left|\omega^{\mathrm{exact}}\right|\}},
 	\label{eq:maxRelErrorDef}
@@ -1188,28 +1236,77 @@ where $\omega^{\mathrm{exact}}$ is the analytical vorticity field, equation	\ref
 
 	\begin{equation}
 	\left\Vert \omega^{\mathrm{exact}} - \omega^{\mathrm{discrete}} \right\Vert_2 = \left(\sum_{i}^{N}\left| \omega^{\mathrm{exact}} - \omega^{\mathrm{discrete}} \right|^2 \cdot h^2\right)^{\frac{1}{2}},
+	\label{eq:l2normeq}
 	\end{equation}
 
 and the error in velocity is calculated using the same principle. Investigating the figure, we see that after the first iteration, there is a sudden increase in the error, but as time progresses the error growth reduces. From literature, we see that this trend has also been observed by Barba \cite{Barba2004c} and Speck \cite{Speck2011a}. For comparison, we used similar parameters, and we observe that the sudden jump in error is similar to the literature.
+
+	\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{figures/lagrangian/lambOseen_errorEvolution_TRS_dt0p01.pdf}
+	\caption{Relative error growth of Lamb-Oseen vortex during the evolution from $t=0$ to $t=1$ using the parameters in table \ref{tab:lambOseenParams}. This figure depicts the error in vorticity: maximum relative error [ ---, solid black], and the error in $L^2-\mathrm{norm}$ [ - -, dashed black]; and error in velocity: maximum relative error [ {\color{plotBlue}{---}}, solid blue], and error in $L^2-\mathrm{norm}$ [ {\color{plotBlue}{- -}}, dashed blue].}
+	\label{fig:lambOseen_convection_errorGrowth_compressed}
+	\end{figure}
+
 	
 \subsubsection{Comparison of diffusion schemes: WRS vs. TRS}
 \label{subsubsec:comp_wrs_trs}
-To observe how both the diffusion schemes compare, we ran the same test case with both diffusion schemes. From the simulation, we were able to observe that Tutty's diffusion scheme (TRS), produced less error than Wee's approach (WRS). Figure \ref{fig:lambOseen_diffusionMethod_comparison_compressed} shows the error growth of maximum relative error in vorticity for both diffusion schemes. The solid lines represents the solution of the MRS and the dashed lines shows the SRS. The convection and the diffusion time steps where controlled by modifying the blob spacing $h$, and keeping the convection time step size $\Delta t_c = 0.01$. 
+To observe how both the diffusion schemes compare, we ran the same test case with both diffusion schemes. From the simulation, we were able to observe that Tutty's diffusion scheme (TRS), produced less error than Wee's approach (WRS). 
 
-At $h = \num{4e-3}$, both schemes have the diffusion time step $\Delta t_d = 0.01$ meaning that the diffusion occurs at every iteration $k_d = 1$. During this time we see that the MRS performs slightly better that the SRS scheme. This is because, the diffusion of the vortex blobs is directly incorporated into the remeshing process, whereas the Tutty's SRS segregates the diffusion and the remeshing into two subsequent process. 
+Figure \ref{fig:lambOseen_diffusionMethod_comparison} shows the evolution of maximum relative error in vorticity, equation \ref{eq:maxRelErrorDef} for both diffusion schemes. Figure \ref{fig:lambOseen_errorEvolution_WRSvsTRS_dt0p01} shows the evolution of error for convective time step size $\Delta t_c = 0.01$. The diffusion scheme TRS enables us to perform diffusion in conjunction with the convection, $\Delta t_d = \Delta t_c = 0.01$. This was possible due to the favorable constraint on the diffusion time step, equation \ref{eq:TRS_difftimeconstr}.
 
-At $h = \num{5e-3}$, the diffusion constraint on the Wee's MRS changes the minimum allowable diffusion time step to $\Delta t_d = 0.02$, meaning that diffusion has to be performs at every second step, $k_d=2$. Whereas for Tutty's SRS, we are not constraint by the minimum diffusion time step as so we can perform diffusion at $k_d = 1$. When investigating the growth in error for MRS, we see that the diffusion scheme has a large increase in the error, whereas the SRS does not have this limitation and is still able to diffuse at every step and has only a slight increase in error, figure \ref{fig:lambOseen_diffusionMethod_comparison_compressed} (solid black line). The diffusion scheme over-estimates the diffusion, and results in an incorrect diffusion process. However, we see that Tutty's SRS still performs a stable diffusion (dashed black line).
+The Wee's diffusion scheme WRS, however is constraint by equation \ref{eq:c2stability} and equation \ref{eq:la_dtcts}. Therefore the diffusion time step $\Delta t_d$ for the given convective time step $\Delta t_c = 0.01$ is $\Delta t_d = k_d \cdot \Delta t_c = 0.07$, where the diffusion frequency $k_d=7$. We observe from the figure that performing diffusion at every other instant creates an oscillatory behavior. This behavior is not ideal when coupling with the Eulerian method as the oscillatory diffusion of the VPM will add additional error in coupling.
 
-This verification of the diffusion scheme showed that if Wee's MRS diffuses at $k_d > 1$, it will over-estimate the diffusion of the vorticity. Therefore, when using this scheme we will have to ensure that $k_d = 1$, by adjusting the convective time step appropriately. However, for large Reynolds number flows this is not possible, and so we must rely on the more stable and versatile Tutty's SRS diffusion scheme.
+\begin{figure}[!h]
+  \centering
+  \begin{subfigure}[b]{0.5\textwidth}
+          \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_errorEvolution_WRSvsTRS_dt0p01.pdf}
+          \caption{$\Delta t_c = 0.01$}
+          \label{fig:lambOseen_errorEvolution_WRSvsTRS_dt0p01}
+  \end{subfigure}%
+  ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+    %(or a blank line to force the subfigure onto a new line)
+  \begin{subfigure}[b]{0.5\textwidth}
+          \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_errorEvolution_WRSvsTRS_dt0p05.pdf}
+          \caption{$\Delta t_c = 0.05$}
+          \label{fig:lambOseen_errorEvolution_WRSvsTRS_dt0p05}
+  \end{subfigure}
+  
+  \caption{Comparison of Tutty's scheme TRS, and Wee-Ghoniem scheme WRS for treating diffusion, depicting the evolution of maximum relative error in vorticity, equation \ref{eq:maxRelErrorDef} from $t=0$ to $t=1$. The figure \textbf{(a)} shows TRS performing diffusion at every step, $\Delta t_d=\Delta t_c = 0.01$ and WRS performing diffusion at every $7^{\mathrm{th}}$ step, $\Delta t_d = k_d\cdot\Delta t_c = 7\cdot0.01$; \textbf{(b)} shows TRS performing diffusion at every step, $\Delta t_d=\Delta t_c = 0.05$ and WRS performing diffusion at every step, $\Delta t_d = k_d\cdot\Delta t_c = 1\cdot0.05$.}
+  \label{fig:lambOseen_diffusionMethod_comparison}
+ \end{figure}
 
-	\begin{figure}[!t]
-	\centering
-	\includegraphics[width=0.7\textwidth]{figures/lagrangian/lambOseen_diffusionMethod_comparison_compressed.pdf}
-	\caption{Comparison of Tutty's, simple redistribution scheme and Wee's modified interpolation method for treating diffusion. Figure depicts the growth in maximum relative error in vorticity from $t_0=4$ to $t_f=5$ at $\Delta t_c = 0.01$. The Wee diffusion scheme with $\Delta t_d = \Delta t_c = 0.01$ [{\color{plotBlue}{---}}, solid blue], and $\Delta t_d = 2 \Delta t_c = 0.02$ [---, solid black]. The Tutty's diffusion scheme, $c^2 = 1/3$, with $\Delta t_d = \Delta t_c = 0.01$ [ {\color{plotBlue}{- -}}, dashed blue], and $\Delta t_d = \Delta t_c = 0.02$ [ - -, dashed black].}
-	\label{fig:lambOseen_diffusionMethod_comparison_compressed}
-	\end{figure}
+However, when modifying the convective time step to $\Delta t_c=0.05$, figure \ref{fig:lambOseen_errorEvolution_WRSvsTRS_dt0p05}, we observe that the error of WRS matches the TRS. At this convective time step $\Delta t_c$, the WRS has a diffusion time step size $\Delta t_d = k_d \cdot \Delta t_c = 0.05$, where the diffusion frequency $k_d = 1$ now. Therefore, the WRS performs diffusion at every step and we see that WRS performs similarly to TRS.
 
-	\begin{figure}[p]
+The conclusion to this investigation is that WRS is useful if we are able to match the convective time step $\Delta t_c$ to the diffusion time step $\Delta t_d$. However, this may not be possible for high Reynolds number flows where the convective time step is critical. The TRS outperforms WRS in this regard and should produce less error when coupling with the Eulerian method.
+
+%
+%for both diffusion schemes. The solid lines represent the solution of the WRS, and the dashed lines shows the SRS. The convection and the diffusion time steps where controlled by modifying the blob spacing $h$, and keeping the convection time step size $\Delta t_c = 0.01$. 
+
+	%	\begin{figure}[!h]
+	%	\centering
+	%	\includegraphics[width=0.6\textwidth]{figures/lagrangian/lambOseen_diffusionMethod_comparison_compressed.pdf}
+	%	\caption{Comparison of Tutty's scheme TRS, and Wee-Ghoniem scheme WRS for treating diffusion. Figure depicts the growth in maximum relative error in vorticity, equation \ref{eq:maxRelErrorDef} from $t=0$ to $t=1$. 
+	%	
+	%	
+	%	at $\Delta t_c = 0.01$. The Wee diffusion scheme with $\Delta t_d = \Delta t_c = 0.01$ [{\color{plotBlue}{---}}, solid blue], and $\Delta t_d = 2 \Delta t_c = 0.02$ [---, solid black]. The Tutty's diffusion scheme, $c^2 = 1/3$, with $\Delta t_d = \Delta t_c = 0.01$ [ {\color{plotBlue}{- -}}, dashed blue], and $\Delta t_d = \Delta t_c = 0.02$ [ - -, dashed black].}
+	%	\label{fig:lambOseen_diffusionMethod_comparison_compressed}
+	%	\end{figure}
+	%	
+	
+  
+
+%At $h = \num{4e-3}$, both schemes have the diffusion time step $\Delta t_d = 0.01$ meaning that the diffusion occurs at every iteration $k_d = 1$. During this time we see that the MRS performs slightly better that the SRS scheme. This is because, the diffusion of the vortex blobs is directly incorporated into the remeshing process, whereas the Tutty's SRS segregates the diffusion and the remeshing into two subsequent process. 
+
+%At $h = \num{5e-3}$, the diffusion constraint on the Wee's MRS changes the minimum allowable diffusion time step to $\Delta t_d = 0.02$, meaning that diffusion has to be performs at every second step, $k_d=2$. Whereas for Tutty's SRS, we are not constraint by the minimum diffusion time step as so we can perform diffusion at $k_d = 1$. When investigating the growth in error for MRS, we see that the diffusion scheme has a large increase in the error, whereas the SRS does not have this limitation and is still able to diffuse at every step and has only a slight increase in error, figure \ref{fig:lambOseen_diffusionMethod_comparison_compressed} (solid black line). The diffusion scheme over-estimates the diffusion, and results in an incorrect diffusion process. However, we see that Tutty's SRS still performs a stable diffusion (dashed black line).
+
+%This verification of the diffusion scheme showed that if Wee's MRS diffuses at $k_d > 1$, it will over-estimate the diffusion of the vorticity. Therefore, when using this scheme we will have to ensure that $k_d = 1$, by adjusting the convective time step appropriately. However, for large Reynolds number flows this is not possible, and so we must rely on the more stable and versatile Tutty's SRS diffusion scheme.
+
+\subsection{Convergence study of the viscous vortex method}
+
+Finally, we can perform a converge study, to validate that our scheme works according to the theory. For a scheme that is numerically stable, the error due to discretization must converge as the resolution of the discretization increases. 
+
+	\begin{figure}[!b]
 	        \centering
 	        \begin{subfigure}[b]{0.5\textwidth}
 	                \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_convergence_dx_sigma0p02_compressed.pdf}
@@ -1220,48 +1317,46 @@ This verification of the diffusion scheme showed that if Wee's MRS diffuses at $
 	          %(or a blank line to force the subfigure onto a new line)
 	        \begin{subfigure}[b]{0.5\textwidth}
 	                \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_convergence_dx_compressed.pdf}
-	                \caption{Error in vorticity vs. $h$, $\sigma$ with $\mathrm{overlap}=1$.}
+	                \caption{Error in vorticity vs. $\sigma$, $h$ with $\lambda=h/\sigma=1$.}
 	                \label{fig:lambOseen_convergence_dx_compressed}
 	        \end{subfigure}
-	        \caption{Convergence in spatial discretization of the vortex blobs. Figure \textbf{(a)} shows the convergence by fixing the core size $\sigma$ and \textbf{(b)} shows the convergence when overlap ratio is fixed.}
+	        \caption{Convergence in spatial discretization of the vortex blobs. Figure \textbf{(a)} shows the convergence by fixing the core size $\sigma$ and \textbf{(b)} shows the convergence when overlap ratio $\lambda = h/\sigma = 1$.}
 	        \label{fig:lambOseen_convergence_dx}
 	\end{figure}
 
-	\begin{figure}[p]
-	\centering
-	\includegraphics[width=0.6\textwidth]{figures/lagrangian/lambOseen_convergence_dt_compressed.pdf}
-	\caption{Error growth of Lamb-Oseen vorticity field after one-step.}
-	\label{fig:lambOseen_convergence_dt_compressed}
-	\end{figure}
+First, we investigate the convergence for spatial discretization. As we are dealing with vortex blobs, there are multiple ways of increasing the resolution. The straightforward method would be to increase the density of particles in a given area, i.e. reduce the blob spacing $h$ and maintaining the core spreading $\sigma$. Figure \ref{fig:lambOseen_convergence_dx_sigma0p02_compressed} shows the convergence of the spatial discretization when the core size $\sigma$ is maintained at $\sigma=0.02$. For this case, the overlap ratio changes with the blob spacing, described by equation \ref{eq:overlapRatio}. For small blob spacing $h$, the error in vorticity quickly drops to near machine precision. When investigating the order of convergence, we see that the error converges in a non-linear fashion and similar results have been obtained by Barba \cite{Barba2004c}.
 
-
-\subsection{Convergence study of the viscous vortex method}
-
-Finally, we can perform a converge study, to validate that our scheme works according to the theory. For a scheme that is numerically stable, the error due to discretization must converge as the resolution of the discretization increases. 
-
-First, we investigate the convergence in spatial discretization. As we are dealing with vortex blobs, there are multiple ways of increasing the resolution. The straight forward method would be to increase the density of particles in a given area, i.e. reducing the blob spacing $h$ and maintaining the core spreading $\sigma$. Figure \ref{fig:lambOseen_convergence_dx_sigma0p02_compressed} shows the convergence of the spatial discretization when the core size $\sigma$ is maintained at $\sigma=0.02$. At this case, the overlap ratio changes with the blob spacing, described by equation \ref{eq:overlapRatio}. At small blob spacing $h$, the error in vorticity quickly drops to near machine precision. When investigating the order of converges, we that the error converges in a non-linear fashion and similar results have been obtained by Barba \cite{Barba2004c}.
-
-Figure \ref{fig:lambOseen_convergence_dx_compressed}, shows the convergence of error when the overlap ratio is fixed, $\mathrm{overlap} = 1$. In this test case, the core size scaled with the blob spacing, $h=\sigma$, and when increasing the spatial resolution, the error converges at non-linear fashion.
+Figure \ref{fig:lambOseen_convergence_dx_compressed}, shows the convergence of the error when the overlap ratio is fixed, $\lambda = 1$. In this test case, the core size scaled with the blob spacing, $h=\sigma$, and when increasing the spatial resolution, the error converges non-linearly.
 	
-To investigate the convergence in temporal discretization, we determined the growth in Lamb-Oseen vorticity field after convecting with various convection step size $\Delta t_c$. Note that to perform this convergence study accurately, we had to rely on the Tutty's SRS diffusion scheme, so that $\Delta t_d = \Delta t_c$. Figure \ref{fig:lambOseen_convergence_dt_compressed} shows the convergence of the error for various temporal discretization. With the combined convection and diffusion scheme, we see that error converges at $\mathcal{O}(\Delta t)$, meaning that the vortex blobs evolution is $1^{\mathrm{st}}$-order in time.
-
-
+	\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{figures/lagrangian/lambOseen_dtConvergence_WRSvsTRS.pdf}
+	\caption{Convergence in temporal discretization of the vortex blobs. The Figure}
+	\label{fig:lambOseen_dtConvergence_WRSvsTRS}
+	\end{figure}	
+	
+To investigate the convergence in temporal discretization, we determined the evolution of the maximum relative error in vorticity, equation \ref{eq:maxRelErrorDef}, at $t=1$ for various convective time step sizes $\Delta t_c$, shown in figure \ref{fig:lambOseen_dtConvergence_WRSvsTRS}. At $t=1$, we see that the error reduces as we increase the temporal resolution meaning that we have a convergent scheme. We also observe that the error produced by WRS is higher than TRS and that it converges at a lower order than TRS. This again validates that TRS performs better than the WRS as it produces less error.
 
 
 \section{Summary of the Lagrangian method}
 
 In summary, we have investigated the Lagrangian domain of our hybrid method in this chapter. The Lagrangian method was used to described the evolution of the wake past the geometry. \printAcron{Vortex Particle Method}{VPM} was an ideal choice to describe the wake, as we require only to evolve the wake, and the generation of the vorticity is dealt with in the Eulerian domain. Unlike the Eulerian method, VPM only required the fluid elements where there was vorticity, meaning that the VPM was inherently auto-adaptive. Using the Population Control method, we were able to remove vortex blobs where they were not needed. Furthermore, the computation of the these elements were accelerated using an FMM, and simultaneously was parallelized using a GPU hardware. 
 
-For the VPM, the choice of fluid elements was vortex blobs. This had non-zero core size, removing the singularity when performing Biot-Savart calculations. The strengths of these particles were initialized by assigning the local circulation strength to the particle, given by equation \ref{eq:particleCirculationAssignment}. When we perform coupling, we will see that the Gaussian blurring of the original vorticity field during the initialization is the fundamental source of error. Strategies such as Beale's iterative method, cannot be used as it is defined for an unbounded domain. The only approach to minimize the Gaussian spreading initialization error was to increase the overlap ratio to $overlap=1$, and minimize the blob spacing $h$ as much as possible. So, the proper handling of the initialization of the vortex blob strength is still an open question, and recommend that if solved can significantly improve the accuracy and the efficiency of the hybrid coupling. More on this will be discussed in section \ref{}. \todo{citation}
+In section \ref{sec:introtovpm}, an introduction to the VPM was given. We determined advantage of the Lagrangian method w.r.t to the Eulerian method for resolving the wake for the VAWT. The velocity-vorticity formulation of the Navier-stokes equations is the governing equation of the VPM and we investigated the viscous splitting algorithm in section \ref{subsec:vsa}.
 
-The convection of the vortex blobs was done by using a $4^{\mathrm{th}}$-order Runge-Kutta time integration method. However, due to high strains in the fluid, we had to deal with the Lagrangian grid distortion of the vortex blob lattice. To deal with this, we used a $\mathrm{M}'_4$ interpolation kernel that remeshed the particles onto a structured grid.
+The viscous splitting algorithm enabled to perform diffusion and convection of the fluid is segregated steps. The discretization of the fluid through vortex blobs was investigated in section \ref{sec:spatialDiscretization}. These fluid elements has non-zero core size, removing the singularity when performing Biot-Savart calculations. 
 
-The diffusion of the vortex blobs was also import when simulation viscous flows. Initially, we employed the modified interpolation kernel by Wee \cite{Wee2006a}, which integrated the diffusion process into the standard interpolation kernel. However, the method posed two problems: the diffusion time step $\Delta t_d$ had a lower limit; the scheme over-estimated the diffusion when the diffusion did not occur at every step, $k_d > 1$. To overcome this problem, we used the simple redistribution scheme by Tutty \cite{Tutty2010a}, which enabled us to perform diffusion after every convection step. This also ensured that the diffusion process was continuous, which was important when performing the coupling algorithm.
+In section \ref{subsec:vortexBlobInitialization}, we investigate the initialization of the vortex blobs. The proper initialization of the vortex blobs is a key factor for accurate coupling of Lagrangian method and the Eulerian method. The strengths of these particles is initialized by assigning the local circulation strength to the particle, as in equation \ref{eq:particleCirculationAssignment}. When the coupling is performed, it will be seen that the Gaussian blurring of the original vorticity field during the initialization is the fundamental source of error, section \ref{subsubsec:vfie}. Strategies such as Beale's iterative method, cannot be used as it is defined for an unbounded domain. The only approach found to minimize the Gaussian spreading initialization error is to increase the overlap ratio to $\lambda=1$, and minimize the blob spacing $h$ as much as possible, while keeping the computational effort to an acceptable level. The optimal strategy for the initialization of the vortex blob strengths is still an open question, and if solved can significantly improve the accuracy and the efficiency of the hybrid coupling
 
-To deal the body boundary in the flow, we used the vortex panels to enforce the no-through/no-slip boundary condition. Koumoutsakos, Leonard, and Pepin \cite{Koumoutsakos1994b}, have shown that enforcing no-slip boundary condition is equivalent to a no-through boundary condition, as they are linked. Constant-Strength Vortex panels, based of Katz \cite{Katz2001a}, were used to treat the body boundary condition. This panel method was then verified and validated with the analytical solution of a potential flow around a cylinder. There was one difference between our vortex panel method and the standard boundary element method that is used in a typical VPM. Our panel method cannot be used to determine the vorticity generation at the body, as this is done in our Eulerian method. So we validated our Lagrangian method separately; first ensuring that the no-through boundary condition is satisfied at the vortex panels, second ensuring that the vorticity of the flow is handled properly by the vortex blobs.
+In section \ref{sec:covb}, we investigated the convection of the vortex blobs. The convection is performed using a $4^{\mathrm{th}}$-order Runge-Kutta time integration method. However, due to high strains in the fluid, the Lagrangian grid distortion of the vortex blob lattice has to be dealt with, section \ref{subsec:remeshing}. For this reason, we used a $\mathrm{M}'_4$ interpolation kernel that remeshed the particles onto a structured grid.
 
-To validate the vortex blob, we used the analytical solution of the Lamb-Oseen vortex problem. We verified that the Wee's MRS diffusion method indeed did not perform optimally for all parameters. The validation was done by investigating the error in the vorticity and the velocity field and was able to conclude that the vortex blobs performed according to literature of Barba \cite{Barba2004c}.
+In section \ref{sec:diffusionVM}, we investigated two diffusion models for the vortex blobs. The WRS diffusion model developed by Wee and Ghonien \cite{Wee2006a}, integrated the diffusion process into the standard interpolation kernel.  This reduces computation cost, however the model was unfavourable constraint on the diffusion time step size, equation 
+\ref{eq:la_dtcts}. The constraint limits the minimum diffusion step size and results in a discontinuous diffusion in time, as shown in figure \ref{fig:lambOseen_errorEvolution_WRSvsTRS_dt0p01}. To overcome this problem, we used the TRS diffusion model by Tutty \cite{Tutty2010a}, which enabled us to perform diffusion after every convection step, section
+\ref{subsubsec:srs}. This also ensured that the diffusion process was continuous, which was important when performing the coupling algorithm.
 
+In section \ref{sec:boundaryConditions}, we investigated the handling of the \emph{no-slip} boundary conditions for the viscous VPM. The boundary integral equations was used to enforces the wall boundary conditions in the Lagrangian method. We used the Constant-Strength Vortex panels, based on Katz \cite{Katz2001a}, to discretize the integral equations. The panel method was then verified and validated with the analytical solution of a potential flow around a cylinder in section \ref{sec:volm}. 
+
+In section \ref{sec:volm}, we also verified and validated the implementation of the vortex blobs to analytical solution of the Lamb-Oseen vortex problem. We determined the evolution of the error for various spatial discretization and temporal discretization. The validation concluded that the implementation performed according to the literature, see example Barba \cite{Barba2004c}.
 
 
 
@@ -1277,9 +1372,13 @@ To validate the vortex blob, we used the analytical solution of the Lamb-Oseen v
 
     $\mathcal{E}$			& Enstrophy			  								& \si{m^2.s^{-2}} \\
 
+	$f_{pc}$				& Population control frequency & - \\
+	$f_{redis}$				& Redistribution frequency & - \\
+	
     $h$						& Nominal particle spacing							& \si{m}\\   
     $h_{\nu}$				& Characteristic diffusion distance					& \si{m}\\ 
 
+	$k$ & Gaussian kernel width spreading	& -\\
 	$k_d$ & Frequency of vortex blob diffusion  								& -\\
     $\mathbf{K}$			& Biot-Savart kernel 								& -\\ 
     $\mathbf{K}_{\sigma}$	& Vortex blob kernel 								& -\\     
@@ -1287,7 +1386,7 @@ To validate the vortex blob, we used the analytical solution of the Lamb-Oseen v
 	$\hat{\mathbf{n}}$  	& Unit normal vector 								& -\\
 	$N$  					& Number of vortex blobs (particles) 				& -\\
 
-	$\mathrm{Ov}$			& Overlap ratio 									& - \\    
+	$\lambda$			& Overlap ratio 									& - \\    
 	
 	$p$						& Pressure											& \si{Pa}\\
 
@@ -1322,7 +1421,7 @@ To validate the vortex blob, we used the analytical solution of the Lamb-Oseen v
 {\renewcommand{\arraystretch}{1.2} %<- modify value to suit your needs
 \begin{longtable}{p{1.5cm}p{10.5cm}p{1.5cm}}
 	$\alpha_p$ 		& Circulation of the particle & \si{m^2.s^{-1}}\\
-	$\beta_p$ 		& Corrected circulation of the particle & \si{m^2.s^{-1}}\\	
+	%$\beta_p$ 		& Corrected circulation of the particle & \si{m^2.s^{-1}}\\	
 
 	$\Delta t_c$ 		& Convection time step size & \si{s}\\
 	$\Delta t_d$ 		& Diffusion time step size & \si{s}\\	
@@ -1330,10 +1429,12 @@ To validate the vortex blob, we used the analytical solution of the Lamb-Oseen v
 	$\epsilon$ 		& Relative error & -\\		
 
 	$\Gamma$ 		& Circulation & \si{m^2.s^{-1}}\\	
-	$\Gamma_b$ 		& Circulation inside a moving body & \si{m^2.s^{-1}}\\		
-	$\gamma_c$ 		& Vortex sheet strength & \si{m^2.s^{-1}}\\			
-	$\gamma_{\gamma}$ 	& Circulation of the vortex sheet & \si{m^2.s^{-1}}\\				
-	$\gamma_{\omega}$ 	& Circulation of the fluid & \si{m^2.s^{-1}}\\					
+	$\Gamma_{glob}$ 		& Particle circulation threshold & \si{m^2.s^{-1}}\\	
+	$\Gamma_{glob}$ 		& Total circulation threshold & \si{m^2.s^{-1}}\\		
+	%$\Gamma_b$ 		& Circulation inside a moving body & \si{m^2.s^{-1}}\\		
+	%$\gamma_c$ 		& Vortex sheet strength & \si{m^2.s^{-1}}\\			
+	%$\Gamma_{\gamma}$ 	& Circulation of the vortex sheet & \si{m^2.s^{-1}}\\				
+	%$\gamma_{\omega}$ 	& Circulation of the fluid & \si{m^2.s^{-1}}\\					
 
 	$\nu$ & Kinematic viscosity & \si{m^2.s^{-1}}\\
 
@@ -1341,10 +1442,12 @@ To validate the vortex blob, we used the analytical solution of the Lamb-Oseen v
 	$\tilde{\omega}$ & Vortex blob cell vorticity & \si{s^{-1}}\\
 	$\omega^h$ & Discrete vorticity field & \si{s^{-1}}\\
 
+	$\Omega$ & Fluid domain & \si{m}\\
+
 	$\rho$ & Density & \si{kg.m^{-3}}\\
 	
 	$\sigma$ & Core size & \si{m}\\
-	$\tau$ & Scaled viscous time & \si{m^2}\\
+	$\tau$ & Lamb-Oseen time constant & \si{s}\\
 	$\xi$ & Scale relative position of particle to stencil node & -\\
 	$\zeta_{\sigma}$		& Smooth cut-off function of the blobs & -\\			
 
