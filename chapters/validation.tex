@@ -210,7 +210,7 @@ Figure \ref{fig:lambOseen_conservation_contourf} compares the error in the Euler
 	\begin{figure}[!p]
 	\centering
 	\includegraphics[width=0.6\linewidth]{./figures/hybrid/lambOseent2/lambOseen_comparision_conservation_compressed.pdf}
-	\caption{Plot of the maximum relative error in vorticity $\epsilon_{\omega}$ [ - -, dashed] and maximum relative error in vorticity $\epsilon_{\mathbf{u}}$ [ ---, solid], equation \ref{eq:maxRelErrorDef}, from $t=0$ to $t=1$, using the parameters tabulated in table \ref{tab:HLO_pt}. The figure compares the coupling scheme with conservation of circulation [{\color{plotRed}{\textbf{red}}}] vs. the coupling scheme without conservation of circulation [{\color{plotGreen}{\textbf{green}}}].}
+	\caption{Plot of the maximum relative error in vorticity $\epsilon_{\omega}$ [ - -, dashed] and maximum relative error in vorticity $\epsilon_{\mathbf{u}}$ [ ---, solid], equation \ref{eq:maxRelErrorDef}, from $t=0$ to $t=1$, using the parameters tabulated in table \ref{tab:HLO_pt}. The figure compares the coupling scheme with conservation of circulation ({\color{plotRed}{\textbf{red}}}) vs. the coupling scheme without conservation of circulation ({\color{plotGreen}{\textbf{green}}}).}
 	\label{fig:lambOseen_comparision_conservation}
 	\end{figure}	
 
@@ -232,9 +232,61 @@ In summary, we have determined that to ensure minimum error during the transfer 
 
 The parameter sensitivity analysis is the last stage of the Lamb-Oseen vortex investigation. The Lamb-Oseen vortex test case is ideal to determine the effects of temporal and spatial discretization on the accuracy of the coupling. 
 
-The third and final investigation is dedicated to the parameter sensitivity analysis, section \ref{subsubsec:psa}. Parameters that determine the spatial and temporal discretization of the scheme is investigated to verify the convergence of scheme.
+To investigate the effects of the spatial discretization on the accuracy of the coupling, we ran several test cases varying the nominal blob spacing $h$, and test cases varying the overlap ratio $\lambda$. To investigate the effects of temporal discretization, we modified the Lagrangian time step size $\Delta t_L$ w.r.t the Eulerian time step size $\Delta t_E$. The control variables of the simulations were chosen to be that of the previous simulations, as tabulated in table \ref{tab:HLO_pt}.
 
+	\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.6\linewidth]{./figures/hybrid/lambOseen/lambOseen_parameter_h.pdf}
+	\caption{Comparison the evolution of error for various nominal blob spacing $h = [0.01,0.02,0.05,0.1]$. The figures shows the maximum relative error in vorticity $\epsilon_{\omega}$ [ - -, dashed] and maximum relative error in vorticity $\epsilon_{\mathbf{u}}$ [ ---, solid], equation \ref{eq:maxRelErrorDef}, from $t=0$ to $t=1$, with control variables from table \ref{tab:HLO_pt}.}
+	\label{fig:lambOseen_parameter_h}
+	\end{figure}	
+	
+Figure \ref{fig:lambOseen_parameter_h} shows the impact of varying the nominal blob spacing $h$ on the coupling. The maximum relative error in vorticity $\epsilon_{\omega}$ and the maximum relative error in velocity $\epsilon_{\mathbf{u}}$ is plotted from $t=0$ to $t=1$ for nominal blob spacing $h = [0.01,0.02,0.05,0.1]$. The figure shows that the reducing the spatial resolution of the Lagrangian method increases the error. At $t=1$, the minimum error is observed for $h=0.01$ with the error in velocity at \num{e-4} and the error in vorticity at \num{e-3}, at $t=1$. The maximum error is observed for $h=0.1$, increasing to \num{e-3} for the error in velocity and to \num{e-2} for the error in vorticity. This implies that the growth in error is order 1. Figure \ref{fig:lambOseen_parameter_h_Trend} shows the variation in error in vorticity at $t=1$ for various $h$. The figure agrees with our previous observation, and shows change in error in coupling due to the spatial discretization is of order one.
 
+	\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.6\linewidth]{./figures/hybrid/lambOseen/lambOseen_parameter_h_Trend.pdf}
+	\caption{Convergence of the error in coupling due to the nominal blob spacing $h$. The control variables are tabulated in table \ref{tab:HLO_pt}}.
+	\label{fig:lambOseen_parameter_h_Trend}
+	\end{figure}	
+
+Figure \ref{fig:lambOseen_parameter_overlap} compares the evolution of the error for various overlap ratios, $\lambda = [0.5, 0.75, 1.0, 1.5]$. We see that the minimum error in velocity and vorticity is observed for the overlap ratio $\lambda = 1$. As we vary from this value, an increase in error is observable. In section \ref{subsubsec:convergenceInterpolation}, we determined that to reduce the Gaussian blurring of the vorticity field due to the vortex blobs, we require an overlap ratio near $\lambda=1$ and a reduction in nominal blob spacing $h$. The parameter sensitivity analysis on the spatial discretization validates this observation and states that to ensure minimum error in coupling, these criteria has to be satisfied.
+
+	\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.6\linewidth]{./figures/hybrid/lambOseen/lambOseen_parameter_overlap.pdf}
+	\caption{Comparison the evolution of error for various overlap ratios $\lambda = [0.5, 0.75, 1.0, 1.5]$. The figures shows the maximum relative error in vorticity $\epsilon_{\omega}$ [ - -, dashed] and maximum relative error in vorticity $\epsilon_{\mathbf{u}}$ [ ---, solid], equation \ref{eq:maxRelErrorDef}, from $t=0$ to $t=1$, with control variables from table \ref{tab:HLO_pt}.}
+	\label{fig:lambOseen_parameter_overlap}
+	\end{figure}	
+
+Figure \ref{fig:lambOseen_parameter_k} shows the varying the temporal discretization of the Lagrangian method and the Eulerian method w.r.t each other. The relation of the Eulerian time step size $\Delta t_E$ to the Lagrangian time step size $\Delta t_L$ is described in section \ref{}. Figure \ref{fig:lambOseen_parameter_k_dtL} shows the effect of modifying the Lagrangian time step size $\Delta t_L$ w.r.t to the Eulerian time step size $\Delta t_E=0.001$, with $\Delta t_L = k_E\cdot\Delta t_E$ for $\Delta t_E = 0.001$ and the number of Eulerian sub-steps $k_E = [1,2,5,10]$. Similarly, figure \ref{fig:lambOseen_parameter_k_dtE} shows the effect of modifying the Eulerian time step size $\Delta t_E$ w.r.t to the Lagrangian time step, with $\Delta t_E = \Delta t_L/k_E$ for $\Delta t_L=0.001$ and $k_E = [1,2,5]$. We see that the minimum error occurs when the time steps match, $\Delta t_L = \Delta t_E$. However if increase the number of Eulerian time steps from $k_E = 1 $ to $k_E=2$, there an substantial increase in the error in velocity. Whereas, increasing $k_E=2$ to $k_E=5$, only increases the error slightly. This observation states that the linear interpolation used for sub-stepping process, has potential for improvement. A possible solution might be to employ a higher-order interpolation method for determining the Eulerian Dirichlet boundary condition at the sub-steps.
+
+	\begin{figure}[!h]
+     \centering
+     \begin{subfigure}[t]{0.45\textwidth}
+             \includegraphics[width=\linewidth]{./figures/hybrid/lambOseen/lambOseen_parameter_k.pdf}
+             \caption{$\Delta t_L = [0.001,0.002,0.005,0.01]$, $\Delta t_E = 0.001$}
+             \label{fig:lambOseen_parameter_k_dtL}
+     \end{subfigure}     
+     \qquad
+     \begin{subfigure}[t]{0.45\textwidth}
+             \includegraphics[width=\linewidth]{./figures/hybrid/lambOseen/lambOseen_parameter_k_dtE.pdf}
+             \caption{$\Delta t_E = [0.001,0.0005,0.0002]$, $\Delta t_L = 0.001$}
+             \label{fig:lambOseen_parameter_k_dtE}
+     \end{subfigure}        
+     
+     \caption{Comparison the evolution of error for various number of Eulerian sub-steps $k_E = [1,2,5,10]$, by modifying the Lagrangian time step size $\Delta t_L$ and Eulerian time step size $\Delta t_E$. The figures shows the maximum relative error in vorticity $\epsilon_{\omega}$ [ - -, dashed] and maximum relative error in vorticity $\epsilon_{\mathbf{u}}$ [ ---, solid], equation \ref{eq:maxRelErrorDef}, from $t=0$ to $t=1$, with control variables of table \ref{tab:HLO_pt}.}
+     \label{fig:lambOseen_parameter_k}
+	\end{figure}	
+
+%Figure \ref{fig:lambOseen_parameter_k_Trend} shows the convergence trend of error in vorticity due to number of Eulerian sub-step $k_E$. 
+%
+%	\begin{figure}[!h]
+%	\centering
+%	\includegraphics[width=0.6\linewidth]{./figures/hybrid/lambOseen/lambOseen_parameter_h_Trend.pdf}
+%	\caption{Convergence of the error in coupling due to the number of Eulerian sub-step $k_E$ at $t=1$. The control variables are tabulated in table \ref{tab:HLO_pt}}.
+%	\label{fig:lambOseen_parameter_k_Trend}
+%	\end{figure}
 
 \subsection{Conclusion}
 
