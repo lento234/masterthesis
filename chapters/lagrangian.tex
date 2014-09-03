@@ -1051,7 +1051,7 @@ An example of the numerical solution is shown in figure \ref{fig:panelCylinder_v
              \caption{Error in the velocity field}
              \label{fig:panelCylinder_error}
      \end{subfigure}
-     \caption{Comparison of the velocity field along the $y$-axis, $0\rightarrow10$. Figure \textbf{(a)} shows both the solutions, the numerical $\left\Vert\mathbf{u}^h\right\Vert$ [{\color{plotBlue}{---}}, solid blue] and the analytical solution [---, solid black]. Figure \textbf{(b)} shows the relative error $\epsilon$ in velocity between the solution, given by equation \ref{eq:panelRelativeError}.}
+     \caption{Comparison of the velocity field along the $y$-axis, $y=0$ to $y=10$. Figure \textbf{(a)} shows both the solutions, the numerical $\left\Vert\mathbf{u}^h\right\Vert$ [{\color{plotBlue}{---}}, solid {\color{plotBlue}{\textbf{blue}}}] and the analytical solution [---, solid \textbf{black}]. Figure \textbf{(b)} shows the relative error $\epsilon$ in velocity between the solution, given by equation \ref{eq:panelRelativeError}.}
      \label{fig:panelCylinderComparision}
 	\end{figure}
 
@@ -1244,10 +1244,9 @@ and the error in velocity is calculated using the same principle. Investigating 
 	\begin{figure}[!h]
 	\centering
 	\includegraphics[width=0.6\textwidth]{figures/lagrangian/lambOseen_errorEvolution_TRS_dt0p01.pdf}
-	\caption{Relative error growth of Lamb-Oseen vortex during the evolution from $t=0$ to $t=1$ using the parameters in table \ref{tab:lambOseenParams}. This figure depicts the error in vorticity: maximum relative error [ ---, solid black], and the error in $L^2-\mathrm{norm}$ [ - -, dashed black]; and error in velocity: maximum relative error [ {\color{plotBlue}{---}}, solid blue], and error in $L^2-\mathrm{norm}$ [ {\color{plotBlue}{- -}}, dashed blue].}
+	\caption{Relative error growth of Lamb-Oseen vortex during the evolution from $t=0$ to $t=1$ using the parameters in table \ref{tab:lambOseenParams}. This figure depicts the error in vorticity: maximum relative error [ ---, solid \textbf{black}], and the error in $L^2-\mathrm{norm}$ [ - -, dashed \textbf{black}]; and error in velocity: maximum relative error [ {\color{plotBlue}{---}}, solid {\color{plotBlue}{\textbf{blue}}}], and error in $L^2-\mathrm{norm}$ [ {\color{plotBlue}{- -}}, dashed {\color{plotBlue}{\textbf{blue}}}].}
 	\label{fig:lambOseen_convection_errorGrowth_compressed}
 	\end{figure}
-
 	
 \subsubsection{Comparison of diffusion schemes: WRS vs. TRS}
 \label{subsubsec:comp_wrs_trs}
@@ -1272,7 +1271,7 @@ The Wee's diffusion scheme WRS, however is constraint by equation \ref{eq:c2stab
           \label{fig:lambOseen_errorEvolution_WRSvsTRS_dt0p05}
   \end{subfigure}
   
-  \caption{Comparison of Tutty's scheme TRS, and Wee-Ghoniem scheme WRS for treating diffusion, depicting the evolution of maximum relative error in vorticity, equation \ref{eq:maxRelErrorDef} from $t=0$ to $t=1$. The figure \textbf{(a)} shows TRS performing diffusion at every step, $\Delta t_d=\Delta t_c = 0.01$ and WRS performing diffusion at every $7^{\mathrm{th}}$ step, $\Delta t_d = k_d\cdot\Delta t_c = 7\cdot0.01$; \textbf{(b)} shows TRS performing diffusion at every step, $\Delta t_d=\Delta t_c = 0.05$ and WRS performing diffusion at every step, $\Delta t_d = k_d\cdot\Delta t_c = 1\cdot0.05$.}
+  \caption{Comparison of Tutty's scheme TRS, and Wee-Ghoniem scheme WRS for treating diffusion, depicting the evolution of maximum relative error in vorticity, equation \ref{eq:maxRelErrorDef} from $t=0$ to $t=1$. The figure \textbf{(a)} shows TRS performing diffusion at every step, $\Delta t_d=\Delta t_c = 0.01$ and WRS performing diffusion at every $7^{\mathrm{th}}$ step, $\Delta t_d = k_d\cdot\Delta t_c = 7\times0.01$; \textbf{(b)} shows TRS performing diffusion at every step, $\Delta t_d=\Delta t_c = 0.05$ and WRS performing diffusion at every step, $\Delta t_d = k_d\cdot\Delta t_c = 1\times0.05$.}
   \label{fig:lambOseen_diffusionMethod_comparison}
  \end{figure}
 

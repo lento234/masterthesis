@@ -24,7 +24,7 @@ The Lamb-Oseen Vortex test case simulates the evolution of a laminar vortex core
 
 The unbounded nature of the problem helps us to neglect the influence of the solid boundary (i.e the wall). Therefore, this test case does not require the panel solver in the Lagrangian solver as we are only concerned with the coupling of the vortex blobs to the Eulerian solver. Thus, we can primarily focus of the vorticity field interpolation error discussed in section \ref{subsubsec:vfie}, and quantitatively present the importance of ensuring conservation of circulation. This is the primary purpose of employing the Lamb-Oseen Vortex test case.
 
-The secondary purpose is to quantify the influences of the discretization on the accuracy of the coupling. A parameter sensitivity analysis was therefore performed to determine their effects on the coupling error. The parameters that determine the spatial discretization of the vortex blobs is nominal particle spacing $h$, and the overlap ratio $Ov$ (see figure \ref{fig:blobOverlap}). The spatial discretization of the Eulerian solver is regarded as a control variable for this test case as its impact was concluded in section \ref{subsec:eulerianLambOseen}. The parameters that determine the temporal discretization of the hybrid method is the time step size of the Eulerian solver $\Delta t_E$ and the time step size of the Lagrangian solver $\Delta t_L$ which are depended according to equation \ref{eq:timeStepDependency} where $k_E$ is the number of Eulerian sub-steps.
+The secondary purpose is to quantify the influences of the discretization on the accuracy of the coupling. A parameter sensitivity analysis was therefore performed to determine their effects on the coupling error. The parameters that determine the spatial discretization of the vortex blobs is nominal particle spacing $h$, and the overlap ratio $\lambda$ (see figure \ref{fig:blobOverlap}). The spatial discretization of the Eulerian solver is regarded as a control variable for this test case as its impact was concluded in section \ref{subsec:eulerianLambOseen}. The parameters that determine the temporal discretization of the hybrid method is the time step size of the Eulerian solver $\Delta t_E$ and the time step size of the Lagrangian solver $\Delta t_L$ which are depended according to equation \ref{eq:timeStepDependency} where $k_E$ is the number of Eulerian sub-steps.
 
 The coupling error was quantified my determining the growth of maximum relative error in vorticity $\epsilon$ given by equation \ref{eq:maxRelErrorDef}, approach used in section \ref{subsec:lagrangianLambOseen} and section \ref{subsec:eulerianLambOseen}. 
 
@@ -42,10 +42,10 @@ The Lamb-Oseen Vortex problem is defined by the vorticity field, equation \ref{e
 		$\Gamma_c$\T               	& 1 &\si{m^2.s^{-1}} 				& Core strength\\
 		$\Omega$               		& $[-0.5,0.5]\times[-0.5,0.5]$ &\si{m}		& Eulerian domain bounds \\
 		$\nu$						& $0.001$ &\si{kg.s^{-1}.m^{-1}}& Kinematic viscosity\\
-		$ \tau$ 		    		& $100$ 	&\si{s}	& Initial time\\
-		$Ov$						& 1 & - & Overlap ratio\\
+		$ \tau$ 		    		& $100$ 	&\si{s}	& Lamb-Oseen time constant\\
+		$\lambda$						& 1 & - & Overlap ratio\\
 		$h$							& 0.01 & \si{m} & Nominal blob spacing\\
-		$\Gamma_{thres}$			& (\num{1e-14}, \num{1e-14}) & - & Population Control threshold\\
+		$(\Gamma_{loc},\Gamma_{glob})$			& (\num{1e-14}, \num{1e-14}) & - & Population Control threshold\\
 		$h_{grid}$ 					& \numrange{0.007}{0.016} & \si{m} & FE cell diameter span \\
 		$ N_{\mathrm{cells}}$ 		& $26448$ 	& -						& Number of mesh cells\\
 		$\Delta t_L$				& 0.001 & \si{s} & Lagrangian time step size\\
@@ -59,18 +59,18 @@ The Lamb-Oseen Vortex problem is defined by the vorticity field, equation \ref{e
 	\showthe\columnwidth
 	\centering
 	\includegraphics[width=0.5\linewidth]{./figures/hybrid/lambOseen/hlo_dd-crop.pdf}
-	\caption{The domain decomposition for the Lamb-Oseen vortex problem, $\Omega_E \subseteq \Omega_L$. The Eulerian domain bounds $\Omega_E = [-1,1]\times[-1,1]$ with Dirichlet boundary $\partial \Omega_{dirichlet}$ [{\color{plotRed}{---}}, solid red] (\emph{not to scale}).}
+	\caption{The domain decomposition for the Lamb-Oseen vortex problem, $\Omega_E \subseteq \Omega_L$. The Eulerian domain bounds $\Omega_E = [-0.5,0.5]\times[-0.5,0.5]$ with Dirichlet boundary $\partial \Omega_{dirichlet}$ [{\color{plotRed}{---}}, solid red] (\emph{not to scale}). The parameters of the discretization are tabulated in table \ref{tab:HLO_pt}.}
 	\label{fig:HLO_dc}
 	\end{figure}
 
 Figure \ref{fig:HLO_dc} shows the Hybrid domain configuration for the Lamb-Oseen Vortex problem with the Lagrangian domain $\Omega_L$ spanning the full fluid domain. The Eulerian domain $\Omega_E$ only resolves the center of the Lamb-Oseen core, $\Omega_E \subseteq \Omega_L$. The domain bounds $[-0.5,-0.5] \times [-0.5,-0.5]$ with a Dirichlet velocity boundary $\Sigma_d$ where the velocity boundary condition is applied as described in section 
-\ref{subsec:dbc}. The correction of the Lagrangian domain is performed in the interpolation domain $\Omega_{int}$ according to the procedures described in section \ref{sec:correction}.
+\ref{subsec:dbc}. The correction of the Lagrangian domain is performed in the interpolation domain $\Omega_{int}$ according to the procedures described in section \ref{sec:correction}. We that the interpolation domain $\Omega_{int}$ is offset from the Eulerian boundary $\Sigma_d$ by a distance $d_{bdry} = 2\cdot h$, where $h$ is the nominal blob spacing. Similar choice was made by Stock \cite{Stock2010a}, and ensures that the potential inaccuracies at the outer Eulerian boundary is ignored during the interpolation procedure.  
 
-The spatial discretization of the Eulerian domain $\Omega_E$ is regarded as the control variable. Therefore, the parameter sensitivity analysis is performed by varying the spatial discretization of the Lagrangian method. The Eulerian domain is discretized with an unstructured mesh formulation using GMSH (see section \ref{subsec:mgugmsh}) having $N_{cells} = 226448$ unstructured cells and grid size $h_{grid}$ spanning $0.007$ to $0.0016$. 
+The spatial discretization of the Eulerian domain $\Omega_E$ is regarded as the control variable. Therefore, the parameter sensitivity analysis is performed by varying the spatial discretization of the Lagrangian method. The Eulerian domain is discretized with an unstructured mesh formulation using GMSH (see section \ref{subsec:mgugmsh}) having $N_{cells} = 26448$ unstructured cells and grid size $h_{grid}$ ranging from $0.007$ to $0.0016$. 
 
-The Lamb-Oseen Vortex problem is defined according to the parameters tabulated in table \ref{tab:HLO_pt}. The core is located at $(0,0)$, where the Eulerian domain $\Omega_E$ is centered. The parameters are chosen such that vorticity $\omega$ and velocity $\mathbf{u}$ is non-zero at the boundary of the Eulerian domain $\Sigma_d$, figure \ref{fig:HLO_dc}. 
+The Lamb-Oseen Vortex problem is defined according to the parameters tabulated in table \ref{tab:HLO_pt}. The core is located at $(0,0)$, where the Eulerian domain $\Omega_E$ is centered. The parameters are chosen such that vorticity $\omega$ and velocity $\mathbf{u}$ is non-zero at the boundary of the Eulerian domain $\Sigma_d$, figure \ref{fig:HLO_dc}. The Lamb-Oseen time constant $\tau = 100$ is chosen to ensure such vorticity distribution.
 
-The evolution of the Lagrangian solver and the Eulerian solver is performed according to section \ref{sec:evolveLagrangian} and \ref{sec:evolveEulerian} respectively. The Lagrangian solver performs TRS for diffusion of the vortex blobs, see section \ref{subsubsec:srs}. The scheme requires vortex blob redistribution at every step, $f_{redis} = 1$. In conjunction with the redistribution, the population control is performed at every step, $f_{pc}=1$ with $\Gamma_{thre}$ in table \ref{tab:HLO_pt}. 
+The evolution of the Lagrangian solver and the Eulerian solver is performed according to section \ref{sec:evolveLagrangian} and \ref{sec:evolveEulerian} respectively. The Lagrangian solver performs TRS for diffusion of the vortex blobs, see section \ref{subsubsec:srs}. The scheme requires vortex blob redistribution at every step, $f_{redis} = 1$. In conjunction with the redistribution, the population control is performed at every step, $f_{pc}=1$ with $(\Gamma_{loc},\Gamma_{glob})$ in table \ref{tab:HLO_pt}. 
 
 
 \subsection{Results and Discussion}
@@ -79,7 +79,7 @@ The investigation of the Lamb-Oseen vortex problem is divided into three parts. 
 
 The third and final investigation is dedicated to the parameter sensitivity analysis, section \ref{subsubsec:psa}. Parameters that determine the spatial and temporal discretization of the scheme is investigated to verify the convergence of scheme.
 
-\subsection{Uncoupled vs. One-way Coupled vs. Fully Coupled}
+\subsubsection{Uncoupled vs. One-way Coupled vs. Fully Coupled}
 \label{subsec:UvOvF}
 To verify the implementation of the hybrid algorithm, we compared several stages of the hybrid coupling with the standard, fully Eulerian test case. The three types of the coupling are as given:
 
@@ -107,34 +107,31 @@ To verify the implementation of the hybrid algorithm, we compared several stages
      \label{fig:lambOseen_initialError}
 	\end{figure}
 		
-Figure \ref{fig:lambOseen_initialError} depicts the initial relative error in velocity and vorticity inside the Eulerian domain $\Omega_E$. The relative error in velocity is near machine epsilon $\epsilon \le \num{10e-8}$, but the error in vorticity is in the order \num{10e-5}. Similar observation was made in section \ref{subsec:eulerianLambOseen} and arises from the projection error when determining the vorticity from velocity. The error is dependent on the type of discretization and we have second-order velocity space and first-order vorticity space. 
+Figure \ref{fig:lambOseen_initialError} depicts the initial relative error in velocity and vorticity inside the Eulerian domain $\Omega_E$. The relative error in velocity is near machine epsilon $\epsilon \le \num{e-8}$, but the error in vorticity is in the order \num{e-5}. Similar observation was made in section \ref{subsec:eulerianLambOseen} and arises from the projection error of the Finite Element when determining the vorticity $\omega$ from velocity $\mathbf{u}$, described in section \ref{subsec:dtvf}. 
 
 	\begin{figure}[!t]
 	\centering
 	\includegraphics[width=0.6\linewidth]{./figures/hybrid/lambOseen/lambOseen_comparision_compressed.pdf}
-	\caption{Comparison of the evolution of the maximum relative error from $t=0$ to $t=1$. The figure compares standard case (\textbf{black}) vs. the one-way coupled case ({\color{plotBlue}{\textbf{blue}}}) vs. the fully coupled case ({\color{plotRed}{\textbf{red}}}). The plot depicts maximum relative error in velocity (dashed), and the maximum relative error in vorticity (solid).}
+	\caption{Comparison of the evolution of the maximum relative error in vorticity $\epsilon_{\omega}$ and maximum relative error in vorticity $\epsilon_{\mathbf{u}}$, equation \ref{eq:maxRelErrorDef}, from $t=0$ to $t=1$, using the parameters tabulated in table \ref{tab:HLO_pt}. The figure compares standard case (\textbf{black}) vs. the one-way coupled case ({\color{plotBlue}{\textbf{blue}}}) vs. the fully coupled case ({\color{plotRed}{\textbf{red}}}). The plot depicts maximum relative error in velocity (dashed), and the maximum relative error in vorticity (solid).}
 	\label{fig:lambOseen_comparison}
 	\end{figure}
 
-The simulation is evolved from $t=0$ to $t=1$ with $N_{t-steps} = 1000$ Lagrangian and Eulerian time steps using the time step parameters tabulated in table \ref{tab:HLO_pt}. Figure \ref{fig:lambOseen_comparison} shows the evolution of maximum relative error in vorticity $\omega$ and velocity $\mathbf{u}$ of the uncoupled, one-way coupled and the fully coupled cases in the Eulerian domain $\Omega_E$ w.r.t. the analytical solution, equation \ref{eq:lo_voeq}. The initial observation shows the error in velocity is two to three orders of magnitude less than the error in vorticity and occurs due to the projection error. The figure shows that the uncoupled scheme has the lowest error in vorticity and velocity. As the boundary condition is directly obtained from the analytical solution, the error only arises from FE discretization of the Eulerian method. As time progresses, the error in velocity converges around \num{10e-7} and the error in vorticity converges around \num{10e-4}.
+The simulation was evolved from $t=0$ to $t=1$ with $N_{t-steps} = 1000$ Lagrangian and Eulerian time steps (i.e $k_E = 1$) using the time step parameters tabulated in table \ref{tab:HLO_pt}. Figure \ref{fig:lambOseen_comparison} shows the evolution of maximum relative error in vorticity $\omega$ and velocity $\mathbf{u}$ of the uncoupled, one-way coupled and the fully coupled cases in the Eulerian domain $\Omega_E$ w.r.t. the analytical solution, equation \ref{eq:lo_voeq}. The initial observation shows the error in velocity is two to three orders of magnitude less than the error in vorticity and occurs due to the projection error. The figure shows that the uncoupled scheme has the lowest error in vorticity and velocity. As the boundary condition is directly obtained from the analytical solution, the error only arises from FE discretization of the Eulerian method. As time progresses, the error in velocity $\epsilon_{\mathbf{u}}$ converges around \num{e-7} and the error in vorticity $\epsilon_{\omega}$ converges around \num{e-4}.
 
-The one-way coupled case shows an increase in the velocity field inside the Eulerian domain $\Omega_E$. The increase in error is negligible at the initial stages of the coupling. This states that the discretization error of the analytical solution is well represented using the vortex blobs. At $t=1$, the error in velocity increases by two orders of magnitude from \num{10e-7} to \num{10e-5}. This implies that the error is due to the growth in error of the Lagrangian field. In chapter \ref{ch:lagrangian}, we observed there is an increase in the error due to the circulation processing techniques (population control, remeshing) and the time-marching of the vortex blobs.
+The one-way coupled case shows an increase in the error in velocity field inside the Eulerian domain $\Omega_E$. However, the difference is negligible in the initial stages of the simulation. This states that the discretization error of the analytical solution is also well represented by the vortex blobs. However by $t=1$, the error in velocity increases by two orders of magnitude from \num{e-7} to \num{e-5}. This implies that the error is due to the time integration error of the Lagrangian method. In section \ref{subsec:lagrangianLambOseen}, we observed similar trend and was caused by the growth in error due to time-marching of the vortex blobs.
 
-The fully coupled case demonstrates that there is further increase in the error in velocity. Moreover, we observe that the there is now an increase in error in vorticity as well. As we are transfer the discrete vorticity field from the Eulerian method to the Lagrangian method it causes an increase in error of the Lagrangian solution. The consequence of this is that now the velocity field resolved by the Lagrangian method has an addition error. The figure depicts this effect, showing an increase in error in velocity. After the first few iteration (around $t=0.2$), there is a measurable difference between the fully coupled and the one-way coupled case. 
-
-	
-	\begin{figure}[h]
+	\begin{figure}[!p]
      \centering
      \begin{subfigure}[t]{0.45\textwidth}
              \includegraphics[width=\linewidth]{./figures/hybrid/lambOseent2/lambOseen_uncoupled_vErrorFinal_compressed-crop.pdf}
-             \caption{Standard; velocity $\mathbf{u}$}
+             \caption{Uncoupled; velocity $\mathbf{u}$}
              \label{fig:lambOseen_uncoupled_vErrorFinal}
      \end{subfigure}%
      \qquad %add desired spacing between images, e. g. ~, \quad, \qquad etc.
        %(or a blank line to force the subfigure onto a new line)
      \begin{subfigure}[t]{0.45\textwidth}
              \includegraphics[width=\linewidth]{./figures/hybrid/lambOseent2/lambOseen_uncoupled_wErrorFinal_compressed-crop.pdf}
-             \caption{Standard; vorticity $\omega$}
+             \caption{Uncoupled; vorticity $\omega$}
              \label{fig:lambOseen_uncoupled_wErrorFinal}
      \end{subfigure}%       
        
@@ -162,15 +159,24 @@ The fully coupled case demonstrates that there is further increase in the error 
              \label{fig:lambOseen_fully_wErrorFinal}
      \end{subfigure}        
      
-     \caption{Initial relative error at $t=0$ inside the Eulerian domain. The figure depicts \textbf{(a)} the relative error in velocity $\mathbf{u}$ and \textbf{(b)} the relative error in vorticity $\omega$.}
+     \caption{Plot of the relative error in velocity (\textit{left}) and relative error in vorticity (\textit{right}) in the Eulerian domain $\Omega_E$ at $t=1$. The figure compares the error between \textbf{(a)},\textbf{(b)} the uncoupled, \textbf{(c)},\textbf{(d)} the one-way coupled and \textbf{(e)},\textbf{(f)} the fully coupled cases.}
      \label{fig:lambOseen_finalError}
-	\end{figure}	
+	\end{figure}
 
+The fully coupled case demonstrates that there is an additional increase in the error. Unlike the one-way coupled case, the increase in the error is observed from the initial stages. This implies that the increasing in error is solely due to the transfer of vorticity from the Eulerian method to the Lagrangian method. A transfer of the discrete vorticity field from the Eulerian method to the Lagrangian method causes an additional increase in error of the Lagrangian solution, deviating the Lagrangian solution further from the analytical solution. Furthermore, in section \ref{subsec:hy_iwtca}, we discussed that the Gaussian blurring of the vorticity field adds an additional error when re-initializing the vortex blobs inside the interpolation domain $\Omega_{int}$. The consequence of this is that at $t=1$, the error in vorticity $\epsilon_{\omega}$ increased from \num{e-4} to \num{e-3} and the error in velocity $\epsilon_{\mathbf{u}}$ increased from \num{e-5} to \num{e-4}.
+	
+Figure \ref{fig:lambOseen_finalError} shows the relative error in velocity and vorticity inside the Eulerian domain $\Omega_E$ at $t=1$, for the three types of coupling. We observe that the error increases as one moves from uncoupled to one-way coupled and one-way coupled to fully coupled. As one goes from uncoupled to one-way coupled, the increase in the error is observed at the boundaries. This implies that the error originates from error in the Dirichlet boundary conditions at the boundary $\Sigma_d$. Comparing the one-way coupled to fully coupled case, we see that the boundary generates additional error. Figure \ref{fig:lambOseen_fully_wErrorFinal} clearly shows this artificial vorticity generated from the boundary due to the mismatch in the solutions of the Eulerian and the Lagrangian method. 
 
-\subsubsection*{Conservation of circulation}
+The strength of the artificial vorticity at the boundary is proportional to the error in the coupling and to ensure an accurate coupling scheme, we have ensure this vorticity does not corrupt the solution. Therefore, to ensure this, we have to modify the discretization such that this vorticity is less the threshold of influence (i.e $<1\%$ of the maximum vorticity $\max\{\omega\}$).
+
+\subsubsection{Conservation of circulation}
 \label{subsubsec:coc}
 
-	\begin{figure}[h]
+The approach for ensuring conservation of circulation during the coupling was discussed in section \ref{subsubsec:cc}. To validate the importance of conservation of circulation, we ran two simulation with and without the conservation of circulation during the transfer of vorticity from the Eulerian method to the Lagrangian method. All the other parameters of the simulation were maintained according to table \ref{tab:HLO_pt}.
+
+Figure \ref{fig:lambOseen_conservation_contourf} compares the error in the Eulerian domain $\Omega_E$ at $t=1$ of the coupling approach without conservation circulation against the approach satisfying the conservation of circulation. We see that the scheme without conservation has significantly larger error in the domain than the with conservation. The maximum error is near the Dirichlet boundary $\Sigma_d$ and shows artificial vorticity emanating from the boundary due to this larger mismatch in the solutions, figure \ref{fig:lambOseen_fullyCoff_wErrorFinal}. However, when we ensure that circulation is conserved, figure \ref{fig:lambOseen_fullyCon_wErrorFinal}, the boundary produces significantly less error.
+
+	\begin{figure}[!p]
      \centering
      \begin{subfigure}[t]{0.45\textwidth}
              \includegraphics[width=\linewidth]{./figures/hybrid/lambOseent2/lambOseen_fully_vErrorFinal_compressed-crop.pdf}
@@ -179,52 +185,56 @@ The fully coupled case demonstrates that there is further increase in the error 
      \end{subfigure}%
      \qquad %add desired spacing between images, e. g. ~, \quad, \qquad etc.
        %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[t]{0.45\textwidth}
+             \includegraphics[width=\linewidth]{./figures/hybrid/lambOseent2/lambOseen_fully_wErrorFinal_compressed-crop.pdf}
+             \caption{Conservation \texttt{on}; vorticity $\omega$}
+             \label{fig:lambOseen_fullyCon_wErrorFinal}
+     \end{subfigure}%     
+            
      \begin{subfigure}[t]{0.45\textwidth}
              \includegraphics[width=\linewidth]{./figures/hybrid/lambOseent2/lambOseen_fullyCoff_vErrorFinal_compressed-crop.pdf}
              \caption{Conservation \texttt{off}; velocity $\mathbf{u}$}
              \label{fig:lambOseen_fullyCoff_vErrorFinal}
      \end{subfigure}
-     
-    \begin{subfigure}[t]{0.45\textwidth}
-             \includegraphics[width=\linewidth]{./figures/hybrid/lambOseent2/lambOseen_fully_wErrorFinal_compressed-crop.pdf}
-             \caption{Conservation \texttt{on}; vorticity $\omega$}
-             \label{fig:lambOseen_fullyCon_wErrorFinal}
-     \end{subfigure}%         
      \qquad     
      \begin{subfigure}[t]{0.45\textwidth}
              \includegraphics[width=\linewidth]{./figures/hybrid/lambOseent2/lambOseen_fullyCoff_wErrorFinal_compressed-crop.pdf}
              \caption{Conservation \texttt{off}; vorticity $\omega$}
              \label{fig:lambOseen_fullyCoff_wErrorFinal}
      \end{subfigure}  
-
-           
   
-     \caption{Initial relative error at $t=0$ inside the Eulerian domain. The figure depicts \textbf{(a)} the relative error in velocity $\mathbf{u}$ and \textbf{(b)} the relative error in vorticity $\omega$.}
+     \caption{Plot of the relative error in velocity (left) and the relative error in vorticity (right) in the Eulerian domain $\Omega_E$ at $t=1$. The figure compares the error between \textbf{(a)}\textbf{(b)} without conservation of circulation, and \textbf{(c)}\textbf{(d)} with the conservation of circulation.}
      \label{fig:lambOseen_conservation_contourf}
 	\end{figure}
+	
+	\begin{figure}[!p]
+	\centering
+	\includegraphics[width=0.6\linewidth]{./figures/hybrid/lambOseent2/lambOseen_comparision_conservation_compressed.pdf}
+	\caption{Plot of the maximum relative error in vorticity $\epsilon_{\omega}$ [ - -, dashed] and maximum relative error in vorticity $\epsilon_{\mathbf{u}}$ [ ---, solid], equation \ref{eq:maxRelErrorDef}, from $t=0$ to $t=1$, using the parameters tabulated in table \ref{tab:HLO_pt}. The figure compares the coupling scheme with conservation of circulation [{\color{plotRed}{\textbf{red}}}] vs. the coupling scheme without conservation of circulation [{\color{plotGreen}{\textbf{green}}}].}
+	\label{fig:lambOseen_comparision_conservation}
+	\end{figure}	
 
+Figure \ref{fig:lambOseen_comparision_conservation} shows the evolution of the maximum relative error from $t=0$ to $t=1$, comparing the results of with conservation and without conservation of circulation. Observing the difference in the error in velocity and the error in vorticity, we see that the scheme without conservation produces larger error at all times. At $t=1$, we observe that scheme without conservation has error in vorticity near \num{e-2}, whereas with conservation, the error is an order of magnitude lower at \num{e-3}. Similarly for velocity, for the scheme without conservation the error approaches \num{e-3}, whereas with conservation, the error only reaches \num{e-4}. 
 
-	\begin{figure}[h]
-     \centering
-     \begin{subfigure}[t]{0.45\textwidth}
-             \includegraphics[width=\linewidth]{./figures/hybrid/lambOseent2/lambOseen_comparision_conservation_compressed.pdf}
-             \caption{Relative Error in velocity and vorticity}
-             \label{fig:lambOseen_comparision_conservation}
-     \end{subfigure}%
-     \qquad %add desired spacing between images, e. g. ~, \quad, \qquad etc.
-       %(or a blank line to force the subfigure onto a new line)
-     \begin{subfigure}[t]{0.45\textwidth}
-             \includegraphics[width=\linewidth]{./figures/hybrid/lambOseent2/lambOseen_comparision_conservation_circulation_compressed.pdf}
-             \caption{Error in total circulation $\Gamma$}
-             \label{fig:lambOseen_comparision_conservation_circulation}
-     \end{subfigure}%       
-     \caption{Initial relative error at $t=0$ inside the Eulerian domain. The figure depicts \textbf{(a)} the relative error in velocity $\mathbf{u}$ and \textbf{(b)} the relative error in vorticity $\omega$.}
-     \label{fig:lambOseen_conservation_comparisions}
-	\end{figure}
+Figure \ref{fig:lambOseen_comparision_conservation_circulation} shows the change in total circulation from $t=0$ to $t=1$ for the non-conserved and conserved scheme. It is apparent that without the conservation of circulation, the error in total circulation significantly larger and approaches \num{e-3}. As the circulation is not conserved explicitly, the transfer of vorticity from the Eulerian method to the Lagrangian method introduces error in total circulation. By ensuring conservation of circulation, section \ref{subsubsec:cc}, we see that the error in total circulation is near \num{e-10}. It is to be noted that the linear increase in the error in total circulation is due to the population control of the vortex blobs, removing the circulation $\Gamma_{glob}$ at every evaluation, as described in section \ref{subsubsec:srs}.
 
+	\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.6\linewidth]{./figures/hybrid/lambOseent2/lambOseen_comparision_conservation_circulation_compressed.pdf}
+	\caption{Plot of the error in total circulation $\epsilon_{\Gamma}$ of the Lagrangian method from $t=0$ to $t=1$. The figure compares the scheme with conservation of circulation [ {\color{plotRed}{\textbf{---}}}, solid {\color{plotRed}{\textbf{red}}}], and the scheme without conservation of circulation [ {\color{plotGreen}{\textbf{---}}}, solid {\color{plotGreen}{\textbf{green}}}].}
+	\label{fig:lambOseen_comparision_conservation_circulation}
+	\end{figure}	
 
-\subsubsection{Parameter sensitiviy analysis}
+In summary, we have determined that to ensure minimum error during the transfer of Eulerian solution to the Lagrangian solution, we have to ensure that circulation is conserved.
+
+\subsubsection{Parameter sensitivity analysis}
 \label{subsubsec:psa}
+
+The parameter sensitivity analysis is the last stage of the Lamb-Oseen vortex investigation. The Lamb-Oseen vortex test case is ideal to determine the effects of temporal and spatial discretization on the accuracy of the coupling. 
+
+The third and final investigation is dedicated to the parameter sensitivity analysis, section \ref{subsubsec:psa}. Parameters that determine the spatial and temporal discretization of the scheme is investigated to verify the convergence of scheme.
+
+
 
 \subsection{Conclusion}
 
