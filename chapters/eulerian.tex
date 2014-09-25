@@ -469,7 +469,7 @@ To determine the convergence of space, the simulation was run for $h \approx 0.2
 To determine convergence in time, we ran the simulation with various time steps $\Delta t = \num{5e-3}$ to $\Delta t = \num{1e-4}$). As we performed the investigation, we saw that the error in primitive variable $\mathbf{u}$, converged at an order 1, figure \ref{fig:lambOseen_eulerianConvergence}. This is true to the theory, as we are employing a $1^{\mathrm{st}}$-order Forward Euler scheme for the time integration. Thus, we have verified with the analytical solution of the Lamb-Oseen vortex that our Eulerian method is implemented according to the theory, and perform in a robust manner.
 
 \subsection{Clercx-Bruneau dipole collison at $Re=625$}
-
+\label{subsec:eul_cbdc}
 The Eulerian method that we have developed here is to be used a wall-bounded Eulerian solver that can highly resolve the vorticity production of the boundary for the Hybrid method. Therefore it is vital that the vortex interaction with the no-slip boundary is handled properly.
 
 To determine the proper handling of the no-slip boundary, it is common practice to use a simple test of dipole colliding with the wall. In this test cases, one could observe how the no-slip boundary handles the incoming vortex and can be used to determine if the system is formulated appropriately.  Ould-salihi et al. \cite{Ould-Salihi2001a} used this case to validate their Hybrid method that couples vortex particles with finite-difference method. Cottet et al. \cite{Cottet2000b} used the collision to tool to validate the vortex method. Therefore, we decided to use the Clercx-Bruneau dipole collision is a test case from Clercx \& Bruneau \cite{Clercx2006a}, where they performed a numerical study of a normal collision of a dipole with a no-slip boundary. This experiment provide extensive benchmark results for various Reynolds numbers with a Chevyshev pseudo-spectral numerical method. 
@@ -488,7 +488,7 @@ Unlike other dipole test cases, Clercx \& Bruneau provide well-defined initial a
      ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
        %(or a blank line to force the subfigure onto a new line)
      \begin{subfigure}[t]{0.45\textwidth}
-             \includegraphics[width=\textwidth]{figures/eulerian/clercxBruneauDomainMesh-crop.pdf}
+             \includegraphics[width=\textwidth]{figures/eulerian/clercxBruneauDomainMesh-crop.png}
              \caption{Domain mesh}
              \label{fig:clercxBruneauDomainMesh}
      \end{subfigure}
@@ -545,7 +545,7 @@ Figure \ref{fig:vorticity_contour_comparison} compares the vorticity contours in
 		$W$			         		& $1$ 					&\si{m}		& Half width of the domain\\		
 		$\nu$						& $\num{1.6e-3}$ 		&\si{kg.s^{-1}.m^{-1}}& Kinematic viscosity\\
 		$ (x,y)_{1,2}$				& $(\pm0.1,0)$			& \si{m}    & Initial location of the dipole\\
-		$ \hat{\omega}_{1,2}$		& $\pm 299.5283853752226$ & -   	& Maximum vorticity of the monopole\\
+		$ \omega_e$		            & $\pm 299.5283853752226$ & -   	& Vorticity parameter of the monopole \cite{Renac2013}\\
 		$ (t_0,t_f)$ 		    	& $(0,2)$				& \si{s} 	& Initial and final scaled viscous time\\
 		$ \mathrm{CFL}$				& $0.95$ 				& -			& CFL number\\	        	        
 		$ \lVert\mathbf{u}\rVert_{\mathrm{max}}$	& $12$	& \si{m.s^{-1}}	& Maximum fluid velocity\\
@@ -642,7 +642,7 @@ Figure \ref{fig:dipole_Palinstrophy_comparison} compares the variation in palins
 Figure \ref{fig:VorticityAtBoundary} compares the vorticity along the boundary of the domain at $y=-1$ for $-0.6 \leqslant x \leqslant 0$. The solid lines represents the present data, and is compared with the dotted data obtained from the reference. The comparison is done for various time instances $t=0.4$, $t=0.6$ and $t=1.0$ and we can finally validate that the Eulerian method accurately represents vorticity generation from the wall.
 
 \subsection{Impulsively started cylinder at $Re=550$}
-
+\label{subsec:eul_isc}
 Finally, we investigated the problem of an impulsively started cylinder at $Re=550$. This validation test ensured that at the end of the simulation, we are able to determine correct forces acting on the body. 
 
 \subsubsection*{Problem Definition}
@@ -670,13 +670,13 @@ The domain was discretized with $N_{\mathrm{vert}}=48$, with the highest mesh re
      ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
        %(or a blank line to force the subfigure onto a new line)
      \begin{subfigure}[t]{0.45\textwidth}
-             \includegraphics[width=\textwidth]{figures/eulerian/ISC_mesh-crop.pdf}
+             \includegraphics[width=\textwidth]{figures/eulerian/ISC_mesh-crop.png}
              \caption{Full mesh}
              \label{fig:ISC_mesh}
      \end{subfigure}
 
      \begin{subfigure}[t]{0.3\textwidth}
-             \includegraphics[width=\textwidth]{figures/eulerian/ISC_mesh_surface-crop.pdf}
+             \includegraphics[width=\textwidth]{figures/eulerian/ISC_mesh_surface-crop.png}
              \caption{Mesh near the surface}
              \label{fig:ISC_mesh_surface}
      \end{subfigure}

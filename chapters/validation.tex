@@ -246,7 +246,7 @@ Figure \ref{fig:lambOseen_parameter_h} shows the impact of varying the nominal b
 	\begin{figure}[!h]
 	\centering
 	\includegraphics[width=0.6\linewidth]{./figures/hybrid/lambOseen/lambOseen_parameter_h_Trend.pdf}
-	\caption{Convergence of the error in coupling due to the nominal blob spacing $h$. The control variables are tabulated in table \ref{tab:HLO_pt}}.
+	\caption{Convergence of the error in coupling due to the nominal blob spacing $h$. The control variables are tabulated in table \ref{tab:HLO_pt}.}
 	\label{fig:lambOseen_parameter_h_Trend}
 	\end{figure}	
 
@@ -259,7 +259,7 @@ Figure \ref{fig:lambOseen_parameter_overlap} compares the evolution of the error
 	\label{fig:lambOseen_parameter_overlap}
 	\end{figure}	
 
-Figure \ref{fig:lambOseen_parameter_k} shows the varying the temporal discretization of the Lagrangian method and the Eulerian method w.r.t each other. The relation of the Eulerian time step size $\Delta t_E$ to the Lagrangian time step size $\Delta t_L$ is described in section \ref{}. Figure \ref{fig:lambOseen_parameter_k_dtL} shows the effect of modifying the Lagrangian time step size $\Delta t_L$ w.r.t to the Eulerian time step size $\Delta t_E=0.001$, with $\Delta t_L = k_E\cdot\Delta t_E$ for $\Delta t_E = 0.001$ and the number of Eulerian sub-steps $k_E = [1,2,5,10]$. Similarly, figure \ref{fig:lambOseen_parameter_k_dtE} shows the effect of modifying the Eulerian time step size $\Delta t_E$ w.r.t to the Lagrangian time step, with $\Delta t_E = \Delta t_L/k_E$ for $\Delta t_L=0.001$ and $k_E = [1,2,5]$. We see that the minimum error occurs when the time steps match, $\Delta t_L = \Delta t_E$. However if increase the number of Eulerian time steps from $k_E = 1 $ to $k_E=2$, there an substantial increase in the error in velocity. Whereas, increasing $k_E=2$ to $k_E=5$, only increases the error slightly. This observation states that the linear interpolation used for sub-stepping process, has potential for improvement. A possible solution might be to employ a higher-order interpolation method for determining the Eulerian Dirichlet boundary condition at the sub-steps.
+Figure \ref{fig:lambOseen_parameter_k} shows the varying the temporal discretization of the Lagrangian method and the Eulerian method w.r.t each other. The relation of the Eulerian time step size $\Delta t_E$ to the Lagrangian time step size $\Delta t_L$ is described in section \ref{subsec:mse}. Figure \ref{fig:lambOseen_parameter_k_dtL} shows the effect of modifying the Lagrangian time step size $\Delta t_L$ w.r.t to the Eulerian time step size $\Delta t_E=0.001$, with $\Delta t_L = k_E\cdot\Delta t_E$ for $\Delta t_E = 0.001$ and the number of Eulerian sub-steps $k_E = [1,2,5,10]$. Similarly, figure \ref{fig:lambOseen_parameter_k_dtE} shows the effect of modifying the Eulerian time step size $\Delta t_E$ w.r.t to the Lagrangian time step, with $\Delta t_E = \Delta t_L/k_E$ for $\Delta t_L=0.001$ and $k_E = [1,2,5]$. We see that the minimum error occurs when the time steps match, $\Delta t_L = \Delta t_E$. However if increase the number of Eulerian time steps from $k_E = 1 $ to $k_E=2$, there an substantial increase in the error in velocity. Whereas, increasing $k_E=2$ to $k_E=5$, only increases the error slightly. This observation states that the linear interpolation used for sub-stepping process, has potential for improvement. A possible solution might be to employ a higher-order interpolation method for determining the Eulerian Dirichlet boundary condition at the sub-steps.
 
 	\begin{figure}[!h]
      \centering
@@ -290,201 +290,550 @@ Figure \ref{fig:lambOseen_parameter_k} shows the varying the temporal discretiza
 
 \subsection{Conclusion}
 
+In section \ref{}, we observed that moving from uncoupled to one-way coupled case increase the error in velocity. When moving from one-way coupled to fully coupled, there is an increase in error in vorticity and an additional increase in error in velocity.
+
+In section \ref{}, we observed that conservation of circulation is vital in ensure an accurate coupling strategy. The transfer of vorticity from the Eulerian method to the Lagrangian method does not explicitly ensure conservation of circulation and introduces artificial vorticity from the Eulerian Dirichlet boundary $\Sigma_d$, figure .
+
+In section \ref{}, we investigated the impact of varying the spatial and temporal discretization on the accuracy of the coupling. We determined there is an increase in error, if the Lagrangian method is spatially under-resolved w.r.t to the Eulerian method. An overlap ration $\lambda=1$ was shown to have the minimum error during the coupling, as it ensures minimum Gaussian blurring. Varying the number of Eulerian sub-steps $k_E$, showed that the linear interpolation for the Dirichlet boundary condition requires improvement in future.
 
 
-\section{Clercx-Bruneau Dipole Collision}
+\section{Clercx-Bruneau Dipole Convection}
+
+In section ref{}, we determine the effects of transferring the Lagrangian solution to the Eulerian method, and transferring the Eulerian solution back to the Lagrangian method using an expanding vortex core (Lamb-Oseen vortex). However, an important aspect of domain decomposition method is the entry and the exist of a vortex core in the Eulerian domain $\Omega_E$. Tho investigate this aspect, we employed the Clercx-Bruneau dipole \cite{} convecting through a finite Eulerian domain. 
 
 \subsection{Problem Definition}
 
-\subsection{Results}
+The hybrid domain decomposition of the this investigation is depicted in figure \ref. The Eulerian domain $\Omega_E$ is finite with bounds $[-0.25,0.25]\times[-0.5,0.5]$ and is a subset of the Lagrangian domain $\Omega_L$, $\Omega_E \subseteq \Omega_L$. The Clercx-Bruneau dipole, equation \ref{fig:hcbconv_dd}, is initialized outside the Eulerian domain $\Omega_L\backslash\Omega_E$ at $(x_1,y_1) = (-1,0.1)$ and $(x_2,y_2)=(-1,-0.1)$, corresponding to the positive and negative core respectively. As the simulation progresses, the dipole convects along the $x$-axis, passing through the Eulerian domain.
+
+	\begin{figure}[!p]
+	\showthe\columnwidth
+	\centering
+	\includegraphics[trim=0cm 2.5cm 0cm 2.5cm, clip, width=\linewidth]{./figures/hybrid/cbConv/hcbconv_dd.pdf}
+	\caption{[\textit{Not to Scale}] The domain decomposition for the Clercx-Bruneau convection problem, $\Omega_E \subseteq \Omega_L$, with the positive pole at $p_{+}=(x_1,y_1) = (-1,0.1)$ and negative pole at $p_{-}=(x_2,y_2)=(-1,-0.1)$. The parameters of the simulation are tabulated in table \ref{tab:HcbConvection_pt}.}
+	\label{fig:hcbconv_dd}
+	\end{figure}
+	
+The Eulerian and the Lagrangian domain is discretized according to the parameters shown in table \ref{tab:HcbConvection_pt}. The focus of this simulation is entry and the exist of vorticity from the Eulerian domain and it's impact on the solution. The simulation was first ran for a Finite Element only method (FE), and a Vortex Particle Method (VPM) only simulation. The purpose of these simulation was to sever as a benchmark for the hybrid study. To ensure that FE only simulation was valid, the Eulerian domain $\Omega_E$ stretched up to the far-field of the dipole, where its vorticity and the induced velocity was zero. The Eulerian domain $\Omega_E$ of the FE only simulation spanned $[-3,3]\times[-2,2]$. For a valid comparison, theses simulation followed the parameters tabulated in table \ref{tab:HcbConvection_pt} as well.
+
+	\ctable[
+		caption = {Summary of the parameters for the Clercx-Bruneau dipole convection problem.},
+		label   = {tab:HcbConvection_pt},
+		pos = !p,]{lcll}{}{\FL
+		
+		Parameters 					& Value 	& Unit					& Description \ML
+		$\Omega_E$             		& $[-0.25,0.25]\times[-0.5,0.5]$ &\si{m}	& Eulerian domain bounds \\
+		$Re$						& 625 & - & Reynolds number\\
+		$U$							& 1 & \si{m.s^{-1}} & Characteristic velocity\\
+		$W$							& 1 & \si{m} & Characteristic Length\\
+		$\nu$						& \num{1.6e-3} & \si{kg.s^{-1}.m^{-1}} & Kinematic viscosity\\
+		$(x,y)_{1,2}$				& $(-1,\pm0.1)$ & \si{m} & Initial location of the monopoles\\
+		$\omega_e$					& 299.528385375226 & - & Characteristic vorticity of the monopole \cite{Renac2013}\\
+		$\lambda$					& 1 & - & Overlap ratio\\
+		$h$							& 0.005 & \si{m} & Nominal blob spacing\\
+		$h_{grid}$ 					& $\approx0.007$ & \si{m}	& FE cell diameter \\
+		$ N_{\mathrm{cells}}$ 		& $40000$ 	& -						& Number of mesh cells\\
+		$\Delta t_L$				& \num{2.5e-4} & \si{s} & Lagrangian time step size\\
+		$\Delta t_E$				& \num{2.5e-5} & \si{s} & Eulerian time step size\\		
+		$k_E$						& 10 & - & Eulerian sub-steps\\
+		$ N_{\mathrm{t-steps}}$ 	& 2800 & -			& Number of time integration steps\\
+		$t$							& 0 to 0.7 & - & Simulation time\\
+		$d_{bdry}$					& $2\cdot{h}$ & \si{m} & Interpolation boundary offset\LL}
+
+
+\subsection{Results and Discussion}
+
+	\begin{figure}[!b]
+	\showthe\columnwidth
+	\centering
+	\includegraphics[width=\linewidth]{./figures/hybrid/cbConv/hybrid_doubleMonopoleConvection_contourfPlots-crop_compressed.pdf}
+	\caption{Plot of the Clercx-Bruneau dipole at $t=[0,0.2,0.4,0.7]$ using parameters tabulated in table \ref{}. The figure compares the hybrid simulation (top halves) against the FE only simulation (bottom halves).}
+	\label{fig:hybrid_doubleMonopoleConvection_contourfPlots}
+	\end{figure}
+
+Figure \ref{fig:hybrid_doubleMonopoleConvection_contourfPlots} compares the state of the dipole of the FE simulation and the hybrid simulation at times $t=[0,0.2,0.4,0.6]$. The top half of each subplot belongs to the hybrid simulation, whereas the bottom half to the FE only simulation. It was determined that the peak vorticity of the dipole enters the Eulerian domain $\Omega_E$ at $t=0.26$ and exits at $t=0.45$. The figure shows that solution of both simulation matches up to the entry of the dipole, figure \ref{fig:hybrid_doubleMonopoleConvection_contourfPlots}a and figure Figure \ref{fig:hybrid_doubleMonopoleConvection_contourfPlots}b. However in figure \ref{fig:hybrid_doubleMonopoleConvection_contourfPlots}c, the solutions start to become different, and at $t=0.7$, figure \ref{fig:hybrid_doubleMonopoleConvection_contourfPlots}d, it is apparent that the dipole in the hybrid method is lagging w.r.t to the FE only simulation. This would imply that the passage of the vortex through the domain has a stalling influence on the vorticity evolution.
+
+To investigate further on this influence of the passage, we analyzed variation in maximum vorticity $\omega_{max}$. Figure \ref{fig:hybrid_dipoleConvection_hybridSubDomains_wMax} shows evolution of the maximum vorticity $\omega_{max}$ from $t=0$ to $t=0.7$ in the Eulerian domain $\Omega_E$ of the hybrid simulation, the Lagrangian domain $\Omega_L$ of the hybrid simulation, the FE only simulation, and the VPM only simulation. We observe there is a slight difference in the maximum vorticity for the FE only and the VPM only simulation and the difference increase as the time progresses. 
+
+	\begin{figure}[!h]
+     \centering
+     \begin{subfigure}[t]{0.48\textwidth}
+             \includegraphics[width=\linewidth]{./figures/hybrid/cbConv/hybrid_dipoleConvection_hybridSubDomains_wMax.pdf}
+             \caption{Discrep ???}
+             \label{fig:hybrid_dipoleConvection_hybridSubDomains_wMax}
+     \end{subfigure}     
+     ~ %\qquad
+     \begin{subfigure}[t]{0.48\textwidth}
+             \includegraphics[width=\linewidth]{./figures/hybrid/cbConv/hybrid_dipoleConvection_comparison_parameter_wMax.pdf}
+             \caption{Discrep ???}
+             \label{fig:hybrid_dipoleConvection_comparison_parameter_wMax}
+     \end{subfigure}        
+     
+     \caption{Desctipsd ???}
+     \label{fig:hybrid_dipoleConvection_comparison_wMax}
+	\end{figure}	
+	
+At $t=0.26$, the maximum vorticity in the Eulerian domain of the hybrid method starts to increase. This signifies the entering of the vortex core. Similarly, at $t=0.45$, the maximum vorticity starts to decrease, signifying the exiting of the vortex core. We see that there is a slight drop in the maximum vorticity w.r.t to the FE only, and the VPM only simulation, as the dipole enters the Eulerian domain. Similarly, as the dipole exits, there a slight peak in the solution of the Eulerian domain. A possible explanation to this phenomena might be error due to the artificial vorticity at the boundary. In section \ref{}, we observed that error in coupling introduces artificial vorticity at the boundary and the strength of this vorticity is proportional to the error in coupling. 
+	
+	\begin{figure}[!h]
+     \centering
+     \begin{subfigure}[t]{0.48\textwidth}
+             \includegraphics[width=\linewidth]{./figures/hybrid/cbConv/hybrid_doubleMonopoleConvection_entering2.pdf}
+             \caption{Discrep ???}
+             \label{fig:hybrid_doubleMonopoleConvection_entering2}
+     \end{subfigure}     
+     ~ %\qquad
+     \begin{subfigure}[t]{0.48\textwidth}
+             \includegraphics[width=\linewidth]{./figures/hybrid/cbConv/hybrid_doubleMonopoleConvection_exiting.pdf}
+             \caption{Discrep ???}
+             \label{fig:hybrid_doubleMonopoleConvection_exiting}
+     \end{subfigure}        
+     
+     \caption{Desctipsd ???}
+     \label{fig:hybrid_doubleMonopoleConvection_ent_exi}
+	\end{figure}
+
+Figure \ref{fig:hybrid_doubleMonopoleConvection_entering2} shows a vorticity contour plot of the Lagrangian method and the Eulerian method, at $t=0.28$ when the dipole has entered the Eulerian domain. We see that there is a mismatch in the vorticity at the boundary of the Eulerian domain. Similarly, there is a slight mismatch in the vorticity field when the dipole leaves the Eulerian domain, figure \ref{fig:hybrid_doubleMonopoleConvection_exiting}.
+
+A simulation with lower Lagrangian resolution was ran to verify this theory. Figure \ref{fig:hybrid_dipoleConvection_comparison_parameter_wMax} compares the evolution of maximum vorticity $\omega_{max}$ for nominal blob spacing $h=0.01$ and $h=0.005$. The less resolved simulation shows a larger drop in maximum vorticity during the entry of the dipole. However, at $t=0.45$, the exiting of the dipole has no effect on the maximum vorticity. 
+
+The evolution of the kinetic energy $E$ and the enstrophy $\Omega$ shows the same behavior, figure \ref{fig:hybrid_dipoleConvection_comparison_parameter_E} and  \ref{fig:hybrid_dipoleConvection_comparison_parameter_Omega}, respectively. It shows that during the entry there is larger change in the kinetic energy and the enstrophy of the flow. This means that the artificial vorticity causes increased diffusion of the flow. Therefore, with the reduced strength of the vortex core, the dipole should travel should have less energy and travel slower, which is observed in figure \ref{fig:hybrid_doubleMonopoleConvection_contourfPlots}. The effect is more sever for a lower resolved Lagrangian method, as seen for the simulation with $h=0.01$.
+
+	\begin{figure}[!t]
+     \centering
+     \begin{subfigure}[t]{0.48\textwidth}
+             \includegraphics[width=\linewidth]{./figures/hybrid/cbConv/hybrid_dipoleConvection_comparison_parameter_E.pdf}
+             \caption{Discrep ???}
+             \label{fig:hybrid_dipoleConvection_comparison_parameter_E}
+     \end{subfigure}     
+     ~
+     \begin{subfigure}[t]{0.48\textwidth}
+             \includegraphics[width=\linewidth]{./figures/hybrid/cbConv/hybrid_dipoleConvection_comparison_parameter_Omega.pdf}
+             \caption{Discrep ???}
+             \label{fig:hybrid_dipoleConvection_comparison_parameter_Omega}
+     \end{subfigure}        
+     
+     \caption{Desctipsd ???}
+     \label{fig:hybrid_dipoleConvection_comparison_parameter}
+	\end{figure}
 
 \subsection{Conclusion}
 
-%
-%\section{Clercx-Bruneau Dipole Collision}
-%
-%\subsection{Problem Definition}
-%
-%\subsection{Results}
-%
-%\subsection{Conclusion}
+In conclusion, we see that a high resolution discretization of the Lagrangian method inside the Eulerian domain $\Omega_L \cap \Omega_E$ is paramount for accurate transfer of information to and from the Eulerian method. For a lower resolved Lagrangian method in this region introduces artificial vorticity at the boundary of the Eulerian domain $\Sigma_d$, corrupting the solution of the coupling.
 
+\section{Clercx-Bruneau Dipole Collision}
+
+In this section, we study the Clercx-Bruneau dipole colliding with a solid wall. A Finite Element (FE) only investigate was performed in section . The purpose of the Clercx-Bruneau dipole collision investigate how the hybrid method deal with wall bounded problem. It was determined the FE only simulation able to accurately simulate the test cases, with the validation data provided by Clercx and Bruneau \cite{Clercx2006a}. Therefore, with help of the these data, we can verify the validate the wall-bounded problem.
+
+\subsection{Problem Definition}
+
+The description of the Clercx-Bruneau dipole collision problem was introduced in section \ref{subsec:eul_cbdc}. However now, the problem is simulated using the hybrid method. Figure ?? shows the step-up of the simulation, with Eulerian domain $\Omega_E$ resolving the near-wall region, and the Lagrangian domain resolving the complete fluid domain. The fluid domain is bounded by the no-slip wall $\Sigma_{wall}$ (shown in blue). The Eulerian domain $\Omega_E$ extends from the wall $\Sigma_{wall}$ to the boundary $\Sigma_{d}$, where Dirichlet velocity is prescribed. The parameters of the domain are tabulated in table \ref{tab:h_clercxBruneauParameters}.
+
+	\begin{figure}[!h]
+	\showthe\columnwidth
+	\centering
+	%\includegraphics[trim=0cm 2.5cm 0cm 2.5cm, clip, width=\linewidth]
+	\includegraphics[width=0.5\linewidth]{./figures/hybrid/cbColl/hcbdc_dd-crop.pdf}
+	\caption{[\textit{Not to Scale}] The domain decomposition for the Clercx-Bruneau dipole collision problem, with the positive pole at $p_{+}=(x_1,y_1) = (0.1,0)$ and negative pole at $p_{-}=(x_2,y_2)=(-0.1,0)$. The parameters of the simulation are tabulated in table \ref{tab:h_clercxBruneauParameters}.}
+	\label{fig:hcbdc_dd}
+	\end{figure}
+
+As we are dealing with the wall-bounded problem, we require the vortex panel method to enforce the boundary condition in the Lagrangian method. In section \ref{sec:dotd} we described the decomposition of the Lagrangian domain $\Omega_L$ to the vortex blob domain $\Omega_b$ and the vortex panel domain $\Omega_p$. This decomposition was applied to this problem, as shown in figure \ref{fig:hcbdc_dd}.
+
+	\ctable[
+		caption = {Summary of the parameters for the Clercx-Bruneau dipole collision.},
+		label   = {tab:h_clercxBruneauParameters},
+		pos = !t,]{lcll}{}{\FL
+		Parameters					& Value 				& Unit		& Description \ML
+		$\Omega$               		& $\left[-1,1\right]^2$ &\si{m}		& Eulerian domain bounds \\
+		$H$ & 0.2 & \si{m} & Eulerian domain width\\
+		$Re$  			       		& $625$ 				&-			& Reynolds number \\ 
+		$U$							& 1 & \si{m.s^{-1}} & Characteristic velocity\\
+		$W$							& 1 & \si{m} & Characteristic Length\\
+		$\nu$						& $\num{1.6e-3}$ 		&\si{kg.s^{-1}.m^{-1}}& Kinematic viscosity\\
+		$ (x,y)_{1,2}$				& $(\pm0.1,0)$			& \si{m}    & Initial location of the dipole\\
+		$\omega_e$					& 299.528385375226 & - & Characteristic vorticity of the monopole \cite{Renac2013}\\
+		$\lambda$					& 1 & - & Overlap ratio\\
+		$h$							& 0.003 & \si{m} & Nominal blob spacing\\
+		$N_{panels}$ & 400 & - & Number of panels\\
+		$h_{grid}$ 					& $0.005$ to $0.01$ & \si{m}	& FE cell diameter \\	
+		$ N_{\mathrm{cells}}$ 		& $58272$ 	& -						& Number of mesh cells\\	
+		$\Delta t_L$				& \num{2.5e-4} & \si{s} & Lagrangian time step size\\
+		$\Delta t_E$				& \num{2.5e-5} & \si{s} & Eulerian time step size\\		
+		$k_E$						& 10 & - & Eulerian sub-steps\\			
+		$ N_{\mathrm{t-steps}}$ 	& 4000 & -			& Number of time integration steps\\
+		$t$							& 0 to 1 & - & Simulation time\\
+		$d_{bdry}$					& $2\cdot{h}$ & \si{m} & Interpolation boundary offset\\
+		$d_{surf}$					& $3\cdot{h}$ & \si{m} & Interpolation offset at surface\LL}		
+
+The parameters of the simulation follows are similar to the ones used in the FE only investigation, section \ref{subsec:eul_cbdc}, and are tabulated in table \ref{tab:h_clercxBruneauParameters}. The dipole is initialized in the center of the domain, in the Lagrangian only domain $\Omega_L\backslash\Omega_E$ at $(x,y)_{1,2}$. The dipole travels along the negative $y$-axis, entering the Eulerian domain $\Omega$ and finally colliding with the no-slip wall $\Sigma_{wall}$.
+
+\subsection{Results and Discussion}
+
+Figure \ref{fig:hybrid_doubleMonolope_contourfComparison} shows the state of the dipole at $t=[0,0.2,0.4,0.6,0.8,1]$. The figure compares the hybrid simulation (left half) with the FE only simulation (right half) from section \ref{subsec:eul_cbd}. Onces the dipole enters the Eulerian domain, $t=0.4$, we observe that there is a slight difference in the solution. The results loose the symmetry and there exists artifact vorticity at the Dirichlet boundary $\Sigma_d$. This emanating vorticity ($<\pm10$ with $\max\{\omega\}=320$) slight corrupts the solution of the collision. !!! APPENDIX !!!
+
+Figure \ref{fig:hybrid_vorticity_contour_comparison} compares the vorticity contour at $t=1$ with the solution of Clercx and Bruneau. We see that he vorticity contours of hybrid has a slight difference with the solution of the FE only solution, figure \ref{fig:hybrid_dipole_contourLine_t1p0}. The shape of the contour lines near the wall is slightly different, and the location of the core is also shifted slightly.
+
+	\begin{figure}[!p]
+	\showthe\columnwidth
+	\centering
+	\includegraphics[width=\linewidth]{./figures/hybrid/cbColl/hybrid_doubleMonolope_contourfComparisonNew_compressed-crop.png}
+	\caption{Plot of the dipole at $t = [0, 0.2, 0.4, 0.6, 0.8, 1]$, comparing the hybrid simulation (left half) and FE only simulation (right half).}
+	\label{fig:hybrid_doubleMonolope_contourfComparison}
+	\end{figure}
+
+	\begin{figure}[!p]
+     \centering
+     \begin{subfigure}[t]{0.4\textwidth}
+             \includegraphics[width=\textwidth]{figures/eulerian/VorticityContourPlot-rotated270.pdf}
+             \caption{Literature}
+             \label{fig:hybrid_VorticityContourPlot}
+     \end{subfigure}%
+     ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+       %(or a blank line to force the subfigure onto a new line)
+     \begin{subfigure}[t]{0.5\textwidth}
+             \includegraphics[width=\textwidth]{./figures/hybrid/cbColl/hybrid_doubleMonolope_contourComparison_t1-crop.pdf}
+             \caption{Present study}
+             \label{fig:hybrid_dipole_contourLine_t1p0}
+     \end{subfigure}
+     \caption{Comparison of the vorticity contours at $t=1$. The figure compares the plot obtained by \textbf{(a)} literature, Clercx and Bruneau \cite{Clercx2006a}, and \textbf{(b)} the present study, the hybrid and FE only simulation.}
+     \label{fig:hybrid_vorticity_contour_comparison}
+	\end{figure}	
+
+	\begin{figure}[!p]
+     \centering
+     \begin{subfigure}[t]{0.49\textwidth}
+             \includegraphics[width=\textwidth]{./figures/hybrid/cbColl/hybrid_doubleMonopole_parameter_wMax.pdf}
+             \caption{Maximum vorticity $\max\{\omega\}$}
+             \label{fig:hybrid_dipole_maxVorticity_comparison}
+     \end{subfigure}%
+     ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+       %(or a blank line to force the subfigure onto a new line)
+     \begin{subfigure}[t]{0.49\textwidth}
+             \includegraphics[width=\textwidth]{./figures/hybrid/cbColl/hybrid_doubleMonopole_parameter_E.pdf}
+             \caption{Kinetic Energy $E(t)$}
+             \label{fig:hybrid_dipole_KineticEnergy_comparison}
+     \end{subfigure}
+     
+     \begin{subfigure}[b]{0.49\textwidth}
+             \includegraphics[width=\textwidth]{./figures/hybrid/cbColl/hybrid_doubleMonopole_parameter_Omega.pdf}
+             \caption{Enstrophy $\Omega(t)$}
+             \label{fig:hybrid_dipole_Enstrophy_comparison}
+	 \end{subfigure}
+     ~
+	 \begin{subfigure}[b]{0.48\textwidth}
+	 		\includegraphics[width=\textwidth]{./figures/hybrid/cbColl/hybrid_doubleMonopole_parameter_P.pdf}
+             \caption{Palinstrophy $P(t)$}
+			\label{fig:hybrid_dipole_Palinstrophy_comparison}
+	 \end{subfigure}     
+     
+     \caption{Comparison of the fluid parameters. Figure \textbf{(a)}, \textbf{(b)}, \textbf{(c)}, \textbf{(d)}compares the evolution of the fluid properties from $t=0$ to $t=1$.} %Figure \textbf{(d)} compares the vorticity generated at the bottom-left wall ($y=-1$, $-0.6\leqslant x \leqslant 0$) at $t=0.4$ [{\color{plotBlue}{---}}, solid blue], $t=0.6$ [{\color{plotRed}{---}}, solid red] and $t=1$ [{\color{plotGreen}{---}}, solid green].}
+     \label{fig:hybrid_dipole_comparison}
+	\end{figure}
+
+To investigate further on the cause of this difference, we studied the change in maximum vorticity $\omega_{max}$, kinetic energy $E$ and enstrophy $\Omega$, and palinstrophy $P$, figure \ref{fig:hybrid_dipole_Palinstrophy_comparison}. The variation in maximum vorticity, figure \ref{fig:hybrid_dipole_maxVorticity_comparison}, shows that first peak in hybrid is slightly lower than the FE only simulation, $t\approx 0.35$. However, the second peak in vorticity, at $t\approx0.65$ is higher than the standard simulation. Between $t=0.4$ and $t=0.6$, the dipole exits and renters the Eulerian domain, as seen in figure \ref{fig:hybrid_doubleMonolope_contourfComparison}. This has a detrimental effect on overall vorticity field solution. 
+
+Figure \ref{fig:hybrid_dipole_KineticEnergy_comparison} shows that, as the dipole leaves the Eulerian domain $\Omega_E$ from $t=0.4$, the kinetic energy $E$ reduces slower, and is higher than the FE only simulation for $t\leq0.4$. Therefore, the core that is leaving and re-entering the Eulerian domain $\Omega_E$ has a higher kinetic energy $E$. This could be cause of deviation seen at $t=1$, figure \ref{fig:hybrid_vorticity_contour_comparison}.
+
+Figure \ref{fig:hybrid_dipole_Enstrophy_comparison} shows the enstrophy $\Omega$ matches reasonable well with the FE only simulation and we see that there is a slight difference at the peaks. Similarly, figure \ref{fig:hybrid_dipole_Palinstrophy_comparison}, shows the variation in palinstrophy $P$. The solution stars to deviate from $t\approx0.5$, after the vortex core re-enters the domain.
+
+Figure \ref{fig:hybrid_doubleMonopole_vorticityAtBoundary} shows the vorticity at the boundary, along $y=-1$. We observe that for $t=0.4$ the solution matches, at $t=0.6$ the peak in vorticity is larger for the hybrid simulation, and for $t=1$, the peak has a larger span. The increased kinetic energy $E$ of the vortex could provide a possible explanation for this. With a higher kinetic energy, the wall has to generate more vorticity to enforce the no-through flow.
+
+	\begin{figure}[!t]
+	\showthe\columnwidth
+	\centering
+	\includegraphics[width=0.5\linewidth]{./figures/hybrid/cbColl/hybrid_doubleMonopole_vorticityAtBoundary.pdf}
+	\caption{Compares the vorticity generated at the bottom-left wall ($y=-1$, $-0.6\leqslant x \leqslant 0$) at $t=0.4$ [{\color{plotBlue}{---}}, solid blue], $t=0.6$ [{\color{plotRed}{---}}, solid red] and $t=1$ [{\color{plotGreen}{---}}, solid green].}
+	\label{fig:hybrid_doubleMonopole_vorticityAtBoundary}
+	\end{figure}
+
+To determine, the effects of parameters, we investigated that for higher resolved Lagrangian field with smaller nominal blob spacing $h$, larger number of panels $N_{panels}$ and smaller Lagrangian time step size $\Delta t_L$. However, the results of these simulation provided only a slight improvement w.r.t the present investigation. Therefore, we see that the primary source of the error in not the resolution of the Lagrangian solution, but entering and re-entering of the vorticity into the Eulerian domain.
+
+
+\subsection{Conclusion}
+
+In conclusion, we determined that the exists a slight difference in the geometry of the vorticity contours and the location of the dipole at the end of the simulation. The deviation of the dipole stars as the dipole enters the Eulerian domain. The entering and the re-entering process of the dipole introduces artificial vorticity from the Dirichlet boundary $\Sigma_d$, increasing the overall kinetic energy $E$ of the problem. This intern has an influence on the position of the dipole at $t=1$. Increasing the resolution of the Lagrangian solution only minimally increases the accuracy of the results meaning that the source of the coupling of the solution itself.  
+
+
+\section{Impulsively Started Cylinder at $Re=550$}
+
+In this section, we will study the flow around an impulsively started cylinder at $Re=550$. The purpose of the this test case is ensure we are able to correctly predict the forces acting on the body. In section \ref{subsec:eul_isc}, a FE only simulation was ran, and we where able to determine the performance the FE simulation w.r.t to the literature data provided by Koumoutsakos and Leonard \cite{Koumoutsakos1995a}, and the data provide by  RosenFeld et al. \cite{MosheRosenFeldDochanKwak1991}. These investigations will be used as the benchmark for the upcoming study.
+
+\subsection{Problem Definition}
+
+The description of the impulsively started test case was given in section \ref{subsec:eul_isc}. For the hybrid simulation, we performed similar investigated and the compared with the validation data. The parameters of the simulation are tabulated in table \ref{tab:h_ISCParameters}. 
+
+	\ctable[
+		caption = {Summary of the parameters of the hybrid simulation for the Impulsively started cylinder test case for $Re=550$.},
+		label   = {tab:h_ISCParameters},
+		pos = !p,]{lcll}{}{\FL
+		Parameters					& Value 				& Unit		& Description \ML
+		$Re$  			       		& $550$ 				&-			& Reynolds number \\ 
+		$\mathbf{u}_{\infty}$		& $[1,0]$ 				&\si{m.s^{-1}}& Free-stream velocity\\		
+		$R$			         		& $1$ 					&\si{m}		& Radius of cylinder\\		
+ 		$R_{ext}$ & 1.5 & \si{m} & Radius of Eulerian domain $\Omega_E$ \\
+		$\nu$						& $\num{3.6e-3}$ 		&\si{kg.s^{-1}.m^{-1}}& Kinematic viscosity\\
+		$\lambda$					& 1 & - & Overlap ratio\\
+		$h$							& 0.008 & \si{m} & Nominal blob spacing\\		
+		$h_{grid}$ 					& $0.008$ to $0.04$ & \si{m}	& FE cell diameter \\
+		$ N_{\mathrm{cells}}$ 		& $32138$ 	& -						& Number of mesh cells\\						
+		$N_{panels}$ & 100 & - & Number of panels\\
+		$\Delta t_L$				& 0.005 & \si{s} & Lagrangian time step size\\
+		$\Delta t_E$				& 0.001  & \si{s} & Eulerian time step size\\		
+		$k_E$						& 5 & - & Eulerian sub-steps\\			
+		$ N_{\mathrm{t-steps}}$ 	& 40000 & -			& Number of time integration steps\\
+		$t$							& 0 to 40 & - & Simulation time\\
+		$d_{bdry}$					& $0.1\cdot{R}$ & \si{m} & Interpolation offset from boundary $\Sigma_d$\\
+		$d_{surf}$					& $3\cdot{h}$ & \si{m} & Interpolation offset from boundary $\Sigma_{wall}$\LL}
+
+Figure \ref{fig:hisc_dd} shows the domain decomposition of the hybrid simulation. The Eulerian domain $\Omega_E$ is bounded by boundary $\partial\Omega_E$, where $\partial\Omega_E=\Sigma_d\cup\Sigma_{wall}$, where $\Sigma_d$ is the external Dirichlet boundary and $\Sigma_{wall}$ is the no-slip wall. The Lagrangian domain $\Omega_L$ resolves the full fluid domain. The interpolation region $\Omega_{int}$, where we correct the particle strengths is within the Eulerian domain $\Omega_E$, such that $\Omega_{int}\subset\Omega_E$. The interpolation region $\Omega_{int}$ is bounded by $\partial\Omega_{int}$ where $\partial\Omega_{int}=\Sigma_p\cup\Sigma_{int;ext}$. The vortex panel boundary $\Sigma_p$ has an offset $d_{surf}=3\cdot{h}$ from the wall $\Sigma_{wall}$. The offset is chosen according to stock, see section \ref{}. The exterior boundary $\Sigma_{int;ext}$ of the interpolation region $\Omega_{int}$ is defined with a larger offset $d_{bdry} = 0.1\cdot{R}$. We observed in the previous sections that the main error of the hybrid scheme is the artificial vorticity generated at the $\Sigma_d$ and to reduce this error, we chose the larger offset.
+
+	\begin{figure}[!h]
+	\showthe\columnwidth
+	\centering
+	%\includegraphics[trim=0cm 2.5cm 0cm 2.5cm, clip, width=\linewidth]
+	\includegraphics[width=0.6\linewidth]{./figures/hybrid/isc/hisc_dd-crop.pdf}
+	\caption{[\textit{Not to Scale}] The domain decomposition for the Impulsively started cylinder. The parameters of the domain are tabulated in table \ref{tab:h_ISCParameters}.}
+	\label{fig:hisc_dd}
+	\end{figure}
+
+The initial boundary conditions of the Eulerian Dirichlet boundary $\Sigma_d$, is the velocity field induced by the vortex panels. At time progress, the vorticity is generated from the Eulerian boundary $\Sigma_{wall}$, transferring to the vortex blobs inside the interpolation region $\Omega_{int}$. 
+
+Two investigation where performed with the impulsively started problem. The first study focused on the impact of parameters on the lift and drag acting on the cylinder. The parameters of interest during this parameter sensitivity analysis were the number of vortex panels $N_{panels}$, nominal blob spacing $h$, time step size of the Lagrangian method $\Delta t_L$.
+
+The second focus of the investigation was the long run performance of the forces acting of the cylinder. Artificial perturbation was induced as described in section \ref{subsec:eul_isc} to initiate vortex shedding at the initial stages of the simulation.
+
+\subsection{Results and Discussion}
+
+	\begin{figure}[!p]
+     \centering
+     \begin{subfigure}[t]{0.49\textwidth}
+             \includegraphics[width=\textwidth]{./figures/hybrid/isc/hisc_EulerianDomain_wall.pdf}
+             \caption{Wall region: Eulerian method}
+             \label{fig:hisc_EulerianDomain_wall}
+     \end{subfigure}%
+     ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+       %(or a blank line to force the subfigure onto a new line)
+     \begin{subfigure}[t]{0.49\textwidth}
+             \includegraphics[width=\textwidth]{./figures/hybrid/isc/hisc_LagrangianDomain_wall.pdf}
+             \caption{Wall region: Lagrangian method}
+             \label{fig:hisc_LagrangianDomain_wall}
+     \end{subfigure}
+     
+     \begin{subfigure}[t]{0.49\textwidth}
+             \includegraphics[width=\textwidth]{./figures/hybrid/isc/hisc_EulerianDomain_bdry.pdf}
+             \caption{Boundary region: Eulerian method}
+             \label{fig:hisc_EulerianDomain_bdry}
+     \end{subfigure}%
+     ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+       %(or a blank line to force the subfigure onto a new line)
+     \begin{subfigure}[t]{0.49\textwidth}
+             \includegraphics[width=\textwidth]{./figures/hybrid/isc/hisc_LagrangianDomain_bdry.pdf}
+             \caption{Boundary region: Lagrangian method}
+             \label{fig:hisc_LagrangianDomain_bdry}
+     \end{subfigure}     
+     \caption{Eulerian method and Lagrangian method resolutions}
+     \label{fig:hisc_EulerianVsLagrangian}
+	\end{figure}
+
+Figure \ref{fig:hybrid_cylinder_contourComparison_tStarting} shows the vorticity contour at the initial stages of the simulation, $t = [1,3,5,7]$. The plot compares the hybrid simulation (top half) with the FE only simulation (bottom half). The hybrid half of the plot also depicts the Eulerian domain $\Omega_E$, and is bounded to the cylinder, resolving the near-wall region of the problem.
+
+	\begin{figure}[!h]
+	\showthe\columnwidth
+	\centering
+	%\includegraphics[trim=0cm 2.5cm 0cm 2.5cm, clip, width=\linewidth]
+	\includegraphics[width=\linewidth]{./figures/hybrid/isc/hybrid_cylinder_contourComparison_tStarting-crop.pdf}
+	\caption{Comparison of the vorticity contours for \textbf{(a)} $t=1$, \textbf{(b)} $t=3$, \textbf{(c)} $t=5$ and \textbf{(d)} $t=7$ with contour levels [$-7,...,-3,-2,-1,0.5,-0.2,-0.1,0.1,0.2,0.5,1,2,3,...,7$]. The figures compares the hybrid simulation (top half) with FE only simulation (bottom half).}
+	\label{fig:hybrid_cylinder_contourComparison_tStarting}
+	\end{figure}
+
+We observe that the vorticity contours of the hybrid simulation matches with the FE only simulation. The figure is nearly symmetric expect the artificial vorticity emanating from the Dirichlet boundary $\Sigma_d$, convecting with the free-stream. This magnitude of this artificial vorticity is within $|\omega|\leqslant0.2$ where the maximum vorticity in the domain is $\max\{\Omega\}=32$. Therefore, the relative vorticity generated from the boundary with less than $1\%$ of the maximum vorticity in the fluid.
+
+	\begin{figure}[!p]
+	\showthe\columnwidth
+	\centering
+	\includegraphics[width=0.6\linewidth]{./figures/hybrid/isc/hybrid_ISC_drag.pdf}
+	\caption{ Evolution of the drag coefficient during the initial stages $t=0$ to $t=4$ with total drag coefficient $C_d$ (solid), pressure drag coefficient $C_{d_{pres}}$ (dashed) and friction drag coefficient $C_{d_{fric}}$ (dotted). The figure compares results of hybrid simulation ({\color{plotBlue}{\textbf{blue}}}), FE only simulation ({\color{plotRed}{\textbf{red}}}) and reference data (\textbf{black}) of Koumoutsakos and Leonard \cite{Koumoutsakos1995a}}
+	\label{fig:hybrid_ISC_drag}
+	\end{figure}
+
+The investigate the effect of this error, we determined the error in the evolution of the drag during the initial stages of the simulation. Figure \ref{fig:hybrid_ISC_drag} shows the evolution of the drag coefficient $C_d$, friction drag $C_{d_{fric}}$, and the pressure drag $C_{d_{pres}}$, comparing the hybrid simulation, FE only simulation and the reference data obtained from Koumoutsakos and Leonard \cite{Koumoutsakos1995a}. Observing the figure, we see that the hybrid simulation has a larger differences with the reference data. The error is due to the difference in the pressure drag $C_{d_{pres}}$. We see that the the hybrid simulation generally larger drag coefficient $C_d$. Furthermore, at the at $t<0.3$, we see that there is a slight difference in the initial drag trend.  
+
+To investigate further on the causes of this trends, we performed a parameter sensitivity analysis. Figure \ref{fig:hybrid_ISC_parameterSensitivity} shows the impact of varying the resolution of the Lagrangian method w.r.t to the Eulerian method on the accuracy of the drag coefficient calculated.
+
+Figure \ref{fig:hybrid_ISC_drag_kComparison} investigates the effect of changing the Lagrangian time step size $\Delta t_L$ on the drag coefficient. The Lagrangian time step was varied with setting the number of Eulerian sub-steps $k_E$ to $k_E=1$ and $k_E=5$. With fixed Eulerian time step size $\Delta t_E=0.001$, the Lagrangian time step sizes were $\Delta t_L = 0.001$ and $\Delta t_L=0.005$, respectively. The figure shows that reducing the Lagrangian time-step size has only a minimal improvement.
+
+Figure \ref{fig:hybrid_ISC_drag_nBlobComparison} shows the effect of varying the nominal blob spacing $h$ from $h=0.008$ to $h=0.005$. The figure shows that increasing the resolution of the blobs as significant improvement on the drag coefficient. Furthermore, the initial trend at $t<0.3$ matches more accurately with higher resolution. This investigation shows the to have an accurate result, we require a finer resolution of the Lagrangian field near the Eulerian domain $\Omega_E$.
+
+Figure \ref{fig:hybrid_ISC_drag_nPanelComparison} shows the effect of varying the number of vortex panels $N_{panels}$ from $N=100$ to $N=400$. The improvement with higher resolved vortex sheet is smaller that the improvement obtained by varying the blob resolution.
+
+	\begin{figure}[!p]
+     \centering
+     \begin{subfigure}[t]{0.49\textwidth}
+             \includegraphics[width=\textwidth]{./figures/hybrid/isc/hybrid_ISC_drag_kComparison.pdf}
+             \caption{Variation in Lagrangian time step size $\Delta t_L$: $k_E=1$ with $\Delta t_L = \Delta t_E$ and $k_E=5$ with $\Delta t_L = 5\cdot{\Delta t_E}$}
+             \label{fig:hybrid_ISC_drag_kComparison}
+     \end{subfigure}%
+     ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+       %(or a blank line to force the subfigure onto a new line)
+     \begin{subfigure}[t]{0.49\textwidth}
+             \includegraphics[width=\textwidth]{./figures/hybrid/isc/hybrid_ISC_drag_nBlobComparison.pdf}
+             \caption{Variation in nominal blob spacing $h$: $h=0.008$ and $h=0.005$}
+             \label{fig:hybrid_ISC_drag_nBlobComparison}
+     \end{subfigure}
+     
+     \begin{subfigure}[b]{0.49\textwidth}
+             \includegraphics[width=\textwidth]{./figures/hybrid/isc/hybrid_ISC_drag_nPanelComparison.pdf}
+             \caption{Variation in number of panels $N_{panels}$: $N=100$ and $N=400$}
+             \label{fig:hybrid_ISC_drag_nPanelComparison}
+	 \end{subfigure}
+    
+     \caption{Parameters sensitivity analysis on the drag evolution of the cylinder from $t=0$ to $t=4$, compared with literature data (\textbf{black}) obtained from Koumoutsakos and Leonard \cite{Koumoutsakos1995a}}
+     \label{fig:hybrid_ISC_parameterSensitivity}
+	\end{figure}
+
+The second focus of the impulsively started cylinder is the long run, $t=0$ to $t=40$, evolution of the drag and lift of the cylinder. We performed similar comparison as done in section ??. An artificial perturbation was induced according to Leocointe \& Piquet \cite{Lecointe1984}. Figure \ref{fig:hybrid_cylinder_LongRun_liftDrag} shows the evolution of the lift coefficient $C_l$, and the drag coefficient $C_d$ of hybrid simulation, FE only simulation, and the reference data from RosenFeld et al. \cite{MosheRosenFeldDochanKwak1991}. 
+
+	\begin{figure}[!p]
+	\showthe\columnwidth
+	\centering
+	\includegraphics[width=0.6\linewidth]{./figures/hybrid/isc/hybrid_cylinder_LongRun_liftDrag.pdf}
+	\caption{Evolution of the lift and drag coefficient from $t=0$ to $t=40$ with artificial perturbation \cite{Lecointe1984}. The figure compares hybrid ({\color{plotBlue}{\textbf{blue}}}), FE only ({\color{plotRed}{\textbf{red}}}), and the reference data (\textbf{black}) from RosenFeld et al. \cite{MosheRosenFeldDochanKwak1991}.}
+	\label{fig:hybrid_cylinder_LongRun_liftDrag}
+	\end{figure}
+
+Investigating the evolution of drag shows that the hybrid simulation has higher drag. After $t=5$, there is slight mismatch in the oscillation of the drag. However observing the amplitude fluctuation, we see that the simulation tend to fluctuate around $C_d=1.4$. Observing the evolution of lift shows that the hybrid simulation has a larger initial amplitude. Furthermore, there exist a negative phase shift in the amplitude. However, at time progress, $t>20$, we see that the frequency and the amplitude of the oscillation is similar to the reference data.
+
+Figure \ref{fig:hybrid_cylinder_LongRun_contourfComparison} compares the vorticity field of the hybrid simulation, and the FE only simulation at $t=[10,20,30,40]$. The shed vorticity of the hybrid simulation matches reasonably well with the FE only with a slight dif
+
+	\begin{figure}[!p]
+	\showthe\columnwidth
+	\centering
+	\includegraphics[width=\linewidth]{./figures/hybrid/isc/hybrid_cylinder_LongRun_contourfComparison_compressed-crop.png}
+	\caption{hybrid cylinder LongRun contourfComparison}
+	\label{fig:hybrid_cylinder_LongRun_contourfComparison}
+	\end{figure}
+
+	\begin{figure}[!p]
+     \centering
+     \begin{subfigure}[t]{0.49\textwidth}
+             \includegraphics[width=\textwidth]{./figures/hybrid/isc/hybrid_isc_firstDipole_hybrid_compressed-crop.png}
+             \caption{Hybrid}
+             \label{fig:hybrid_isc_firstDipole_hybrid_compressed-crop}
+     \end{subfigure}%
+     ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+       %(or a blank line to force the subfigure onto a new line)
+     \begin{subfigure}[t]{0.49\textwidth}
+             \includegraphics[width=\textwidth]{./figures/hybrid/isc/hybrid_isc_firstDipole_FE_compressed-crop.png}
+             \caption{FE only}
+             \label{fig:hybrid_isc_firstDipole_FE_compressed-crop}
+     \end{subfigure}
+     \caption{First dipole}
+     \label{fig:hybrid_isc_firstDipole}
+	\end{figure}
+
+A through investigation of the oscillation requires a longer simulation where the amplitude of the oscillation would become fixed. However, due to the lack of computational resources, a longer simulation than $t=40$ with the current simulation parameters was not feasible.
+	
+	
+	
+\subsection{Conclusion}	
+
+
+%In conclusion, we 
+\section{Stalled Elliptic airfoil at $Re=5000$}
+
+\subsection{Problem Definition}
+
+The stalled airfoil performed similar to the impulsively started cylinder.
+
+The parameters are tabulated below.
+
+	\begin{figure}[!h]
+	\showthe\columnwidth
+	\centering
+	%\includegraphics[trim=0cm 2.5cm 0cm 2.5cm, clip, width=\linewidth]
+	\includegraphics[width=0.6\linewidth]{./figures/hybrid/ellipse/hellipticAirfoil_dd-crop.pdf}
+	\caption{[\textit{Not to Scale}] }
+	\label{fig:hellipticAirfoil_dd-crop}
+	\end{figure}
+
+\subsection{Results and Discussion}
+
+	\begin{figure}[!p]
+	\showthe\columnwidth
+	\centering
+	\includegraphics[width=\linewidth]{./figures/hybrid/ellipse/hybrid_ellipse_HybridvsFE_contourDeviation_compressed-crop.png}
+	\caption{hybrid ellipse HybridvsFE contourDeviation}
+	\label{fig:hybrid_ellipse_HybridvsFE_contourDeviation}
+	\end{figure}
+
+	\begin{figure}[!p]
+	\showthe\columnwidth
+	\centering
+	\includegraphics[width=\linewidth]{./figures/hybrid/ellipse/hybrid_ellipse_Hybrid_contours_compressed-crop.png}
+	\caption{hybrid ellipse Hybrid contours}
+	\label{fig:hybrid_ellipse_Hybrid_contours}
+	\end{figure}
+
+	\begin{figure}[!p]
+     \centering
+     \begin{subfigure}[t]{0.49\textwidth}
+             \includegraphics[width=\textwidth]{./figures/hybrid/ellipse/hybrid_ellipseForce_CL.pdf}
+             \caption{Hybrid}
+             \label{fig:hybrid_ellipseForce_CL}
+     \end{subfigure}%
+     ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+       %(or a blank line to force the subfigure onto a new line)
+     \begin{subfigure}[t]{0.49\textwidth}
+             \includegraphics[width=\textwidth]{./figures/hybrid/ellipse/hybrid_ellipseForce_CD.pdf}
+             \caption{FE only}
+             \label{fig:hybrid_ellipseForce_CD}
+     \end{subfigure}
+     \caption{Forces}
+     \label{fig:hybrid_ellipseForce}
+	\end{figure}
+	
+	
+	
+	
+%\section{Clercx-Bruneau dipole convection at $Re=625$}
 %
-%	\begin{figure}[h]
-%     \centering
-%     \begin{subfigure}[t]{0.45\textwidth}
-%             \includegraphics[width=\linewidth]{./figures/hybrid/lambOseen_standard_vErrorInitial_compressed-crop.pdf}
-%             \caption{Velocity}
-%             \label{fig:lambOseen_standard_vErrorInitial}
-%     \end{subfigure}%
-%     \qquad %add desired spacing between images, e. g. ~, \quad, \qquad etc.
-%       %(or a blank line to force the subfigure onto a new line)
-%     \begin{subfigure}[t]{0.45\textwidth}
-%             \includegraphics[width=\linewidth]{./figures/hybrid/lambOseen_standard_wErrorInitial_compressed-crop.pdf}
-%             \caption{Final Error}
-%             \label{fig:lambOseen_standard_wErrorInitial}
-%     \end{subfigure}
-%     \caption{Initial Error of the Lamb-Oseen vortex}
-%     \label{fig:lambOseen_initialError}
-%	\end{figure}
+%	\subsection{Comparison of vorticity contours}
 %	
-	
-
-%	\begin{figure}[h]
-%     \centering
-%     \begin{subfigure}[t]{0.45\textwidth}
-%             \includegraphics[width=\linewidth]{./figures/hybrid/lambOseen_vErrorInitial_compressed-crop.pdf}
-%             \caption{Initial Error}
-%             \label{fig:lambOseen_vErrorInitial_compressed-crop}
-%     \end{subfigure}%
-%     ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
-%       %(or a blank line to force the subfigure onto a new line)
-%     \begin{subfigure}[t]{0.45\textwidth}
-%             \includegraphics[width=\linewidth]{./figures/hybrid/lambOseen_vErrorFinal_k1_compressed-crop.pdf}
-%             \caption{Final Error}
-%             \label{fig:lambOseen_vErrorFinal_k1_compressed}
-%     \end{subfigure}
-%     \caption{Growth in error, velocity max. relative error, dtl=dte, h=0.02, dte=0.001}
-%     \label{fig:lambOseen_vError}
-%	\end{figure}
+%	\subsection{Variation in maximum vorticity}
 %	
-%	\begin{figure}[h]
-%     \centering
-%     \begin{subfigure}[t]{0.45\textwidth}
-%             \includegraphics[width=\linewidth]{./figures/hybrid/lambOseen_wErrorInitial_compressed-crop.pdf}
-%             \caption{Initial Error}
-%             \label{fig:lambOseen_wErrorInitial_compressed}
-%     \end{subfigure}%
-%     ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
-%       %(or a blank line to force the subfigure onto a new line)
-%     \begin{subfigure}[t]{0.45\textwidth}
-%             \includegraphics[width=\linewidth]{./figures/hybrid/lambOseen_wErrorFinal_k1_compressed-crop.pdf}
-%             \caption{Final Error}
-%             \label{fig:lambOseen_wErrorFinal_k1_compressed}
-%     \end{subfigure}
-%     \caption{Growth in error, vorticity max. relative error, dtl=dte, h=0.02, dte=0.001}
-%     \label{fig:lambOseen_wError}
-%	\end{figure}	
-	
-\subsection{Variation in Lagrangian time step size}	
-	
-%	\begin{figure}[h]
-%		\centering
-%		\begin{subfigure}[t]{0.45\textwidth}
-%		      \includegraphics[width=\linewidth]{./figures/hybrid/lambOseen_vErrorFinal_k1_compressed-crop.pdf}
-%		      \caption{$k=1$}
-%		      \label{fig:lambOseen_vErrorFinal_k1}
-%		\end{subfigure}%
-%		~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
-%		%(or a blank line to force the subfigure onto a new line)
-%		\begin{subfigure}[t]{0.45\textwidth}
-%		      \includegraphics[width=\linewidth]{./figures/hybrid/lambOseen_vErrorFinal_k2_compressed-crop.pdf}
-%		      \caption{$k=2$}
-%		      \label{fig:lambOseen_vErrorFinal_k2}
-%		\end{subfigure}
-%		~
-%		\begin{subfigure}[t]{0.45\textwidth}
-%		      \includegraphics[width=\linewidth]{./figures/hybrid/lambOseen_vErrorFinal_k5_compressed-crop.pdf}
-%		      \caption{$k=5$}
-%		      \label{fig:lambOseen_vErrorFinal_k5}
-%		\end{subfigure}		
-%		~
-%		\begin{subfigure}[t]{0.45\textwidth}
-%		      \includegraphics[width=\linewidth]{./figures/hybrid/lambOseen_vErrorFinal_k10_compressed-crop.pdf}
-%		      \caption{$k=5$}
-%		      \label{fig:lambOseen_vErrorFinal_k10}
-%		\end{subfigure}			
-%		
-%		\caption{Variation in the Lagrangian k, velocity max. relative error, dtl=k*dte, h=0.02, dte=0.001}
-%		\label{fig:lambOseen_vError_k}
-%	\end{figure}
+%	\subsection{Variation in kinetic energy}
 %	
+%	\subsection{Variation in enstrophy}
+
+%\section{Clercx-Bruneau dipole collision at $Re=625$}
+%
+%	\subsection{Comparison of vorticity contours}
 %	
-%	\begin{figure}[h]
-%		\centering
-%		\begin{subfigure}[t]{0.45\textwidth}
-%		      \includegraphics[width=\linewidth]{./figures/hybrid/lambOseen_wErrorFinal_k1_compressed-crop.pdf}
-%		      \caption{$k=1$}
-%		      \label{fig:lambOseen_wErrorFinal_k1}
-%		\end{subfigure}%
-%		~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
-%		%(or a blank line to force the subfigure onto a new line)
-%		\begin{subfigure}[t]{0.45\textwidth}
-%		      \includegraphics[width=\linewidth]{./figures/hybrid/lambOseen_wErrorFinal_k2_compressed-crop.pdf}
-%		      \caption{$k=2$}
-%		      \label{fig:lambOseen_wErrorFinal_k2}
-%		\end{subfigure}
-%		~
-%		\begin{subfigure}[t]{0.45\textwidth}
-%		      \includegraphics[width=\linewidth]{./figures/hybrid/lambOseen_wErrorFinal_k5_compressed-crop.pdf}
-%		      \caption{$k=5$}
-%		      \label{fig:lambOseen_wErrorFinal_k5}
-%		\end{subfigure}		
-%		~
-%		\begin{subfigure}[t]{0.45\textwidth}
-%		      \includegraphics[width=\linewidth]{./figures/hybrid/lambOseen_wErrorFinal_k10_compressed-crop.pdf}
-%		      \caption{$k=5$}
-%		      \label{fig:lambOseen_wErrorFinal_k10}
-%		\end{subfigure}			
-%		
-%		\caption{Variation in the Lagrangian k, velocity max. relative error, dtl=k*dte, h=0.02, dte=0.001}
-%		\label{fig:lambOseen_wError_k}
-%	\end{figure}		
-	
-	
-%	\begin{figure}[h]
-%	\centering
-%	\includegraphics[width=0.5\linewidth]{./figures/hybrid/daeninck_CylinderVorticity.png}
-%	\caption{Result of hybrid coupling by Daeninck \cite{Daeninck2006}. The figure shows artificial vorticity at the boundary of the Eulerian domain.}
-%	\label{fig:daeninck_CylinderVorticity}
-%	\end{figure}
+%	\subsection{Variation in maximum vorticity}
+%	
+%	\subsection{Variation in kinetic energy}
+%	
+%	\subsection{Variation in Enstrophy}
+%	
+%	\subsection{Variation in Palinstrophy}
+
+%\section{Impulsively started cylinder problem at $Re=550$}
+%
+%	\subsection{Evolution of the wake}
+%	
+%	\subsection{Evolution of pressure and friction drag}
+%	
+%	\subsection{Evolution of lift}
 
 
-
-
-\section{Error in coupling: Verification with Lamb-Oseen vortex}
-
-	\subsection{Generation of artificial vorticity}
-
-
-\section{Clercx-Bruneau dipole convection at $Re=625$}
-
-	\subsection{Comparison of vorticity contours}
-	
-	\subsection{Variation in maximum vorticity}
-	
-	\subsection{Variation in kinetic energy}
-	
-	\subsection{Variation in enstrophy}
-
-\section{Clercx-Bruneau dipole collision at $Re=625$}
-
-	\subsection{Comparison of vorticity contours}
-	
-	\subsection{Variation in maximum vorticity}
-	
-	\subsection{Variation in kinetic energy}
-	
-	\subsection{Variation in Enstrophy}
-	
-	\subsection{Variation in Palinstrophy}
-
-\section{Impulsively started cylinder problem at $Re=550$}
-
-	\subsection{Evolution of the wake}
-	
-	\subsection{Evolution of pressure and friction drag}
-	
-	\subsection{Evolution of lift}
-
-\section{Moving body}
-
-	\subsection{Error due to pertubation lag}
-
-\section{Proof of concepts}
-
-	\subsection{Multiple cylinder case}
-	
-	\subsection{Stalled airfoil at $Re=5000$}
-
-\section{Summary}
+%\section{Moving body}
+%
+%	\subsection{Error due to pertubation lag}
+%
+%\section{Proof of concepts}
+%
+%	\subsection{Multiple cylinder case}
+%	
+%	\subsection{Stalled airfoil at $Re=5000$}
+%
+%\section{Summary}

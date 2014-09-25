@@ -28,6 +28,7 @@ Chapter \ref{ch:introduction} introduces the \printAcron{Hybrid Eulerian-Lagrang
 The coupling of the Eulerian and the Lagrangian solver is done at steps 1 and 3. In step 1, the Eulerian solution is transfered to the Lagrangian solver, whereas in step 3, we use the Lagrangian solution back to time-march the Eulerian solver. This chapter will be dedicated to elaborated the procedures of step 1 and step 3.
 
 \section{Decomposition of the domain}
+\label{sec:dotd}
 The hybrid solver decomposes the fluid domain into two subdomains: the near-body region, referred to as the Eulerian domain $\Omega_E$ where the Eulerian solution of the Eulerian solver is valid; and the wake region, referred to as the Lagrangian domain $\Omega_L$ where the Lagrangian solution of the Lagrangian solver is valid. Figure \ref{fig:hybrid_domains} shows this segregation of the fluid into this two regions. To ensure that the two solver are coupled, where steps 1 and 3 can be performed correctly, the Lagrangian domain $\Omega_L$ is overlap with the Eulerian domain $\Omega_E$ completely, such that $\Omega_E \subset \Omega_L$. 
 	\begin{figure}[h]
 	\centering
@@ -446,6 +447,7 @@ where $\mathbf{x}_{bdrt}$ are the nodal coordinates of the Eulerian dirichlet bo
 
 
 \subsection{Multi-step evolution}
+\label{subsec:mse}
 % Evolution, neglect the pressure b.c, and evolve the problem
 % sub
 
