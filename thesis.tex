@@ -79,6 +79,8 @@
 \usepackage{longtable}
 \usepackage{comment}
 %\usepackage{appendix}
+\usepackage{flipbook}
+\usepackage{ifthen}
 
 
 % Flowchart definition
@@ -167,6 +169,10 @@
 %
 \renewcommand{\bibname}{References}
 
+% Flip books
+
+
+
 \begin{document}%
 %============================= Front matter ========================================
 \frontmatter%
@@ -192,42 +198,44 @@
     %
 \mainmatter%
 
+	% ---------------------------------------------------------
+	% Input flipcard animation
+	\rfoot[]{\setlength{\unitlength}{1mm}
+	\begin{picture}(0,0)
+	\put(-10,-5){\includegraphics[scale=0.1]{./figures/style/flipbook/pic\thepage.png}}
+	\end{picture}}
+	% ---------------------------------------------------------
+
     % Example Chapter
-    %\include{help_chap_introduction}
-	%\include{chapters/projectPlan}
-    %\include{chap_literatureReview}
-    %\include{chap_developmentHybridVortex}
-    %\include{chapters/diffusion}
-   	%\include{chapters/validation}
-	%\include{chapters/application}
 	
     % Chapter 1: Introduction
-%    \include{chapters/introduction}%
+    \include{chapters/introduction}%
 
-    % Chapter 2 : Lagrangian Domain: Vortex Particle Method
-%  	\include{chapters/lagrangian}
+    % Chapter 2 : Lagrangian Subdomain: Vortex Particle Method
+	\include{chapters/lagrangian}
 
-	% Chapter 3: Eulerian Domain: Finite Element Method
-%	\include{chapters/eulerian}
+	% Chapter 3: Eulerian Subdomain: Finite Element Method
+	\include{chapters/eulerian}
 
     % Chapter 4: Hybrid Eulerian-Lagrangian Vortex Particle Method
-%   	\include{chapters/hybrid}
-   	
-%   	\include{chapter/phyflow}
+  	\include{chapters/hybrid}
 
-   	% Chapter 5: Validation of Hybrid Method
+	% Chapter 5:   	
+   	\include{chapters/phyflow}
+
+  	% Chapter 6: Verification and Validation of the Hybrid Method
 	\include{chapters/validation}   
 
-   	% Chapter 6: Conclusion and Recommendations
+   	% Chapter 7: Conclusion and Recommendations
    	\include{chapters/conclusion}
     
     % Bibliography
     \printbib{bibliography/library,bibliography/others}
     
     % and some appendices here
-	 %\addcontentsline{toc}{chapter}{Appendix}
-     \appendix  
-     \include{appendix/pHyFlow_codeStructure}%
+    %\addcontentsline{toc}{chapter}{Appendix}
+    \appendix  
+    \include{appendix/pHyFlow_codeStructure}%
     	
 %    \appendix  
 %    \addcontentsline{toc}{chapter}{Appendix}

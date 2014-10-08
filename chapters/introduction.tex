@@ -94,7 +94,7 @@ In order to answer the research questions, the goal of the project is to develop
 }
 The innovativeness of this project is that such hybrid modeling has not been yet applied for the wind energy problem case. Through the parallelization of the vortex particle method in a GPU and employing solver acceleration techniques such as the FMM, this simulation could give an edge in the understanding the flow behavior of a VAWT.
 
-\section{Introduction to Hybrid Eulerian-Lagrangian Vortex Particle Method}
+\section{Introduction to Hybrid Eulerian-Lagrangian Vortex \\Particle Method}
 
 The \printAcron{Hybrid Eulerian-Lagrangian Vortex Particle Method}{HELVPM} is a domain decomposition method, where the Eulerian method and the Lagrangian method solves different regions of the fluid. The domain decomposition method simply splits the domain of interest and uses appropriate method in each domain. The Eulerian formulation will be used at the near-wall region, where we need proper description of the vorticity generation at the boundary, and the Lagrangian formulation is used away from the body, where we only need to evolve the vorticity field. Figure \ref{fig:domainDecomposition} shows the decomposition of the domain in the gridded and the non-gridded region.
 
@@ -102,20 +102,20 @@ Several studies have already been done: Cottet and Koumoutsakos (2000a)\cite{Cot
 
 When evaluating the previous works, we see that not all domain decomposition methods are the same. The main difference between the methods is their coupling strategies. Most works employ the Schwartz alternating method to couple the vortex particle method and the grid solver. The Schwartz alternating method (or sometimes referred to as Schwartz iterative method), couples the vortex particle method and the grid solver by iteratively determining the boundary condition such that the stream functions in both domains, $\psi_L$ and $\psi_E$ in $\Omega_L$ and $\Omega_E$ respectively, match at the overlap region $\Omega_E-\Omega_L$, figure \ref{fig:domainDecomposition}. The summary of a single iteration of the Schwartz alternating method is as follows:
 	\begin{itemize}
-	\item Determine the Eulerian boundary condition, the stream function $\psi_{\Gamma_E}$ at the Eulerian boundary $\Gamma_E$, extracted from the Lagrangian stream function $\psi_L$in the Lagrangian domain $\Omega_L$.
-	\item Solve for the stream function $\psi_E$ in the Eulerian domain $\Omega_E$ with the new boundary condition $\Gamma_E$.
-	\item Determine the Lagrangian condition, the stream function $\psi_{\Gamma_L}$ at the Lagrangian boundary $\Gamma_L$, extracted from the Eulerian stream function $\psi_E$ in the Eulerian domain $\Omega_E$.
-	\item Solve the stream function $\psi_L$ in the Lagrangian domain with the boundary conditions $\psi_{\Gamma_L}$ at the Lagrangian boundary $\Gamma_L$.
+	\item Determine the Eulerian boundary condition, the stream function $\psi_{\Gamma_E}$ at the Eulerian boundary $\Gamma_E$, extracted from the Lagrangian stream function $\psi_L$in the Lagrangian subdomain $\Omega_L$.
+	\item Solve for the stream function $\psi_E$ in the Eulerian subdomain $\Omega_E$ with the new boundary condition $\Gamma_E$.
+	\item Determine the Lagrangian condition, the stream function $\psi_{\Gamma_L}$ at the Lagrangian boundary $\Gamma_L$, extracted from the Eulerian stream function $\psi_E$ in the Eulerian subdomain $\Omega_E$.
+	\item Solve the stream function $\psi_L$ in the Lagrangian subdomain with the boundary conditions $\psi_{\Gamma_L}$ at the Lagrangian boundary $\Gamma_L$.
 	\end{itemize}
 	
-This procedure is iterated until the stream functions of both domains converge \cite{Ould-Salihi2001a}. Once the stream function is determined in both the domains, the velocity field can be obtained. Using the velocity field, we can evolve the vorticity field in the Lagrangian domain.
+This procedure is iterated until the stream functions of both domains converge \cite{Ould-Salihi2001a}. Once the stream function is determined in both the domains, the velocity field can be obtained. Using the velocity field, we can evolve the vorticity field in the Lagrangian subdomain.
 
 As we realized now, the downside to this procedure is that we have to solve the stream function in both $\Omega_E$ and $\Omega_L$ iteratively, until we converge to a solution. This makes the computation very expensive, especially when we are dealing with large numbers of vortex particles. Therefore, for this project, we are using the coupling technique that is based on the research work of Daeninck (2006) \cite{Daeninck2006} and Stock (2010) \cite{Stock2010a}. However we had to perform a correction to their scheme to ensure the conservation of circulation is satisfied.
 
 	\begin{figure}[!t]
 		\centering
 		\includegraphics[width=0.6\linewidth]{figures/introduction/domainDecomposition_typical_type2.pdf}
-		\caption{Standard domain decomposition using Schwartz iteration for coupling the two methods. Eulerian domain $\Omega_E$ (near the body), and Lagrangian domain $\Omega_L$ (away from the body). Figure is based on Guermond (2000) \cite{Guermond2000a}}.
+		\caption{Standard domain decomposition using Schwartz iteration for coupling the two methods. Eulerian subdomain $\Omega_E$ (near the body), and Lagrangian subdomain $\Omega_L$ (away from the body). Figure is based on Guermond (2000) \cite{Guermond2000a}}.
 		\label{fig:domainDecomposition}
 	\end{figure}
 
@@ -123,51 +123,51 @@ As we realized now, the downside to this procedure is that we have to solve the 
 This approach will be referred to as the \indexAcron{Simple Coupling Strategy}{SCS}. It is simpler than the Schwartz iterative method, as no iteration is needed for the coupling procedure. The basic algorithm consists of solving the vortex method in the full fluid domain using a relatively coarse resolution on the near-wall region. Then we use the grid solver in the near-wall region to capture the detailed features of the boundary layer and transfer the vorticity field in this region to the vortex particles, figure \ref{fig:domainDecomposition_daenick}. Therefore, the grid solver essentially acts as the correction for the under-resolved regions of the Lagrangian method. The functionality of this strategy has been demonstrated by Daeninck and was found to be significantly faster than the Schwartz coupling strategy. The features of the simple coupling strategy can summarized as follows:
 
 	\begin{itemize}
-	\item Eulerian method is used to resolve the near-wall region, at the Eulerian domain $\Omega_E$, enabling it to capture important features of the boundary layer (such as flow separation) with great accuracy.
+	\item Eulerian method is used to resolve the near-wall region, at the Eulerian subdomain $\Omega_E$, enabling it to capture important features of the boundary layer (such as flow separation) with great accuracy.
 	
-	\item Lagrangian method is used to capture the wake, at the Lagrangian domain $\Omega_L$, and to efficiently evolve the wake.
+	\item Lagrangian method is used to capture the wake, at the Lagrangian subdomain $\Omega_L$, and to efficiently evolve the wake.
 	
-	\item The accurate solution of the Eulerian domain is transfered to the Lagrangian domain according to the coupling algorithm of Daeninck \cite{Daeninck2006} and Stock \cite{Stock2010a}. In addition to their algorithm, a correction in done on the transfer to ensure conservation of circulation.
+	\item The accurate solution of the Eulerian subdomain is transfered to the Lagrangian subdomain according to the coupling algorithm of Daeninck \cite{Daeninck2006} and Stock \cite{Stock2010a}. In addition to their algorithm, a correction in done on the transfer to ensure conservation of circulation.
 	
-	\item The boundary conditions for the Eulerian domain are retrieved from the Lagrangian domain.
+	\item The boundary conditions for the Eulerian subdomain are retrieved from the Lagrangian subdomain.
 	\end{itemize}
 
 	\begin{figure}[!t]
 		\centering
 		\includegraphics[width=0.6\linewidth]{figures/introduction/domainDecomposition_daenick_type2.pdf}
-		\caption{Modified domain decomposition \underline{without} Schwartz alternating method. Lagrangian domain extends up to the surface of the body. Figure is based on Daeninck (2006) \cite{Daeninck2006}.}
+		\caption{Modified domain decomposition \underline{without} Schwartz alternating method. Lagrangian subdomain extends up to the surface of the body. Figure is based on Daeninck (2006) \cite{Daeninck2006}.}
 		\label{fig:domainDecomposition_daenick}
 	\end{figure}
 
 The algorithm to the \printAcron{Simple Coupling Strategy}{SCS} follows from Daeninck's doctoral thesis, \cite{Daeninck2006}. Figure \ref{fig:flowchart_simpleCoupling} shows the overview to the algorithm and can be summarized as follows:
 
 	\begin{enumerate}
-	\item \textbf{Correct Lagrangian:} Use the solution of the Eulerian domain $\Omega_E$ (in the near-wall region) to correct the solution of the Lagrangian domain $\Omega_L$, that is overlapping the Eulerian domain, ensuring that the \textit{circulation is conserved}.  
+	\item \textbf{Correct Lagrangian:} Use the solution of the Eulerian subdomain $\Omega_E$ (in the near-wall region) to correct the solution of the Lagrangian subdomain $\Omega_L$, that is overlapping the Eulerian subdomain, ensuring that the \textit{circulation is conserved}.  
 	
 	\item \textbf{Evolve Lagrangian:} With the modified solution, evolve the Lagrangian solution from time step $t_n$ to next time step $t_{n+1}$.
 	
-	\item \textbf{Determine Eulerian boundary conditions:} Use the Lagrangian solution of time $t_{n+1}$ to determine the boundary conditions of the Eulerian domain at $t_{n+1}$.
+	\item \textbf{Determine Eulerian boundary conditions:} Use the Lagrangian solution of time $t_{n+1}$ to determine the boundary conditions of the Eulerian subdomain at $t_{n+1}$.
 	
 	\item \textbf{Evolve Eulerian:} With the boundary condition, evolve the Eulerian solution from $t_n$ to $t_{n+1}$.
 	\end{enumerate}
 	
-This is the basic approach for coupling the Eulerian method in the Eulerian domain $\Omega_E$ with the Lagrangian method in the Lagrangian domain $\Omega_L$ without the iterative Schwartz algorithm. 
+This is the basic approach for coupling the Eulerian method in the Eulerian subdomain $\Omega_E$ with the Lagrangian method in the Lagrangian subdomain $\Omega_L$ without the iterative Schwartz algorithm. 
 
-Furthermore, the SCS handles the Lagrangian boundary condition differently from the classic hybrid method. Typically during the evolution process of the Lagrangian domain, the shedding of the vorticity is also defined in the Lagrangian method. However, in our coupling strategy, the Lagrangian method is under-resolved at the boundary and cannot be used to resolve the vorticity flux at the body. Instead, we use the Eulerian method to resolve the boundary, and the Eulerian method acts as the vorticity generator for the Lagrangian method. However, there are some assumptions that we must satisfy, for this coupling strategy to be valid:
+Furthermore, the SCS handles the Lagrangian boundary condition differently from the classic hybrid method. Typically during the evolution process of the Lagrangian subdomain, the shedding of the vorticity is also defined in the Lagrangian method. However, in our coupling strategy, the Lagrangian method is under-resolved at the boundary and cannot be used to resolve the vorticity flux at the body. Instead, we use the Eulerian method to resolve the boundary, and the Eulerian method acts as the vorticity generator for the Lagrangian method. However, there are some assumptions that we must satisfy, for this coupling strategy to be valid:
 
 	\begin{itemize}
 	\item At $t_n$ before the evolution of both method to $t_{n+1}$, the Lagrangian solution matches Eulerian solution at the boundary of the near-wall region.
 	\item After the evolution to $t_{n+1}$, the deviation of the Lagrangian solution (due to lack of vorticity flux at Lagrangian boundary), should be minimal.
-	\item Even though the Lagrangian domain is under-resolved in the near-wall region, it should be able to provide accurate boundary conditions for the Eulerian external boundary.
+	\item Even though the Lagrangian subdomain is under-resolved in the near-wall region, it should be able to provide accurate boundary conditions for the Eulerian external boundary.
 	\end{itemize}
 	
 	\begin{figure}[!t]
 		\centering
 		\begin{tikzpicture}
 			[node distance=.8cm, start chain=going below,]
-			\node[punktchain, join] (correct) {Correct the Lagrangian domain};
+			\node[punktchain, join] (correct) {Correct the \\Lagrangian subdomain};
 		    \node[punktchain, join] (evolveL) {Evolve the Lagrangian solution};
-		    \node[punktchain, join] (bcE)     {Determine the Eulerian boundary conditions};
+		    \node[punktchain, join] (bcE)     {Determine the \\Eulerian boundary conditions};
 		    \node[punktchain, join] (evolveE) {Evolve the Eulerian solution};
 		\end{tikzpicture}
 		\caption{Flowchart of the simple coupling strategy. The flowchart shows the procedure to evolve both methods from $t_n$ to $t_{n+1}$.}
@@ -175,46 +175,63 @@ Furthermore, the SCS handles the Lagrangian boundary condition differently from 
 	\end{figure}
 
 \section{Verification and Validation Test Cases}
-
+\label{sec:vavtc}
 In order to assess the accuracy of this hybrid formulation, the following test cases haven been used:
 
 	\begin{description}
 	\item[Lamb-Oseen vortex] \cite{Lamb1993} \cite{Tryggeson2007} \hfill\\
 	Lamb-Oseen vortex test case is an analytical solution derived from the NS equation, and is a test case for unbounded flow (without any wall). This is the first model that will be used to validate the Lagrangian method and Eulerian method separately. As it describes an unbounded flow, we do not need to concern with the vorticity generation problem. This helps us focus on just the evolution of the vorticity field.
 	\item[Clercx-Bruneau dipole] \cite{Clercx2006a}\hfill\\
-	The Clercx-Bruneau dipole test case is the simple case of a colliding dipole with a wall. This test case will be used to verify and validate the coupling of the Eulerian and the Lagrangian method in the presence of a solid wall. This test cases focuses on the interaction of vorticity with the wall making it ideal to verify and validate the proper generation of vorticity and its transfer to the Lagrangian domain.
+	The Clercx-Bruneau dipole test case is the simple case of a colliding dipole with a wall. This test case will be used to verify and validate the coupling of the Eulerian and the Lagrangian method in the presence of a solid wall. This test cases focuses on the interaction of vorticity with the wall making it ideal to verify and validate the proper generation of vorticity and its transfer to the Lagrangian subdomain.
 	\item[Impulsively started cylinder] \cite{Koumoutsakos1995a} \cite{Chang1991} \cite{Braza1986} \cite{Lecointe1984}\hfill\\
-	The impulsively started cylinder test case is used to analyse the forces acting on the cylinder. This test case is used to verify and validate the lift and drag evolution of the cylinder exposed to free-stream flow.
+	The impulsively started cylinder test case is used to analyze the forces acting on the cylinder. This test case is used to verify and validate the lift and drag evolution of the cylinder exposed to free-stream flow.
 	\item[Elliptic Airfoil] \cite{Nair1997a}\hfill\\
 	The elliptic airfoil test case focuses on the flow separation past a lifting body. The elliptic airfoil is pitched at high angle of attack and the flow past the airfoil is comparatively unsteady and undergoes phenomena such as laminar separation bubble, flow separation and karman vortex shedding from the trailing edge of the airfoil. This helps us ensure the coupling strategy is accurate for complex flow phenomena.
 	\end{description}
 
 %\todo{add picture here}
-\section{Methodology}
-The initial steps of the development of the hybrid vortex method is as follows:
-
-	\begin{enumerate}
-	\item Develop the vortex particle method
-	\item Validate the vortex particle method against a Lamb-Oseen convection test case.
-	\item Develop the vortex panel method to deal with the boundaries for the vortex particle calculation. 
-	\item Validate the vortex panel method by solving a potential flow around a cylinder.
-	\item Develop the grid solver that is based on the Finite Element method. 
-	\item Validate the grid solver against test cases: impulsively starting cylinder, dipole-Wall interaction.
-	\end{enumerate}
-
-Once all the components have been validated, the methods will be coupled and validated against similar test cases.
-
-	\begin{enumerate}
-	\setcounter{enumi}{6}
-	\item Couple vortex particle, vortex panel and grid solver together.
-	\item Validate the hybrid method with test cases provide from literature.
-%	\item Introduce more complicated phenomenons: multiple geometry (i.e multiple grid meshes) and moving boundaries, if it feasible in the constraints of a master thesis.
-	\end{enumerate}
-
-%If the coupled solver has been validated with the test cases, the final step will be to simulated the flow around a VAWT and investigating the performance vs. numerical and experimental data.
+%\section{Methodology}
+%The initial steps of the development of the hybrid vortex method is as follows:
+%
+%	\begin{enumerate}
+%	\item Develop the vortex particle method
+%	\item Validate the vortex particle method against a Lamb-Oseen convection test case.
+%	\item Develop the vortex panel method to deal with the boundaries for the vortex particle calculation. 
+%	\item Validate the vortex panel method by solving a potential flow around a cylinder.
+%	\item Develop the grid solver that is based on the Finite Element method. 
+%	\item Validate the grid solver against test cases: impulsively starting cylinder, dipole-Wall interaction.
+%	\end{enumerate}
+%
+%Once all the components have been validated, the methods will be coupled and validated against similar test cases.
+%
+%	\begin{enumerate}
+%	\setcounter{enumi}{6}
+%	\item Couple vortex particle, vortex panel and grid solver together.
+%	\item Validate the hybrid method with test cases provide from literature.
+%%	\item Introduce more complicated phenomenons: multiple geometry (i.e multiple grid meshes) and moving boundaries, if it feasible in the constraints of a master thesis.
+%	\end{enumerate}
+%
+%%If the coupled solver has been validated with the test cases, the final step will be to simulated the flow around a VAWT and investigating the performance vs. numerical and experimental data.
 
 \section{Thesis Outline}
 
+\begin{description}
+\item[Ch. 2 \qquad Lagrangian Subdomain: Vortex Particle Method]\hfill\\
+The chapter introduces the vortex particle method used to solve the Lagrangian subdomain of the hybrid method. The chapters introduces the concept of vortex blobs for discretizing the vorticity in the fluid and vortex panels for discretizing the wall-bounded vorticity. The chapter concludes with a verification and validation of the described Lagrangian method with the help of the Lamb-Oseen vortex test case.
+
+\item[Ch. 3 \qquad Eulerian Subdomain: Finite Element Method]\hfill\\
+The chapter introduces the finite element method used to solve the Eulerian subdomain of the hybrid method. We investigate the methodology for solving the incompressible Navier-Stokes equations using the finite element approach. The chapter concludes with a verification and validation of the described Eulerian method with the help of Lamb-Oseen vortex test case, impulsively started cylinder test case at $Re=550$ of Koumoutsakos and Leonard \cite{Koumoutsakos1995a}, and the Clercx-Bruneau dipole collision of Clercx and Bruneau \cite{Clercx2006a}.
+
+\item[Ch. 4 \qquad Hybrid Eulerian-Lagrangian Vortex Particle Method]\hfill\\
+The chapter introduces the hybrid Eulerian-Lagrangian vortex particle method. We investigate the methodology for coupling the Eulerian subdomain and the Lagrangian subdomain. This chapter highlights the modification we implemented to the coupling strategy used by Daeninck \cite{Daeninck2006} and Stock \cite{Stock2010a}.
+
+\item[Ch. 5 \qquad Introduction to the Hybrid Solver: pHyFlow]\hfill\\
+The chapter introduces \texttt{pHyFlow}, the python based hybrid solver. The chapter gives an overview of the program structure and the class hierarchy.
+
+\item[Ch. 6 \qquad Verification and Validation of the Hybrid Method]\hfill\\
+The chapter focuses on the verification and the validation of the hybrid method. We use the test cases described in section \ref{sec:vavtc}, to achieve this.
+
+\end{description}
 
 %\todo{To be done at the end}
 

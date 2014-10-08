@@ -92,7 +92,7 @@ The main structure of the \texttt{Blobs} class. This class contains all the func
 \subsection*{Attributes:}
 \begingroup
 \footnotesize
-\begin{longtable}{|l|p{12cm}|}
+\begin{longtable}{|l|p{9cm}|}
 	\hline
 	\textbf{Attributes} & \textbf{Description}\\
 	\toprule
@@ -187,7 +187,7 @@ The main structure of the \texttt{Blobs} class. This class contains all the func
 	\begin{tabular}{p{3.5cm}p{9cm}p{1cm}}
 				\multicolumn{2}{l}{\textit{Free stream velocity}} & \textit{Default}\\ \hline
 				\texttt{vInf} &: The free-stream velocity function, returning the velocity action on the vortex blobs. & -\\		
-				&		\begin{tabular}{lp{10cm}}
+				&		\begin{tabular}{lp{2cm}}
 							\textbf{Input parameters} &: \texttt{t}\\ 
 							\textbf{Assigns} &: \texttt{-}\\ 			
 							\textbf{Returns} &: \texttt{vx,vy}\\ 					
@@ -246,7 +246,7 @@ The main structure of the panel method class \texttt{Panels}. This class contain
 \subsection*{Attributes:}
 \begingroup
 \footnotesize
-\begin{longtable}{|l|p{12cm}|}
+\begin{longtable}{|l|p{11cm}|}
 	\hline
 	\textbf{Attributes} & \textbf{Description}\\
 	\toprule
@@ -394,7 +394,7 @@ The main structure of the \texttt{Blobs} + \texttt{Panels} (LagrangianSolver) cl
 		\multirow{2}{*}{\textit{Parameters}} & \texttt{vortexBlobs} &: \{\texttt{vortexBlobs}\} class. \\ \cline{2-3}
 		& \texttt{panels} &: \texttt{panels} class. \\ \cline{2-3}
 	\end{tabular}
-	\paragraph{Description:} Initialize the \texttt{vortexMethod} class using \textbf{vortexBlob}+\textbf{panelMethod} classes.
+	\paragraph{Description:} Initialize the \texttt{vortexMethod} class using \textbf{vortexBlob}+\textbf{panelMethod} \\ classes.
 	\paragraph{Input parameters:}
 	\begin{list}{\quad}{}
 	\item \texttt{Blobs}: vortex particle class
@@ -460,7 +460,7 @@ The main structure for the Navier-stokes class \texttt{EulerianSolver}. This cla
 \subsection*{Attributes:}
 \begingroup
 \footnotesize
-\begin{longtable}{|l|p{12cm}|}
+\begin{longtable}{|l|p{11cm}|}
 	\hline
 	\textbf{Attributes} & \textbf{Description}\\
 	\toprule
@@ -586,7 +586,7 @@ The main structure for the hybrid class \texttt{HybridSolver}. This class contai
 \subsection*{Attributes:}
 \begingroup
 \footnotesize
-\begin{longtable}{|l|p{12cm}|}
+\begin{longtable}{|l|p{10cm}|}
 	\hline
 	\textbf{Attributes} & \textbf{Description}\\
 	\toprule
@@ -620,8 +620,8 @@ The main structure for the hybrid class \texttt{HybridSolver}. This class contai
 	\paragraph{Input parameters:}
 	\begin{list}{\quad}{}
 	\item \texttt{LagrangianSolver}: The vortex method containing \texttt{Blobs} and \textbf{Panels} classes which can already handle the multi-body problem.
-	\item \texttt{EulerianSolver}: The Navier-Stokes grid solver class (if multiple: list of \texttt{EulerianSolver} classes). The number of navier-stokes class has to be same as the number of vortex panels.
-	\item \textbf{Interpolation Region}: the Navier-Stokes class (if multiple: list of \texttt{EulerianSolver} classes). Should be equal to number of Navier-Stokes classes. The interpolation region should be defined as list of $x,y$ coordinates of the polygon of the interpolation region.
+	\item \texttt{EulerianSolver}: The Navier-Stokes grid solver class (if multiple: list of \\ \texttt{EulerianSolver} classes). The number of navier-stokes class has to be same as the number of vortex panels.
+	\item \textbf{Interpolation Region}: the Navier-Stokes class (if multiple: list of \\ \texttt{EulerianSolver} classes). Should be equal to number of Navier-Stokes classes. The interpolation region should be defined as list of $x,y$ coordinates of the polygon of the interpolation region.
 	\item \textbf{Motion function}: the function describing the motion of all the geometries in the hybrid class.
 	\end{list}
 	

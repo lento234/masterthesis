@@ -14,7 +14,7 @@ This chapter focuses on the verification and the validation of the hybrid method
 
 The implementation of the hybrid method was verified using the analytical solutions of the Lamb-Oseen vortex problem. The analytical solution of the problem enabled us to quantify the error in the scheme.
 
-The validation of the hybrid solver was performed using the test cases provided from literature. The Clercx-Bruneau dipole collision problem of Clercx and Bruneau \cite{Clercx2006a}, provide a detailed analysis on the evolution of the vorticity field and the generation of vorticity from the boundary. The impulsively started cylinder problem investigated by Koumoutsakos and Leonard \cite{Koumoutsakos1995a}, and RosenFeld et al. \cite{MosheRosenFeldDochanKwak1991} showed the evolution of the forces acting on an immersed cylinder in a free-stream flow.
+The validation of the hybrid solver was performed using the test cases provided from literature. The Clercx-Bruneau dipole collision problem of Clercx and Bruneau \cite{Clercx2006a}, provide a detailed analysis on the evolution of the vorticity field and the generation of vorticity from the boundary. The impulsively started cylinder problem investigated by Koumoutsakos and Leonard \cite{Koumoutsakos1995a}, and Rosenfeld et al. \cite{MosheRosenFeldDochanKwak1991} showed the evolution of the forces acting on an immersed cylinder in a free-stream flow.
 
 With a proper verification and validation of the hybrid solver, we were able to perform simulation of more complex problems. We were able to perform simulation of a stalled flow past a thin airfoil using an elliptical airfoil at $Re=5000$. Furthermore, a simulation of two cylinder in tandem showed the feasibility of simulation a multi-body problem. Both these simulations served as a proof of concept for a simulation of a full VAWT in future research.
 
@@ -36,10 +36,9 @@ The Lamb-Oseen Vortex problem is defined by the vorticity field and the velocity
 Figure \ref{fig:HLO_dc} shows the hybrid domain configuration for the Lamb-Oseen vortex problem with the Lagrangian domain $\Omega_L$ spanning the full fluid domain. The Eulerian domain $\Omega_E$ only resolves the center of the Lamb-Oseen core, $\Omega_E \subseteq \Omega_L$, bounding $[-0.5,-0.5] \times [-0.5,-0.5]$. The boundary of the Eulerian domain $\partial \Omega_E$ is a Dirichlet velocity boundary $\partial \Omega_E = [\Sigma_d]$ where the velocity boundary condition is applied, as described in section \ref{subsec:dbc}. The correction of the Lagrangian domain is performed in the interpolation domain $\Omega_{int}$ according to the procedures described in section \ref{sec:correction}.The boundary of the interpolation domain $\Sigma_{int}$ is defined with an offset $d_{bdry}$ from the Eulerian boundary $\Sigma_d$ by a distance $d_{bdry} = 2\cdot h$, where $h$ is the nominal blob spacing. Similar choice was made by Stock \cite{Stock2010a}, and ensures that the potential inaccuracies at the outer Eulerian boundary is ignored during the interpolation procedure.  
 
 	\begin{figure}[!t]
-	\showthe\columnwidth
 	\centering
 	\includegraphics[width=0.5\linewidth]{./figures/hybrid/lambOseen/hlo_dd-crop.pdf}
-	\caption{(\emph{Not to scale}) The domain decomposition for the Lamb-Oseen vortex problem, $\Omega_E \subseteq \Omega_L$. The Eulerian domain is defined as $\Omega_E = [-0.5,0.5]\times[-0.5,0.5]$ with Dirichlet boundary $\partial \Omega_{dirichlet}$ [{\color{plotRed}{---}}, solid red]. The parameters of the discretization are tabulated in table \ref{tab:HLO_pt}.}
+	\caption{(\textit{Not to scale}) The domain decomposition for the Lamb-Oseen vortex problem, $\Omega_E \subseteq \Omega_L$. The Eulerian domain is defined as $\Omega_E = [-0.5,0.5]\times[-0.5,0.5]$ with Dirichlet boundary $\partial \Omega_{dirichlet}$ [{\color{plotRed}{---}}, solid red]. The parameters of the discretization are tabulated in table \ref{tab:HLO_pt}.}
 	\label{fig:HLO_dc}
 	\end{figure}
 
@@ -307,7 +306,6 @@ In section \ref{sec:vvhm-love}, we determine the effects of transferring the Lag
 The hybrid domain decomposition of this investigation is depicted in figure \ref{fig:hcbconv_dd}. The Eulerian domain $\Omega_E$ is finite with bounds $[-0.25,0.25]\times[-0.5,0.5]$. The Clercx-Bruneau dipole, defined by equation \ref{fig:hcbconv_dd}, is initialized outside the Eulerian domain $\Omega_L\backslash\Omega_E$ at $(x_1,y_1) = (-1,0.1)$ and $(x_2,y_2)=(-1,-0.1)$, corresponding to the positive and negative cores, respectively. As the simulation progresses, the dipole convects along the $x$-axis, passing through the Eulerian domain.
 
 	\begin{figure}[!h]
-	\showthe\columnwidth
 	\centering
 	\includegraphics[trim=0cm 2.5cm 0cm 2.5cm, clip, width=\linewidth]{./figures/hybrid/cbConv/hcbconv_dd.pdf}
 	\caption{(\textit{Not to Scale}) The domain decomposition for the Clercx-Bruneau convection problem, with the positive pole located at $p_{+}=(x_1,y_1) = (-1,0.1)$ and negative pole located at $p_{-}=(x_2,y_2)=(-1,-0.1)$. The parameters of the simulation are tabulated in table \ref{tab:HcbConvection_pt}.}
@@ -353,7 +351,6 @@ At $t=0.26$, the maximum vorticity in the Eulerian sub-domain starts to increase
 %A possible explanation to this phenomena might be error due to the artificial vorticity at the boundary. In section \ref{}, we observed that error in coupling introduces artificial vorticity at the boundary and the strength of this vorticity is proportional to the error in coupling. 
 	
 	\begin{figure}[!b]
-	\showthe\columnwidth
 	\centering
 	\includegraphics[width=\linewidth]{./figures/hybrid/cbConv/hybrid_doubleMonopoleConvection_contourfPlots-crop.png}
 	\caption{Plot of the Clercx-Bruneau dipole at $t=[0,0.2,0.4,0.7]$ using parameters tabulated in table \ref{tab:HcbConvection_pt}. The figure compares the hybrid simulation (top halves) against the FE only simulation (bottom halves).}
@@ -435,7 +432,6 @@ In this section, we study the Clercx-Bruneau dipole colliding with a solid wall.
 A detailed description of the Clercx-Bruneau dipole collision problem is given in section \ref{subsec:eul_cbdc}. Figure \ref{fig:hcbdc_dd} shows the step-up of the hybrid simulation, with the Eulerian sub-domain $\Omega_E$ resolving the near-wall region, and the Lagrangian sub-domain domain resolving the complete fluid domain. The fluid domain is bounded by the no-slip wall $\Sigma_{wall}$ (shown in blue). The Eulerian domain $\Omega_E$ extends from the wall $\Sigma_{wall}$ to the boundary $\Sigma_{d}$, where the velocity boundary condition from the Lagrangian method is prescribed. The parameters of the simulation are tabulated in table \ref{tab:h_clercxBruneauParameters}.
 
 	\begin{figure}[!p]
-	\showthe\columnwidth
 	\centering
 	%\includegraphics[trim=0cm 2.5cm 0cm 2.5cm, clip, width=\linewidth]
 	\includegraphics[width=0.6\linewidth]{./figures/hybrid/cbColl/hcbdc_dd-crop.pdf}
@@ -480,7 +476,6 @@ Figure \ref{fig:hybrid_doubleMonolope_contourfComparison} shows the state of the
 Figure \ref{fig:hybrid_vorticity_contour_comparison} compares the vorticity contour at $t=1$ against the FE only simulation. We see there is a slight difference in the vorticity contour lines of hybrid solution, figure \ref{fig:hybrid_dipole_contourLine_t1p0}. The shape of the contour lines near the wall is slightly different, and furthermore, the location of the core is also shifted slightly.
 
 	\begin{figure}[!p]
-	\showthe\columnwidth
 	\centering
 	\includegraphics[width=\linewidth]{./figures/hybrid/cbColl/hybrid_doubleMonolope_contourfComparisonNew_compressed-crop.png}
 	\caption{Plot of the dipole at $t = [0, 0.2, 0.4, 0.6, 0.8, 1]$, comparing the hybrid simulation (left half) and FE only simulation (right half).}
@@ -545,7 +540,6 @@ Figure \ref{fig:hybrid_dipole_Enstrophy_comparison} shows that the enstrophy $\O
 Figure \ref{fig:hybrid_doubleMonopole_vorticityAtBoundary} shows the vorticity at the boundary, along $y=-1$. We observe that for $t=0.4$ the solution matches, at $t=0.6$ the peak in vorticity is larger for the hybrid simulation, and for $t=1$, the peak has a larger span. The increased kinetic energy $E$ of the vortex could provide a possible explanation for this. With a higher kinetic energy, the wall generates stronger vorticity to repel the dipole.
 
 	\begin{figure}[!t]
-	\showthe\columnwidth
 	\centering
 	\includegraphics[width=0.5\linewidth]{./figures/hybrid/cbColl/hybrid_doubleMonopole_vorticityAtBoundary.pdf}
 	\caption{Compares the vorticity generated at the bottom-left wall ($y=-1$, $-0.6\leqslant x \leqslant 0$) at $t=0.4$ [{\color{plotBlue}{---}}, solid blue], $t=0.6$ [{\color{plotRed}{---}}, solid red] and $t=1$ [{\color{plotGreen}{---}}, solid green].}
@@ -560,24 +554,32 @@ We investigated further with a higher resolved Lagrangian method, with a smaller
 
 In conclusion, we determined that the exists a slight difference in the geometry of the vorticity contours and the location of the dipole at the end of the simulation. The deviation of the dipole stars as the dipole enters the Eulerian domain. The entering and the re-entering process of the dipole introduces artificial vorticity from the Dirichlet boundary $\Sigma_d$, increasing the overall kinetic energy $E$ of the problem. This intern has an influence on the position of the dipole at $t=1$. Increasing the resolution of the Lagrangian solution only minimally increases the accuracy of the results. 
 
+It is recommended that a further focused study should be performed on the artificial vorticity generated from the boundary of Eulerian domain $\Sigma_d$. If this artificial vorticity can be further minimized, we could potential attain more accurate results.
 
 \section{Impulsively Started Cylinder at $Re=550$}
 \label{sec:vvhm-isc}
-In this section, we will study the flow around an impulsively started cylinder at $Re=550$. The purpose of the this test case is ensure we are able to correctly predict the forces acting on the body. In section \ref{subsec:eul_isc}, a FE only simulation was ran, and we where able to determine the performance the FE simulation w.r.t to the literature data provided by Koumoutsakos and Leonard \cite{Koumoutsakos1995a}, and the data provide by  RosenFeld et al. \cite{MosheRosenFeldDochanKwak1991}. These investigations will be used as the benchmark for the upcoming study.
+In this section, we will study the flow around an \printAcron{impulsively started cylinder}{ISC} at $Re=550$. The purpose of this test case is ensure that we are able to correctly predict the lift and drag forces acting on a body. In section \ref{subsec:eul_isc}, the FE only simulation was validated against the study of Koumoutsakos and Leonard \cite{Koumoutsakos1995a}, and the study of Rosenfeld et al. \cite{MosheRosenFeldDochanKwak1991}. The FE only investigation will be therefore be used a benchmark for the current hybrid study.
 
 \subsection{Problem Definition}
 
-The description of the impulsively started test case was given in section \ref{subsec:eul_isc}. For the hybrid simulation, we performed similar investigated and the compared with the validation data. The parameters of the simulation are tabulated in table \ref{tab:h_ISCParameters}. 
+The description of the impulsively started test case was initially introduced in section \ref{subsec:eul_isc}. For the hybrid simulation, we performed similar investigation and the compared the results with the benchmark study and the aforementioned literature. The parameters of the simulation are tabulated in table \ref{tab:h_ISCParameters}. 
+	\begin{figure}[!p]
+	\centering
+	%\includegraphics[trim=0cm 2.5cm 0cm 2.5cm, clip, width=\linewidth]
+	\includegraphics[width=0.6\linewidth]{./figures/hybrid/isc/hisc_dd-crop.pdf}
+	\caption{(\textit{Not to Scale}) The domain decomposition for the Impulsively started cylinder. The parameters of the domain are tabulated in table \ref{tab:h_ISCParameters}.}
+	\label{fig:hisc_dd}
+	\end{figure}
 
 	\ctable[
-		caption = {Summary of the parameters of the hybrid simulation for the Impulsively started cylinder test case for $Re=550$.},
+		caption = {Summary of the parameters of the hybrid simulation for the impulsively started cylinder test case at $Re=550$.},
 		label   = {tab:h_ISCParameters},
 		pos = !p,]{lcll}{}{\FL
 		Parameters					& Value 				& Unit		& Description \ML
 		$Re$  			       		& $550$ 				&-			& Reynolds number \\ 
-		$\mathbf{u}_{\infty}$		& $[1,0]$ 				&\si{m.s^{-1}}& Free-stream velocity\\		
-		$R$			         		& $1$ 					&\si{m}		& Radius of cylinder\\		
- 		$R_{ext}$ & 1.5 & \si{m} & Radius of Eulerian domain $\Omega_E$ \\
+		$\mathbf{u}_{\infty}$		& $[1,0]$ 				&\si{m.s^{-1}}& Freestream velocity\\		
+		$R$			         		& $1$ 					&\si{m}		& Radius to Eulerian boundary $\Sigma_{wall}$\\		
+ 		$R_{ext}$ & 1.5 & \si{m} & Radius to Eulerian boundary $\Sigma_d$ \\
 		$\nu$						& $\num{3.6e-3}$ 		&\si{kg.s^{-1}.m^{-1}}& Kinematic viscosity\\
 		$\lambda$					& 1 & - & Overlap ratio\\
 		$h$							& 0.008 & \si{m} & Nominal blob spacing\\		
@@ -586,92 +588,69 @@ The description of the impulsively started test case was given in section \ref{s
 		$N_{panels}$ & 100 & - & Number of panels\\
 		$\Delta t_L$				& 0.005 & \si{s} & Lagrangian time step size\\
 		$\Delta t_E$				& 0.001  & \si{s} & Eulerian time step size\\		
-		$k_E$						& 5 & - & Eulerian sub-steps\\			
+		$k_E$						& 5 & - & Number of Eulerian sub-steps\\			
 		$ N_{\mathrm{t-steps}}$ 	& 40000 & -			& Number of time integration steps\\
 		$t$							& 0 to 40 & - & Simulation time\\
-		$d_{bdry}$					& $0.1\cdot{R}$ & \si{m} & Interpolation offset from boundary $\Sigma_d$\\
-		$d_{surf}$					& $3\cdot{h}$ & \si{m} & Interpolation offset from boundary $\Sigma_{wall}$\LL}
+		$d_{bdry}$					& $0.1\cdot{R}$ & \si{m} & Interpolation domain offset from boundary $\Sigma_d$\\
+		$d_{surf}$					& $3\cdot{h}$ & \si{m} & Interpolation domain offset from boundary $\Sigma_{wall}$\LL}
 
-Figure \ref{fig:hisc_dd} shows the domain decomposition of the hybrid simulation. The Eulerian domain $\Omega_E$ is bounded by boundary $\partial\Omega_E$, where $\partial\Omega_E=\Sigma_d\cup\Sigma_{wall}$, where $\Sigma_d$ is the external Dirichlet boundary and $\Sigma_{wall}$ is the no-slip wall. The Lagrangian domain $\Omega_L$ resolves the full fluid domain. The interpolation region $\Omega_{int}$, where we correct the particle strengths is within the Eulerian domain $\Omega_E$, such that $\Omega_{int}\subset\Omega_E$. The interpolation region $\Omega_{int}$ is bounded by $\partial\Omega_{int}$ where $\partial\Omega_{int}=\Sigma_p\cup\Sigma_{int;ext}$. The vortex panel boundary $\Sigma_p$ has an offset $d_{surf}=3\cdot{h}$ from the wall $\Sigma_{wall}$. The offset is chosen according to stock, see section \ref{}. The exterior boundary $\Sigma_{int;ext}$ of the interpolation region $\Omega_{int}$ is defined with a larger offset $d_{bdry} = 0.1\cdot{R}$. We observed in the previous sections that the main error of the hybrid scheme is the artificial vorticity generated at the $\Sigma_d$ and to reduce this error, we chose the larger offset.
+Figure \ref{fig:hisc_dd} shows the domain decomposition of the hybrid simulation, performed according to section \ref{sec:dotd}. The Lagrangian domain $\Omega_L$ resolves the full fluid domain, with an Eulerian domain $\Omega_E$ resolving the near-wall region of the cylinder. The Eulerian domain $\Omega_E$ is bounded by boundary $\partial\Omega_E=\Sigma_d\cup\Sigma_{wall}$, where $\Sigma_d$ is the external Dirichlet boundary and $\Sigma_{wall}$ is the no-slip wall of the cylinder. The interpolation region $\Omega_{int}$, where we correct the particle strengths, is within the Eulerian domain $\Omega_E$, i.e $\Omega_{int}\subset\Omega_E$. The interpolation region $\Omega_{int}$ is bounded by $\partial\Omega_{int}=\Sigma_p\cup\Sigma_{int;ext}$, where $\Sigma_p$ is the vortex panel domain boundary, and $\Sigma_{int;ext}$ is the external boundary of the interpolation domain. The vortex panel domain boundary $\Sigma_p$, is defined with an offset $d_{surf}=3\cdot{h}$ from the cylinder wall $\Sigma_{wall}$. The exterior boundary $\Sigma_{int;ext}$ of the interpolation region $\Omega_{int}$ is defined with a larger offset $d_{bdry} = 0.1\cdot{R}$ for the boundary $\Sigma_d$. We observed in the previous test cases that the main error of the hybrid scheme is the artificial vorticity generated at the $\Sigma_d$ and therefore to minimize this error, we have chosen a larger offset than used by Stock \cite{Stock2010a}.
 
-	\begin{figure}[!h]
-	\showthe\columnwidth
-	\centering
-	%\includegraphics[trim=0cm 2.5cm 0cm 2.5cm, clip, width=\linewidth]
-	\includegraphics[width=0.6\linewidth]{./figures/hybrid/isc/hisc_dd-crop.pdf}
-	\caption{[\textit{Not to Scale}] The domain decomposition for the Impulsively started cylinder. The parameters of the domain are tabulated in table \ref{tab:h_ISCParameters}.}
-	\label{fig:hisc_dd}
-	\end{figure}
+%The initial boundary conditions of the Eulerian Dirichlet boundary $\Sigma_d$, is the velocity field induced by the vortex panels. At time progress, the vorticity is generated from the Eulerian boundary $\Sigma_{wall}$, transferring to the vortex blobs inside the interpolation region $\Omega_{int}$. 
 
-The initial boundary conditions of the Eulerian Dirichlet boundary $\Sigma_d$, is the velocity field induced by the vortex panels. At time progress, the vorticity is generated from the Eulerian boundary $\Sigma_{wall}$, transferring to the vortex blobs inside the interpolation region $\Omega_{int}$. 
+We investigated two aspects of the impulsively started cylinder problem. The first study focused on the impact of coupling parameters on the accuracy of the lift and the drag forces. The parameters of interest are the number of vortex panels $N_{panels}$, nominal blob spacing $h$, and time step size of the Lagrangian method $\Delta t_L$.
 
-Two investigation where performed with the impulsively started problem. The first study focused on the impact of parameters on the lift and drag acting on the cylinder. The parameters of interest during this parameter sensitivity analysis were the number of vortex panels $N_{panels}$, nominal blob spacing $h$, time step size of the Lagrangian method $\Delta t_L$.
-
-The second focus of the investigation was the long run performance of the forces acting of the cylinder. Artificial perturbation was induced as described in section \ref{subsec:eul_isc} to initiate vortex shedding at the initial stages of the simulation.
+The second study focused on the long run performance of the forces acting of the cylinder. Artificial perturbation was induced, as described in section \ref{subsec:eul_isc}, to induced vortex shedding at a smaller simulation time $t$.
 
 \subsection{Results and Discussion}
 
 	\begin{figure}[!p]
-     \centering
-     \begin{subfigure}[t]{0.49\textwidth}
-             \includegraphics[width=\textwidth]{./figures/hybrid/isc/hisc_EulerianDomain_wall.pdf}
-             \caption{Wall region: Eulerian method}
-             \label{fig:hisc_EulerianDomain_wall}
-     \end{subfigure}%
-     ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
-       %(or a blank line to force the subfigure onto a new line)
-     \begin{subfigure}[t]{0.49\textwidth}
-             \includegraphics[width=\textwidth]{./figures/hybrid/isc/hisc_LagrangianDomain_wall.pdf}
-             \caption{Wall region: Lagrangian method}
-             \label{fig:hisc_LagrangianDomain_wall}
-     \end{subfigure}
-     
-     \begin{subfigure}[t]{0.49\textwidth}
-             \includegraphics[width=\textwidth]{./figures/hybrid/isc/hisc_EulerianDomain_bdry.pdf}
-             \caption{Boundary region: Eulerian method}
-             \label{fig:hisc_EulerianDomain_bdry}
-     \end{subfigure}%
-     ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
-       %(or a blank line to force the subfigure onto a new line)
-     \begin{subfigure}[t]{0.49\textwidth}
-             \includegraphics[width=\textwidth]{./figures/hybrid/isc/hisc_LagrangianDomain_bdry.pdf}
-             \caption{Boundary region: Lagrangian method}
-             \label{fig:hisc_LagrangianDomain_bdry}
-     \end{subfigure}     
-     \caption{Eulerian method and Lagrangian method resolutions}
-     \label{fig:hisc_EulerianVsLagrangian}
-	\end{figure}
-
-Figure \ref{fig:hybrid_cylinder_contourComparison_tStarting} shows the vorticity contour at the initial stages of the simulation, $t = [1,3,5,7]$. The plot compares the hybrid simulation (top half) with the FE only simulation (bottom half). The hybrid half of the plot also depicts the Eulerian domain $\Omega_E$, and is bounded to the cylinder, resolving the near-wall region of the problem.
-
-	\begin{figure}[!h]
-	\showthe\columnwidth
 	\centering
 	%\includegraphics[trim=0cm 2.5cm 0cm 2.5cm, clip, width=\linewidth]
 	\includegraphics[width=\linewidth]{./figures/hybrid/isc/hybrid_cylinder_contourComparison_tStarting-crop.pdf}
-	\caption{Comparison of the vorticity contours for \textbf{(a)} $t=1$, \textbf{(b)} $t=3$, \textbf{(c)} $t=5$ and \textbf{(d)} $t=7$ with contour levels [$-7,...,-3,-2,-1,0.5,-0.2,-0.1,0.1,0.2,0.5,1,2,3,...,7$]. The figures compares the hybrid simulation (top half) with FE only simulation (bottom half).}
+	\caption{Comparison of the vorticity contours for \textbf{(a)} $t=1$, \textbf{(b)} $t=3$, \textbf{(c)} $t=5$ and \textbf{(d)} $t=7$ with contour levels $[-7,..., -3, -2, -1,$ $0.5, -0.2, -0.1, 0.1, 0.2, 0.5,$ $1, 2, 3,..., 7]$. The figures compares the hybrid simulation (top half) with FE only simulation (bottom half).}
 	\label{fig:hybrid_cylinder_contourComparison_tStarting}
 	\end{figure}
 
-We observe that the vorticity contours of the hybrid simulation matches with the FE only simulation. The figure is nearly symmetric expect the artificial vorticity emanating from the Dirichlet boundary $\Sigma_d$, convecting with the free-stream. This magnitude of this artificial vorticity is within $|\omega|\leqslant0.2$ where the maximum vorticity in the domain is $\max\{\Omega\}=32$. Therefore, the relative vorticity generated from the boundary with less than $1\%$ of the maximum vorticity in the fluid.
+Figure \ref{fig:hybrid_cylinder_contourComparison_tStarting} shows the vorticity contour at $t = [1,3,5,7]$. The plot compares the hybrid simulation (top halves) with the FE only simulation (bottom halves). The hybrid halves of the plot depicts the Eulerian sub-domain $\Omega_E$ in pink. After studying the figure, we observer that the vorticity contours of the hybrid simulation matches with the FE only simulation. The only difference between both simulation is the artificial vorticity emanating from the Dirichlet boundary $\Sigma_d$. This magnitude of this artificial vorticity is in the range $|\omega|\leqslant0.2$, and with the maximum vorticity in the domain $\max\{\omega\}=32$, we have that the strength of the artificial vorticity is less than $1\%$ of the maximum vorticity in the fluid.
+
+%	\begin{figure}[!p]
+%     \centering
+%     \begin{subfigure}[t]{0.49\textwidth}
+%             \includegraphics[width=\textwidth]{./figures/hybrid/isc/hisc_EulerianDomain_wall.pdf}
+%             \caption{Wall region: Eulerian method}
+%             \label{fig:hisc_EulerianDomain_wall}
+%     \end{subfigure}%
+%     ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+%       %(or a blank line to force the subfigure onto a new line)
+%     \begin{subfigure}[t]{0.49\textwidth}
+%             \includegraphics[width=\textwidth]{./figures/hybrid/isc/hisc_LagrangianDomain_wall.pdf}
+%             \caption{Wall region: Lagrangian method}
+%             \label{fig:hisc_LagrangianDomain_wall}
+%     \end{subfigure}
+%     
+%     \begin{subfigure}[t]{0.49\textwidth}
+%             \includegraphics[width=\textwidth]{./figures/hybrid/isc/hisc_EulerianDomain_bdry.pdf}
+%             \caption{Boundary region: Eulerian method}
+%             \label{fig:hisc_EulerianDomain_bdry}
+%     \end{subfigure}%
+%     ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+%       %(or a blank line to force the subfigure onto a new line)
+%     \begin{subfigure}[t]{0.49\textwidth}
+%             \includegraphics[width=\textwidth]{./figures/hybrid/isc/hisc_LagrangianDomain_bdry.pdf}
+%             \caption{Boundary region: Lagrangian method}
+%             \label{fig:hisc_LagrangianDomain_bdry}
+%     \end{subfigure}     
+%     \caption{Eulerian method and Lagrangian method resolutions}
+%     \label{fig:hisc_EulerianVsLagrangian}
+%	\end{figure}
 
 	\begin{figure}[!p]
-	\showthe\columnwidth
 	\centering
 	\includegraphics[width=0.6\linewidth]{./figures/hybrid/isc/hybrid_ISC_drag.pdf}
 	\caption{ Evolution of the drag coefficient during the initial stages $t=0$ to $t=4$ with total drag coefficient $C_d$ (solid), pressure drag coefficient $C_{d_{pres}}$ (dashed) and friction drag coefficient $C_{d_{fric}}$ (dotted). The figure compares results of hybrid simulation ({\color{plotBlue}{\textbf{blue}}}), FE only simulation ({\color{plotRed}{\textbf{red}}}) and reference data (\textbf{black}) of Koumoutsakos and Leonard \cite{Koumoutsakos1995a}}
 	\label{fig:hybrid_ISC_drag}
 	\end{figure}
-
-The investigate the effect of this error, we determined the error in the evolution of the drag during the initial stages of the simulation. Figure \ref{fig:hybrid_ISC_drag} shows the evolution of the drag coefficient $C_d$, friction drag $C_{d_{fric}}$, and the pressure drag $C_{d_{pres}}$, comparing the hybrid simulation, FE only simulation and the reference data obtained from Koumoutsakos and Leonard \cite{Koumoutsakos1995a}. Observing the figure, we see that the hybrid simulation has a larger differences with the reference data. The error is due to the difference in the pressure drag $C_{d_{pres}}$. We see that the the hybrid simulation generally larger drag coefficient $C_d$. Furthermore, at the at $t<0.3$, we see that there is a slight difference in the initial drag trend.  
-
-To investigate further on the causes of this trends, we performed a parameter sensitivity analysis. Figure \ref{fig:hybrid_ISC_parameterSensitivity} shows the impact of varying the resolution of the Lagrangian method w.r.t to the Eulerian method on the accuracy of the drag coefficient calculated.
-
-Figure \ref{fig:hybrid_ISC_drag_kComparison} investigates the effect of changing the Lagrangian time step size $\Delta t_L$ on the drag coefficient. The Lagrangian time step was varied with setting the number of Eulerian sub-steps $k_E$ to $k_E=1$ and $k_E=5$. With fixed Eulerian time step size $\Delta t_E=0.001$, the Lagrangian time step sizes were $\Delta t_L = 0.001$ and $\Delta t_L=0.005$, respectively. The figure shows that reducing the Lagrangian time-step size has only a minimal improvement.
-
-Figure \ref{fig:hybrid_ISC_drag_nBlobComparison} shows the effect of varying the nominal blob spacing $h$ from $h=0.008$ to $h=0.005$. The figure shows that increasing the resolution of the blobs as significant improvement on the drag coefficient. Furthermore, the initial trend at $t<0.3$ matches more accurately with higher resolution. This investigation shows the to have an accurate result, we require a finer resolution of the Lagrangian field near the Eulerian domain $\Omega_E$.
-
-Figure \ref{fig:hybrid_ISC_drag_nPanelComparison} shows the effect of varying the number of vortex panels $N_{panels}$ from $N=100$ to $N=400$. The improvement with higher resolved vortex sheet is smaller that the improvement obtained by varying the blob resolution.
 
 	\begin{figure}[!p]
      \centering
@@ -697,26 +676,18 @@ Figure \ref{fig:hybrid_ISC_drag_nPanelComparison} shows the effect of varying th
      \caption{Parameters sensitivity analysis on the drag evolution of the cylinder from $t=0$ to $t=4$, compared with literature data (\textbf{black}) obtained from Koumoutsakos and Leonard \cite{Koumoutsakos1995a}}
      \label{fig:hybrid_ISC_parameterSensitivity}
 	\end{figure}
-
-The second focus of the impulsively started cylinder is the long run, $t=0$ to $t=40$, evolution of the drag and lift of the cylinder. We performed similar comparison as done in section ??. An artificial perturbation was induced according to Leocointe \& Piquet \cite{Lecointe1984}. Figure \ref{fig:hybrid_cylinder_LongRun_liftDrag} shows the evolution of the lift coefficient $C_l$, and the drag coefficient $C_d$ of hybrid simulation, FE only simulation, and the reference data from RosenFeld et al. \cite{MosheRosenFeldDochanKwak1991}. 
-
+	
 	\begin{figure}[!p]
-	\showthe\columnwidth
 	\centering
 	\includegraphics[width=0.6\linewidth]{./figures/hybrid/isc/hybrid_cylinder_LongRun_liftDrag.pdf}
-	\caption{Evolution of the lift and drag coefficient from $t=0$ to $t=40$ with artificial perturbation \cite{Lecointe1984}. The figure compares hybrid ({\color{plotBlue}{\textbf{blue}}}), FE only ({\color{plotRed}{\textbf{red}}}), and the reference data (\textbf{black}) from RosenFeld et al. \cite{MosheRosenFeldDochanKwak1991}.}
+	\caption{Evolution of the lift and drag coefficient from $t=0$ to $t=40$ with artificial perturbation \cite{Lecointe1984}. The figure compares hybrid ({\color{plotBlue}{\textbf{blue}}}), FE only ({\color{plotRed}{\textbf{red}}}), and the reference data (\textbf{black}) from Rosenfeld et al. \cite{MosheRosenFeldDochanKwak1991}.}
 	\label{fig:hybrid_cylinder_LongRun_liftDrag}
-	\end{figure}
-
-Investigating the evolution of drag shows that the hybrid simulation has higher drag. After $t=5$, there is slight mismatch in the oscillation of the drag. However observing the amplitude fluctuation, we see that the simulation tend to fluctuate around $C_d=1.4$. Observing the evolution of lift shows that the hybrid simulation has a larger initial amplitude. Furthermore, there exist a negative phase shift in the amplitude. However, at time progress, $t>20$, we see that the frequency and the amplitude of the oscillation is similar to the reference data.
-
-Figure \ref{fig:hybrid_cylinder_LongRun_contourfComparison} compares the vorticity field of the hybrid simulation, and the FE only simulation at $t=[10,20,30,40]$. The shed vorticity of the hybrid simulation matches reasonably well with the FE only with a slight dif
+	\end{figure}	
 
 	\begin{figure}[!p]
-	\showthe\columnwidth
 	\centering
 	\includegraphics[width=\linewidth]{./figures/hybrid/isc/hybrid_cylinder_LongRun_contourfComparison_compressed-crop.png}
-	\caption{hybrid cylinder LongRun contourfComparison}
+	\caption{Plot of the vorticity field at $t=[10,20,30,40]$, comparing the hybrid simulation (left) with the FE only simulation (right).}
 	\label{fig:hybrid_cylinder_LongRun_contourfComparison}
 	\end{figure}
 
@@ -734,53 +705,95 @@ Figure \ref{fig:hybrid_cylinder_LongRun_contourfComparison} compares the vortici
              \caption{FE only}
              \label{fig:hybrid_isc_firstDipole_FE_compressed-crop}
      \end{subfigure}
-     \caption{First dipole}
+     \caption{Plot of the first shed vortex at $t=40$, comparing (\textbf{a}) the hybrid simulation, and (\textbf{b}) the FE only simulation.}
      \label{fig:hybrid_isc_firstDipole}
 	\end{figure}
 
-A through investigation of the oscillation requires a longer simulation where the amplitude of the oscillation would become fixed. However, due to the lack of computational resources, a longer simulation than $t=40$ with the current simulation parameters was not feasible.
-	
-	
+To investigate the effect of the artificial vorticity, we determined the error in drag during the initial stages of the simulation, for times $t<4$. Figure \ref{fig:hybrid_ISC_drag} shows the evolution of the drag coefficient $C_d$, the friction drag $C_{d_{fric}}$, and the pressure drag $C_{d_{pres}}$. The results are compared with the FE only simulation and the reference data obtained from Koumoutsakos and Leonard \cite{Koumoutsakos1995a}. Observing the figure, we see that the hybrid simulation has a larger drag coefficient, due to the increased pressure drag $C_{d_{pres}}$. Moreover, the drag coefficient is under-estimated at the first few time instances. To investigate further on the causes of this trends, we performed a parameter sensitivity analysis. 
+
+Figure \ref{fig:hybrid_ISC_parameterSensitivity} shows the impact of varying the resolution of the Lagrangian method w.r.t to the Eulerian method on the accuracy of the drag coefficient calculated. To reduce the artificial vorticity, we modified the Lagrangian time step size $\Delta t_L$, the nominal blob spacing $h$, and the number of vortex panels $N_{panels}$. 
+
+Figure \ref{fig:hybrid_ISC_drag_kComparison} investigates the effect of changing the Lagrangian time step size $\Delta t_L$ on the drag coefficient. The Lagrangian time step was varied with setting the number of Eulerian sub-steps $k_E$ to $k_E=1$ and $k_E=5$. With fixed Eulerian time step size $\Delta t_E=0.001$, the Lagrangian time step sizes were $\Delta t_L = 0.001$ and $\Delta t_L=0.005$, respectively. The figure shows that reducing the Lagrangian time-step size by a $5^{\mathrm{th}}$, only educes the error slightly. Therefore, varying the Lagrangian time-step size has only a minimal improvement.
+
+Figure \ref{fig:hybrid_ISC_drag_nBlobComparison} shows the effect of varying the nominal blob spacing $h$ from $h=0.008$ to $h=0.00625$. The figure shows that by a small increase he resolution of the blobs as a larger improvement on the drag coefficient, that varying the Lagrangian time step size. Therefore, to improve the coupling, it is more ideal to increase the spatial resolution of the Lagrangian method than the temporal resolution. 
+
+Figure \ref{fig:hybrid_ISC_drag_nPanelComparison} shows the effect of varying the number of vortex panels $N_{panels}$ from $N=100$ to $N=400$. Increasing the number of panels by $4$ times, has a smaller effect than the improvement of varying the resolution of the vortex blobs.
+
+The second focus of the impulsively started cylinder is the long run evolution of the lift and the drag of the cylinder, from $t=0$ to $t=40$. We performed similar comparison as done in section \ref{subsec:eul_isc}. An artificial perturbation was induced according to Leocointe and Piquet \cite{Lecointe1984}. Figure \ref{fig:hybrid_cylinder_LongRun_liftDrag} compares the evolution of the lift coefficient $C_l$, and the drag coefficient $C_d$ of hybrid simulation, with the FE only simulation, and the reference data from Rosenfeld et al. \cite{MosheRosenFeldDochanKwak1991}. 
+
+Investigating the evolution of drag shows that the hybrid simulation has higher drag. After $t=5$, there is slight mismatch in the oscillation of the drag. However observing the amplitude fluctuation, we see that the simulation tend to fluctuate around $C_d=1.4$. Observing the evolution of lift shows that the hybrid simulation has a larger initial amplitude. Furthermore, there exist a negative phase shift in the amplitude. However, at time progress, $t>20$, we see that the frequency and the amplitude of the oscillation is similar to the reference data. A through investigation of the oscillation requires a longer simulation where the amplitude of the oscillation would become fixed. However, due to the lack of computational resources, a longer simulation than $t=40$ with the current simulation parameters was not feasible.
+
+Figure \ref{fig:hybrid_cylinder_LongRun_contourfComparison} compares the vorticity field of the hybrid simulation (left), and the FE only simulation (right) at time instances $t=[10,20,30,40]$. The differences in the both the vorticity plots is minimal. The main difference between the simulation, at $t=40$, is not the strength of shed vortex, but its location. A possible reason for this difference might be the small artificial vorticity emanating from the Eulerian boundary $\Sigma_d$. With a higher resolved hybrid scheme, their effects should be further minimized.
+
+Figure \ref{fig:hybrid_isc_firstDipole}	shows the state of the first shed vortex at $t=40$, for the hybrid simulation and the FE only simulation. For an efficient FE only simulation, we had to under-resolve the mesh, away from the cylinder. However, with the auto-adaptive nature of the Lagrangian method, the hybrid simulation has a well defined first vortex core. Furthermore, we see that the dipole sustains is strength, unlike the FE only simulation with is more diffusive, when under-resolved. This highlights the main advantage of employing the hybrid method.
 	
 \subsection{Conclusion}	
 
+In conclusion, we observed that the hybrid simulation provided a relative similar performance as the benchmark simulation and the literature of  Koumoutsakos and Leonard \cite{Koumoutsakos1995a} and Rosenfeld et al. \cite{MosheRosenFeldDochanKwak1991}. However, when the hybrid scheme is under-resolved, the artificial vorticity due to the mismatch increases the amplitude of the drag and the lift.
+
+We were also able to observe the auto-adaptive nature of our hybrid scheme. The first vortex shed from the cylinder, was still well-resolved at $t=40$ in the hybrid scheme, whereas the FE only simulation failed to sustain the structure and the strength of the vortex.
 
 %In conclusion, we 
-\section{Stalled Elliptic airfoil at $Re=5000$}
+\section{Stalled Elliptic Airfoil at $Re=5000$}
 \label{sec:vvhm-ea}
+
+The purpose of investigating the stalled elliptical airfoil at $Re=5000$ is to demonstrate the feasibility of using the hybrid method to simulate a complex problem, such as a flow around a thin stalled airfoil. The FE only simulation is as a benchmark for the current study.
+
 \subsection{Problem Definition}
 
-The stalled airfoil performed similar to the impulsively started cylinder.
+The study of the stalled elliptical airfoil at $RE=5000$, is performed similar to the study of the impulsively started cylinder at $Re=550$, see section \ref{sec:vvhm-isc}. The main difference now is the mesh geometry (now representing a thin stalled airfoil), and a higher Reynolds number.
 
-The parameters are tabulated below.
-
-	\begin{figure}[!h]
-	\showthe\columnwidth
+	\begin{figure}[!b]
 	\centering
 	%\includegraphics[trim=0cm 2.5cm 0cm 2.5cm, clip, width=\linewidth]
 	\includegraphics[width=0.6\linewidth]{./figures/hybrid/ellipse/hellipticAirfoil_dd-crop.pdf}
-	\caption{[\textit{Not to Scale}] }
+	\caption{(\textit{Not to scale}) The domain decomposition for the stalled elliptical airfoil. The parameters of the domain are tabulated in table \ref{tab:h_ea_Parameters}.}
 	\label{fig:hellipticAirfoil_dd-crop}
 	\end{figure}
 
+Figure \ref{fig:hellipticAirfoil_dd-crop} depicts the configuration of the hybrid simulation. We studied the flow around a thin airfoil with thickness to chord ratio $t/c$ of $12\%$, having a with a chord length $L=1$, and a maximum thickness $W=0.12$. As we have a elliptical airfoil, the maximum thickness is located at $0.5L$. Furthermore, the airfoil is pitched to $20^{\circ}$ about center of rotation $0.25L$, to create a stalled flow.
+
+The parameters of the simulation are summarized in table \ref{tab:h_ea_Parameters}. 
+
+	\ctable[
+		caption = {Summary of the parameters of the hybrid simulation for the stalled elliptical airfoil test case.},
+		label   = {tab:h_ea_Parameters},
+		pos = !t,]{lcll}{}{\FL
+		Parameters					& Value 				& Unit		& Description \ML
+		$Re$  			       		& $5000$ 				&-			& Reynolds number \\ 
+		$\mathbf{u}_{\infty}$		& $[1,0]$ 				&\si{m.s^{-1}}& Freestream velocity\\		
+		$L$			         		& $1$ 					&\si{m}		& Chord length\\		
+		$W$			         		& $0.12$ 				&\si{m}		& Maximum thickness\\		
+ 		$\nu$						& $\num{2e-4}$ 		&\si{kg.s^{-1}.m^{-1}}& Kinematic viscosity\\
+		$\lambda$					& 1 & - & Overlap ratio\\
+		$h$							& \num{1.67e-3} & \si{m} & Nominal blob spacing\\		
+		$h_{grid}$ 					& $0.0014$ to $0.008$ & \si{m}	& FE cell diameter \\
+		$ N_{\mathrm{cells}}$ 		& $118196$ 	& -						& Number of mesh cells\\						
+		$N_{panels}$ & 400 & - & Number of panels\\
+		$\Delta t_L$				& \num{1e-4} & \si{s} & Lagrangian time step size\\
+		$\Delta t_E$				& \num{1e-3}  & \si{s} & Eulerian time step size\\		
+		$k_E$						& 10 & - & Number of Eulerian sub-steps\\			
+		$ N_{\mathrm{t-steps}}$ 	& 10000 & -			& Number of time integration steps\\
+		$t$							& 0 to 10 & - & Simulation time\\
+		$d_{bdry}$					& $0.1\cdot{L}$ & \si{m} & Interpolation domain offset from boundary $\Sigma_d$\\
+		$d_{surf}$					& $3\cdot{h}$ & \si{m} & Interpolation domain offset from boundary $\Sigma_{wall}$\LL}
+
 \subsection{Results and Discussion}
 
+Figure \ref{fig:hybrid_ellipse_HybridvsFE_contourDeviation} compares the vorticity plot of hybrid and the FE only simulation at time instances $t=[1,2,3,4]$. It is apparent that from $t=3$, the structure of the shed vorticity is different. For higher Reynolds number flows, the error in the coupling, seemed to have a greater impact on the evolution of the vorticity field. 
+
+To further investigate the effect of the artificial vorticity, we investigated the evolution of the lift and the drag forces, depicted in figure \ref{fig:hybrid_ellipseForce}. The lift and the drag forces determined by the hybrid method matches upto $t=2$. The oscillation of the lift after $t=3$ is fundamentally different, which peaks occuring at different time instances. Similarly, the peak drag occurs at different time instances, however we can see that the maximum and minimum drag coefficient during is similar. 
+
+Figure \ref{fig:hybrid_ellipse_Hybrid_contours} shows the plot of vorticity field at $t=[1,2,3,...,10]$. We see that thanks to adaptive nature of the scheme, the shed vortices are well-defined. Furthermore, in the near-wall region, the Eulerian region is able to capture the complex stalled structure of the airfoil.
+
+
 	\begin{figure}[!p]
-	\showthe\columnwidth
 	\centering
 	\includegraphics[width=\linewidth]{./figures/hybrid/ellipse/hybrid_ellipse_HybridvsFE_contourDeviation_compressed-crop.png}
 	\caption{hybrid ellipse HybridvsFE contourDeviation}
 	\label{fig:hybrid_ellipse_HybridvsFE_contourDeviation}
 	\end{figure}
-
-	\begin{figure}[!p]
-	\showthe\columnwidth
-	\centering
-	\includegraphics[width=\linewidth]{./figures/hybrid/ellipse/hybrid_ellipse_Hybrid_contours_compressed-crop.png}
-	\caption{hybrid ellipse Hybrid contours}
-	\label{fig:hybrid_ellipse_Hybrid_contours}
-	\end{figure}
-
+	
 	\begin{figure}[!p]
      \centering
      \begin{subfigure}[t]{0.49\textwidth}
@@ -797,69 +810,41 @@ The parameters are tabulated below.
      \end{subfigure}
      \caption{Forces}
      \label{fig:hybrid_ellipseForce}
+	\end{figure}	
+
+	\begin{figure}[!p]
+	\centering
+	\includegraphics[width=\linewidth]{./figures/hybrid/ellipse/hybrid_ellipse_Hybrid_contours_compressed-crop.png}
+	\caption{hybrid ellipse Hybrid contours}
+	\label{fig:hybrid_ellipse_Hybrid_contours}
 	\end{figure}
-	
 	
 \section{Multi-body problem}
 \label{sec:vvhm-mb}
+
+To demonstrate the feasibility of simulating a multi-body problem with the hybrid method, we simulated the flow around two impulsively started cylinders. The simulation is performed similarly to the single cylinder configuration, section \ref{sec:vvhm-isc}, where here we use two cylinders instead of one.
+
+\subsection{Problem Definition}
+
+As the simulation is performed similar to the single cylinder setup, the parameters of the simulation are according to table \ref{tab:h_ISCParameters}. However, now with the two cylinder configuration, we have two Eulerian sub-domains, $\Omega_{E_{A}}$ and $\Omega_{E_B}$, belonging to cylinder $A$ and cylinder $B$ respectively. The configuration of the two cylinder is depicted in figure \ref{fig:hmisc_dd-crop}. The locations of the cylinder $A$ and $B$ are at $(x_A,y_A) = (-R_{ext},0)$ and $(x_B,y_B) = (R_{ext},R)$, respectively. These positions ensure that the Eulerian sub-domains do not overlap, $\Omega_{E_A}\cap\Omega_{E_B}=\emptyset$, and the Lagrangian method is used to communicate between theses sub-domains.
+
 	\begin{figure}[!h]
-	\showthe\columnwidth
 	\centering
-	%\includegraphics[trim=0cm 2.5cm 0cm 2.5cm, clip, width=\linewidth]
 	\includegraphics[width=0.6\linewidth]{./figures/hybrid/multipleCylinder/hmisc_dd-crop.pdf}
-	\caption{[\textit{Not to Scale}] }
+	\caption{(\textit{Not to Scale}) The hybrid domain decomposition configuration of two impulsively started cylinder test case. }
 	\label{fig:hmisc_dd-crop}
 	\end{figure}
 
+\subsection{Results and Discussion}
+
+The simulation of multi-body problem was ran upto $t=22$, reaching the limit of the computational resource. Figure \ref{fig:hybrid_multipleCylinder_contours_compressed-crop} shows the plot of the vorticity at various time instances, at $t=[1,4,7,10,13,16,19,22]$. The plot shows the transfer of vorticity from cylinder $A$ to cylinder $B$ with the help of the Lagrangian method. The Lagrangian method serves as the global communication tool for transferring the information between various Eulerian sub-domains. 
+
 	\begin{figure}[!p]
-	\showthe\columnwidth
 	\centering
-	%\includegraphics[width=\linewidth]{./figures/hybrid/multipleCylinder/hybrid_multipleCylinder_contours_compressed-crop.png}
 	\includegraphics[width=\linewidth]{./figures/hybrid/multipleCylinder/hybrid_multipleCylinder_contours_compressed-crop.png}
 	\caption{hybrid ellipse Hybrid contours}
 	\label{fig:hybrid_multipleCylinder_contours_compressed-crop}
 	\end{figure}
 
-	
-%\section{Clercx-Bruneau dipole convection at $Re=625$}
-%
-%	\subsection{Comparison of vorticity contours}
-%	
-%	\subsection{Variation in maximum vorticity}
-%	
-%	\subsection{Variation in kinetic energy}
-%	
-%	\subsection{Variation in enstrophy}
+Therefore, by extending the current hybrid method implementation to take in account of the moving body, it should be feasible to simulate a VAWT simulation.
 
-%\section{Clercx-Bruneau dipole collision at $Re=625$}
-%
-%	\subsection{Comparison of vorticity contours}
-%	
-%	\subsection{Variation in maximum vorticity}
-%	
-%	\subsection{Variation in kinetic energy}
-%	
-%	\subsection{Variation in Enstrophy}
-%	
-%	\subsection{Variation in Palinstrophy}
-
-%\section{Impulsively started cylinder problem at $Re=550$}
-%
-%	\subsection{Evolution of the wake}
-%	
-%	\subsection{Evolution of pressure and friction drag}
-%	
-%	\subsection{Evolution of lift}
-
-
-%\section{Moving body}
-%
-%	\subsection{Error due to pertubation lag}
-%
-%\section{Proof of concepts}
-%
-%	\subsection{Multiple cylinder case}
-%	
-%	\subsection{Stalled airfoil at $Re=5000$}
-%
-%\section{Summary}
