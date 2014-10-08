@@ -200,10 +200,10 @@
 
 	% ---------------------------------------------------------
 	% Input flipcard animation
-	\rfoot[]{\setlength{\unitlength}{1mm}
-	\begin{picture}(0,0)
-	\put(-10,-5){\includegraphics[scale=0.1]{./figures/style/flipbook/pic\thepage.png}}
-	\end{picture}}
+%	\rfoot[]{\setlength{\unitlength}{1mm}
+%	\begin{picture}(0,0)
+%	\put(-10,-5){\includegraphics[scale=0.1]{./figures/style/flipbook/pic\thepage.png}}
+%	\end{picture}}
 	% ---------------------------------------------------------
 
     % Example Chapter
@@ -211,23 +211,28 @@
     % Chapter 1: Introduction
     \include{chapters/introduction}%
 
-    % Chapter 2 : Lagrangian Subdomain: Vortex Particle Method
-	\include{chapters/lagrangian}
-
-	% Chapter 3: Eulerian Subdomain: Finite Element Method
-	\include{chapters/eulerian}
-
-    % Chapter 4: Hybrid Eulerian-Lagrangian Vortex Particle Method
+	% Chapter 2: Hybrid Eulerian-Lagrangian Vortex Particle Method
   	\include{chapters/hybrid}
 
-	% Chapter 5:   	
-   	\include{chapters/phyflow}
+    % Chapter 3 : Lagrangian Subdomain: Vortex Particle Method
+	\include{chapters/lagrangian}
 
-  	% Chapter 6: Verification and Validation of the Hybrid Method
-	\include{chapters/validation}   
-
-   	% Chapter 7: Conclusion and Recommendations
-   	\include{chapters/conclusion}
+%	% Chapter 4: Eulerian Subdomain: Finite Element Method
+%	\include{chapters/eulerian}
+%
+%    % Chapter 5: Coupling Eulerian and Lagrangian Method
+%  	\include{chapters/coupling}  	
+%  
+%	\include{chapters/hybridOld}
+%
+%	% Chapter 6: Introduction to the Hybrid Solver: pHyFlow
+%   	\include{chapters/phyflow}
+%
+%  	% Chapter 7: Verification and Validation of the Hybrid Method
+%	\include{chapters/validation}   
+%
+%   	% Chapter 8: Conclusion and Recommendations
+%   \include{chapters/conclusion}
     
     % Bibliography
     \printbib{bibliography/library,bibliography/others}
@@ -235,6 +240,7 @@
     % and some appendices here
     %\addcontentsline{toc}{chapter}{Appendix}
     \appendix  
+    \include{appendix/coordinateSystem}%
     \include{appendix/pHyFlow_codeStructure}%
     	
 %    \appendix  
