@@ -456,7 +456,7 @@ The algorithm of evolving the Eulerian method is summarized in this section. The
 The flowchart of the Eulerian method is given by Figure \ref{fig:flowchart_eulerian}.The algorithm to the Eulerian method can be summarized as follows:
 	\begin{enumerate}
 	\item \textbf{Mesh generation}: We generate the mesh of the fluid domain using \gmsh before the iteration.
-	\item \textbf{Determine the boundary condition}: We determine the boundary conditions for the boundary domains: $\partial \Omega_E = [\Sigma_{wall},\Sigma_{d} \Sigma_{pres}]$. If we have Dirichlet velocity boundary conditions for all the exterior boundaries, we do not have to apply any pressure boundary conditions at $\partial \Sigma_{pres}$, because $\Sigma_{pres}=\empty$ in that case.
+	\item \textbf{Determine the boundary condition}: We determine the boundary conditions for the boundary domains: $\partial \Omega_E = \Sigma_{w} \cup \Sigma_{d} \cup \Sigma_{p}$. If we have Dirichlet velocity boundary conditions for all the exterior boundaries, we do not have to apply any pressure boundary conditions at $\partial \Sigma_{p}$, because $\Sigma_{p}=\emptyset$ in that case.
 	\item \textbf{Solve the IPCS}: Using IPCS, time march from $t_n$ to $t_{n+1}$ to solve for the new velocity $\mathbf{u}$ and pressure $p$ field.
 	\item \textbf{Determine the vorticity}: Using the algorithm described in \ref{subsec:dtvf}, solve for the vorticity field $\omega$ at the time $t_{n+1}$. 
 	\end{enumerate}
@@ -536,7 +536,7 @@ The parameters used for the simulation are tabulated in table \ref{tab:eulerianL
 	\label{fig:lambOseenDomainDefinition}
 	\end{figure}
 
-Figure \ref{fig:lambOseenDomainDefinition} depicts the domain for the present Lamb-Oseen vortex study. The fluid domain $\Omega_E$ is bounded by a Dirichlet boundary $\Sigma_d$ such that $\partial \Omega_E = [\Sigma_d]$. The Dirichlet boundary $\Sigma_d$ is used to prescribe the analytical Dirichlet velocity boundary conditions for the Lamb-Oseen vortex problem.
+Figure \ref{fig:lambOseenDomainDefinition} depicts the domain for the present Lamb-Oseen vortex study. The fluid domain $\Omega_E$ is bounded by a Dirichlet boundary $\Sigma_d$ such that $\partial \Omega_E = Sigma_d$. The Dirichlet boundary $\Sigma_d$ is used to prescribe the analytical Dirichlet velocity boundary conditions for the Lamb-Oseen vortex problem.
  
 The Eulerian method is time marched using the time integration parameters tabulated in table \ref{tab:eulerianLambOseenParams}. To ensure a stable time integration, we enforced the CFL conditions, equation \ref{eq:cfl}. During the evolution of the solution, we evaluated the growth of the error in velocity, and the error in vorticity between the numerical and the analytical solutions.
 
@@ -648,7 +648,7 @@ For the present study, we have decided to use the simpler case of $Re=625$, wher
 	\end{equation}
 where $U$ is the characteristic velocity of the flow, $W$ is half width of domain, and $\nu$ is the kinematic viscosity and are chosen according to Clercx and Bruneau \cite{Clercx2006a}. A low Reynolds number of $Re=625$ is required as the Eulerian method currently only solves an incompressible laminar flow. However in future, an implementation of a turbulence method can enable a high Reynolds number investigation.
 
-The domain $\Omega$ of the problem is square, $\Omega_E = [-1,1]\times[-1,1]$, as shown in Figure \ref{fig:clercxBruneauDomainDefinition}. The problem is defined in a closed box, where the Eulerian domain is enclosed in a no-slip boundary $\partial{\Omega} = \Sigma_{wall}$ where dipole collides and interacts.
+The domain $\Omega$ of the problem is square, $\Omega_E = [-1,1]\times[-1,1]$, as shown in Figure \ref{fig:clercxBruneauDomainDefinition}. The problem is defined in a closed box, where the Eulerian domain is enclosed in a no-slip boundary $\partial{\Omega} = \Sigma_w$ where dipole collides and interacts.
 
 The initial condition of the Clercx-Bruneau dipole is a smooth dipole velocity distribution with a positive monopole at $(x_1,y_1)=(0.1,0)$ and the negative monopole at $(x_2,y_2)=(-0.1,0)$, with each having a core radius $R = 0.1$. The velocity distribution for the combined monopole at $t=0$ is given as,
 	\begin{subequations}
@@ -965,7 +965,7 @@ Finally, we an impulsively started cylinder at $Re=550$. This validation test en
 
 The \indexAcron{Impulsively Started Cylinder}{ISC} test case simulates an impulsively started freestream flow around a cylinder. The test case focuses on the unsteady behavior of the separated flow past the cylinder. Various experimental and numerical investigations have been performed to study the flow characterstics. For this project we relied on the widely used and validated results of Koumoutsakos and Leonard \cite{Koumoutsakos1995a}. They investigated the flow around the ISC using vortex method and provided extensive data on the vorticity profile behind the cylinder and the evolution of the lift and drag coefficients.
 
-Figure \ref{fig:ISCDomain} shows the domain of the ISC problem, where Figure \ref{fig:ISCDomainDefinition-crop} shows the definitions of the Eulerian domain $\Omega_E$. The Eulerian domain $\Omega_E$ has the following boundary conditions: the no-slip wall boundary condition at $\Sigma_{wall}$ (solid blue) $\mathbf{u}=0$, the freestream Dirichlet velocity boundary condition at $\Sigma_{d}$ (solid red) $\mathbf{u}_{\infty} = [1,0]$, and the pressure outlet $\Sigma_{pres}$ (solid green). Unlike the previous test cases we now require a pressure outlet boundary condition $\partial p/ \partial \mathbf{n} = 0$, as the velocity field behind the cylinder perturbed and therefore free-stream boundary condition cannot be applied there. The boundaries of the Eulerian domain $\Omega_E$ are $\partial \Omega_E = [\Sigma_{wall}, \Sigma_{d}, \Sigma_{pres}]$.
+Figure \ref{fig:ISCDomain} shows the domain of the ISC problem, where Figure \ref{fig:ISCDomainDefinition-crop} shows the definitions of the Eulerian domain $\Omega_E$. The Eulerian domain $\Omega_E$ has the following boundary conditions: the no-slip wall boundary condition at $\Sigma_w$ (solid blue) $\mathbf{u}=0$, the freestream Dirichlet velocity boundary condition at $\Sigma_{d}$ (solid red) $\mathbf{u}_{\infty} = [1,0]$, and the pressure outlet $\Sigma_{p}$ (solid green). Unlike the previous test cases we now require a pressure outlet boundary condition $\partial p/ \partial \mathbf{n} = 0$, as the velocity field behind the cylinder perturbed and therefore free-stream boundary condition cannot be applied there. The boundaries of the Eulerian domain $\Omega_E$ are $\partial \Omega_E = \Sigma_w \cup \Sigma_{d} \cup \Sigma_{p}$.
 
 The Reynolds number $Re$ of the flow dependent is defined as,
 	\begin{equation}
@@ -1188,8 +1188,8 @@ The final test case involved simulating an impulsively started cylinder at $Re=5
 
 	$\sigma$ & Cauchy stress tensor & \si{Pa}\\
 	$\Sigma_d$ & Dirichlet velocity boundary & - \\
-	$\Sigma_{pres}$ & Pressure outlet boundary & - \\
-	$\Sigma_{wall}$ & No-slip wall boundary & - \\
+	$\Sigma_{p}$ & Pressure outlet boundary & - \\
+	$\Sigma_{w}$ & No-slip wall boundary & - \\
 
 	$\psi$ & Basis function & - \\
 	$\psi$ & Basis function & -\\

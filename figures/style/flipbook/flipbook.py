@@ -1,4 +1,14 @@
 
+"""
+Latex code in the begin of the \mainmatter
+
+	\rfoot[]{\setlength{\unitlength}{1mm}
+	\begin{picture}(0,0)
+	\put(-10,-5){\includegraphics[scale=0.1]{./figures/style/flipbook/pic\thepage.png}}
+	\end{picture}}
+
+"""
+
 import os
 import glob
 
@@ -21,7 +31,7 @@ startNum2 = len(part1[startNum::])
 convertString = 'convert %s -colorspace Gray -density 10 -flop animation%g.png' 
 #convertString = 'convert %s -colorspace Gray -density 10 -flop -contrast-stretch -75x0 animation%g.png' 
 
-os.system('rm *.png')
+#os.system('rm *.png')
 
 # Convert
 for i,fileName in enumerate(part1[startNum::]):

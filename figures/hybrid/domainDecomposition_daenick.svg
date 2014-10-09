@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+    xmlns:latexdraw="http://latexdraw.sourceforge.net/namespaces/latexdraw"
+    version="1.1" baseProfile="full">
+    <defs>
+        <pattern latexdraw:type="crosshatch"
+            latexdraw:rotationAngle="0.0" latexdraw:size="20.0"
+            patternUnits="userSpaceOnUse" id="pattern944" x="0" y="0"
+            width="665" height="428">
+            <g stroke="#969696" stroke-width="0.5" stroke-dasharray="none">
+                <path d="M 65.0 128.0 L 65.0 428.0 M 85.5 128.0 L 85.5 428.0 M 106.0 128.0 L 106.0 428.0 M 126.5 128.0 L 126.5 428.0 M 147.0 128.0 L 147.0 428.0 M 167.5 128.0 L 167.5 428.0 M 188.0 128.0 L 188.0 428.0 M 208.5 128.0 L 208.5 428.0 M 229.0 128.0 L 229.0 428.0 M 249.5 128.0 L 249.5 428.0 M 270.0 128.0 L 270.0 428.0 M 290.5 128.0 L 290.5 428.0 M 311.0 128.0 L 311.0 428.0 M 331.5 128.0 L 331.5 428.0 M 352.0 128.0 L 352.0 428.0 M 372.5 128.0 L 372.5 428.0 M 393.0 128.0 L 393.0 428.0 M 413.5 128.0 L 413.5 428.0 M 434.0 128.0 L 434.0 428.0 M 454.5 128.0 L 454.5 428.0 M 475.0 128.0 L 475.0 428.0 M 495.5 128.0 L 495.5 428.0 M 516.0 128.0 L 516.0 428.0 M 536.5 128.0 L 536.5 428.0 M 557.0 128.0 L 557.0 428.0 M 577.5 128.0 L 577.5 428.0 M 598.0 128.0 L 598.0 428.0 M 618.5 128.0 L 618.5 428.0 M 639.0 128.0 L 639.0 428.0 M 659.5 128.0 L 659.5 428.0 M 65.0 128.0 L 665.0 128.0 M 65.0 148.5 L 665.0 148.5 M 65.0 169.0 L 665.0 169.0 M 65.0 189.5 L 665.0 189.5 M 65.0 210.0 L 665.0 210.0 M 65.0 230.5 L 665.0 230.5 M 65.0 251.0 L 665.0 251.0 M 65.0 271.5 L 665.0 271.5 M 65.0 292.0 L 665.0 292.0 M 65.0 312.5 L 665.0 312.5 M 65.0 333.0 L 665.0 333.0 M 65.0 353.5 L 665.0 353.5 M 65.0 374.0 L 665.0 374.0 M 65.0 394.5 L 665.0 394.5 M 65.0 415.0 L 665.0 415.0 "/>
+            </g>
+        </pattern>
+        <marker overflow="visible" orient="auto" id="arrow1-948">
+            <path
+                d="M 0.0 0.0 L 7.452083333333333 2.6614583333333335 L 4.4712499999999995 0.0 L 7.452083333333333 -2.6614583333333335 z "
+                latexdraw:arrSizeNum="4.0" fill="black"/>
+        </marker>
+        <marker overflow="visible" orient="auto" id="arrow2-948">
+            <path
+                d="M 0.0 0.0 L -7.452083333333333 2.6614583333333335 L -4.4712499999999995 0.0 L -7.452083333333333 -2.6614583333333335 z "
+                latexdraw:arrSizeNum="4.0" fill="black"/>
+        </marker>
+        <marker overflow="visible" orient="auto" id="arrow1-949">
+            <path
+                d="M 0.0 0.0 L 7.452083333333333 2.6614583333333335 L 4.4712499999999995 0.0 L 7.452083333333333 -2.6614583333333335 z "
+                latexdraw:arrSizeNum="4.0" fill="black"/>
+        </marker>
+    </defs>
+    <g>
+        <g latexdraw:type="ellipse" id="id944" transform="rotate(14.885108222606855) translate(59.16473899672451 -103.09066865418359)">
+            <ellipse cx="365.0" cy="278.0" rx="299.0" ry="149.0"
+                latexdraw:borderPos="outer" stroke-width="2.0"
+                stroke="black" fill="url(#pattern944)"/>
+        </g>
+        <g latexdraw:type="ellipse" id="id946" transform="rotate(14.885108222606855) translate(59.16473899672451 -103.09066865418359)">
+            <ellipse cx="365.0" cy="278.0" rx="199.0" ry="22.0"
+                latexdraw:borderPos="outer" stroke-width="2.0"
+                stroke="black" fill="#969191"/>
+        </g>
+        <g latexdraw:type="line" id="id948">
+            <line x1="316.0" x2="349.0" y1="419.0" y2="295.0"
+                stroke-width="2.0" stroke="black"
+                latexdraw:rotationAngle="-0.023433209879467568"
+                marker-start="url(#arrow1-948)" marker-end="url(#arrow2-948)"/>
+        </g>
+        <g latexdraw:type="line" id="id949">
+            <line x1="359.0" x2="406.0" y1="253.0" y2="68.0"
+                stroke-width="2.0" stroke="black"
+                latexdraw:rotationAngle="0.0" marker-start="url(#arrow1-949)"/>
+        </g>
+        <g latexdraw:type="text" id="id950" font-family="Dialog"
+            fill="black" font-size="44" latexdraw:x="294.0">
+            <text x="294.0" y="124.0"><![CDATA[$\Omega_L$]]></text>
+        </g>
+        <g latexdraw:type="text" id="id953" font-family="Dialog"
+            fill="black" font-size="44" latexdraw:x="228.0">
+            <text x="228.0" y="393.0"><![CDATA[$\Omega_E$]]></text>
+        </g>
+    </g>
+    <metadata>
+        <latexdraw:metadata>
+            <latexdraw:displayBorders>false</latexdraw:displayBorders>
+            <latexdraw:autoAdjust>true</latexdraw:autoAdjust>
+            <latexdraw:ppc>50</latexdraw:ppc>
+            <latexdraw:zoom>1.5</latexdraw:zoom>
+            <latexdraw:unit>cm</latexdraw:unit>
+            <latexdraw:classicGrid>false</latexdraw:classicGrid>
+            <latexdraw:gridGap>10</latexdraw:gridGap>
+            <latexdraw:code>0</latexdraw:code>
+            <latexdraw:displayGrid>true</latexdraw:displayGrid>
+            <latexdraw:magneticGrid>false</latexdraw:magneticGrid>
+            <latexdraw:autoUpdate>true</latexdraw:autoUpdate>
+            <latexdraw:version>2.0.8</latexdraw:version>
+            <latexdraw:size>
+                <latexdraw:width>1249</latexdraw:width>
+                <latexdraw:height>1056</latexdraw:height>
+            </latexdraw:size>
+            <latexdraw:position>
+                <latexdraw:x>545</latexdraw:x>
+                <latexdraw:y>24</latexdraw:y>
+            </latexdraw:position>
+            <latexdraw:dividerPosition>0.6357085668534828</latexdraw:dividerPosition>
+            <latexdraw:displayCodePanel>true</latexdraw:displayCodePanel>
+            <latexdraw:displayXScale>true</latexdraw:displayXScale>
+            <latexdraw:displayYScale>true</latexdraw:displayYScale>
+            <latexdraw:delimitorOpacity>130</latexdraw:delimitorOpacity>
+        </latexdraw:metadata>
+    </metadata>
+</svg>
