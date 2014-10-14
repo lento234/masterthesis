@@ -74,7 +74,7 @@
 	Daeninck's the simplified coupling strategy focused on the vorticity-velocity formulation for the Eulerian domain. However, he briefly showed that it is also possible to couple the Eulerian method with the velocity-pressure formulation. The advantage of using the velocity-pressure formulation is that it will be easier to extend to a 3D problem, unlike the vorticity-velocity formulation for the Eulerian method.
 	
 	\subsection{Coupling Algorithm}	
-	
+	\label{subsec:hybrid-ca}
 	The coupling of the solvers was described in one global time stepping algorithm. As the Eulerian methods suffers from a larger stability constraint on the time step, and the Lagrangian time marching is computationally more expensive, a  different time discretization for both methods was employed. The Lagrangian method and the Eulerian method had the time steps $\Delta t_L$ and $\Delta t_E=\Delta t_L/k_E$, respectively, where $k_E$ is the number of Eulerian sub-steps.
 	
 	Assuming that we known the solutions of both solver at $t_n$, the algorithm for the coupled time marching from $t_n$ to $t_n+\Delta t_L$ for Eulerian method (with velocity-pressure formulation) and the Lagrangian method is summarized as follows:
@@ -99,7 +99,7 @@
 	\end{figure}		
 	
 	\subsection{Lagrangian Correction Step}
-	
+	\label{subsec:hybrid-lcs}
 	The coupling strategy demonstrated by Daeninck \cite{Daeninck2006}, was studied and was further extended by Stock \cite{Stock2010a}. Stock's work focused on the overlap region $\Omega_E\cap\Omega_L$ (Figure \ref{fig:domainDecomposition_daenick}) and correction of the Lagrangian solution. Following observations was determined by the work:
 	
 	\begin{itemize}

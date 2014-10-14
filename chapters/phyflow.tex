@@ -1,6 +1,6 @@
 \chapter{Introduction to the Hybrid Solver: \texttt{pHyFlow}}
 
-We have implemented the algorithms described in chapter \ref{ch:lagrangian}, \ref{ch:eulerian}, and \ref{ch:hybrid} into \texttt{pHyFlow}, an acronym for  \textbf{p}ython \textbf{Hy}brid \textbf{Flow} solver. \texttt{pHyFlow} functions a fluid dynamics computational library in python, that has implemented the Eulerian solver, the Lagrangian solver (without vorticity diffusion of panels). These solver can used as a standalone solver (for test purposes), or can be coupled together to make the Hybrid solver. 
+We have implemented the algorithms described in chapters \ref{ch:helvpm} to \ref{ch:coupling} into \texttt{pHyFlow}, an acronym for \textbf{p}ython \textbf{Hy}brid \textbf{Flow} solver. \texttt{pHyFlow} functions a fluid dynamics computational library in python, that has implemented the Eulerian solver, the Lagrangian solver (without vorticity diffusion of panels). These solver can used as a standalone solver (for test purposes), or can be coupled together to make the Hybrid solver. 
 
 
 The features of \texttt{pHyFlow} can be summarized as follows:
@@ -88,7 +88,7 @@ The \texttt{pHyFlow} library serves as a computing environment for \python progr
 \item \texttt{panels}: This module contains all the vortex panel operations and is wrapped in the class \texttt{Panels}, an the Panel method solver object. Algorithms of the vortex panel defined in chapter \ref{ch:lagrangian} is implemented in this module
 \item \texttt{lagrangian}: This module contains all the vortex blob and vortex panel coupling function and wrapped in the \texttt{LagrangianSolver} class and containing all the high-level function for managing the Lagrangian solver. THe vortex panel, vortex blob coupling algorithm described in chapter \ref{ch:lagrangian} is implemented in this module.
 \item \texttt{eulerian}: This module contains all the Navier-Stokes grid operations and wrapped in the \texttt{EulerianSolver} class, that containing all the high-level function for defining and managing the Eulerian solver. Algorithms explained in chapter \ref{ch:eulerian} is implemented in this module.
-\item \texttt{hybrid}: This module contains all the functions related to coupling of the Lagrangian and the Eulerian solver, summarized in section \ref{sec:correction}, \ref{sec:evolveLagrangian}, and \ref{sec:evolveEulerian}. The functions are wrapped in the \texttt{HybridSolver} class and manages the global coupling process.
+\item \texttt{hybrid}: This module contains all the functions related to coupling of the Lagrangian and the Eulerian solver, summarized in section \ref{sec:coupling-mlca}, \ref{sec:la-eolm}, and \ref{sec:eu-eotem}. The functions are wrapped in the \texttt{HybridSolver} class and manages the global coupling process.
 
 \end{itemize}
 

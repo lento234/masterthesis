@@ -279,7 +279,7 @@ meaning that the particle carries the circulation of its local area. This might 
 
 Figure \ref{fig:particleInitialization} shows the initialization of the vorticity field using the equation 	\ref{eq:particleCirculationAssignment}. We observed that the mollified vorticity field $\omega^h$, deviates from the original intended vorticity distribution $\omega$. Barba and Rossi \cite{Barba2010a}, have described this problem as Gaussian blurring of the original vorticity field due to use of mollified vortex kernel $\zeta_{\sigma}$ in equation 	\ref{eq:mollifiedVorticityField}. Even though the total circulation is conserved, locally we see that the circulation is not conserved. 
 
-This phenomenon causes issue during the coupling of the Lagrangian method and the Eulerian method, as particle in the overlap region are re-initialized at every step of the hybrid method. This error in initialization posses a challenge in the coupling of the method and is described in section \ref{subsec:hy_iwtca}.
+This phenomenon causes issue during the coupling of the Lagrangian method and the Eulerian method, as particle in the overlap region are re-initialized at every step of the hybrid method. This error in initialization posses a challenge in the coupling of the method and is described in section \ref{subsec:coupling-vpri}.
 
 A typical strategy for recovering the intended distribution is the Beale's Iterative Method \cite{Beale1988}, as used by Koumoutsakos and Cottet \cite{Cottet2000a}. The method is particle circulation processing scheme where the circulation $\alpha_p$ of the particles are modified iteratively such that the mollified vorticity field $\omega^h$ matches the original distribution $\omega$. However, the Beale's method required the correction of complete vorticity field in fluid domain and cannot be used to correct only part of the fluid domain, as required for our decomposed domain method. Therefore, an alternate method is required to minimized the error in particle initialization.
 
@@ -588,7 +588,7 @@ as depicted in Figure \ref{fig:simpleRedistribution}. Note that $\xi_1 = \xi - 1
 
 For the 2D, the redistribution fractions are simple tensors product of the $x$ and $y$ 1D redistribution fractions,
 	\begin{equation}
-	W_{kl} = F_k G_l, \quad k = i-1,\cdots,i+2, \quad \l = j-1,\dots,j+2,
+	W_{kl} = F_k G_l, \quad k = i-1,\cdots,i+2, \quad\ l = j-1,\dots,j+2,
 	\end{equation}
 with a 16 point stencil when $\xi=1/2$.
 
@@ -743,6 +743,9 @@ An additional constraint is obtained from Kelvin's circulation theorem stating t
 
 where $\Gamma_{\gamma}$ is the integral of the vortex sheet strengths $\gamma$. The total circulation of the vortex sheet $\Gamma_{\gamma}$ is determined during the hybrid coupling of the Lagrangian method to the Eulerian method, see section \ref{subsubsec:cc}.
 
+\todo{update the figure, maybe show the domain decomposition}
+
+\todo{Talk about the correct method, i.e the spectral decomposition of the kernel used by koumoutsakos.}
 
 
 \begin{comment}
@@ -977,9 +980,11 @@ body $b$ on body $a$ and body $a$ on body $b$, respectively. The final two rows 
 
 
 \section{Evolution of the Lagrangian method}
-
+\label{sec:la-eolm}
 The algorithm of the full Lagrangian method is summarized in this section. The full or complete	Lagrangian method is the coupled vortex blobs and the vortex panels. Note that for our hybrid scheme, the panel does not act as the source of the vorticity in the Lagrangian method (which is done by the Eulerian method), but instead simply enforces the \emph{no-slip} boundary condition for the vortex blobs.
 	
+\todo{add the general evolution figure, highlight the lagrangian part}	
+
 	\begin{figure}[!h]
 		\centering
 		\begin{tikzpicture}
@@ -996,14 +1001,15 @@ The algorithm of the full Lagrangian method is summarized in this section. The f
 	
 The flowchart of one time step of the Lagrangian method is given by Figure \ref{fig:flowchart_lagrangian}.The algorithm to the Lagrangian method can be summarized as follows:
 	\begin{enumerate}
-	\item \textbf{Solve for panels:} Determine the strengths of the vortex panels $\gamma$, such that the no-slip boundary condition at the collocation points of the vortex panels is enforced. When determining the strengths, we also have to ensure that the total circulation of the vortex panels satisfies the conservation of circulation, equation \ref{eq:circulationConstraintonPanels}, which we investigate during the hybrid coupling, section \ref{subsubsec:cc}.
+	\item \textbf{Solve for panels:} Determine the strengths of the vortex panels $\gamma$, such that the no-slip boundary condition at the collocation points of the vortex panels is enforced. When determining the strengths, we also have to ensure that the total circulation of the vortex panels satisfies the conservation of circulation, equation \ref{eq:circulationConstraintonPanels}, which we investigate during the hybrid coupling, section \ref{subsec:coupling-covs}.
+	
 	\item \textbf{Evaluate the total velocity field:} Evaluate the total velocity field $\mathbf{u}$, which is the sum of velocity field induced by the vortex blobs $\mathbf{u}_{\omega}$, the velocity field induced by the vortex panels $\mathbf{u}_{\gamma}$, and the free-stream velocity field $\mathbf{u}_{\infty}$. 
 	\item \textbf{Convect the vortex blobs:} Use the velocity field to convect the vortex blobs from $t_n$ to $t_{n+1}$ to the new position.
 	\item \textbf{Remesh the Lagrangian field:} Remesh the vortex blobs onto a structured square lattice using the $\mathrm{M}'_4$ interpolation kernel.
 	\item \textbf{Diffuse the vortex blobs:} Diffuse the vortex blobs using the $\Delta t_d$ diffusion time step, by modifying the strengths of the vortex blobs according to Wee's WRS or Tutty's TRS method.
 	\end{enumerate}
 
-The generation of the vorticity is dealt with in the Eulerian subdomain, which is explained in chapter \ref{ch:eulerian}. The vorticity is then transfered into the Lagrangian domain using the Hybrid coupling scheme, which was summarized in the introduction, chapter \ref{ch:introduction}, and fully elaborated in chapter \ref{ch:hybrid}.
+The generation of the vorticity is dealt with in the Eulerian subdomain, which is explained in chapter \ref{ch:eulerian}. The vorticity is then transfered into the Lagrangian domain using the Hybrid coupling scheme, which was summarized in the introduction, chapter \ref{ch:introduction}, and fully elaborated in chapter \ref{ch:coupling}.
 
 %
 \section{Validation of Lagrangian method}
@@ -1347,7 +1353,7 @@ In section \ref{sec:introtovpm}, an introduction to the VPM was given. We determ
 
 The viscous splitting algorithm enabled to perform diffusion and convection of the fluid is segregated steps. The discretization of the fluid through vortex blobs was investigated in section \ref{sec:spatialDiscretization}. These fluid elements has non-zero core size, removing the singularity when performing Biot-Savart calculations. 
 
-In section \ref{subsec:vortexBlobInitialization}, we investigate the initialization of the vortex blobs. The proper initialization of the vortex blobs is a key factor for accurate coupling of Lagrangian method and the Eulerian method. The strengths of these particles is initialized by assigning the local circulation strength to the particle, as in equation \ref{eq:particleCirculationAssignment}. When the coupling is performed, it will be seen that the Gaussian blurring of the original vorticity field during the initialization is the fundamental source of error, section \ref{subsubsec:vfie}. Strategies such as Beale's iterative method, cannot be used as it is defined for an unbounded domain. The only approach found to minimize the Gaussian spreading initialization error is to increase the overlap ratio to $\lambda=1$, and minimize the blob spacing $h$ as much as possible, while keeping the computational effort to an acceptable level. The optimal strategy for the initialization of the vortex blob strengths is still an open question, and if solved can significantly improve the accuracy and the efficiency of the hybrid coupling
+In section \ref{subsec:vortexBlobInitialization}, we investigate the initialization of the vortex blobs. The proper initialization of the vortex blobs is a key factor for accurate coupling of Lagrangian method and the Eulerian method. The strengths of these particles is initialized by assigning the local circulation strength to the particle, as in equation \ref{eq:particleCirculationAssignment}. When the coupling is performed, it will be seen that the Gaussian blurring of the original vorticity field during the initialization is the fundamental source of error, section 	\ref{subsec:coupling-vpri}. Strategies such as Beale's iterative method, cannot be used as it is defined for an unbounded domain. The only approach found to minimize the Gaussian spreading initialization error is to increase the overlap ratio to $\lambda=1$, and minimize the blob spacing $h$ as much as possible, while keeping the computational effort to an acceptable level. The optimal strategy for the initialization of the vortex blob strengths is still an open question, and if solved can significantly improve the accuracy and the efficiency of the hybrid coupling
 
 In section \ref{sec:covb}, we investigated the convection of the vortex blobs. The convection is performed using a $4^{\mathrm{th}}$-order Runge-Kutta time integration method. However, due to high strains in the fluid, the Lagrangian grid distortion of the vortex blob lattice has to be dealt with, section \ref{subsec:remeshing}. For this reason, we used a $\mathrm{M}'_4$ interpolation kernel that remeshed the particles onto a structured grid.
 

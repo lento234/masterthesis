@@ -1,30 +1,368 @@
 \chapter{Coupling Eulerian and Lagrangian Method}
 \label{ch:coupling}
+
 % chapter outline
 % summarize previous chapters with references
-
 %\section{Introduction to Hybrid Eulerian-Lagrangian \\Vortex Particle Method}
-stuff
 
-\section{Correction of Lagrangian Subdomain}
+Chapter \ref{ch:helvpm} provided a detailed summary on Hybrid Eulerian-Lagrangian Vortex Particle Method. We introduced the concept of coupling a Lagrangian and an Eulerian method. The coupling algorithm without Schwartz iterative method used by Daeninck \cite{Daeninck2006} was summarized. We then described the Lagrangian correction algorithm used demonstrated by Stock \cite{Stock2010a}. However, when investigating the strategy, we observe some issues with the correction algorithm.
 
-	\subsection{Issues with the correction strategy}			
-		% Summarize the issues
+\section{Modifications to the Lagrangian Correction Strategy}
+\label{seec:coupling-mthlcs}
+The Lagrangian correction step by Stock \cite{Stock2010a}, based on coupling strategy of Daeninck \cite{Daeninck2006} had to be modified in the present work. During the investigation of the algorithm, it became apparent that without additional steps, the total circulation in the Lagrangian method will be violated.
 
-	\subsection{Modified correction strategy}			
-		% Algorithm to the coupled evolution of the hybrid method.
-		% Refer to chapters
-		% Flow charts.
-		% Refer to the code
-		% Proposed modifications
+The two issues that causes an error in the total circulation is as follows:
+	\begin{itemize}
+	\item \textbf{Vortex particle re-initialization}: In section \ref{subsec:vortexBlobInitialization}, we observed that initializing the particle using the local particle volume and local vorticity causes a diffusive effect on the vorticity distribution due to the \textit{smoothing error} of Gaussian kernels. Section 	\ref{subsec:coupling-vpri} elaborates the cause and correction required for this problem.
+	
+	\item \textbf{Circulation of Vortex sheet}: In section \ref{sec:boundaryConditions}, we saw that due to singular nature of the vortex panels, we require an additional constraint on total circulation of the vortex sheet. It is an unknown and has to be determined from the solution of the Eulerian method. Section \ref{subsec:coupling-covs} elaborates the methodology for determining the strength.
+	\item \textbf{Conservation of total circulation}: The Lagrangian correction step, consisting of re-initializing the vortex blobs inside the interpolation domain $\Omega_I$, Figure \ref{fig:interpolationDomainDefinition}, and the transfer of circulation to the vortex panels must ensure that the total circulation in the Lagrangian method is conserved. Section \ref{subsec:coupling-cotc} elaborates the methodology used to explicitly ensuring the Lagrangian correction step conserves circulation of the Lagrangian method.
+	\end{itemize}
 
-	\subsubsection*{Probing vorticity}
-	\subsubsection*{Removing blobs}
-	\subsubsection*{Generating blobs}
-	\subsubsection*{Correcting total circulation}
+	\subsection{Vortex Particle Re-initialization}
+	\label{subsec:coupling-vpri}
+	The Lagrangian correction step requires the correction of the vortex particle strengths inside the interpolation domain $\Omega_{I}$. To illustrate, we use a simple unbounded problem (without bodies), where the Eulerian domain $\Omega_E$ resolves a subset of the Lagrangian domain $\Omega_E:\Omega_E\subset\Omega_L$, as shown in Figure \ref{fig:interpolationDomainDefinition}. The interpolation domain $\Omega_I\subset\Omega_E$ defines the Lagrangian correction region.
+	
+	\subsubsection*{Concern with re-initialization method}
+
+	To understand the origin of the error, lets assume that the Eulerian vorticity solution $\omega$ used to initialize the Lagrangian particles is exact. The Lagrangian method discretizes the vorticity field $\omega$ by $N$ linear combination of Gaussian basis functions, representing a continuous vorticity field $\hat{\omega}$:
+		\begin{equation}
+		\omega \approx \hat{\omega}(\mathbf{x}) = \sum_{i=1}^{N} \alpha_i \zeta_{\sigma}(\mathbf{x} - \mathbf{x}_i).
+		\label{eq:coupling-mollifiedVorticityDistributionEquation}
+		\end{equation}
+	
+	In vortex method, and by Stock \cite{Stock2010a}, it is typically a standard approach to initialize the particle strengths $\alpha_i$ using the local particle area $h^2$ and the local vorticity $\omega$,
+		\begin{equation}
+		\alpha_i = \omega_i\cdot{h^2}.
+		\label{eq:coupling-standardInitialization}
+		\end{equation}
+	
+	where $\alpha_i$ is the strength of the particle $\mathbf{x}_i\in\Omega_L$. However, in section \ref{subsec:vortexBlobInitialization}, we observed that this type off initialization introduces a \textit{smoothing error}. Barba and Rossi \cite{Barba2010a} noticed that this standard initialization corresponds to a Gaussian blurring of the original vorticity field and is equivalent to the blurring of the vorticity. 
+	
+	The accurate re-initialization of the Lagrangian vorticity field $\hat{\omega}$ in $\Omega_I$ must satisfy the following equality:
+		\begin{equation}
+		\omega^E = \hat{\omega}^L \qquad \mathrm{in}\ \Omega_I
+		\label{eq:coupling-eqa1}
+		\end{equation} 
+	ensuring that the vorticity solution of the Eulerian method $\omega^E$ matches the mollified Lagrangian vorticity field $\hat{\omega}^L$. Substituting equation \ref{eq:coupling-mollifiedVorticityDistributionEquation} into Equation \ref{eq:coupling-eqa1} gives:
+		\begin{equation}
+		\omega^E = \sum_{i=1}^{N} \alpha_i \zeta_{\sigma}(\mathbf{x} - \mathbf{x}_i), \qquad \forall\ \mathbf{x}_i \in \Omega_I
+		\end{equation}
+	simplifying to,
+		\begin{equation}
+		\omega^E = \mathbf{A}_{ij}\alpha_i \qquad \mathrm{in}\ \Omega_I
+		\label{eq:coupling-initialization}
+		\end{equation}
+	where $\mathbf{A}_{ij}=\zeta_{\sigma}(\mathbf{x}_j-\mathbf{x_i})$ is a coefficient matrix. Therefore the strengths of the particles $\alpha_i$ must be obtained from equation \ref{eq:coupling-initialization} and initialize of the particles using equation \ref{eq:coupling-standardInitialization} is mathematically incorrect. 
+	
+	Equation \ref{eq:coupling-initialization} is a linear system of equations equating the strengths of each particle to the indented vorticity distribution. However, inverting the matrix $\mathbf{A}$ is still an open equation in vortex method, as stated by Koumoutsakos and Cottet \cite{Cottet2000a}, and investigated of Barba and Rossi \cite{Barba2010a}. The problem is that the matrix $\mathbf{A}$ is full and badly condition for direct inversion. For a global field interpolation (i.e for unbounded domain), one could use Beale's iterative method which uses a \printAcron{successive over-relaxation}{SOR} for solving the equation \ref{eq:coupling-initialization}. This method relies on iterative correction of all the particles $\mathbf{x}_i \in \Omega_L$, in the full Lagrangian domain. However, in our case of initializing the strengths of the particles $\mathbf{x}_i$ in the sub-domain $\Omega_{I}$ of the Lagrangian domain $\Omega_L$, it would require us to modify the strength of only the particles $\mathbf{x}_i$. In such case, Beale's iterative method is not valid and cannot be used. Therefore, Beale's method cannot be used to solve the problem of smoothing error.
+
+	In future, the key to solving this smoothing error might be in the research works of Barba and Rossi \cite{Barba2010a}, where they try to reverse the blurring of the vorticity field by reversing the ``diffusion" caused by the smoothing kernel. However, currently for our investigation the best solution is to minimize the error in equation \ref{eq:coupling-standardInitialization}.
+
+	\subsubsection*{Modification}
+
+	The mismatch in the Eulerian vorticity field $\omega^E$ and the corrected Lagrangian vorticity $\hat{\omega}^L$ in the interpolation domain $\Omega_I$, Figure \ref{fig:interpolationDomainDefinition}, results in an error $\epsilon$ defined as,
+			\begin{equation}
+			\epsilon = |\omega^E - \hat{\omega}^L| \qquad \mathrm{in}\ \Omega_I
+			\label{eq:coupling-errorDefinition}
+			\end{equation}
+	where,
+			\begin{equation}
+			\epsilon = \epsilon_{\sigma} + \epsilon_h,
+			\label{eq:coupling-totalError}
+			\end{equation}
+	the sum of the smoothing error $\epsilon_{\sigma}$, and the discretization error $\epsilon_h$. In section \ref{subsubsec:convergenceInterpolation}, we investigated the minimization of this error. We observed that $\epsilon$ scales with the particle resolution. An overlap ratio of $\lambda=1$, a minimizing the particle core spreading $\sigma$, reduces the initialization error inside the interpolation domain $\Omega_I$. It was determined that an appropriate core spreading $\sigma$ should give an initialization error $\epsilon\leqslant5\%$.
+	
+
+	\subsection{Circulation of Vortex sheet}
+	\label{subsec:coupling-covs}
+	
+	The second concern with the implementation of Daeninck's coupling strategy and Stock's Lagrangian correction step is the uncertainty of the vortex sheet strengths. In section \ref{subsec:hybrid-ca}, we described that to time-march the Lagrangian solution from $t_n$ to $t_{n}+\Delta t_L$, we have enforce a \textit{no-slip} boundary condition at the wall by computing the satisfactory vortex sheet distribution $\gamma$. 
+	
+	To solve for the vortex sheet distribution $\gamma$ that satisfy the no-slip boundary conditions, we discretized the boundary integral equation using vortex panels, section \ref{sec:boundaryConditions}. Koumoutsakos \cite{Koumoutsakos1993b}, related the vortex sheet strengths to the no-slip boundary conditions with Fredholm integral equation of the second kind, equation \ref{eq:fredholmIntegral2ndKind}. However, this equation is singular and accepts non-unique solution and therefore requires an additional constraint. Kelvin's circulation theorem imposes a direct constraint on the integral strengths of the vortex sheet, equation \ref{eq:circulationConstraintonPanels}, and can be used to find the unique solution. 
+	
+	In order to describe the approach to determine the solution to this problem, let us investigate a hybrid problem with $N_E$ number of Eulerian subdomain $\Omega_E^k\subset\Omega_L$, where $k=\{1,...,N_E\}$ is the indices of the Eulerian subdomain, shown in Figure \todo{??}. Stock \cite{Stock2010a} stated that the Eulerian solution is assumed to be correct from the body surface $\Sigma_w^k$ to somewhat inside of the outer Eulerian domain $\Sigma_d^k$, i.e all the Eulerian solution within $\Omega_{in}^k: \partial\Omega_{in}^k = \Sigma_o$. During the Lagrangian correction step, the vortex particles $\mathbf{x}_i\in\Omega_I^k$ are corrected using the Eulerian solution. Therefore, all the other Eulerian solution within $\Sigma_o^k$ that was not transfered during the Lagrangian correction step should belong to the vortex sheet. In other words, the total Eulerian circulation in $\Omega_{in}$ should be equal to the total Lagrangian circulation in $\Omega_{in}$,
+		\begin{equation}
+		\Gamma_{\Omega_{in}^k}^E = \hat{\Gamma}_{\Omega_{in}^k}^L \qquad \mathrm{in}\ \Omega_{in},
+		\label{eq:coupling-equalitil2}
+		\end{equation}	
+	where $\Gamma_{\Omega_{in}^k}^E$ is the total circulation of the Eulerian solution in the $k^{\mathrm{th}}$ correction region $\Omega_{in}^k$ and the total circulation of the correction Lagrangian solution is given as,
+		\begin{equation}
+		\hat{\Gamma}_{\Omega_{in}^k}^L = \Gamma_{\gamma^k}^L + \hat{\Gamma}_{\Omega_{I}^k}^L,
+		\label{eq:coupling-vs2}
+		\end{equation}
+	with $ \Gamma_{\gamma^k}^L$ as the total circulation of the vortex sheet of the $k^{\mathrm{th}}$ domain. The total circulation of the re-initialized particles $\hat{\Gamma}_{\Omega_{I}^k}^L$ is determined by,
+		\begin{equation}
+		\hat{\Gamma}_{\Omega_I^k}^L = \sum\limits_{i=1}^{N} \hat{\alpha}_i \qquad \mathrm{in}\ \Omega_I^k,
+		\end{equation}
+	where $\hat{\alpha}_i$ is the strength of the re-initialized particles determined using equation 		\ref{eq:coupling-standardInitialization}. Substituting equation \ref{eq:coupling-vs2} into equation \ref{eq:coupling-equalitil2} gives our unknown,
+		\begin{equation}
+		\Gamma_{\gamma^k}^L = \Gamma_{\Omega_{in}^k}^E - \hat{\Gamma}_{\Omega_{I}^k}^L.
+		\end{equation} 
+	
+	With the additional constraint on the circulation of the vortex sheet, we can follow the procedures described in section \ref{sec:boundaryConditions}, and solve the strengths of the vortex sheet satisfy the no-slip boundary condition. 
+	
+	\subsection{Conservation of Total Circulation}
+	\label{subsec:coupling-cotc}
+	
+	The Lagrangian correction strategy of Stock \cite{Stock2010a}, does not explicitly ensure the conservation of total circulation in the fluid. Furthermore, in section \ref{subsec:coupling-vpri} we saw the re-initialization of the vortex blobs introduces an inherent error into the Lagrangian domain and will resulting in a slight error in the total circulation. Therefore, in this section we will investigate the approach to ensure conservation of total circulation.
+	
+	The Lagrangian domain $\Omega_L$ is divided into two section (as shown in Figure \todo{??}): 
+		\begin{itemize}
+		\item Modified region $\Omega_{in}$: The Lagrangian region that is inside the interpolation domains and is modified during the correction step: $\Omega_{in} = \bigcup_{k=1}^{N_E}{\Omega_{in}^k}$, where $\Omega_{in}^k: \partial\Omega_{in}^k = \Sigma_{o}^k$.
+		\item Unmodified region $\Omega_{in}$: The Lagrangian region that is outside the correction region and is therefore unmodified during the correction step: $\Omega_{out} = \Omega_L\backslash\Omega_{in}$.
+		\end{itemize}
+	
+	Before the correction of the Lagrangian solution, the total circulation in the Lagrangian domain $\Omega_L$ is given as,
+		\begin{equation}
+		\Gamma_{\Omega_L} = \Gamma_{\Omega_{in}} + \Gamma_{\Omega_{out}},
+		\label{eq:couping-uncorrected}
+		\end{equation}
+	where $\Gamma_{\Omega_{in}}$ is sum of circulation of the particles inside $\Omega_{in}$ before they are corrected, and $\Gamma_{\Omega_{out}}$ is the sum of circulation of the particles in $\Omega_{out}$. 
+	
+	The Lagrangian correction replaces $\Gamma_{\Omega_{in}}$ with the corrected circulation $\tilde{\Gamma}_{\Omega_{in}}$, resulting in a new total Lagrangian circulation given as,
+		\begin{equation}
+		\tilde{\Gamma}_{\Omega_L} = \tilde{\Gamma}_{\Omega_{in}} + \Gamma_{\Omega_{out}},
+		\label{eq:coupling-totalLC}
+		\end{equation}
+	where $\tilde{\Gamma}_{\Omega_L}$ is the total circulation of the Lagrangian domain after the correction, $\tilde{\Gamma}_{\Omega_{in}}$ is the corrected circulation inside $\Omega_{in}$ and total circulation outside $\Gamma_{\Omega_{out}}$ remains unchanged. To ensure conservation of circulation we required that $\Delta \Gamma=0$, and so we have,
+		\begin{equation}
+		\Gamma_{\Omega_L} = \tilde{\Gamma}_{\Omega_L},
+		\label{eq:coupling-conserveEq}
+		\end{equation}
+	and substituting equation \ref{eq:couping-uncorrected} and equation \ref{eq:coupling-totalLC} into equation 		\ref{eq:coupling-conserveEq} gives,
+		\begin{equation}
+		\Gamma_{\Omega_{in}} = \tilde{\Gamma}_{\Omega_{in}}.
+		\label{eq:coupling-conserEq2}
+		\end{equation}
+
+	Therefore, the circulation inside $\Omega_{in}$ before the correction should match the circulation after the correction. However, as there exists a slight error in the correction steps, we have that,
+		\begin{equation}
+		\hat{\Gamma}_{\Omega_{in}} = \tilde{\Gamma}_{\Omega_{in}} + \epsilon_{\Gamma}
+		\label{eq:coupling-circError}
+		\end{equation}
+	where $\hat{\Gamma}_{\Omega_{in}}$ is circulation that was actually transfered, $\tilde{\Gamma}_{\Omega_{in}}$ is the correct circulation that was supposed to be transferred, and $\epsilon_{\Gamma}$ is the error in the transfer. The error in circulation can be determined by substituting equation \ref{eq:coupling-circError} into equation 		\ref{eq:coupling-conserEq2}:
+		\begin{equation}
+		\epsilon_{\Gamma} = \hat{\Gamma}_{\Omega_{in}} - \Gamma_{\Omega_{in}}.
+		\label{eq:coupling-eq22}
+		\end{equation}
+		
+	From equation \ref{eq:coupling-eq22} and equation \ref{eq:coupling-circError}, we see that the corrected strengths of the particles $\tilde{\alpha}_i \in \Omega_{I}$ that associates with the corrected circulation $\tilde{\Gamma}_{\Omega_{in}}$ is given as,
+		\begin{equation}
+		\tilde{\alpha}_i = \alpha_i - \frac{\epsilon_{\Gamma}}{N},
+		\end{equation}
+
+	where $\alpha_i$ is the uncorrected strengths of $N$ particle associating to the uncorrected circulation $\hat{\Gamma}_{\Omega_{in}}$. Following this procedure in addition to Stocks Lagrangian correction strategy described in section \ref{subsec:hybrid-lcs}, we will ensure that our hybrid scheme conserves circulation.
+	
+	%	
+%	
+%	. To satisfy equation ??, we must negate this error, and therefore the true corrected circulation in $\Omega_{in}$ is defined as,
+%		\begin{equation}
+%		\hat{\Gamma_{\Omega_L}}
+%		\end{equation}
+%		
+%	Investigation the correction strategy of Stock ?? we determine conservation of total circulation is not explicitly ensured.
+%	
+%	we need to perform additional steps to ensure that the hybrid scheme ensures conservation of total circulation.
+%
+%	However, we will still have $\epsilon>0$. The mismatch in the interpolated vorticity $\hat{\omega}|_L$ and the vorticity field solution of the Eulerian method $\omega|_E$, will resulting in a loss of total circulation during the correction process. To describe the methodology for correcting the loss in total circulation, let us look at an example unbounded problem (with solid bodies). To generalize the approach, we will investigate a hybrid setup with multiple Eulerian subdomains, Figure ??. 
+%	
+%	Let $k=\{1,...,N_E\}$, the indices of the Eulerian subdomains $\{\Omega_E^1,...,\Omega_E^k,...\Omega_E^{N_E}\}\subset\Omega_L$ with the total number of Eulerian subdomains $N_E$. Each Eulerian domain $\Omega_E^k$ has its own interpolation domain $\Omega_I^k\subset\Omega_E^k$, where the Lagrangian solution is modified using the Eulerian solutions. The Lagrangian domain therefore can be divided into unmodified $\Omega_{out}$, and modified region $\Omega_{in}$:
+%	\begin{itemize}
+%	\item Modified region $\Omega_{in}$: The Lagrangian region that is inside the interpolation domains and is modified during the correction step: $\Omega_{in} = \bigcup_{k=}^{N_E}{\Omega_{in}^k}$, where $\Omega_{in}^k=\Omega_L\cap\Omega_{I}^k$, as shown in Figure ??.
+%	\item Unmodified region $\Omega_{in}$: The Lagrangian region that is outside the correction region and is therefore unmodified during the correction step: $\Omega_{out} = \Omega_L\backslash\Omega_{in}$, shown in Figure ??.
+%	\end{itemize}
+%
+%	
+%
+%	
+%	To ensure conservation of circulation, the Lagrangian method should satisfy the Kelvin's circulation theorem, $\mathrm{d}\Gamma/\mathrm{d}t=0$. If we assume that the initial total circulation in the Lagrangian method is $\Gamma_{t=0}=0$, then the total circulation in the Lagrangian domain at all times $t$ should be,
+%		\begin{equation}
+%		\Gamma_{\Omega_{in}}|_L + \Gamma_{\Omega_{out}}|_L = 0.
+%		\end{equation}
+%
+%	The Lagrangian correction steps replaces the Lagrangian circulation inside the correction region $\Gamma_{\Omega_{in}^k}|_L$ with Eulerian circulation $\Gamma_{\Omega_{I}^k}|_E$. But due to the error in interpolation from the Eulerian method to the Lagrangian method, we will have that, 
+%		\begin{equation}
+%		\Gamma_{\Omega_{I}}|_E + \Gamma_{\Omega_{out}}|_L = \epsilon_{\Gamma},
+%		\end{equation}
+%	
+%	where $\epsilon_{\Gamma}$ is the error in total circulation due to the correction. To negate this error, we will have to modify the strengths of blobs, ensuring conservation of total circulation,
+%			\begin{equation}
+%			\hat{\alpha}_i = \alpha_i - \frac{\epsilon_{\Gamma}}{N}
+%			\end{equation}
+%	
+%	where $\hat{alpha}_i$ is the corrected particle strength, $\alpha_i$ is determined from Equation ??, and $N$ is the number of particles $\mathbf{x}_i\in\Omega_I$.		
+%
+%
+%	
 
 
-\section{Determining Eulerian boundary conditions}
+
+	%	In equation ??, if $\epsilon=0$, then have that $\Gamma_{\Omega_{in}}|_E = \Gamma_{\Omega_{in}}|_L$. However, due to error in initialization $\epsilon\not0$, at every Lagrangian correction step, there will be a loss in total circulation $\epsilon_{\Gamma}$, where
+	%		\begin{equation}
+	%		\epsilon_{\Gamma} = \Gamma_{\Omega_{in}}|_E - \Gamma_{\Omega_{in}}|_L
+	%		\end{equation}
+	%
+	%	Following the Kutta's circulation theorem, we require that the total circulation of the Lagrangian method is conserved at all times $\mathrm{d}\Gamma/\mathrm{d}t=0$. Taking $\Gamma_{t=0}=0$, we have that $\Gamma_L=0$ at all times. 
+	%	
+	%	To compensate this mismatch, by distributing the error uniformly to all the corrected vortex blobs,
 
 
-% % 
+
+	
+
+%	vorticity field $\omega^h$ is represented by a $N$ linear combination of kernel $\delta$ carrying the strengths $\alpha_i$,
+%	
+%		\begin{equation}
+%		\omega \approx \omega^h(\mathbf{x}_j) = \sum_{i=1}^N \alpha_i \delta(\mathbf{x}_j - \mathbf{x_i}).
+%		\end{equation}
+%	
+%	 The standard approach, used by Stock ?? as well, for initializing the particles using the local particle area $h^2$ and the local vorticity $\omega_i$,
+%		\begin{equation}
+%		\alpha_i = \omega_i\cdot{h^2},
+%		\end{equation}
+%	where $i$ corresponds to the vortex blobs $\mathbf{x}_i \in \Omega_{int}$.
+%	
+%	
+%
+%	
+%	The discrete vorticity field $\omega^h$ is represented by a $N$ linear combination of kernel $\delta$ carrying the strengths $\alpha_i$,
+%	
+%		\begin{equation}
+%		\omega \approx \omega^h(\mathbf{x}_j) = \sum_{i=1}^N \alpha_i \delta(\mathbf{x}_j - \mathbf{x_i}).
+%		\end{equation}
+%	
+%	where $\alpha_i$ is the strength of the particle $\mathbf{x}_i\in\Omega_L$. From section ??, the singularity of the kernel $\delta$ can removed by using a Gaussian kernel $\zeta_{\sigma}$, ensuring smooth continuous vorticity field,
+%
+%	
+%	
+%	The use of Gaussian kernels introduces additional error in the vorticity field known as the \textit{smoothing error}. In section ??, we investigated significance of the error on the accuracy of the mollified vorticity field.
+%	The resulting error $\epsilon$ of this mollified vorticity field $\hat{\omega}$ to the exact vorticity field $\omega$ is:
+%			\begin{equation}
+%			\epsilon = \epsilon_{\sigma} + \epsilon_h,
+%			\label{eq:coupling-totalError}
+%			\end{equation}
+%			
+%	the sum of the smoothing error $\epsilon_{\sigma}$ and the discretization error $\epsilon_h$. Barba and Rossi ??,  			
+%		
+%	Stock ?? assigned the strength $\alpha_i$ of the particles $x_i\in\Omega_I\subset\Omega_I$ using the standard initialization approach used in vortex methods. The standard initialization uses the local particle area $h^2$ and vorticity from the Eulerian domain $\omega^E$ at the particle $i$, such that:
+%		\begin{equation}
+%		\alpha_i = \omega_i|_L\cdot{h^2}, \qquad x_i \in \Omega_I.
+%		\end{equation}	
+
+
+%	 In section ??, we observed that when using this approach for a Gaussian kernel results in a mollification of the original intended vorticity distribution $\omega$. The Lagrangian solution of the vorticity field $\omega^L$ is discretized using $N$ vortex particles,
+%		 \begin{equation}
+%		 \omega |_L \approx \omega^h(\mathbf{x}_j) = \sum_{i=1}^N \alpha_i \delta(\mathbf{x}_j - \mathbf{x_i}).
+%		 \end{equation}
+%		 
+%	 If we use the solution of the Eulerian method $\omega^E$ to initialize the vorticity in the Lagrangian method, the resulting mollified vorticity field is:
+%	 
+%	  	\begin{equation}
+%	 	\omega^E \approx \hat{\omega}^L(\mathbf{x}) = \sum_{i=1}^{N} \alpha_i \zeta_{\sigma}(\mathbf{x} - \mathbf{x}_i).
+%	 	\label{eq:coupling-mollifiedVorticityDistributionEquation}
+%	 	\end{equation}
+%	 
+%	 where the mollified vorticity
+%	 
+%	  Barba and Rossi ??, described this phenomena as a Gaussian blurring of the original vorticity field due to the initialization, due to the \textit{smoothing error} of the Gaussian kernel.
+%	 
+%	 Figure ?? demonstrates this effect on initializing an example Gaussian vorticity distribution. For a non-decomposed domain initialization, this initialization only has an effect on the distribution of the vorticity field, but conserves the total circulation.
+%	 
+%	 However, in conjuction with a domain decomposed initialization, 
+%	 The results 
+	
+
+
+\section{Modified Lagrangian Correction Algorithm}
+\label{sec:coupling-mlca}
+	The Lagrangian correction strategy used by Stock \cite{Stock2010a} is described in section \ref{subsec:hybrid-lcs}. This section investigated the implementation of the modification to the Lagrangian correction strategy described in section \ref{seec:coupling-mthlcs}.
+		
+	The modified Lagrangian correction algorithm is summarized as follows:
+	\begin{enumerate}
+	\item \textbf{Interpolate vorticity}: Interpolate the vorticity from the unstructured Eulerian mesh onto a uniformly structured Cartesian grid covering the whole Eulerian domain $\Omega_E$.
+	\item \textbf{Remove particles}: Remove particles that are inside the interpolation domain $\Omega_{I}$.
+	\item \textbf{Generate particles}: Generate zero-strength particle inside the interpolation domain $\Omega_{I}$.
+	\item \textbf{Assign strengths of particles}: Using the standard particle initialization approach described in section \ref{subsec:coupling-vpri}, assign the strengths of the newly generated particles. 
+	\item \textbf{Assign strengths of panels}: using the approach described in section \ref{subsec:coupling-covs}, assign the strengths of the vortex sheet.
+	\item \textbf{Correct total circulation}: Using the approach described in section \ref{subsec:coupling-cotc}, ensure that the total circulation is conserved at the end of the Lagrangian correction step.
+	\end{enumerate}
+	
+	Figure \todo{??}, shows the flowchart of the modified Lagrangian correction algorithm and each step is detailed in the following sections.
+	
+	% Summary of the algorithm
+	% Algorithm to the coupled evolution of the hybrid method.
+	% Refer to chapters
+	% Flow charts.
+	% Refer to the code
+	% Proposed modifications
+	
+	\subsection{Interpolate Vorticity}
+	In this step, we interpolate the vorticity from the unstructured grid of the Eulerian method onto a structured Cartesian grid covering the Eulerian domain $\Omega_E$. The purpose of this is to perform fast and efficient interpolation of vorticity from the Eulerian domain onto the vortex blobs.
+	
+	The algorithm of vorticity interpolation is as follows:
+	\begin{enumerate}[label=1.\alph*)]
+	\item \textbf{Make a structured grid} (\textit{before time stepping}): Make a structured grid covering the Eulerian domain $\Omega_E$. The structure grid $\mathbb{S}$ is defined in the local coordinate system of the body $[x,y]'$ and covers the Eulerian grid $\mathbb{E}$ of the Eulerian domain $\Omega_E$. Figure \ref{fig:interpolation_FE2andStructuredGrid} shows the structured grid is bounded to the Eulerian domain and follows the same transformation as the Eulerian domain.
+	
+	\item \textbf{Determine the weights} (\textit{before time stepping}): Determine the weights of the vorticity interpolation. The interpolation of the Eulerian vorticity $\omega$ from the unstructured Eulerian grid $EG$ onto the structure grid $SG$ is defined as,
+		\begin{eqnarray}
+		\hat{\omega}_i = \sum_k \omega_k W_{ki},
+		\label{eq:coupling-interpolationeq2}
+		\end{eqnarray}
+	where $\hat{\omega}_i$ is the interpolated vorticity on $SG$, using the interpolation weights $W$. As the structured grid $SG$ is bounded to the Eulerian domain, the interpolation weights $W$ needs to only calculated once, ensuring fast interpolation.
+	
+	\item \textbf{Interpolate the vorticity}: The interpolated vorticity $\hat{\omega}$ can be calculated by simply solving the pre-assembled problem, equation \ref{eq:coupling-interpolationeq2}. 
+	\end{enumerate}
+	
+	To construct the interpolation problem, we used a tree search algorithm from the CGAL library \cite{CGAL}, included in \fenics and adapted for fast repeated evaluation by Mortenson (Fenicstools \cite{fenicstools}). The algorithm probes the vorticity function $\omega\in{\Omega_E}$ on the unstructured Eulerian grid $EG$ at the nodes of the structured grid $\mathbf{x}_i^{SG}$.
+	
+	Figure ?? shows a depiction of the transfer of the vorticity from the Eulerian unstructured grid $EG$ to the structured Cartesian grid $SG$. Once we had the interpolated vorticity $\hat{\omega}$ on the structured grid $SG$, we assign the strengths to the particles. This was performed using an efficient index search algorithm to find the location of particles in the structured grid $SG$, section \ref{subsec:coupling-as}. If we had not used this approach and directly transfered the vorticity from the Eulerian mesh $EG$ onto the vortex blobs $\mathbf{x}_i$, we would require an expensive search algorithm to determine the position of the blob w.r.t to the nodes of the unstructured grid $\mathbf{x}_{i}^{EG}$. This would imply the construction of the interpolation matrix at each iteration, drastically reducing the efficiency of interpolation.
+		
+	\subsection{Remove Particles}
+	In this step, the uncorrected vortex particles inside $\Omega_in$, Figure \todo{??}, is removed so that we replace it with the corrected particles from the Eulerian domain $\Omega_E \cap \Omega_{in}$. Let $\mathcal{P}$ be the set of all particles $p_i$ inside the Lagrangian domain $\Omega_L$.
+	
+	The algorithm for removing the particles is as follows:
+	\begin{enumerate}[label=2.\alph*)]
+	\item \textbf{Determine the particles inside BBOX}: Determine which particles $p_i$ lies inside the bounding box of the domain $\Omega_{in}$, $\mathcal{P}_{\mathrm{BBOX}}$, as shown in Figure \todo{??}. Determining this is computationally efficient and helps us ignore the particles that are outside the correction region $\Omega_{in}$.
+	\item \textbf{Determine the particles inside correction region}: Determine which particles inside the bounding box of the domain $\mathcal{P}_{\mathrm{BBOX}}$, are also within the correction region $\Omega_{in}$, $\mathcal{P}_{in}$, as shown in Figure \todo{??}. To perform this, we require a \textit{point inclusion in polygon} test, a point-in-polygon search.
+	\item \textbf{Remove uncorrected particles}: Remove all the uncorrected particles $\mathcal{P}_{in}$, resulting in a loss of circulation of $\Gamma_{\Omega_{in}}$, Equation \ref{eq:couping-uncorrected}. Figure \todo{??} shows the depiction of this algorithm. 
+	\end{enumerate}	
+	
+	To perform the point-in-polygon test, we used the \texttt{pnpoly} function of \texttt{matplotlib}, the python 2D plotting library created by Hunter \cite{Hunter:2007}. The function implemented the \textit{point inclusion in polygon} test algorithm developed by Franklin \cite{franklin2006pnpoly}. The algorithm is based on the crossings test, which determines whether the point is inside the polygon by determining the number of the times a semi-infinite ray originating from the point intersects with the polygon.
+	
+	\subsection{Generate Particles}
+	In this step, we generate zero-strengths particles inside the interpolation region $\Omega_I$, defined in Figure \todo{??}. This step is vital as later we can use the location of the particles to determined the strengths associated to them. 
+	
+	The algorithm for generating zero-strength particles is as follows:
+	\begin{enumerate}[label=3.\alph*)]
+	\item \textbf{Generate particles inside BBOX}: Generate zero-strength particles inside the bounding box of the correction region $\Omega_{in}$, shown in Figure \todo{??}. Let $\hat{\mathcal{P}}_{\mathrm{BBOX}}$ be the set all newly generated particles inside the bounding box. The particles are generated coinciding with the global Lagrangian remeshing grid, described in section \ref{subsec:remeshing}, such that particles are equally spaced (shown in green in Figure \todo{??}).
+	\item \textbf{Determine particles inside correction region}: We perform a point-in-polygon test for the newly generated particles $\hat{\mathcal{P}}_{\mathrm{BBOX}}$, so that we can neglect the particles that are outside the correction region $\Omega_{in}$. Let $\hat{\mathcal{P}}_{in}$ be the set of particles that are within the correction region $\Omega_{in}$.
+	\item \textbf{Neglect particles outside correction region}: Remove all the particles that outside the correction region $p_i \notin \tilde{\mathcal{P}}_{in}$.
+	\end{enumerate}
+	
+	Figure \todo{??} shows the depiction of the above described algorithm.
+	
+	\subsection{Assign Strengths of Particles}
+	\label{subsec:coupling-as}
+	
+	The theory of determining the strengths of the particles are described in section \ref{subsec:coupling-vpri}. In this step, we will describe the methodology for transferring the strengths to the newly generated particles.
+	
+	The algorithm for assigning the strengths of the newly generated particles is as follows:
+	\begin{enumerate}[label=4.\alph*)]
+	\item \textbf{}
+	\end{enumerate}
+	
+	\subsection{Assign Strengths of Panels}	
+	
+	
+	\subsection{Correct Total Circulation}
+
+
+\section{Determining Eulerian Substep Boundary Conditions}	
+\label{sec:coupling-desbc}
+
+	
+	
+	
+
+
