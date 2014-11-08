@@ -244,7 +244,7 @@ selected = np.abs(WL)>0.1
 
 # ----------------------------------------------------------
 
-
+'''
 # ----------------------------------------------------------
 
 # Plot the Lagrangian Domain
@@ -917,35 +917,35 @@ plt.axis('off')
 ##py.savefig('eulerianDirichletBC.pdf')
 
 # ----------------------------------------------------------
-
+'''
 # ----------------------------------------------------------
 # Plot the local orientation
+import pylab as py
+fig = py.figure()
+ax  = fig.add_subplot(111)
 
-#fig = py.figure()
-#ax  = fig.add_subplot(111)
-#
-#py.plot(rotate(xyEllipse,theta=-30.)[0],rotate(xyEllipse,theta=-30.)[1],color='0.5',lw=1.5)
-## Draw arrow
-#ax.arrow(0.,0.,0,1.2,head_width=0.05,head_length=0.05,fc='k',ec='k',zorder=10,lw='0.5')
-#ax.arrow(0.,0.,1.2,0.,head_width=0.05,head_length=0.05,fc='k',ec='k',zorder=10,lw='0.5')
-#py.plot(0.,0.,'ko')
-#ax.annotate(r'$(x_o,y_o)$', xy=(-0.3, -0.15),fontsize=12,zorder=20)
-#ax.annotate(r"$x'$", xy=(-0.2, 1.1),fontsize=15,zorder=20)
-#ax.annotate(r"$y'$", xy=(1.1, -0.2),fontsize=15,zorder=20)
-#
-#py.axis('scaled')
-##py.axis([-1.5,1.5,-1.5,1.5])
-#py.axis([-2,2,-2,2])
-#py.axis('off')
-#
-##py.plot([-2,2,2,-2,-2],[-2,-2,2,2,-2],'k--')
-#
-#py.savefig('./localOrientation.pdf')
+py.plot(rotate(xyEllipse,theta=-30.)[0],rotate(xyEllipse,theta=-30.)[1],color='0.5',lw=1.5)
+# Draw arrow
+ax.arrow(0.,0.,0,1.2,head_width=0.05,head_length=0.05,fc='k',ec='k',zorder=10,lw='0.5')
+ax.arrow(0.,0.,1.2,0.,head_width=0.05,head_length=0.05,fc='k',ec='k',zorder=10,lw='0.5')
+py.plot(0.,0.,'ko')
+ax.annotate(r"$(x'_o,y'_o)$", xy=(0.1, 0.075),fontsize=12,zorder=25)
+ax.annotate(r"$x'$", xy=(-0.2, 1.1),fontsize=15,zorder=20)
+ax.annotate(r"$y'$", xy=(1.1, -0.2),fontsize=15,zorder=20)
 
-#ax.arrow(-0.7,0.5,0,0.15,head_width=0.025,head_length=0.05,fc='k',ec='k',zorder=10)
-#ax.arrow(0.7,1.5,0,-1+0.05,head_width=0.025,head_length=0.05,fc='k',ec='k',zorder=3)
+py.axis('scaled')
+#py.axis([-1.5,1.5,-1.5,1.5])
+py.axis([-2,2,-2,2])
+py.axis('off')
 
+#py.plot([-2,2,2,-2,-2],[-2,-2,2,2,-2],'k--')
 
+py.savefig('./localOrientation2.pdf')
+
+ax.arrow(-0.7,0.5,0,0.15,head_width=0.025,head_length=0.05,fc='k',ec='k',zorder=10)
+ax.arrow(0.7,1.5,0,-1+0.05,head_width=0.025,head_length=0.05,fc='k',ec='k',zorder=3)
+
+'''
 # ----------------------------------------------------------
 
 
@@ -1096,3 +1096,4 @@ plt.axis('off')
 
 
 # ----------------------------------------------------------
+'''

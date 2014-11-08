@@ -180,6 +180,7 @@
 \definecolor{plotGreen}{rgb}{0,0.5,0}
 \definecolor{plotRed}{rgb}{1.0,0,0}
 \definecolor{plotBlue}{rgb}{0,0,1.0}
+\definecolor{plotCyan}{rgb}{0,1.0,1.0}
 \definecolor{plotGray}{gray}{0.25}
 %
 % \hypersetup{colorlinks=true,

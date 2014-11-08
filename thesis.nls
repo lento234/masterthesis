@@ -2,8 +2,6 @@
 
  \nomgroup{Y}
 
-  \item [{\textbf {2-D}}]\begingroup Two-Dimensional\nomeqref {1.0}
-		\nompageref{2}
   \item [{\textbf {AD}}]\begingroup Actuator Disk\nomeqref {1.0}
 		\nompageref{3}
   \item [{\textbf {BEM}}]\begingroup Blade Element Momentum\nomeqref {1.0}
@@ -11,39 +9,39 @@
   \item [{\textbf {CFD}}]\begingroup Computional Fluid Dynamics\nomeqref {1.0}
 		\nompageref{3}
   \item [{\textbf {CG}}]\begingroup Continuous Galerkin\nomeqref {4.1}
-		\nompageref{51}
+		\nompageref{52}
   \item [{\textbf {CSVP}}]\begingroup Constant-Strength Vortex Panel\nomeqref {3.50}
-		\nompageref{31}
+		\nompageref{32}
   \item [{\textbf {DOF}}]\begingroup Degrees of Freedom\nomeqref {4.0}
 		\nompageref{50}
   \item [{\textbf {FDM}}]\begingroup Finite Difference Method\nomeqref {4.0}
-		\nompageref{49}
+		\nompageref{50}
   \item [{\textbf {FEM}}]\begingroup Finite Element Method\nomeqref {4.0}
-		\nompageref{49}
+		\nompageref{50}
   \item [{\textbf {FE}}]\begingroup Forward Euler\nomeqref {4.34}
 		\nompageref{62}
   \item [{\textbf {FMM}}]\begingroup Fast Multipole Method\nomeqref {1.0}
 		\nompageref{3}
   \item [{\textbf {FVM}}]\begingroup Finite Volume Method \nomeqref {4.0}
-		\nompageref{49}
+		\nompageref{50}
   \item [{\textbf {GPU}}]\begingroup Graphical Processing Units\nomeqref {1.0}
 		\nompageref{3}
   \item [{\textbf {HELVPM}}]\begingroup Hybrid Eulerian-Lagrangian Vortex Particle Method\nomeqref {1.0}
 		\nompageref{4}
   \item [{\textbf {ICNS}}]\begingroup Incompressible Navier-Stokes\nomeqref {4.28}
-		\nompageref{58}
-  \item [{\textbf {IPCS}}]\begingroup Incremental Pressure Correction Scheme\nomeqref {4.29}
 		\nompageref{59}
+  \item [{\textbf {IPCS}}]\begingroup Incremental Pressure Correction Scheme\nomeqref {4.29}
+		\nompageref{60}
   \item [{\textbf {ISC}}]\begingroup Impulsively Started Cylinder\nomeqref {4.45}
-		\nompageref{74}
+		\nompageref{75}
   \item [{\textbf {lhs}}]\begingroup left hand side\nomeqref {3.49}
 		\nompageref{31}
   \item [{\textbf {LSTSQ}}]\begingroup Least-Square solution method\nomeqref {3.54}
-		\nompageref{32}
+		\nompageref{33}
   \item [{\textbf {MPI}}]\begingroup Message Passing Interface\nomeqref {4.16}
-		\nompageref{54}
+		\nompageref{55}
   \item [{\textbf {PC}}]\begingroup Population Control\nomeqref {3.63}
-		\nompageref{40}
+		\nompageref{41}
   \item [{\textbf {PIV}}]\begingroup Particle Image Velocimetry\nomeqref {1.0}
 		\nompageref{2}
   \item [{\textbf {PSE}}]\begingroup Particle Strength Exchange\nomeqref {3.26}
@@ -54,7 +52,7 @@
 		\nompageref{1}
   \item [{\textbf {VPM}}]\begingroup Vortex Particle Method\nomeqref {3.0}
 		\nompageref{15}
-  \item [{\textbf {WRS}}]\begingroup Wee-Ghoniem Remeshing Scheme\nomeqref {3.27}
+  \item [{\textbf {WRS}}]\begingroup Wee Remeshing Scheme\nomeqref {3.27}
 		\nompageref{26}
 
 \end{thenomenclature}

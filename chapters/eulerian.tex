@@ -16,6 +16,22 @@
 %------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------
 %\section{Purpose of eulerian domain}
+
+In this chapter, we introduce the Finite lement Method used to solved the Eulerian subdomain of the hybrid method, and summarize the process for evolving the Eulerian method, step 4 of the hybrid evolution, Figure \ref{fig:flowchart_simpleCoupling_Eulerian}.
+
+	\begin{figure}[!h]
+		\centering
+		\begin{tikzpicture}
+			[node distance=.8cm, start chain=going below,]
+			\node[punktchainO, join] (correct) {\textsf{Correct Lagrangian}};
+		    \node[punktchainO, join] (evolveL) {\textsf{Evolve Lagrangian}};
+		    \node[punktchainO, join] (bcE)     {\textsf{Determine Eulerian \\boundary conditions}};
+		    \node[punktchainS, join] (evolveE) {\textsf{\textbf{Evolve Eulerian}}};
+		\end{tikzpicture}
+		\caption{Flowchart of the hybrid evolution, focusing on the $4^{\mathrm{th}}$ step: Evolve the Eulerian solution.}
+		\label{fig:flowchart_simpleCoupling_Eulerian}
+	\end{figure}
+
 Standard \printAcron{Computation Fluid Dynamics}{CFD} methods discretize the fluid into smaller grids, and solve the set of Navier-Stokes equations in these region. Eulerian methods uses this type of formulation.
 %is referred to as an Eulerian , as we are evaluating the change of flow property in a given volume.
 
@@ -440,16 +456,14 @@ such that lift perpendicular to the free-steam and the drag is tangential to it.
 \label{sec:eu-eotem}
 The algorithm of evolving the Eulerian method is summarized in this section. The Eulerian method acts as the source of the vorticity for the Lagrangian method.
 
-\todo{Add the general evolution flowchart}
-
 	\begin{figure}[!h]
 		\centering
 		\begin{tikzpicture}
 			[node distance=.8cm, start chain=going below,]
-			\node[punktchain, join] (meshGen) {Mesh Generation};
-		    \node[punktchain, join] (bc) {Determine boundary conditions};
-		    \node[punktchain, join] (solve)     {Solve the IPCS};
-		    \node[punktchain, join] (vort) 	  {Determine the vorticity};
+			\node[punktchainN, join] (meshGen) {\textsf{Generation Eulerian mesh}};
+		    \node[punktchainN, join] (bc) {\textsf{Determine boundary conditions}};
+		    \node[punktchainN, join] (solve)     {\textsf{Solve the IPCS}};
+		    \node[punktchainN, join] (vort) 	  {\textsf{Determine the vorticity}};
 		\end{tikzpicture}
 		\caption{Flowchart of the Eulerian method.}
 		\label{fig:flowchart_eulerian}

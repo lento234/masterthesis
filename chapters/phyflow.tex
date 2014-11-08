@@ -1,12 +1,12 @@
 \chapter{Introduction to the Hybrid Solver: \texttt{pHyFlow}}
 
-We have implemented the algorithms described in chapters \ref{ch:helvpm} to \ref{ch:coupling} into \texttt{pHyFlow}, an acronym for \textbf{p}ython \textbf{Hy}brid \textbf{Flow} solver. \texttt{pHyFlow} functions a fluid dynamics computational library in python, that has implemented the Eulerian solver, the Lagrangian solver (without vorticity diffusion of panels). These solver can used as a standalone solver (for test purposes), or can be coupled together to make the Hybrid solver. 
+We have implemented the algorithms described in chapters \ref{ch:helvpm} to \ref{ch:coupling} into \texttt{pHyFlow}, an acronym for \textbf{p}ython \textbf{Hy}brid \textbf{Flow} solver. \texttt{pHyFlow} functions  as a fluid dynamics computational library written in python, that has implemented the Eulerian solver, the Lagrangian solver (without vorticity diffusion of panels). These solver can used as a standalone solver (for test purposes), or can be coupled together to make the Hybrid solver. 
 
 
 The features of \texttt{pHyFlow} can be summarized as follows:
 \begin{itemize}
 \item \texttt{pHyFlow} is a hybrid flow solver that uses Hybrid Eulerian-Lagrangian Vortex Particle Method to couple the Navier-Stokes grid solver and a vortex blob solver.
-\item The algorithms are written in \python, \textsc{Cython} \cite{Behnel2011}, C, C++, and CUDA C/C++ for efficiency. All the high-level algorithms such as definition of the problem, coupling of the solver, convection and diffusion of the problem is implemented in \python. The low-level algorithms such as remeshing kernel and saving routine calculations are written in the computationally efficient languages: \textsc{Cython}, C, and C++. The parallelizable routine such as calculation of the induced velocity of the vortex blobs is written in CUDA C/C++ for the NVIDIA GPU hardware.
+\item The algorithms are written in \python, \textsc{Cython} \cite{Behnel2011}, C, C++, and CUDA C/C++ for efficiency. All the high-level algorithms such as the definition of the problem, coupling of the solver, convection and diffusion of the problem are implemented in \python. The low-level algorithms such as the remeshing kernel and the routine for saving are written in the computationally efficient languages: \textsc{Cython}, C, and C++. The parallelizable routines such as the calculation of the induced velocities of the vortex blobs are written in CUDA C/C++ for the NVIDIA GPU hardware.
 \item \texttt{pHyFlow} uses several open-source libraries: FEniCS \cite{Logg2012b}, Fenicstools \cite{fenicstools}, Scipy \cite{scipyLibrary}, Numpy \cite{VanDerWalt2011}, mpi4py \cite{Dalcin2008}, pyUblas \cite{pyublasLink}, for performing the calculations; and PyVTK \cite{pyublasLink}, H5py \cite{collette2013python}, Matplotlib \cite{Hunter:2007} for plotting and efficient data storage.
 \item \texttt{pHyFlow} is maintained, and is available at the bitbucket online repositiory\\ \texttt{https://bitbucket.org/apalha/phyflow2.0}.
 \end{itemize}
@@ -78,21 +78,21 @@ The features of \texttt{pHyFlow} can be summarized as follows:
 \label{fig:tikz_pHyFlowStructure}
 \end{figure}
 
-The \texttt{pHyFlow} library serves as a computing environment for \python programming language, where one could solve the hybrid flow problems. To achieve this, we have implemented an Eulerian solver, and a Lagrangian solver (without panel diffusion scheme), which can be used as a standalone solver for verification and validation. The \texttt{pHyFlow} library is structured into several modules, categorized by their purposes. In each \texttt{module}, we defined a \texttt{class} that handles the functions in the module. To add flexibility in computation, we added an \texttt{option} file where the user change the solver options. Figure \ref{fig:tikz_pHyFlowStructure} shows the structure of the \texttt{pHyFlow} library, classified using a color code. The structure of the \texttt{pHyFlow} is as follows:
+The \texttt{pHyFlow} library extends \python computing environment, where one can solve hybrid flow problems. To achieve this, we have implemented an Eulerian solver and a Lagrangian solver (without panel diffusion scheme, which can be used as a standalone solver for verification and validation). The \texttt{pHyFlow} library is structured into several modules, categorized by their purposes. In each \texttt{module}, we defined a \texttt{class} that handles the functions in the module. To add flexibility in computation, we added an \texttt{option} file where the user can change the solver's options. Figure \ref{fig:tikz_pHyFlowStructure} shows the structure of the \texttt{pHyFlow} library, classified using a color code. The structure of the \texttt{pHyFlow} is as follows:
 
 \begin{itemize}
-\item \texttt{IO}: This module contains all the input/output function for saving and plotting data. The \texttt{File} class handles the functions of the \texttt{IO} module.
+\item \texttt{IO}: This module contains all the input/output functions for saving and plotting data. The \texttt{File} class handles the functions of the \texttt{IO} module.
 \item \texttt{aux}: This module contains all the auxiliary function of the library that does not belong to the fluid dynamics computation.
-\item \texttt{cpp}: The module that contains all the low-level compiled function that has been wrapped using binding generator for the use in python. The module contains the two main low-level algorithms for performing the induced velocity calculations for vortex blobs and vortex panels, and the remeshing algorithm for the vortex blobs.
-\item \texttt{blobs}: This module contains all the vortex blob operations. The module contains the class \texttt{Blobs}, an the vortex blob solver object handling the all the vortex blobs operations. Algorithms of the vortex blobs defined in chapter \ref{ch:lagrangian} is implemented in this module.
-\item \texttt{panels}: This module contains all the vortex panel operations and is wrapped in the class \texttt{Panels}, an the Panel method solver object. Algorithms of the vortex panel defined in chapter \ref{ch:lagrangian} is implemented in this module
-\item \texttt{lagrangian}: This module contains all the vortex blob and vortex panel coupling function and wrapped in the \texttt{LagrangianSolver} class and containing all the high-level function for managing the Lagrangian solver. THe vortex panel, vortex blob coupling algorithm described in chapter \ref{ch:lagrangian} is implemented in this module.
-\item \texttt{eulerian}: This module contains all the Navier-Stokes grid operations and wrapped in the \texttt{EulerianSolver} class, that containing all the high-level function for defining and managing the Eulerian solver. Algorithms explained in chapter \ref{ch:eulerian} is implemented in this module.
-\item \texttt{hybrid}: This module contains all the functions related to coupling of the Lagrangian and the Eulerian solver, summarized in section \ref{sec:coupling-mlca}, \ref{sec:la-eolm}, and \ref{sec:eu-eotem}. The functions are wrapped in the \texttt{HybridSolver} class and manages the global coupling process.
+\item \texttt{cpp}: The module that contains all the low-level compiled functions that have been wrapped for the use in \textsf{python}. This module contains the two main low-level algorithms for performing the induced velocity calculations for vortex blobs and vortex panels, and the remeshing algorithm for the vortex blobs.
+\item \texttt{blobs}: This module contains all the vortex blob related functions. Contains the class \texttt{Blobs} and the vortex blob solver object, handling all the vortex blobs operations. The algorithms of the vortex blobs defined in chapter \ref{ch:lagrangian} are implemented in this module.
+\item \texttt{panels}: This module contains all the vortex panel functions and is wrapped in the class \texttt{Panels}. The algorithms of the vortex panel defined in chapter \ref{ch:lagrangian} are implemented in this module
+\item \texttt{lagrangian}: This module contains all the vortex blob and vortex panel coupling functions. The vortex panel, vortex blob coupling algorithm described in chapter \ref{ch:lagrangian} is implemented in this module.
+\item \texttt{eulerian}: This module contains all the Navier-Stokes grid operations. The algorithms explained in chapter \ref{ch:eulerian} are implemented in this module.
+\item \texttt{hybrid}: This module contains all the functions related to coupling of the Lagrangian and the Eulerian solver, summarized in section \ref{sec:coupling-mlca}, \ref{sec:la-eolm}, and \ref{sec:eu-eotem}. The functions are wrapped in the \texttt{HybridSolver} class and manage the global coupling process.
 
 \end{itemize}
 
-Figure \ref{fig:tikz_pHyFlowStructure} shows the structure of the \texttt{pHyFlow} library and is categorized into several modules of different purposes. It is structured in this manner such that one could employ the library for any general simulation purposes such as for hybrid case, or for non-hybrid cases (e.g. potential flow using vortex panels, full Eulerian grid simulation using Eulerian solver). This means that one could use a single module of \texttt{pHyFlow} library for the desired test case.
+Figure \ref{fig:tikz_pHyFlowStructure} shows the structure of the \texttt{pHyFlow} library and is categorized into several modules of different purposes. It is structured in this manner such that one could employ the library for any general simulation purpose such as the hybrid case, or for non-hybrid cases (e.g. potential flow using vortex panels, full Eulerian grid simulation using Eulerian solver). This means that one could use a single module of \texttt{pHyFlow} library for the desired test case.
 
 \section{Hybrid class Hierarchy}
 
@@ -117,7 +117,7 @@ However, the hybrid module relies on the functions of the Lagrangian module and 
 \label{fig:tikz_hybridStructure}
 \end{figure}
 
-We use a bottom-up approach to construct the \texttt{HybridSolver} object, starting the lower-level objects: \texttt{Blobs}, \texttt{Panels} and then constructing the mid-level object: \\ \texttt{LagrangianSolver}, and \texttt{EulerianSolver}, and finally constructing the highest-level object: \texttt{HybridSolver}. The procedure of constructing the hybrid class is as follows:
+We use a bottom-up approach to construct the \texttt{HybridSolver} object, starting from the lower-level objects: \texttt{Blobs}, \texttt{Panels}. Then constructing the mid-level objects: \\ \texttt{LagrangianSolver}, and \texttt{EulerianSolver}. Finally constructing the highest-level object: \texttt{HybridSolver}. The procedure for constructing the hybrid class is as follows:
 \begin{enumerate}
 	\item Construct the lowest-level objects:
 		\begin{enumerate}

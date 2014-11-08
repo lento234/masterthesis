@@ -279,24 +279,24 @@ ax.annotate(r'$\Sigma_{d}$', xy=(0.38, 1.55),fontsize=30,zorder=10,backgroundcol
 
 
 
-ax.annotate(r'', xy=(0.55,0.6), xycoords='data',fontsize=15,
+ax.annotate(r'', xy=(0.54,0.58), xycoords='data',fontsize=15,
             xytext=(0.65,0.5),textcoords='data',
-            arrowprops=dict(arrowstyle="<|-", color="k", shrinkA=1, shrinkB=0,
+            arrowprops=dict(arrowstyle="-", color="k", shrinkA=1, shrinkB=0,
                             patchA=None, patchB=None, connectionstyle="arc3,rad=0.2",),zorder=9)
 
-ax.annotate(r'', xy=(0.54,0.8), xycoords='data',fontsize=15,
+ax.annotate(r'', xy=(0.52,0.782), xycoords='data',fontsize=15,
             xytext=(0.65,0.7),textcoords='data',
-            arrowprops=dict(arrowstyle="<|-", color="k", shrinkA=1, shrinkB=0,
+            arrowprops=dict(arrowstyle="-", color="k", shrinkA=1, shrinkB=0,
                             patchA=None, patchB=None, connectionstyle="arc3,rad=0.2",),zorder=9)
 
-ax.annotate(r'', xy=(0.54,1.4), xycoords='data',fontsize=15,
+ax.annotate(r'', xy=(0.535,1.38), xycoords='data',fontsize=15,
             xytext=(0.65,1.3),textcoords='data',
-            arrowprops=dict(arrowstyle="<|-", color="k", shrinkA=1, shrinkB=0,
+            arrowprops=dict(arrowstyle="-", color="k", shrinkA=1, shrinkB=0,
                             patchA=None, patchB=None, connectionstyle="arc3,rad=0.2",),zorder=9)
 
-ax.annotate(r'', xy=(0.55,1.6), xycoords='data',fontsize=15,
+ax.annotate(r'', xy=(0.529,1.59), xycoords='data',fontsize=15,
             xytext=(0.65,1.5),textcoords='data',
-            arrowprops=dict(arrowstyle="<|-", color="k", shrinkA=1, shrinkB=0,
+            arrowprops=dict(arrowstyle="-", color="k", shrinkA=1, shrinkB=0,
                             patchA=None, patchB=None, connectionstyle="arc3,rad=0.2",),zorder=9)
 
 # Body

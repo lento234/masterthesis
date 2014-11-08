@@ -22,19 +22,19 @@ Conventional energy resources such as fossil fuels and nuclear energy are not on
 
 VAWTs are unlike the normal wind turbines, which are mounted on a mast away from the ground and generate energy by spinning perpendicular to the ground, figure \ref{fig:VAWTvsHAWT}, whereas the \printAcron{Horizontal-Axis Wind Turbine}{VAWT}, spins parallel to the ground with its hub located at the ground, figure \ref{fig:HAWT}. The VAWT has it's generator located at the ground, allowing it to be easily accessible and maintained. However, the main advantage is the early wake dissipation of VAWTs. Near-wake experiments of Ferreira (2009) \cite{SimaoFerreira2009}, and simulations of Vermeer (2003) \cite{Vermeer2003a} have shown that the fluid past the turbine is more turbulent. Due to this higher turbulence, the flow is able to recover much earlier than convectional wind turbines. This allows the turbines to be placed much closer, potentially outputting more power per ground. Furthermore, VAWTs operate independently of the flow direction, and can operate at low wind speeds (i.e. at low tip-speed ratios).
 
-However, there are some limitations that we must take into account. As the blades pass through their own wake, complex wake-body interactions take place, figure \ref{fig:3DunsteadyPanelVAWT}. These have adverse effects on the blade structure, making it more susceptible to fatigue. As the blade is constantly pitching, flow behaviors such as dynamic stall and constant vortex shedding take place \cite{SimaoFerreira2008a}. These complex fluid behaviors makes it hard to predict the performance of a VAWTs and this is one of the reasons why VAWTs are not widely used. 
+However, there are some limitations that we must take into account. As the blades pass through their own wake, complex wake-body interactions take place, figure \ref{fig:3DunsteadyPanelVAWT}. These have adverse effects on the blade structure, making it more susceptible to fatigue. As the blade is constantly pitching, flow behaviors such as dynamic stall and constant vortex shedding take place (Ferreira \cite{SimaoFerreira2008a}). These complex fluid behaviors makes it hard to predict the performance of a VAWTs and this is one of the reasons why VAWTs are not widely used. 
 
 	\begin{figure}[!t]
 		\centering
 		\includegraphics[width=0.6\linewidth]{figures/introduction/3DunsteadyPanelVAWT.png}
-		\caption{3-D Unsteady Panel simulation of a Straight-bladed VAWT showing the strength of the shed vorticity. The VAWT blades interact with their own wake increasing the complexity of the wake geometry \cite{Dixon2008}}
+		\caption{3-D Unsteady Panel simulation of a Straight-bladed VAWT showing the strength of the shed vorticity. The VAWT blades interact with their own wake increasing the complexity of the wake geometry, source: Dixon et. al \cite{Dixon2008}.}
 		\label{fig:3DunsteadyPanelVAWT}
 	\end{figure}
 
 In addition, a VAWT operates at a large Reynolds, number making accurate numerical methods computationally very expensive. So we see that we require a numerical method that can not only reproduce accurate results, but is also efficient at modeling the flow around the turbine.
 
 \section{Motivation and Goal}
-The goal of this research is to develop an efficient, reliable, and accurate numerical method for modeling the flow around a \indexAcron{Two-Dimensional}{2-D} VAWT, enabling to compute the correct performance characteristics. The two approaches of investigating the flow around a turbine are by either using a numerical method to model the flow, or by performing an experimental test, for example in a wind tunnel.
+The goal of this research is to develop an efficient, reliable, and accurate numerical method for modeling the flow around a \printAcron{Two Dimensional}{2D} VAWT, enabling to compute the correct performance characteristics. The two approaches of investigating the flow around a turbine are by either using a numerical method to model the flow, or by performing an experimental test, for example in a wind tunnel.
 
 To understand the unsteady aerodynamic behavior, \indexAcron{Particle Image Velocimetry}{PIV} has been a useful tool to visualize the flow around the turbine. PIV was used by Ferreira et al. (2007) \cite{Ferreira2007a}, showing that it is possible to measure the flow characteristics around the blade. The downside to experimental investigation is that it is very expensive to investigate all types of airfoil geometries, blade geometries and VAWT configurations. However, investigating this is vital in understanding the performance characteristics of VAWT. Furthermore, it is difficult to perform experiments on array of wind turbines in a wind tunnel.
 
@@ -136,19 +136,22 @@ In order to assess the accuracy of this hybrid formulation, the following test c
 \section{Thesis Outline}
 
 \begin{description}
-\item[Ch. 2 \qquad Lagrangian Subdomain: Vortex Particle Method]\hfill\\
-The chapter introduces the vortex particle method used to solve the Lagrangian subdomain of the hybrid method. The chapters introduces the concept of vortex blobs for discretizing the vorticity in the fluid and vortex panels for discretizing the wall-bounded vorticity. The chapter concludes with a verification and validation of the described Lagrangian method with the help of the Lamb-Oseen vortex test case.
+\item[Ch. 2 \qquad Hybrid Eulerian-Lagrangian Vortex Particle Method]\hfill\\
+The chapter introduces the hybrid Eulerian-Lagrangian vortex particle method. The chapter introduces the concept of domain decomposition and gives a summary of the coupling strategy developed by Daeninck \cite{Daeninck2006} and the Lagrangian correction algorithm developed by Stock \cite{Stock2010a}. The chapter concludes which an overview of the algorithm for time stepping the hybrid method.
 
-\item[Ch. 3 \qquad Eulerian Subdomain: Finite Element Method]\hfill\\
-The chapter introduces the finite element method used to solve the Eulerian subdomain of the hybrid method. We investigate the methodology for solving the incompressible Navier-Stokes equations using the finite element approach. The chapter concludes with a verification and validation of the described Eulerian method with the help of Lamb-Oseen vortex test case, impulsively started cylinder test case at $Re=550$ of Koumoutsakos and Leonard \cite{Koumoutsakos1995a}, and the Clercx-Bruneau dipole collision of Clercx and Bruneau \cite{Clercx2006a}.
+\item[Ch. 3 \qquad Lagrangian Subdomain: Vortex Particle Method]\hfill\\
+The chapter introduces Vortex Particle Method used to solve the Lagrangian subdomain of the hybrid method. The chapters introduces the concept of vortex blobs for discretizing the vorticity in the fluid and vortex panels for discretizing the wall-bounded vorticity. The chapter concludes with a verification and validation of the Lagrangian method with a Lamb-Oseen vortex test case.
 
-\item[Ch. 4 \qquad Hybrid Eulerian-Lagrangian Vortex Particle Method]\hfill\\
-The chapter introduces the hybrid Eulerian-Lagrangian vortex particle method. We investigate the methodology for coupling the Eulerian subdomain and the Lagrangian subdomain. This chapter highlights the modification we implemented to the coupling strategy used by Daeninck \cite{Daeninck2006} and Stock \cite{Stock2010a}.
+\item[Ch. 4 \qquad Eulerian Subdomain: Finite Element Method]\hfill\\
+The chapter introduces Finite Element Method used to solve the Eulerian subdomain of the hybrid method. We investigate the methodology for solving the incompressible Navier-Stokes equations using the finite element approach. The chapter concludes with a verification and validation of the Eulerian method with the Lamb-Oseen vortex test case, impulsively started cylinder test case at $Re=550$ if Koumoutsakos and Leonard \cite{Koumoutsakos1995a}, and the Clercx-Bruneau dipole collision of Clercx and Bruneau \cite{Clercx2006a}.
 
-\item[Ch. 5 \qquad Introduction to the Hybrid Solver: pHyFlow]\hfill\\
+\item[Ch. 5 \qquad Coupling Eulerian and Lagrangian Method]\hfill\\
+The chapter gives an indepth analysis on the coupling strategy of the Eulerian and the Lagrangian method. This chapter highlights the modification we implemented to the coupling strategy used by Daeninck \cite{Daeninck2006} and Stock \cite{Stock2010a}.
+
+\item[Ch. 6 \qquad Introduction to the Hybrid Solver: pHyFlow]\hfill\\
 The chapter introduces \texttt{pHyFlow}, the python based hybrid solver. The chapter gives an overview of the program structure and the class hierarchy.
 
-\item[Ch. 6 \qquad Verification and Validation of the Hybrid Method]\hfill\\
+\item[Ch. 7 \qquad Verification and Validation of the Hybrid Method]\hfill\\
 The chapter focuses on the verification and the validation of the hybrid method. We use the test cases described in section \ref{sec:vavtc}, to achieve this.
 
 \end{description}
