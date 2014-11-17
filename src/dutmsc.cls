@@ -441,10 +441,11 @@
     \setlength{\unitlength}{1pt}%
     \put(0,\strip@pt\paperheight){%
     \parbox[t][\paperheight]{\paperwidth}{%
-    \vfill
-    \centering\includegraphics{#1}
+    \vspace{5cm}
+    %\vfill
+    %\centering\includegraphics{#1}
 %     \centering\includegraphics[height=\paperheight]{#1}
-%     \centering\includegraphics[width=\paperwidth]{#1}
+	\centering\includegraphics[width=0.8\paperwidth]{#1}
     \vfill
 }}}
 \newcommand\TuPicture[1]{%
@@ -477,7 +478,7 @@
     \newcommand{\HRule}{\rule{\linewidth}{1mm}}
     \setlength{\parindent}{0mm}
     \setlength{\parskip}{0mm}
-    \vspace*{\stretch{2}}
+    \vspace*{\stretch{4}}
     \HRule
     \begin{flushright}
     \huge{\textbf{\textsf{\msctitle}}}\\ \Large{\textbf{\textsf{\mscsubtitle}}} \\[5mm]
@@ -487,7 +488,7 @@
     \HRule
     \\ \mscdate \\
 % 
-    \vspace*{\stretch{2}}
+    \vspace*{\stretch{1}}
  %
  % 
  \begin{center}

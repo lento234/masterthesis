@@ -1,5 +1,5 @@
-%\documentclass[draft]{src/dutmsc}%
-\documentclass{src/dutmsc}
+\documentclass[draft]{src/dutmsc}%
+%\documentclass{src/dutmsc}
 %
 % STARTING FROM VERSION 1.0.8, DIRECT PDF OUTPUT FROM THE LATEX SOURCE IS SUPPORTED.
 % IF YOU WANT TO USE THIS FEATURE, MAKE SURE ALL YOUR OWN FIGURES ARE IN A FORMAT
@@ -16,10 +16,10 @@
 \mscKeyWords{Hybrid Vortex Method, Eulerian, Lagrangian, Python, FEniCS, GMSH, Navier-Stokes, CFD, Coupling, Finite Element, Vortex Blobs}%
 %
 % background picture for the first page, make sure it is in the correct format (eps or something else)
-%%\ifpdfma
-%  \mscBackPicture{./figs/merlin_landing_3_pdf}    % eps of 21 * 29.7 cm
+%\ifpdfma
+%	\mscBackPicture{./figures/style/cylinder.pdf}   % eps of 21 * 29.7 cm
 %\else
-%  \mscBackPicture{./figs/merlin_landing_3}    % pdf version of the cover background
+\mscBackPicture{./figures/style/cylinder.png}    % pdf version of the cover background
 %\fi
 %
 % readers page (un)comment as necessary
@@ -310,26 +310,26 @@
     \include{chapters/introduction}%
 
 	% Chapter 2: Hybrid Eulerian-Lagrangian Vortex Particle Method
-	\include{chapters/hybrid}
+%	\include{chapters/hybrid}
 
     % Chapter 3 : Lagrangian Subdomain: Vortex Particle Method
-	\include{chapters/lagrangian}
+%	\include{chapters/lagrangian}
 
 	% Chapter 4: Eulerian Subdomain: Finite Element Method
-	\include{chapters/eulerian}
+%	\include{chapters/eulerian}
 
     % Chapter 5: Coupling Eulerian and Lagrangian Method
   	\include{chapters/coupling}  	
 %  	\include{chapters/hybridOld}
 %
 %	% Chapter 6: Introduction to the Hybrid Solver: pHyFlow
- 	\include{chapters/phyflow}
+% 	\include{chapters/phyflow}
 
 %  	% Chapter 7: Verification and Validation of the Hybrid Method
-	\include{chapters/validation}   
+%	\include{chapters/validation}   
 
 %   	% Chapter 8: Conclusion and Recommendations
-   \include{chapters/conclusion}
+%   \include{chapters/conclusion}
 
    %\include{chapters/afterword} 
 
