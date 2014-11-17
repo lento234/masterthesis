@@ -101,9 +101,9 @@ However, the key advantage of the VPM is that it is ideal for capturing the reso
 
 A summary of the advantage of the Lagrangian vortex method w.r.t the Eulerian method was provided by Wee and Ghoniem \cite{Wee2006a}:
 \begin{itemize}
-\item Eulerian methods introduce dissipation, even in flows with zero velocity gradient. However such error as minimized at the convection of the Lagrangian method.
+\item Eulerian methods introduce dissipation, even in flows with zero velocity gradient. However such error is minimized when using a Lagrangian method.
 \item The numerical stability of the Lagrangian method is not restricted by the CFL condition.
-\item The support of the Lagrangian elements are a small fraction of the fluid domain. The support is confined to location of non-zero vorticity, making the method naturally grid adaptive.
+\item The effective support of the Lagrangian elements are a small fraction of the fluid domain. The support is confined to location of non-zero vorticity, making the method naturally grid adaptive.
 \end{itemize}
 
 The main literature on the VPM (the Lagrangian component of the hybrid method), is the book of Cottet and Koumoutsakos, Vortex Methods: Theory and Practice \cite{Cottet2000a}. It gives an insight on the fundamentals of the vortex method (specifically VPM) and gives a summary on hybrid methods.
@@ -142,12 +142,12 @@ relating the velocity field $\mathbf{u}\left(\mathbf{x},t\right)$ to the pressur
 	\nabla\cdot\mathbf{u} = 0,
 	\label{eq:la_ic}
 	\end{equation}
-The curl of the equation \ref{eq:mom} is take to obtain the velocity-vorticity formulation, 
+The curl of the equation \ref{eq:mom} is taken to obtain the velocity-vorticity formulation, 
 	\begin{equation}
 	\frac{\partial \omega}{\partial t} + \mathbf{u}\cdot\nabla\omega = \nu \nabla^2 \omega,
 	\label{eq:la_vteq}
 	\end{equation}
-relating the vorticity $\omega$ to the velocity $\mathbf{u}$. Note that the pressure term $p$ disappear  from the equality.
+giving the time evolution of the vorticity. Note that the pressure term $p$ disappear  from the equality.
 
 \subsection{Viscous Splitting Algorithm}
 \label{subsec:vsa}
@@ -187,8 +187,8 @@ The vorticity field is discretized by representing the continuous vorticity fiel
 	\begin{equation}
 	\omega\left(\mathbf{x},t\right) \simeq \omega^h\left(\mathbf{x},t\right) = \sum_{p}^N\alpha_p\left(t\right)\delta \left[\mathbf{x}-\mathbf{x}_p\left(t\right)\right],
 	\end{equation}
-where $\delta$ is the Dirac delta function, and $\alpha_{p}$ is the circulation carried by the particle at $\mathbf{x}_p$. We must note that $\omega^h$ is the discrete vorticity field and therefore in an approximation of the continuous vorticity field $\omega$. 
-
+where $\alpha_{p}$ is the circulation carried by the particle at $\mathbf{x}_p$. We must note that $\omega^h$ is the discrete vorticity field and therefore in an approximation of the continuous vorticity field $\omega$. 
+%$\delta$ is the Dirac delta function, and
 The velocity $\mathbf{u}$ is related to the vorticity $\omega$ using the Biot-Savart Law.
 
 \subsection{Biot-Savart Law}
@@ -297,9 +297,9 @@ meaning that the particle carries the circulation of its local area. This might 
 
 Figure \ref{fig:particleInitialization} shows the initialization of the vorticity field using the equation 	\ref{eq:particleCirculationAssignment}. We observed that the mollified vorticity field $\omega^h$, deviates from the original intended vorticity distribution $\omega$. Barba and Rossi \cite{Barba2010a}, have described this problem as Gaussian blurring of the original vorticity field due to use of mollified vortex kernel $\zeta_{\sigma}$ in equation 	\ref{eq:mollifiedVorticityField}. Even though the total circulation is conserved, locally we see that the circulation is not conserved. 
 
-This phenomenon causes issue during the coupling of the Lagrangian method and the Eulerian method, as particle in the overlap region are re-initialized at every step of the hybrid method. This error in initialization posses a challenge in the coupling of the method and is described in section \ref{subsec:coupling-vpri}.
+This phenomenon causes issues during the coupling of the Lagrangian method and the Eulerian method, as particles in the overlap region are re-initialized at every step of the hybrid method. This error in initialization poses a challenge in the coupling of the method and is described in section \ref{subsec:coupling-vpri}.
 
-A typical strategy for recovering the intended distribution is the Beale's Iterative Method \cite{Beale1988}, as used by Koumoutsakos and Cottet \cite{Cottet2000a}. The method is particle circulation processing scheme where the circulation $\alpha_p$ of the particles are modified iteratively such that the mollified vorticity field $\omega^h$ matches the original distribution $\omega$. However, the Beale's method required the correction of complete vorticity field in fluid domain and cannot be used to correct only part of the fluid domain, as required for our decomposed domain method. Therefore, an alternate method is required to minimized the error in particle initialization.
+A typical strategy for recovering the intended distribution is the Beale's Iterative Method \cite{Beale1988}, as used by Koumoutsakos and Cottet \cite{Cottet2000a}. The method is a particle circulation processing scheme where the circulation $\alpha_p$ of the particles are modified iteratively such that the mollified vorticity field $\omega^h$ matches the original distribution $\omega$. However, the Beale's method required the correction of the complete vorticity field in the fluid domain and cannot be used to correct only part of the fluid domain, as required for our decomposed domain method. Therefore, an alternate method is required to minimized the error in the particle initialization.
 
 %################# Beale's Iterative method, removed.
 \begin{comment}
@@ -348,7 +348,7 @@ An alternate method to reduce the Gaussian blurring of the vorticity field is to
 
 Figure \ref{fig:convergenceOfSpatialResolution} shows mollified vorticity field results from modifying the spatial resolution parameters. Figure \ref{fig:convergenceOfBlobsH} shows the convergence of the mollified vorticity field $\omega^h$ to the exact vorticity field $\omega$ by reducing the nominal particle spacing $h$. The overlap ratio is set to $\mathrm{overlap} = 1$, meaning that the blob core-size $\sigma$ is equal to $h$. We see that by reducing blob core size, and simultaneously increasing the number of particles, the mollified vorticity converges to the exact vorticity. 
 
-The second parameter we can adjust is the $\mathrm{overlap}$ of the blobs, as seen in Figure \ref{fig:convergenceOfBlobsOverlap}. The blob spacing $h$ is set to $h = 0.08$, and we see that by increasing the overlap ratio $\lambda$, the mollified vorticity approaches the exact vorticity field. However, as shown by Koumoutsakos and Cottett \cite{Cottet2000a}, if the overlap is low, we lose the smooth reconstruction of the vorticity field. This can be seen for $\mathrm{\lambda} = 2.0$. We see that the mollified vorticity field has a fluctuating solution, and will result in non-smooth velocity field.
+The second parameter we can adjust is the $\mathrm{overlap}$ of the blobs, as seen in Figure \ref{fig:convergenceOfBlobsOverlap}. The blob spacing $h$ is set to $h = 0.08$, and we see that by increasing the overlap ratio $\lambda$, the mollified vorticity approaches the exact vorticity field. However, as shown by Koumoutsakos and Cottett \cite{Cottet2000a}, if the overlap is low, we lose the smooth reconstruction of the vorticity field. This can be seen for $\mathrm{\lambda} = 2.0$. We see that the mollified vorticity field has a fluctuating solution, and will result in a non-smooth velocity field.
 
 \begin{figure}[!t]
         \centering
@@ -381,7 +381,7 @@ Convection of the vorticity is the first step of evolution of the vorticity from
 	\end{align}
 	\label{eq:convectionODE}
 	\end{subequations}
-where the change in position of vortex blob $\mathbf{x}_p$ is due to the induction velocity $\mathbf{u}\left(\mathbf{x}_p\right)$ acting on it, and the strengths of the particles $\alpha_p$ is conserved.
+where the change in position of vortex blob $\mathbf{x}_p$ is due to the induction velocity $\mathbf{u}\left(\mathbf{x}_p\right)$ acting on it, and the strengths of the particles $\alpha_p$ are conserved.
 
 The Biot-Savart Law, equation \ref{eq:mollifiedVelocityField}, is used to determine the induced velocities acting on each particle, resulting in an $N$-body problem. The calculation of the $N$-body problem is optimized by parallelizing the calculations in GPU hardware. The calculation is further optimized by using a fast summation method, the \printAcron{Fast Multipole Method}{FMM}, reducing the problem from $\mathcal{O}(N^2)$ to $\mathcal{O}(N)$ (in the ideal case).
 
@@ -471,7 +471,7 @@ The flow is convected during the first substep, whereas in the second substep, w
 	\end{subequations}
 where the position of the particles $\mathbf{x}_p$ is fixed, whereas the change in strengths of the particles $\alpha_p$ as depended on the kinematic viscous $\nu$. Thus the diffusion of the vortex blobs requires only the modification to the strengths $\alpha_p$ of the particles. 
 
-Chorin in 1973 \cite{Chorin1973a}, initially employed the \indexAcron{Random Walk Method}{RWM}, which generates and disperses vorticity using a pseudo-random number algorithm. However, this method suffered some limitations in accuracy, and since then methods such as \indexAcron{Particle Strength Exchange}{PSE} method \cite{Degond1989a}, and \printAcron{Vortex Redistribution Method}{VRM} \cite{Shankar1996} become a popular choice for treating diffusion of the particles.
+Chorin in 1973 \cite{Chorin1973a}, initially employed the \indexAcron{Random Walk Method}{RWM}, which generates and disperses vorticity using a pseudo-random number algorithm. However, this method suffered some limitations in accuracy, and since then methods such as \indexAcron{Particle Strength Exchange}{PSE} method \cite{Degond1989a}, and \printAcron{Vortex Redistribution Method}{VRM} \cite{Shankar1996} became popular choices for treating diffusion of the particles.
 
 The VRM simulates the diffusion of the particles by redistributing fractions of circulations of the vortex blobs to each other, such that diffusion is appropriately modeled. These redistribution fractions $f_{ij}^n$ are determined by solving a linear system of equations, that conserves the moments of the particles (such as the total circulation, linear and angular impulse) and the diffusion of the flow. 
 
@@ -482,7 +482,7 @@ The redistribution fractions $f_{ij}^n$, transfers portion of circulation $\alph
 	\end{equation}
 where $h_{\nu}$ is the diffusion distance and is directly related to the kinematic viscosity $\nu$ and the diffusive time step $\Delta t_d$ of the simulation.
 
-For this work, we investigate two methods that employ this approach. The Wee Remeshing Scheme \cite{Wee2006a} implemented the VRM into the remeshing process, section \ref{subsec:modifiedRemeshing}. The advantage was that diffusion and remeshing can be performed simultaneously in a single process. However for some flow cases, this approach had undesirable constraint on the diffusion time step $\Delta t_d$. Therefore, the approach of Tutty \cite{Tutty2010a}, the Tutty Remeshing Scheme, was employed which had a desirable constraint on the diffusion time step $\Delta t_d$, section \ref{subsubsec:srs}. The scheme was used to perform diffusion at every step of the evolution, which is important for proper coupling of the Eulerian and the Lagrangian method.
+For this work, we investigate two methods that employ this approach. The Wee Remeshing Scheme \cite{Wee2006a} implemented the VRM into the remeshing process, section \ref{subsec:modifiedRemeshing}. The advantage was that diffusion and remeshing can be performed simultaneously in a single process. However for some flow cases, this approach had an undesirable constraint on the diffusion time step $\Delta t_d$. Therefore, the approach of Tutty \cite{Tutty2010a}, the Tutty Remeshing Scheme, was employed which had a desirable constraint on the diffusion time step $\Delta t_d$, section \ref{subsubsec:srs}. The scheme was used to perform diffusion at every step of the evolution, which is important for proper coupling of the Eulerian and the Lagrangian methods.
 
 %This means that the VRM scheme (and also the PSE) requires a search algorithm to determine the particles that are within the zone of influence. A direct evaluation would require an $\mathcal{O}\left(N^2\right)$ evaluation. However, this can be optimized using a search tree algorithm, speeding up the search to an $\mathcal{O}\left(\log N\right)$.
 
@@ -547,7 +547,7 @@ However, we see that this $c^2$ constraint imposes a direct constraint not only 
 
 where $k_d \geqslant 1$ and is an integer. This is a problem for the hybrid method as the Lagrangian method and the Eulerian method are coupled at every step. If the Lagrangian method does not perform diffusion at every step, from the Eulerian method's point of view, it would seem that the Lagrangian vorticity diffuses in a discontinuous fashion. This discontinuous behavior of the Lagrangian method (w.r.t. the Eulerian method), can cause stability issues during the coupling process, and therefore should be avoided.
 
-We could minimize this problem by modifying the $\Delta t_c$ such that it matches the diffusion time step (i.e $\Delta t_c = \Delta t_d$), so that the diffusion is performed at every step. This was a feasible solution for low Reynolds number flows, however for high Reynolds number $Re$ flows, where the convection time step has to be small, we need a scheme that is not constrained by the minimum diffusion time step.
+We could minimize this problem by modifying the $\Delta t_c$ such that it matches the diffusion time step (i.e $\Delta t_c = \Delta t_d$), so that the diffusion is performed at every step. This was a feasible solution for low Reynolds number flows, however for high Reynolds number flows, where the convection time step has to be small, we need a scheme that is not constrained by the minimum diffusion time step.
 
 \subsection{Tutty Remeshing Scheme}
 \label{subsubsec:srs}
@@ -578,7 +578,7 @@ where $h_{\nu}$ is the characteristic diffusion distance associated to the time 
 	\label{fig:simpleRedistribution}
 	\end{figure}
 	
-Similar to the the TRS, described in section \ref{subsec:modifiedRemeshing}, the TRS transfers the strengths to known set of new nodes rather than the neighboring nodes (removing the requirement for a search algorithm). Figure \ref{fig:simpleRedistribution} shows the 1D redistribution of the vortex blob $x_i \leqslant x_{\nu} \leqslant x_{n+1}$ to the stencil nodes $x_k$, where $k=i-1,\cdots,i+2$. The solution to the redistribution is given by the following equations,
+Similar to the the TRS, described in section \ref{subsec:modifiedRemeshing}, the TRS transfers the strengths to a known set of new nodes rather than the neighboring blobs (removing the requirement for a search algorithm). Figure \ref{fig:simpleRedistribution} shows the 1D redistribution of the vortex blob located at $x_i \leqslant x_{\nu} \leqslant x_{i+1}$ to the stencil nodes $x_k$, where $k=i-1,\cdots,i+2$. The solution to the redistribution is given by the following equations,
 	\begin{subequations}
 	\begin{align}
 	f_{i-1} &= \frac{1}{2}\left(1-f_i-\Delta\right)\\
@@ -623,7 +623,7 @@ as explained by Tutty \cite{Tutty2010a}. A resulting constraint is imposed on th
 
 Therefore, we observe that this scheme only poses a constraint on the maximum diffusion time step $\Delta t_d$, enabling us to perform the diffusion at every step of the evolution, equation \ref{eq:la_dtcts}.
 
-When employing the Tutty's scheme, we require diffusion and redistribution to be performed at every step, i.e the diffusion frequency $f_{diff}=1$ and the redistribution frequency $f_{redis}=1$. In addition to the redistribution, a common approach to minimize the number of vortex blobs is to perform a population control. A population control removes particles with strengths $\left|\alpha\right|$ less than pre-defined circulation threshold $\Gamma_{loc}$, and simultaneously ensuring that the total circulation removed is less that the pre-defined global threshold $\Gamma_{glob}$,
+When employing the Tutty's scheme, we require diffusion and redistribution to be performed at every step, i.e the diffusion frequency $f_{diff}=1$ and the redistribution frequency $f_{redis}=1$. In addition to the redistribution, a common approach to minimize the number of vortex blobs is to perform a population control. A population control removes particles with strengths $\left|\alpha\right|$ less than a pre-defined circulation threshold $\Gamma_{loc}$, and simultaneously ensuring that the total circulation removed is less that a pre-defined global threshold $\Gamma_{glob}$,
 
 \begin{equation}
 \sum_i \left|\alpha_i\right| \leqslant \Gamma_{glob},
@@ -672,9 +672,9 @@ with,
 
 where $\mathbf{u}_s$ is the velocity at the surface point $\mathbf{x}_s$. However, in the present work, we deal with stationary bodies and so $\mathbf{u}_b = 0$ and $\Omega(t) = 0$. The boundary condition, Equation \ref{eq:la_bcSlip}, is usually expressed as,
 \begin{equation}
-\mathbf{u} \cdot \hat{\mathbf{s}} =  \mathbf{u}_s \cdot \hat{\mathbf{s}}.
+\mathbf{u} \cdot \hat{\mathbf{s}} =  \mathbf{u}_s \cdot \hat{\mathbf{s}},
 \end{equation}
-equating the tangential components $\hat{\mathbf{s}}$, and is referred to as the \emph{no-slip} boundary condition. The paper of Koumoutsakos, Leonard and Pepin \cite{Koumoutsakos1994b} stated that, by satisfying no-slip boundary condition directly satisfies the no-through boundary conditions, as these boundary conditions are linked (\emph{Linked boundary condition}). This was also been stated by Shiels \cite{Shiels1998} and have been further employed by Cooper, Mar and Barba in 2009 \cite{Cooper2009a}.
+and is referred to as the \emph{no-slip} boundary condition. The paper of Koumoutsakos, Leonard and Pepin \cite{Koumoutsakos1994b} stated that, by satisfying no-slip boundary condition directly satisfies the no-through boundary conditions, as these boundary conditions are linked (\emph{Linked boundary condition}). This was also stated by Shiels \cite{Shiels1998} and have been further employed by Cooper, Mar and Barba in 2009 \cite{Cooper2009a}.
 
 	\begin{figure}[!h]
 	\centering
@@ -683,10 +683,11 @@ equating the tangential components $\hat{\mathbf{s}}$, and is referred to as the
 	\label{fig:noSlipVorticityField}
 	\end{figure}
 
-Typically in an inviscid flow, the boundary condition is enforced after performing the Helmholtz decomposition of the velocity, equation \ref{eq:helmholtz}. The rotational component $\mathbf{u}_{\omega}$ represents the velocity due to the vorticity in the flow, whereas the potential component $\mathbf{u}_{\phi}$ is used to taken in account of the presence of the body. However, Koumoutsakos, Leonard and Pepin in 1994 \cite{Koumoutsakos1994b}, used an alternate approach for enforcing the boundary condition. Instead of performing the Helmholtz decomposition, they considered an extended vorticity field that is divided into:
+Typically in an inviscid flow, the boundary condition is enforced after performing the Helmholtz decomposition of the velocity, equation \ref{eq:helmholtz}. The rotational component $\mathbf{u}_{\omega}$ represents the velocity due to the vorticity in the flow, whereas the harmonic form $\mathbf{u}_h$ is used to take in account of the presence of the body. Koumoutsakos, Leonard and Pepin in 1994 \cite{Koumoutsakos1994b}, uses the Helmholtz decomposition to divide the vorticity into: 
+%follows:used an alternate approach for enforcing the boundary condition. Instead of performing the Helmholtz decomposition, they considered an extended vorticity field that is divided into:
 \begin{itemize}
 \item the vorticity field in the fluid $\omega$,
-\item the vortex sheet distribution on the boundary $\gamma$,
+\item the vortex sheet distribution on the boundary $\gamma$ from the harmonic form,
 \end{itemize}
 Figure \ref{fig:noSlipVorticityField} depicts this extended vorticity and the division of the vorticity field to the two sub-categories. The resulting velocity field throughout the domain is given as,
 \begin{equation}
@@ -762,7 +763,7 @@ An additional constraint is obtained from Kelvin's circulation theorem stating t
 
 where $\Gamma_{\gamma}$ is the integral of the vortex sheet strengths $\gamma$. The total circulation of the vortex sheet $\Gamma_{\gamma}$ is determined during the hybrid coupling of the Lagrangian method to the Eulerian method, see section \ref{subsec:coupling-covs}.
 
-A potential alternative for removing the singularity associated to the boundary integral equation was demonstrated by Koumoutsakos \cite{Koumoutsakos1993a}. He employed a spectral decomposition of the kernel in the Fredholm equation and obtained a set equations that was well-conditioned, even when the number of panels is increased.
+A potential alternative for removing the singularity associated to the boundary integral equation was demonstrated by Koumoutsakos \cite{Koumoutsakos1993a}. He employed a spectral decomposition of the kernel in the Fredholm equation and obtained a set of equations that is well-conditioned, even when the number of panels is increased.
 
 \begin{comment}
  As the body is in the domain of the vortex sheet, the circulation of the body is represented by the vortex sheet,
@@ -1020,7 +1021,7 @@ The flowchart of one time step of the Lagrangian method is given by Figure \ref{
 	\item \textbf{Solve for panels:} Determine the strengths of the vortex panels $\gamma$, such that the no-slip boundary condition at the collocation points of the vortex panels is enforced. When determining the strengths, we also have to ensure that the total circulation of the vortex panels satisfies the conservation of circulation, equation \ref{eq:circulationConstraintonPanels}, which we investigate during the hybrid coupling, section \ref{subsec:coupling-covs}.
 	
 	\item \textbf{Evaluate the total velocity field:} Evaluate the total velocity field $\mathbf{u}$, which is the sum of velocity field induced by the vortex blobs $\mathbf{u}_{\omega}$, the velocity field induced by the vortex panels $\mathbf{u}_{\gamma}$, and the free-stream velocity field $\mathbf{u}_{\infty}$. 
-	\item \textbf{Convect the vortex blobs:} Use the velocity field to convect the vortex blobs from $t_n$ to $t_{n+1}$ to the new position.
+	\item \textbf{Convect the vortex blobs:} Use the velocity field to convect the vortex blobs from $t_n$ to $t_{n+1}$ to the new position. The strength of the vortex panels remain constant during this step.
 	\item \textbf{Remesh the Lagrangian field:} Remesh the vortex blobs onto a structured square lattice using the $\mathrm{M}'_4$ interpolation kernel.
 	\item \textbf{Diffuse the vortex blobs:} Diffuse the vortex blobs using the $\Delta t_d$ diffusion time step, by modifying the strengths of the vortex blobs according to Wee's WRS or Tutty's TRS method.
 	\end{enumerate}

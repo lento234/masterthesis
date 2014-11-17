@@ -161,20 +161,34 @@ xySquare  = np.array([[-1, 1, 1, -1, -1],
 
 
 # Initial set of blobs
-xB = np.array([0,0.35,1,1,1.3,1.3,1.3,1.3,1.3,1.6,1.65,1.7,
-	       1.8,1.86,1.8,2.1,1.9,2.2,2.2,2.5,2.4,2.31,0.6,
-	       0.9,0.8,1,0.6,0.5*1.2,0.5*2.84,0.5*2.09,
-	       0.5*0.5,0.5*1.315,-0.4,0.5*3.86,0.5*3.96,0.])*1.25
-        
-yB = (np.array([1.5,1.2,1.3, -1.2,2,-0.5,-1.8,0.4,1,1.2,-0.2,
-		.5,-2,2,-1.2,2.3,-2.3,0,0.5,2,0.8,-1.2,-1.3,
-		0.5,-0.3,-0.5,1.6,1.02,-1.13,0.015,0.8,
-		0.397,-1*2*-0.65,1.14,-0.59,-1*2.*-0.5])*0.5)*-1.25
+#xB = np.array([0,0.35,1,1,1.3,1.3,1.3,1.3,1.3,1.6,1.65,1.7,
+#	       1.8,1.86,1.8,2.1,1.9,2.2,2.2,2.5,2.4,2.31,0.6,
+#	       0.9,0.8,1,0.6,0.5*1.2,0.5*2.84,0.5*2.09,
+#	       0.5*0.5,0.5*1.315,-0.4,0.5*3.86,0.5*3.96,0.])*1.25
+#        
+#yB = (np.array([1.5,1.2,1.3, -1.2,2,-0.5,-1.8,0.4,1,1.2,-0.2,
+#		.5,-2,2,-1.2,2.3,-2.3,0,0.5,2,0.8,-1.2,-1.3,
+#		0.5,-0.3,-0.5,1.6,1.02,-1.13,0.015,0.8,
+#		0.397,-1*2*-0.65,1.14,-0.59,-1*2.*-0.5])*0.5)*-1.25
 
 # Lagrangian grid
 hLagr = 0.3
 xLagr = np.arange(-5-hLagr*0.5,5+hLagr+hLagr*0.5,hLagr)
 XLagr,YLagr = np.meshgrid(xLagr,xLagr)
+
+#xLagr = np.arange(-5-hLagr*0.5,5+hLagr+hLagr*0.5,hLagr)
+
+
+
+xB = np.arange(-0.5-hLagr*0.5,2+hLagr+hLagr*0.5,hLagr)+np.spacing(100)
+yB = np.arange(-0.5-hLagr*0.5-hLagr,1+hLagr+hLagr*0.5,hLagr)+np.spacing(100)
+xB, yB = np.meshgrid(xB,yB)
+xB = xB.copy().flatten()
+yB = yB.copy().flatten()
+
+removeIndices = [11,10,2*11-1,9,7*11-1,8*11-1,8*11-2,8*11-3,0,1,7*11]#[0,1,2,6,7,8,2*9-1,2*9-2,9,8*9,8*9+1,7*9,9*9-1,9*9-2,3*9-1,8*9-1,2*9+1,9-2,9-4,9-5]
+xB = np.delete(xB,removeIndices)
+yB = np.delete(yB,removeIndices)
 
 # Integrator
 beta = np.linspace(-np.pi,np.pi,1000)
@@ -259,6 +273,10 @@ interpRegion = mpl.path.Path(vertices=np.concatenate([surface.vertices[::-1], bo
 
 # ----------------------------------------------------------
 # Calculations
+
+inside = surface.contains_points(np.vstack((xB,yB)).T)
+xB = xB[~inside]
+yB = yB[~inside]
 
 clim = 5
 cmap,norm = mpl.colors.from_levels_and_colors(colorMapDaen['levels']*clim,colorMapDaen['colors'],extend='both')

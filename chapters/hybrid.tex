@@ -8,7 +8,7 @@
 
 	\section{Introduction to Hybrid Eulerian-Lagrangian Vortex Particle Method}
 	
-	The \printAcron{Hybrid Eulerian-Lagrangian Vortex Particle Method}{HELVPM} is a domain decomposition method, where the Eulerian method and the Lagrangian method solves different regions of the fluid. The domain decomposition method simply splits the domain of interest and uses appropriate method in each domain. The Eulerian formulation will be used at the near-wall region, where we need proper description of the vorticity generation at the boundary, and the Lagrangian formulation is used away from the body, where we only need to evolve the vorticity field. Figure \ref{fig:domainDecomposition} shows the decomposition of the domain to the gridded and the non-gridded region.
+	The \printAcron{Hybrid Eulerian-Lagrangian Vortex Particle Method}{HELVPM} is a domain decomposition method, where the Eulerian method and the Lagrangian method solve different regions of the fluid. The domain decomposition method simply splits the domain of interest and uses the appropriate method in each domain. The Eulerian formulation will be used at the near-wall region, where we need proper description of the vorticity generation at the boundary, and the Lagrangian formulation is used away from the body, where we only need to evolve the vorticity field. Figure \ref{fig:domainDecomposition} shows the decomposition of the domain into the gridded and the non-gridded region.
 	
 		\begin{figure}[!h]
 			\centering
@@ -17,7 +17,7 @@
 			\label{fig:domainDecomposition}
 		\end{figure}	
 	
-	Several studies have already been performed regarding the domain decomposition. Cottet and Koumoutsakos (2000a)\cite{Cottet2000a} summarized the thoery behind the Eulerian-Lagrangian domain decomposition. Guermond and Lu (2000) \cite{Guermond2000a} simulated the advection dominated, external flows. They used Schwartz type method to couple the two methods together. Ould-Salhi et al. (2001) \cite{Ould-Salihi2001a} blended the finite difference and vortex method together to construct the hybrid method. Winckelmans et al. (2005a) \cite{Winckelmans2005} investigated the trailing vorticies. Daeninck (2006) \cite{Daeninck2006} used a simplified coupling strategy without the Schwartz method, to coupling Vortex Particle Method and Finite Difference Method together. Stock (2010) \cite{Stock2010a} expanded Daeninck's strategy, coupling Vortex Particle Method and Finite Volume Method and modeled a 3D rotor.
+	Several studies have already been performed regarding the domain decomposition. Cottet and Koumoutsakos (2000a)\cite{Cottet2000a} summarized the theory behind the Eulerian-Lagrangian domain decomposition. Guermond and Lu (2000) \cite{Guermond2000a} simulated the advection dominated, external flows. They used Schwartz type method to couple the two methods together. Ould-Salhi et al. (2001) \cite{Ould-Salihi2001a} blended the finite difference and vortex method together to construct the hybrid method. Winckelmans et al. (2005a) \cite{Winckelmans2005} investigated the trailing vorticies. Daeninck (2006) \cite{Daeninck2006} used a simplified coupling strategy without the Schwartz method, to couple Vortex Particle Method and Finite Difference Method together. Stock (2010) \cite{Stock2010a} expanded Daeninck's strategy, coupling Vortex Particle Method and Finite Volume Method and modeled a 3D rotor.
 
 	\section{Convectional Coupling Strategy}
 	\label{sec:helvpm-ccs}
@@ -36,7 +36,7 @@
 	\section{Simplified Coupling Strategy}
 	\label{sec:helvpm-scs}
 	
-	As we realized now, the downside to this procedure is that we have to solve the stream function in both $\Omega_E$ and $\Omega_L$ iteratively, until we converge to a solution. This makes the computation very expensive, especially when we are dealing with large numbers of vortex particles. Therefore for this project, we decided to use the coupling technique formulated by Daeninck (2006) \cite{Daeninck2006} and expanded by Stock (2010) \cite{Stock2010a}. However, through the course of present work, we will see that we have to perform a modification to the scheme, to ensure that the total circulation of the Lagrangian domain is conserved at all times (see section \ref{seec:coupling-mthlcs}).	
+	As we realized now, the downside to this procedure is that we have to solve the stream function in both $\Omega_E$ and $\Omega_L$ iteratively, until we converge to a solution. This makes the computation very expensive, especially when we are dealing with large numbers of vortex particles. Therefore for this project, we decided to use the coupling technique formulated by Daeninck (2006) \cite{Daeninck2006} and expanded by Stock (2010) \cite{Stock2010a}. However, through the course of the present work, we will see that we have to perform a modification to the scheme, to ensure that the total circulation of the Lagrangian domain is conserved at all times (see section \ref{seec:coupling-mthlcs}).	
 	
 %	\subsection{Coupling Eulerian and Lagrangian Methods}
 
@@ -47,7 +47,7 @@
 			\label{fig:domainDecomposition_daenick}
 		\end{figure}
 	
-	The simplified coupling strategy was first demonstrated in the doctoral thesis of Daeninck \cite{Daeninck2006}. Daeninck showed that it is possible to coupled the Lagrangian and the Eulerian method without the use of Schwartz iterative method. Daeninck proposed an approach that satisfies the following statements:
+	The simplified coupling strategy was first demonstrated in the doctoral thesis of Daeninck \cite{Daeninck2006}. Daeninck showed that it is possible to couple the Lagrangian and the Eulerian methods without the use of Schwartz iterative method. Daeninck proposed an approach that satisfies the following statements:
 	
 	\begin{itemize}
 	\item The Lagrangian vortex method solves the full fluid domain $\Omega_L$ (see Figure \ref{fig:domainDecomposition_daenick}), but under-resolves the near-wall region $\Omega_E$ as it is less efficient at resolving the boundary layer of the flow.
@@ -64,18 +64,18 @@
 	Furthermore, the Lagrangian boundary condition is handled differently. Unlike the standard Lagrangian method, where the boundary sheds vorticity, in this strategy as the Lagrangian method is under-resolved at the boundary, it cannot be used to resolve the vorticity flux at the body. Instead, the Eulerian method is used to solve vorticity generation from the wall boundary, and acts as the vorticity generator for the Lagrangian method. For this coupling strategy to be valid, there are some assumptions that we must satisfy:
 
 	\begin{itemize}
-	\item At $t_n$ before the evolution of both method to $t_{n+1}$, the Lagrangian solution matches Eulerian solution at the boundary of the near-wall region $\Sigma_d$ (see Figure \ref{fig:domainDecomposition_daenick}).
+	\item At $t_n$ before the evolution of both methods to $t_{n+1}$, the Lagrangian solution matches the Eulerian solution at the boundary of the near-wall region $\Sigma_d$ (see Figure \ref{fig:domainDecomposition_daenick}).
 	\item Even though the Lagrangian subdomain is under-resolved in the near-wall region, it should still be able to provide accurate boundary conditions for the Eulerian method at the external boundary $\Sigma_d$.
 	\item After the evolution to $t_{n+1}$, the deviation of the Lagrangian solution (due to lack of vorticity flux at Lagrangian boundary), should be minimal.
 	\end{itemize}	
 	
-	Daeninck's the simplified coupling strategy focused on the vorticity-velocity formulation for the Eulerian domain. However, he briefly showed that it is also possible to couple the Eulerian method with the velocity-pressure formulation. The advantage of using the velocity-pressure formulation is that it will be easier to extend to a 3D problem, unlike the vorticity-velocity formulation for the Eulerian method.
+	Daeninck's simplified coupling strategy focused on the vorticity-velocity formulation for the Eulerian domain. However, he briefly showed that it is also possible to couple the Eulerian method with the velocity-pressure formulation. The advantage of using the velocity-pressure formulation is that it will be easier to extend to a 3D problem, unlike the vorticity-velocity formulation for the Eulerian method.
 	
 	\subsection{Coupling Algorithm}	
 	\label{subsec:hybrid-ca}
 	The coupling of the solvers was described in one global time stepping algorithm. As the Eulerian methods suffers from a larger stability constraint on the time step, and the Lagrangian time marching is computationally more expensive, a  different time discretization for both methods was employed. The Lagrangian method and the Eulerian method had the time steps $\Delta t_L$ and $\Delta t_E=\Delta t_L/k_E$, respectively, where $k_E$ is the number of Eulerian substeps.
 	
-	Assuming that we known the solutions of both solver at $t_n$, the algorithm for the coupled time marching of the Eulerian method (with velocity-pressure formulation) and the Lagrangian method from $t_n$ to $t_n+\Delta t_L$ is summarized as follows:
+	Assuming that we known the solutions of both solvers at $t_n$, the algorithm for the coupled time marching of the Eulerian method (with velocity-pressure formulation) and the Lagrangian method from $t_n$ to $t_n+\Delta t_L$ is summarized as follows:
 	
 	\begin{enumerate}
 	\item At $t_n$, \textbf{correct the Lagrangian solution} in the near-wall region $\Omega_L\cap\Omega_E$ from the Eulerian field, Figure \ref{fig:domainDecomposition_daenick}. The vorticity in $\Omega_E$ is determined by taking the curl of the velocity field of the Eulerian method. The vortex particles strengths are determined by interpolating the vorticity from the Eulerian grid.
@@ -102,17 +102,17 @@
 	\item \textbf{Advance the Eulerian method} from $t_n$ to $t_n + \Delta t_L$ using $k_E$ Eulerian substeps. The boundary conditions on $\mathbf{u}$ at each substep is obtained by linear interpolation of the boundary condition at $t_n$ and $t_{n} + \Delta t_L$.
 	\end{enumerate}	
 	
-	 Daeninck notices that the when using the velocity-pressure formulation for the Eulerian method, the transition from the Eulerian to the Lagrangian domain is more noticeable. Figure \ref{fig:daeninck_CylinderVorticityMod}, shows the artificial vorticity at the boundary of the Eulerian domain $\Sigma_d$. This error is more prominent as the coupling is performed at the level of velocity, and we are looking at the derivative. To enhance the coupling of the Eulerian and the Lagrangian method, Daeninck further modified the Eulerian solution in the most external region of the Eulerian subdomain $\Omega_E$ from interpolation the Lagrangian solution, and observed that it provided better results. Figure \ref{fig:daeninckInterpolation} the modified adjustments regions used by Daeninck in his work. 
+	 Daeninck notices that when using the velocity-pressure formulation for the Eulerian method, the transition from the Eulerian to the Lagrangian domain is more noticeable. Figure \ref{fig:daeninck_CylinderVorticityMod}, shows the artificial vorticity at the boundary of the Eulerian domain $\Sigma_d$. This error is more prominent as the coupling is performed at the level of velocity, and we are looking at the curl of it, vorticity. To enhance the coupling of the Eulerian and the Lagrangian method, Daeninck further modified the Eulerian solution in the most external region of the Eulerian subdomain $\Omega_E$ interpolating the Lagrangian solution, and observed that it provided better results. Figure \ref{fig:daeninckInterpolation} shows the modified adjustments regions used by Daeninck in his work. 
  
 	 However, in the present work we will use the Lagrangian correction strategy by Stock \cite{Stock2010a} and introduce additional modifications to the Lagrangian correction step itself to reduce this mismatch.
 		
 	
 	\subsection{Lagrangian Correction Step}
 	\label{subsec:hybrid-lcs}
-	The coupling strategy demonstrated by Daeninck \cite{Daeninck2006}, was studied and was further extended by Stock \cite{Stock2010a}. Stock's work focused on the overlap region $\Omega_E\cap\Omega_L$ (Figure \ref{fig:domainDecomposition_daenick}) and correction of the Lagrangian solution. Following observations was determined by the work:
+	The coupling strategy demonstrated by Daeninck \cite{Daeninck2006}, was studied and was further extended by Stock \cite{Stock2010a}. Stock's work focused on the overlap region $\Omega_E\cap\Omega_L$ (Figure \ref{fig:domainDecomposition_daenick}) and correction of the Lagrangian solution. The following observations can be extracted from Stock's work:
 	
 	\begin{itemize}
-	\item Eulerian solution is only assumed to be correct from the body surface $\Sigma_w$ to somewhat inside of the outer Eulerian domain $\Sigma_d$. Therefore, the transfer of the Eulerian solution to the Lagrangian method should take in account of the potential inaccuracy of the Eulerian solution at the outer boundary (depicted in the results of Stock, Figure \ref{fig:stockBoundaryErrorMod}).
+	\item Eulerian solution is only assumed to be correct from the body surface $\Sigma_w$ to somewhat inside of the outer Eulerian domain $\Sigma_d$. Therefore, the transfer of the Eulerian solution to the Lagrangian method should take in account the potential inaccuracy of the Eulerian solution at the outer boundary (depicted in the results of Stock, Figure \ref{fig:stockBoundaryErrorMod}).
 	
 		\begin{figure}[!b]
 			\centering
@@ -121,10 +121,10 @@
 			\label{fig:stockBoundaryErrorMod}
 		\end{figure}		
 	
-	\item The very strong gradient in vorticity (vortex sheet) cannot be efficiently and accurately transfered to the Lagrangian method. This is especially problematic at high Reynolds number flows, and interpolating this vorticity from Eulerian method to Lagrangian method results in numerical problems. Therefore, to avoid the noise in the interpolation, the correction step has to ignore the region very near to the wall.
+	\item The very strong gradient in vorticity (vortex sheet) cannot be efficiently and accurately transfered to the Lagrangian method. This is especially problematic at high Reynolds number flows, and interpolating this vorticity from the Eulerian method to the Lagrangian method results in numerical problems. Therefore, to avoid the noise in the interpolation, the correction step has to ignore the region very near to the wall.
 	\end{itemize}
 	
-	The resulting Lagrangian correction domain, or the interpolation domain $\Omega_I$, using Stock's coupling approach is shown in Figure \ref{fig:interpolationDomainDefinition}. The interpolation domain $\Omega_I$ is defined with an offset from the Eulerian domain boundaries $\Omega_E: \partial\Omega_E=\Sigma_w \cup \Sigma_d$ (see Figure \ref{fig:interpolationDomainExpanded}), such that regions of the Eulerian domain that introduces issues with coupling are ignored. The outer boundary of the interpolation domain $\Sigma_o$ is defined with an offset $d_{bdry}$ from the Eulerian Dirichlet velocity boundary $\Sigma_d$, such that potential inaccuracy of the Eulerian solution is ignored (depicted in Figure \ref{fig:interpolationDomainCloseup}). Similarly, the inner boundary of the interpolation domain $\Sigma_i$ is defined with an offset $d_{surf}$ from the Eulerian wall boundary $\Sigma_w$ such that the very strong vorticity (i.e the vortex sheet) is ignored. The offsets $d_{surf}$ and $d_{bdry}$ was defined in the order of the Lagrangian vortex particle size.
+	The resulting Lagrangian correction domain, or the interpolation domain $\Omega_I$, using Stock's coupling approach, is shown in Figure \ref{fig:interpolationDomainDefinition}. If the Eulerian domain $\Omega_E$ is defined by $\partial\Omega_E=\Sigma_w \cup \Sigma_d$, then the interpolation region $\Omega_I$ is defined by $\partial\Omega_I = \Sigma_{i}\cup\Sigma_{o}$. The outer boundary of the interpolation domain $\Sigma_o$ is defined with an offset $d_{bdry}$ from the Eulerian Dirichlet velocity boundary $\Sigma_d$, such that potential inaccuracy of the Eulerian solution is ignored (depicted in Figure \ref{fig:interpolationDomainCloseup}). Similarly, the inner boundary of the interpolation domain $\Sigma_i$ is defined with an offset $d_{surf}$ from the Eulerian wall boundary $\Sigma_w$ such that the very strong vorticity (i.e the vortex sheet) is ignored (depicted in Figure \ref{fig:interpolationDomainCloseup}). The offsets $d_{surf}$ and $d_{bdry}$ were defined in the order of the Lagrangian vortex particle size.
 	
 	\begin{figure}[!t]
         \centering
@@ -158,7 +158,7 @@
 	
 	\section{Evolution of the Hybrid Method}
 
-	In the present work, we will therefore employ Daeninck's simplified coupling strategy with the detailed Lagrangian correction approach of Stock. The algorithm for the evolution of the hybrid method is divide into four key components:
+	In the present work, we will therefore employ Daeninck's simplified coupling strategy with the detailed Lagrangian correction approach of Stock. The algorithm for the evolution of the hybrid method is divided into four key components:
 
 		\begin{enumerate}
 		\item \textbf{Correct Lagrangian:} Use the solution of the Eulerian subdomain $\Omega_E$, to correct the solution of the Lagrangian subdomain $\Omega_L$, using the strategy of Stock (summarized in section 	\ref{subsec:hybrid-lcs}). Chapter \ref{ch:coupling} provides a detailed analysis on the implementation of Stock's Lagrangian correction strategy. Furthermore, the chapter highlights the limitations of Stock's correction strategy and described the methodology to ensure conservation of total circulation, paramount for a valid numerical scheme.

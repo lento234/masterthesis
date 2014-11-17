@@ -1,9 +1,10 @@
 \chapter{Conclusion and Recommendation}
 \label{ch:ConclusionandRecommendation}
 
-The goal of the present research was to develop an efficient, reliable, and an accurate numerical method for modeling the flow past a 2D \printAcron{Verticle Axis Wind Turbine}{VAWT}. The numerical method should enable us to have better understanding of the performance of the VAWT. The challenge in modeling the flow past a VAWT is the motion of the blades where it passes through its own wake creating flow phenomena such as flow separation, dynamic stall and other blade-wake interactions. The resulting wake geometry of VAWT becomes difficult to model and makes it hard to predict the performance of the VAWT. Therefore, the numerical method should be able to accurately simulate the near-body flow phenomena and should be efficient at evolving the wake.
+The goal of the present research was to develop an efficient, reliable, and accurate numerical method for modeling the flow past a 2D \printAcron{Verticle Axis Wind Turbine}{VAWT}. The numerical method should enable us to have better understanding of the performance of the VAWT. The challenge in modeling the flow past a VAWT is the motion of the blades where it passes through its own wake creating flow phenomena such as flow separation, dynamic stall and other blade-wake interactions. The resulting wake geometry of VAWT becomes difficult to model and makes it hard to predict the performance of the VAWT. Therefore, the numerical method should be able to accurately simulate the near-body flow phenomena and should be efficient at evolving the wake.
 
-The numerical method that satisfied these requirements was a \printAcron{Hybrid Eulerian-Lagrangian Vortex Particle Method}{HELVPM} which couples a Finite Element Method (Eulerian method) that resolves the near-body region, and the Vortex Particle Method (Lagrangian Method) that resolves the wake. The advantage of an Eulerian method was that it was efficient at accurately describing the generation of vorticity from the body. This generated vorticity was then transfered to the Lagrangian method where it was efficiently evolved using \printAcron{Fast Multipole Method}{FMM} and parallel computation in \printAcron{Graphical Processing Units}{GPU}. The hybrid method that was employed was based on the doctoral thesis of Daeninck \cite{Daeninck2006} and the additional study on the Lagrangian correction algorithm by Stock \cite{Stock2010a}. 
+The numerical method that satisfied these requirements was a \printAcron{Hybrid Eulerian-Lagrangian Vortex Particle Method}{HELVPM} which couples a Finite Element Method (Eulerian method) that resolves the near-body region, and the Vortex Particle Method (Lagrangian Method) that resolves the wake. The advantage of an Eulerian method was that it was efficient at accurately describing the generation of vorticity from the body. This generated vorticity was then transfered to the Lagrangian method where it was efficiently evolved using \printAcron{Fast Multipole Method}{FMM} and parallel computation in \printAcron{Graphical Processing Units}{GPU}. The hybrid method that was employed was based on the doctoral thesis of Daeninck \cite{Daeninck2006} and the additional study on the Lagrangian correction algorithm by Stock \cite{Stock2010a}. Though additional modification where required to the coupling strategy to ensure a valid numerical method that conserves the total circulation in the fluid.
+
 
 \section{Conclusion}
 
@@ -11,13 +12,13 @@ The present study implemented the strategy and performed test case simulations t
 
 \begin{itemize}
 
-\item The coupling strategy employed by Daeninck and Stock required several modification to ensure conservation of circulation (Chapter \ref{ch:coupling}):
+\item The coupling strategy employed by Daeninck and Stock required several modifications to ensure conservation of circulation (Chapter \ref{ch:coupling}):
 	\begin{itemize}
 	\item A standard particle initialization of local particle volume and local vorticity causes a diffusive effect for the vorticity field in the Lagrangian domain. This was due to the smoothing error of the Gaussian kernels for vortex particle. The accurate initialization of the particles is still an open question in vortex method, but for the present study we were able to minimize the error by adjusting the resolution of the spatial discretization. 
 
 	\item Solving the boundary condition for the Lagrangian method required an additional constraint on the integral strength of the vortex panels, due to the singular nature of the vortex panel problem.  The additional constraint on the strength was determined directly from the Eulerian method further ensuring conservation of circulation.
 	
-	\item The slight error in the interpolation of vorticity from the Eulerian method onto the Lagrangian method introduces a slight error in the total circulation of the Lagrangian method. Therefore, the correction of the particles within the interpolation region was performed with a focus on conservation of circulation.
+	\item An error in the interpolation of vorticity from the Eulerian method onto the Lagrangian method introduces a an error in the total circulation of the Lagrangian method. Therefore, the correction of the particles within the interpolation region was performed with a focus on conservation of circulation.
 	\end{itemize}
 	
 \item During the evolution of the hybrid method, if an error exists in the coupling, it is manifested by a generation of artificial vorticity from the external boundary of the Eulerian domain:
@@ -33,6 +34,7 @@ The present study implemented the strategy and performed test case simulations t
 	\begin{itemize}
 	\item When employing an under-resolved hybrid method, the drag coefficient in the hybrid method is over-predicted. However as we increase the discretization within the interpolation region, we observe a convergence of the error.
 	\item For an under-resolved hybrid method, we observed a premature trigger in the unsteady behavior of the vorticity field. This occurs due to small generation of artificial vorticity in the under-resolved method but converges with increasing resolution at the overlap region. The simulations demonstrated the need for matching vorticity field from both methods at overlap region.
+	\item In the final stages of the present study, it was determined that the offset of the interpolation region from the outer Eulerian boundary $d_{bdry}$ plays a pivot role in the accuracy of the forces calculated. It was determined that increasing this offset can substantially increase the accuracy of the simulation. However, a smaller region of interpolation could have detrimental effect on the accuracy of the coupling. At high Reynolds number flows, the ideal parameters for the offset becomes a non-trivial question. Therefore it is recommended a dedicated research on the ideal method to deal with the other solution of the Eulerian method is performed in future.
 	\end{itemize}
 	
 \item The present study concluded by demonstrating the feasibility for simulating the flow of a 2D VAWT through proof-of-concept test cases:
@@ -142,6 +144,8 @@ The present study implemented the strategy and performed test case simulations t
 
 \item \textbf{Determine the relation of particle resolution to the flow conditions}: For the present study, the ideal particle resolution (overlap ratio $\lambda$ and nominal blob spacing $h$) was determined by analyzing the final solution of the simulation (such as lift and drag). However, we recommend a thorough study on determine the relation for the particle size to the flow condition such as Reynolds number or the maximum vorticity in the fluid, in order for an accurate simulation.
 
+\item \textbf{Modify the outer Eulerian domain}: During the research, we observed that the any mismatch between the Eulerian and the Lagrangian method introduces an artifact near the outer Eulerian boundary, in the form of artificial vorticity. To deal with this artificial vorticity, we reduced the region of interpolation, ignoring the outer Eulerian boundary. However, as we now have a smaller interpolation region, this results in a weaker coupling of the methods. Therefore, an ideal approach to deal with the incorrect Eulerian solution is to directly modify the outer Eulerian domain such this artificial vorticity is negated.
+
 \item \textbf{Spatially varying vortex core sizes}: A vortex particle method with spatially varying vortex blob core size can substantially improve the computational efficiency of the hybrid method. At the region of overlap, we could use vortex blobs with small core size ensuring minimum coupling error. As we move away from the body, the blob cores size can be scaled up with the size of shed vorticity.
 
 \item \textbf{Higher order time marching schemes for the Eulerian method}: A higher order time marching scheme for the Eulerian method can ensure a more accurate evolution of the Eulerian solution, thereby further increasing the accuracy in coupling. A higher order time marching scheme such as a $4^{\mathrm{th}}$ order Runge-Kutta method could help us reduce the number of Eulerian substeps $k_E$.
@@ -150,7 +154,7 @@ The present study implemented the strategy and performed test case simulations t
 
 \item \textbf{Multipole and GPU accelerated boundary element method}: The greatest computational limitation of the hybrid solver was the calculation of the vortex panel induced velocity on the vortex particles. When dealing with millions of particles, the direct calculation of this induced velocity substantially increases the computational time and resources. Simulation acceleration techniques such as Fast Multipole method or a GPU-accelerated boundary element method can help us tackle this challenge.
 
-\item \textbf{Turbulence modeling}: The present study could only research in the realms of laminar flow. However, as the flow around a VAWT is inherently turbulent, an implementation is turbulence modeling is needed. Turbulence model such as Reynolds Averaged Navier-Stokes (RANS) or Large Eddy simulation (LES) could provide a potential solution to this problem.
+\item \textbf{Turbulence modeling}: The present study could only research in the realms of laminar flow. However, as the flow around a VAWT is inherently turbulent, an implementation is turbulence modeling is needed. Turbulence model such as Unsteady Reynolds Averaged Navier-Stokes (URANS) or Large Eddy simulation (LES) could provide a potential solution to this problem.
 
 \item \textbf{Moving body}: The implementation of the moving geometry will enable us to investigate the dynamic stall behavior of the VAWT. The implementation can easily be extended by introducing the ALE formulation to the Eulerian method. Furthermore, this could open the possible for investigating fluid-structure interactions and introduce possibility for studying deforming VAWT blades.
 

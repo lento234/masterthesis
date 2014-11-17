@@ -9,13 +9,13 @@ Chapter \ref{ch:helvpm} provided a detailed summary on Hybrid Eulerian-Lagrangia
 
 \section{Modifications to the Lagrangian Correction Strategy}
 \label{seec:coupling-mthlcs}
-The Lagrangian correction step by Stock \cite{Stock2010a}, based on coupling strategy of Daeninck \cite{Daeninck2006} had to be modified in the present work. During the investigation of the algorithm, it became apparent that without additional steps, the total circulation in the Lagrangian method will be violated.
+The Lagrangian correction step by Stock \cite{Stock2010a}, based on the coupling strategy of Daeninck \cite{Daeninck2006} had to be modified in the present work. During the investigation of the algorithm, it became apparent that without additional steps, the total circulation in the Lagrangian method will be not be conserved.
 
-The two issues that causes an error in the total circulation (and subsequently introduces additional error in the coupling) is as follows:
+The two issues that causes an error in the total circulation (and subsequently introduces additional error in the coupling) are the following:
 	\begin{itemize}
 	\item \textbf{Vortex particle re-initialization}: In section \ref{subsec:vortexBlobInitialization}, we observed that initializing the particles using the local particle volume and local vorticity causes a diffusive effect on the vorticity distribution due to the \textit{smoothing error} of Gaussian kernels. Section 	\ref{subsec:coupling-vpri} elaborates the cause and correction required for this problem.
 	
-	\item \textbf{Circulation of Vortex sheet}: In section \ref{sec:boundaryConditions}, we saw that due to singular nature of the vortex panels, we require an additional constraint on total circulation of the vortex sheet. It is an unknown and has to be determined from the solution of the Eulerian method. Section \ref{subsec:coupling-covs} elaborates the methodology for determining the strength.
+	\item \textbf{Circulation of Vortex sheet}: In section \ref{sec:boundaryConditions}, we saw that as the vortex panel problem is singular, we require an additional constraint on total circulation of the vortex sheet. It is an unknown and has to be determined from the solution of the Eulerian method. Section \ref{subsec:coupling-covs} elaborates the methodology for determining the strength.
 	\item \textbf{Conservation of total circulation}: The Lagrangian correction step, consisting of re-initializing the vortex blobs inside the interpolation domain $\Omega_I$ (Figure \ref{fig:interpolationDomainDefinition}), and the transfer of circulation to the vortex panels must ensure that the total circulation in the Lagrangian method is conserved. Section \ref{subsec:coupling-cotc} elaborates the methodology used to explicitly ensure the conservation of circulation in the Lagrangian domain during the correction step.
 	\end{itemize}
 
@@ -384,7 +384,7 @@ The two issues that causes an error in the total circulation (and subsequently i
 		\end{figure}		
 	
 	
-	\item \textbf{Determine the weights} (\textit{only once}): The interpolation of the Eulerian vorticity $\omega$ from the Eulerian grid onto the structure grid is represented as,
+	\item \textbf{Determine the weights} (\textit{only once}): The interpolation of the Eulerian vorticity $\omega$ from the Eulerian grid onto the structured grid is represented as,
 		\begin{eqnarray}
 		\hat{\omega}_j = \sum_i \omega_i W_{ij},
 		\label{eq:coupling-interpolationeq2}

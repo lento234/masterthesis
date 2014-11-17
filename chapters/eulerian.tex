@@ -17,7 +17,7 @@
 %------------------------------------------------------------------------------------------------------
 %\section{Purpose of eulerian domain}
 
-In this chapter, we introduce the Finite lement Method used to solved the Eulerian subdomain of the hybrid method, and summarize the process for evolving the Eulerian method, step 4 of the hybrid evolution, Figure \ref{fig:flowchart_simpleCoupling_Eulerian}.
+In this chapter, we introduce the Finite element Method used to solved the Eulerian subdomain of the hybrid method, and summarize the process for evolving the Eulerian method, step 4 of the hybrid evolution, Figure \ref{fig:flowchart_simpleCoupling_Eulerian}.
 
 	\begin{figure}[!h]
 		\centering
@@ -32,7 +32,7 @@ In this chapter, we introduce the Finite lement Method used to solved the Euleri
 		\label{fig:flowchart_simpleCoupling_Eulerian}
 	\end{figure}
 
-Standard \printAcron{Computation Fluid Dynamics}{CFD} methods discretize the fluid into smaller grids, and solve the set of Navier-Stokes equations in these region. Eulerian methods uses this type of formulation.
+Standard \printAcron{Computation Fluid Dynamics}{CFD} methods discretize the fluid into smaller grids, and solve the set of \indexAcron{Navier-Stokes}{NS} equations in these regions. Eulerian methods use this type of formulation.
 %is referred to as an Eulerian , as we are evaluating the change of flow property in a given volume.
 
 For the hybrid method, we use the Navier-Stokes Eulerian formulation in the near-body region. The advantage of using this formulation in this region is that it is much more efficient in resolving boundary layers than the \printAcron{Vortex Particle Method}{VPM}. We can directly enforce the wall boundary condition at the wall boundary of the Eulerian subdomain, solving the problem of vorticity generation of the body. %In the hybrid coupling strategy, we can then interpolate this newly resolved near-wall solution onto the Lagrangian domain, where the vortex blobs can efficiently evolve the particles.
@@ -112,7 +112,7 @@ For $q=1$, we have a simple linear Lagrange element $\mathrm{CG}_1$ or linear in
 \subsection*{Variational Formulation}
 \label{subsec:variationalProblem}
 
-To solve a problem such as the Poisson equation numerically with FE, we need to convert it into a variational problem. The methodology is followed from the \fenics tutorial provided by Langtangen \cite{Logg2012b}. A 1D Poisson problem is given as,
+To solve a problem such as the Poisson equation numerically with FEM, we need to convert it into a variational problem. The methodology is followed from the \fenics tutorial provided by Langtangen \cite{Logg2012b}. A 1D Poisson problem is given as,
 	\begin{equation}
 	\begin{aligned}
 	- \nabla^2 u(x) &= f(x), \qquad x\ \mathrm{in}\ \Omega,\\
@@ -133,7 +133,7 @@ In equation \ref{eq:poissonEqVariationFormA}, the function $u$ is the trial func
 	\label{eq:poissonEqVariationFormB}
 	\end{equation}
 
-This form is referred to as the \textit{weak-form} of the original Poisson equation and is valid for all $v$ in the trial space $\hat{V}$. An inner product of any two functions $f$ and $g$ in domain $\Omega$ is defined as,
+Equations \ref{eq:poissonEqVariationFormA} and \ref{eq:poissonEqVariationFormB} are referred to as the \textit{weak-form} of the original Poisson equation and is valid for all $v$ in the trial space $\hat{V}$. An inner product of any two functions $f$ and $g$ in domain $\Omega$ is defined as,
 	\begin{equation}
 	\langle f,g \rangle = \int_{\Omega}fg\ \mathrm{d}x,
 	\label{eq:innerProductRule}
@@ -261,7 +261,7 @@ The coupling between the Eulerian and the Lagrangian subdomain is done by transf
 	\omega = \nabla \times u,
 	\label{eq:vorticityEq}
 	\end{equation}
-where the vorticity $\omega$ lies on the scalar-valued function space $X$. However, as $\nabla\times\mathbf{u}\notin{X}$, because $\mathbf{u}\in V$, we require a projection from the velocity function space $V$ onto the vorticity function space $X$. In variational formulation, this requires the following equality to be satisfied,
+where the vorticity $\omega$ lies on the scalar-valued function space $X$. However, as $\nabla\times\mathbf{u}\notin{X}$, because $\mathbf{u}\in V$, we require a projection from the velocity function space $V$ onto the vorticity function space $X$. In weak form, this requires the following equality to be satisfied,
 %Due to the constant change in the velocity field, we have to recalculate the vorticity at every time step $t_n, t_{n+1}, ...$ . To solve this problem in an efficient manner, we can use the \texttt{assemble} function of \dolfin to pre-construct the problem. %We must first define the equation \ref{eq:vorticityEq} in the variational (integral) form,  
 	\begin{equation}
 	\int_{\Omega} \omega \cdot v\ \mathrm{d}x = \int_{\Omega} (\nabla \times \mathbf{u}) \cdot v\ \mathrm{d}x, \qquad \forall\ v \in \hat{X}.
@@ -321,11 +321,11 @@ To solve the \indexAcron{Incompressible Navier-Stokes}{ICNS} problem, we must ch
 	\begin{equation}
 	q_{\mathrm{vel}} = 	q_{\mathrm{pres}} + 1,
 	\end{equation}
-for a stable problem. Therefore, we have decided to use the Taylor-Hood family, introduced by Taylor and Hood \cite{Taylor1973} and verified by Boffi \cite{Boffi1997}, that satisfies the inf-sup compatibility condition by using $q_{\mathrm{vel}} = 2$ and $q_{\mathrm{pres}} = 1$. We decided to choose this method, as it is the most conventional method, that is simple, and shows a stable behavior.
+for a stable formulation. Therefore, we have decided to use the Taylor-Hood family, introduced by Taylor and Hood \cite{Taylor1973} and verified by Boffi \cite{Boffi1997}, that satisfies the inf-sup compatibility condition by using $q_{\mathrm{vel}} = 2$ and $q_{\mathrm{pres}} = 1$. We decided to choose this method, as it is the most conventional method, that is simple, and shows a stable behavior.
 
 %Brezzi and Fortin \cite{Brezzi1991} showed that if both have the same order, it will result in an unstable problem. To solve the ICNS problem, we will used the Taylor-Hood family \cite{Taylor1973}, examined by Boffi \cite{Boffi1997}. The method use velocity order $q_{\mathrm{vel}} = 2$ and pressure order $q_{\mathrm{pres}} = 1$. We decided to choose this method, as it is the most conventional method, that is simple, and that shows a stable behavior.
 
-In addition, we have to choose an appropriate function space for the vorticity. As vorticity is the curl of the velocity, to reduce interpolation error during the projection of the solution, we will used function space one order lower than the velocity, $q_{\mathrm{vort}} = 1$. Table \ref{tab:eulerianFunctionTerms} shows the list of the function spaces, the finite element type and their orders. In additional, we have included the variable names of the function space, trial functions and the test functions, associated to the function element that we have chosen for the problem.
+In addition, we have to choose an appropriate function space for the vorticity. As vorticity is the curl of the velocity, to reduce interpolation error during the projection of the solution, we will use a function space one order lower than the velocity, $q_{\mathrm{vort}} = 1$. Table \ref{tab:eulerianFunctionTerms} shows the list of the function spaces, the finite element type and their orders. Additionally, we have included the variable names of the function space, trial functions and the test functions, associated to the function element that we have chosen for the problem.
 
 	\ctable[
 	    caption = {Summary of the Lagrange element $\mathrm{CG}_q$ of order $q$, that was used for solving the incompressible Navier-Stokes problem. The variable names of the function space, the trial functions, and the test functions are tabulated together.},
@@ -472,12 +472,14 @@ The algorithm of evolving the Eulerian method is summarized in this section. The
 The flowchart of the Eulerian method is given by Figure \ref{fig:flowchart_eulerian}.The algorithm to the Eulerian method can be summarized as follows:
 	\begin{enumerate}
 	\item \textbf{Mesh generation}: We generate the mesh of the fluid domain using \gmsh before the iteration.
-	\item \textbf{Determine the boundary condition}: We determine the boundary conditions for the boundary domains: $\partial \Omega_E = \Sigma_{w} \cup \Sigma_{d} \cup \Sigma_{p}$. If we have Dirichlet velocity boundary conditions for all the exterior boundaries, we do not have to apply any pressure boundary conditions at $\partial \Sigma_{p}$, because $\Sigma_{p}=\emptyset$ in that case.
+	\item \textbf{Determine the boundary condition}: We determine the boundary conditions for the boundary domains: $\partial \Omega_E = \Sigma_{w} \cup \Sigma_{d}$. The Dirichlet velocity boundary condition is obtained directly the Lagrangian method and the Neumann pressure boundary condition is obtained from the velocity. This is possible as we known the complete velocity distribution at all $\partial \Omega_E$. 
+	
+%	If we have Dirichlet velocity boundary conditions for all the exterior boundaries, we do not have to apply any pressure boundary conditions at $\partial \Sigma_{p}$, because $\Sigma_{p}=\emptyset$ in that case.
 	\item \textbf{Solve the IPCS}: Using IPCS, time march from $t_n$ to $t_{n+1}$ to solve for the new velocity $\mathbf{u}$ and pressure $p$ field.
 	\item \textbf{Determine the vorticity}: Using the algorithm described in \ref{subsec:dtvf}, solve for the vorticity field $\omega$ at the time $t_{n+1}$. 
 	\end{enumerate}
 	
-Once we have the well-resolved vorticity $\omega$ of the near-body region, the vorticity is then transfered into the Lagrangian subdomain using the Hybrid coupling scheme, which was summarized in the introduction, chapter \ref{ch:introduction}, and fully elaborated in chapter \ref{ch:hybrid}.
+Once we have the well-resolved vorticity $\omega$ of the near-body region, the vorticity is then transfered into the Lagrangian subdomain using the Hybrid coupling scheme, which was summarized in chapter \ref{ch:helvpm}, and fully elaborated in chapter \ref{ch:coupling}.
 
 \section{Validation of Eulerian Method}
 \label{sec:eu-voem}
