@@ -1223,7 +1223,24 @@ This method was used to investigate the error evolution of the vortex blob metho
 %	\label{fig:lambOseen_convection_vorticityErrorContours_compressed}
 %	\end{figure}
 %	
-	
+		\begin{figure}[!t]
+	  \centering
+	  \begin{subfigure}[b]{0.45\textwidth}
+	          \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_intialError_wRel-crop.png}
+	          \caption{$t=0$}
+	          \label{fig:lambOseen_convection_vorticityErrorContours_initial}
+	  \end{subfigure}%
+	  \qquad %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+	    %(or a blank line to force the subfigure onto a new line)
+	  \begin{subfigure}[b]{0.45\textwidth}
+	          \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_finalErrorEvolution_wRel-crop.png}
+	          \caption{$t=1$}
+	          \label{fig:lambOseen_convection_vorticityErrorContours_final}
+	  \end{subfigure}
+	  
+	  \caption{Relative error growth of Lamb-Oseen vorticity during the evolution (in logarithmic scale) using the parameters tabulated in table \ref{tab:lambOseenParams}. The figure shows \textbf{(a)}, the initial relative error at $t=0$, and \textbf{(b)} the final relative error in vorticity at $t=1$.}
+	  \label{fig:lambOseen_convection_vorticityErrorContours}
+		\end{figure}
 
 
 The convection and diffusion was performed according to the time integration parameters tabulated in table \ref{tab:lambOseenParams}. The vortex blobs where convected using a $4^{\mathrm{th}}$-order Runge-Kutta method ($\mathrm{RK4}$) for a high order time integration. After the convection substeps, the Lagrangian distortion was treated using the remeshing scheme discussed in section \ref{subsec:remeshing}. Generally, the remeshing is typically done every 10 iterations \cite{Barba2004c}. However, as our diffusion scheme and hybrid method requires structured lattice of vortex blobs for efficient calculations, we will remesh after every step, $f_{\mathrm{redist}}=1$.  
@@ -1233,24 +1250,7 @@ In addition to the evolution of the vortex blobs, we performed a population cont
 
 To verify whether our Lagrangian scheme is performs according to theory, we evaluated the error evolution of the simulation. Figure \ref{fig:lambOseen_convection_vorticityErrorContours}, shows the initial and the final relative error in vorticity. We see that initially we have a maximum relative error around \num{e-8}, located at the center of the Lamb-Oseen core. After 100 time integration steps from $t=0$ to $t=1$, we see that the maximum relative error in vorticity increases from \num{e-8} to \num{e-2}. The errors of the vorticity are predominantly localized at the center of the core, where we have maximum vorticity, Figure \ref{fig:lambOseen_convection_vorticityErrorContours}.
 
-	\begin{figure}[!t]
-     \centering
-     \begin{subfigure}[b]{0.45\textwidth}
-             \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_intialError_wRel-crop.png}
-             \caption{$t=0$}
-             \label{fig:lambOseen_convection_vorticityErrorContours_initial}
-     \end{subfigure}%
-     \qquad %add desired spacing between images, e. g. ~, \quad, \qquad etc.
-       %(or a blank line to force the subfigure onto a new line)
-     \begin{subfigure}[b]{0.45\textwidth}
-             \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_finalErrorEvolution_wRel-crop.png}
-             \caption{$t=1$}
-             \label{fig:lambOseen_convection_vorticityErrorContours_final}
-     \end{subfigure}
-     
-     \caption{Relative error growth of Lamb-Oseen vorticity during the evolution (in logarithmic scale) using the parameters tabulated in table \ref{tab:lambOseenParams}. The figure shows \textbf{(a)}, the initial relative error at $t=0$, and \textbf{(b)} the final relative error in vorticity at $t=1$.}
-     \label{fig:lambOseen_convection_vorticityErrorContours}
-	\end{figure}
+
 
 Figure \ref{fig:lambOseen_convection_errorGrowth_compressed}, shows the maximum relative error, equation \ref{eq:maxRelErrorDef}, and the $L^2-\mathrm{norm}$, equation \ref{eq:l2normeq}, error evolution of vorticity and velocity from $t=0$ to $t=1$. Similar investigation was performed by Barba \cite{Barba2004c} and Speck \cite{Speck2011a}. Due to the relation of the vorticity and the velocity, equation \ref{eq:lag_vort}, the error of the vorticity is higher that the error in the velocity. The figure shows both the maximum relative error, and the error in the $L^2-\mathrm{norm}$. The maximum relative error (e.g. for vorticity), is defined as,
 	\begin{equation}

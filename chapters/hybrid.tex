@@ -160,6 +160,19 @@
 
 	In the present work, we will therefore employ Daeninck's simplified coupling strategy with the detailed Lagrangian correction approach of Stock. The algorithm for the evolution of the hybrid method is divided into four key components:
 
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}
+			[node distance=.8cm, start chain=going below,]
+			\node[punktchainN, join] (correct) {\textsf{Correct Lagrangian}};
+		    \node[punktchainN, join] (evolveL) {\textsf{Evolve Lagrangian}};
+		    \node[punktchainN, join] (bcE)     {\textsf{Determine Eulerian \\boundary conditions}};
+		    \node[punktchainN, join] (evolveE) {\textsf{Evolve Eulerian}};
+		\end{tikzpicture}
+		\caption{Flowchart of the simple coupling strategy. The flowchart shows the procedure to evolve both methods from $t_n$ to $t_{n+1}$.}
+		\label{fig:flowchart_simpleCoupling}
+	\end{figure}
+
 		\begin{enumerate}
 		\item \textbf{Correct Lagrangian:} Use the solution of the Eulerian subdomain $\Omega_E$, to correct the solution of the Lagrangian subdomain $\Omega_L$, using the strategy of Stock (summarized in section 	\ref{subsec:hybrid-lcs}). Chapter \ref{ch:coupling} provides a detailed analysis on the implementation of Stock's Lagrangian correction strategy. Furthermore, the chapter highlights the limitations of Stock's correction strategy and described the methodology to ensure conservation of total circulation, paramount for a valid numerical scheme.
 		
@@ -185,17 +198,6 @@
 %		\label{fig:flowchart_simpleCoupling}
 %	\end{figure}
 
-	\begin{figure}[!t]
-		\centering
-		\begin{tikzpicture}
-			[node distance=.8cm, start chain=going below,]
-			\node[punktchainN, join] (correct) {\textsf{Correct Lagrangian}};
-		    \node[punktchainN, join] (evolveL) {\textsf{Evolve Lagrangian}};
-		    \node[punktchainN, join] (bcE)     {\textsf{Determine Eulerian \\boundary conditions}};
-		    \node[punktchainN, join] (evolveE) {\textsf{Evolve Eulerian}};
-		\end{tikzpicture}
-		\caption{Flowchart of the simple coupling strategy. The flowchart shows the procedure to evolve both methods from $t_n$ to $t_{n+1}$.}
-		\label{fig:flowchart_simpleCoupling}
-	\end{figure}
+
 	
 	

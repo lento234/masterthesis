@@ -6,7 +6,7 @@ The goal of the present research was to develop an efficient, reliable, and accu
 The numerical method that satisfied these requirements was a \printAcron{Hybrid Eulerian-Lagrangian Vortex Particle Method}{HELVPM} which couples a Finite Element Method (Eulerian method) that resolves the near-body region, and the Vortex Particle Method (Lagrangian Method) that resolves the wake. The advantage of an Eulerian method was that it was efficient at accurately describing the generation of vorticity from the body. This generated vorticity was then transfered to the Lagrangian method where it was efficiently evolved using \printAcron{Fast Multipole Method}{FMM} and parallel computation in \printAcron{Graphical Processing Units}{GPU}. The hybrid method that was employed was based on the doctoral thesis of Daeninck \cite{Daeninck2006} and the additional study on the Lagrangian correction algorithm by Stock \cite{Stock2010a}. Though additional modification where required to the coupling strategy to ensure a valid numerical method that conserves the total circulation in the fluid.
 
 
-\section{Conclusion}
+\section{Discussion of Conclusions}
 
 The present study implemented the strategy and performed test case simulations to ensure an accurate implementation (Chapter \ref{ch:vavohm}). During the verification and the validation of this hybrid method, we were able to derive some key conclusions:
 
