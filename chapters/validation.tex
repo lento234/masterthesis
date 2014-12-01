@@ -16,6 +16,8 @@ This chapter focuses on the verification and the validation of the hybrid method
 
 The final stage of the validation was to show the feasibility of simulation the flow around a full VAWT. To perform this we investigated the flow past a stalled airfoil at $Re=5000$, and the flow around a multi-body problem with two cylinders.
 
+All the simulation were ran on a desktop computer with a 3.47GHz Intel Xeon processor, a 12GB RAM and an NVIDIA Quadro 2000 GPU with 1GB RAM.
+
 \section{Lamb-Oseen Vortex Evolution}
 \label{sec:vvhm-love}
 The Lamb-Oseen vortex test case simulates the evolution of a laminar vortex core in an unbounded domain. In section \ref{subsec:lagrangianLambOseen}, we used this test case to verify and validate the implementation of the vortex blobs of the Lagrangian solver and in section \ref{subsec:eulerianLambOseen}, we used it to verify the implementation of the Eulerian solver. Therefore, in a similar fashion we employed this test case to verify the coupling of the hybrid solver. 
@@ -1035,6 +1037,7 @@ However, we were only able to simulate up to $Re=5000$ as we did not implemented
 Furthermore, an interesting extension of the present test case is to investigate the flow around a presently used VAWT airfoil such as a NACA0018 airfoil. This could enable us to perform a direct comparison with the competing numerical method used in simulating the VAWT. However, a fundamental challenge of a full VAWT simulation is the multi-body moving problem. In section \ref{sec:vvhm-mb}, we were able to shows that the present scheme is capable of dealing with multiple bodies. However, the implementation of the moving body requires further research in future, and should be able to be achieved by the implementation of an Arbitrary Lagrangian-Eulerian (ALE) scheme into the Eulerian method.
 
 %However, due the large number of parameters that have an influence on the accuracy of the simulation, such as the number of panels, nominal particle spacing, overlap ration, particle core size, the diffusion scheme.
+\newpage
 	
 \section{Multi-body problem}
 \label{sec:vvhm-mb}
