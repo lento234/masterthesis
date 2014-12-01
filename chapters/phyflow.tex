@@ -12,7 +12,7 @@ The features of \texttt{pHyFlow} can be summarized as follows:
 \end{itemize}
 
 
-\section{Program structure}
+\section{Program Structure}
 
 \begin{figure}[p]
 \centering
@@ -94,7 +94,7 @@ The \texttt{pHyFlow} library extends \python computing environment, where one ca
 
 Figure \ref{fig:tikz_pHyFlowStructure} shows the structure of the \texttt{pHyFlow} library and is categorized into several modules of different purposes. It is structured in this manner such that one could employ the library for any general simulation purpose such as the hybrid case, or for non-hybrid cases (e.g. potential flow using vortex panels, full Eulerian grid simulation using Eulerian solver). This means that one could use a single module of \texttt{pHyFlow} library for the desired test case.
 
-\section{Hybrid class Hierarchy}
+\section{Hybrid Class Hierarchy}
 
 However, the hybrid module relies on the functions of the Lagrangian module and the Eulerian module. Moreover, the Lagrangian module requires the function of vortex blob module and the vortex panel module. Therefore, the hierarchy of the hybrid class is defined in a different manner, as shown in figure \ref{fig:tikz_hybridStructure}. 
 

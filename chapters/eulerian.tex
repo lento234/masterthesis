@@ -17,7 +17,7 @@
 %------------------------------------------------------------------------------------------------------
 %\section{Purpose of eulerian domain}
 
-In this chapter, we introduce the Finite element Method used to solved the Eulerian subdomain of the hybrid method, and summarize the process for evolving the Eulerian method, step 4 of the hybrid evolution, Figure \ref{fig:flowchart_simpleCoupling_Eulerian}.
+In this chapter, we introduce the Finite Element Method used to solved the Eulerian subdomain of the hybrid method, and summarize the process for evolving the Eulerian method, step 4 of the hybrid evolution, Figure \ref{fig:flowchart_simpleCoupling_Eulerian}.
 
 	\begin{figure}[!h]
 		\centering
@@ -452,7 +452,7 @@ such that lift perpendicular to the free-steam and the drag is tangential to it.
 %	\end{equation}
 %where $\epsilon$ is the symmetric gradient, equation \ref{eq:symGrad}, and is a function of the velocity $\mathbf{u}$ and the pressure $p$ acting on the surface.
 
-\section{Evolution of the Eulerian method}
+\section{Evolution of the Eulerian Method}
 \label{sec:eu-eotem}
 The algorithm of evolving the Eulerian method is summarized in this section. The Eulerian method acts as the source of the vorticity for the Lagrangian method.
 
@@ -545,18 +545,18 @@ In section \ref{subsec:lagrangianLambOseen}, the vortex blobs of the Lagrangian 
 	\end{subequations}	
 where $u_{\theta}$ is the circumferential velocity, and $u_r$ is the radial velocity. The velocity is a function of the vortex core strength $\Gamma_c$, the simulation time $t\in[0,\infty[$, the time constant $\tau$, the kinematic viscosity $\nu$, and the distance from the core center $r$.
 
-The parameters used for the simulation are tabulated in table \ref{tab:eulerianLambOseenParams}. To ensure a valid comparison of the present Eulerian method study with the Lagrangian method performed in section \ref{subsec:lagrangianLambOseen}, we chose similar spatial discretization parameters.
+The parameters used for the simulation are tabulated in Table \ref{tab:eulerianLambOseenParams}. To ensure a valid comparison of the present Eulerian method study with the Lagrangian method performed in section \ref{subsec:lagrangianLambOseen}, we chose similar spatial discretization parameters.
 
 	\begin{figure}[!t]
 	\centering
 	\includegraphics[width=0.5\linewidth]{./figures/eulerian/lambOseenDomainDefinition-crop.pdf}
-	\caption{Eulerian domain $\Omega_E$ ({\color{plotGray}{\textbf{gray}}}) for the Lamb-Oseen vortex problem, bounded by the Dirichlet velocity boundary $\Sigma_d$ ({\color{plotRed}{\textbf{red}}}), where the Dirichlet velocity boundary condition was applied. The parameters of the domain are tabulated in table \ref{tab:eulerianLambOseenParams}.}
+	\caption{Eulerian domain $\Omega_E$ ({\color{plotGray}{\textbf{gray}}}) for the Lamb-Oseen vortex problem, bounded by the Dirichlet velocity boundary $\Sigma_d$ ({\color{plotRed}{\textbf{red}}}), where the Dirichlet velocity boundary condition was applied. The parameters of the domain are tabulated in Table \ref{tab:eulerianLambOseenParams}.}
 	\label{fig:lambOseenDomainDefinition}
 	\end{figure}
 
 Figure \ref{fig:lambOseenDomainDefinition} depicts the domain for the present Lamb-Oseen vortex study. The fluid domain $\Omega_E$ is bounded by a Dirichlet boundary $\Sigma_d$ such that $\partial \Omega_E = Sigma_d$. The Dirichlet boundary $\Sigma_d$ is used to prescribe the analytical Dirichlet velocity boundary conditions for the Lamb-Oseen vortex problem.
  
-The Eulerian method is time marched using the time integration parameters tabulated in table \ref{tab:eulerianLambOseenParams}. To ensure a stable time integration, we enforced the CFL conditions, equation \ref{eq:cfl}. During the evolution of the solution, we evaluated the growth of the error in velocity, and the error in vorticity between the numerical and the analytical solutions.
+The Eulerian method is time marched using the time integration parameters tabulated in Table \ref{tab:eulerianLambOseenParams}. To ensure a stable time integration, we enforced the CFL conditions, equation \ref{eq:cfl}. During the evolution of the solution, we evaluated the growth of the error in velocity, and the error in vorticity between the numerical and the analytical solutions.
 
 %where $\Gamma_c$ is the vortex core strength, $\tau \equiv \nu t$ is the scaled viscous time, and $r$ is the distance from the core center. The parameters of the simulation is tabulated in table \ref{tab:eulerianLambOseenParams}. To ease the comparison of the Eulerian to the Lagrangian method, we performed ensure similar spatial resolution. The figure \ref{fig:lambOseenDomainDefinition} shows the domain of the problem, discretized the domain $\Omega = \left[-1,1\right]^2$ in a structure grid with the number of finite element cells $N_{\mathrm{cells}}=200^2$ in $x$ and $y$ direction, minimum cell size $h=\sqrt{2}/100$. 
 
@@ -586,14 +586,14 @@ The Eulerian method is time marched using the time integration parameters tabula
              \label{fig:lambOseen_wErrorFinal_compressed-crop}
      \end{subfigure}
      
-     \caption{Relative error in vorticity (in logarithmic scale) using the parameters tabulated in table \ref{tab:eulerianLambOseenParams}. The figure shows \textbf{(a)}, the initial relative error in vorticity at $t=0$, and \textbf{(b)} the final relative error in vorticity at $t=1$.}
+     \caption{Relative error in vorticity (in logarithmic scale) using the parameters tabulated in Table \ref{tab:eulerianLambOseenParams}. The figure shows \textbf{(a)}, the initial relative error in vorticity at $t=0$, and \textbf{(b)} the final relative error in vorticity at $t=1$.}
      \label{fig:lambOseen_eulerian_wRelField_compressed}
 	\end{figure}	
 	
 	\begin{figure}[p]
 	\centering
 	\includegraphics[width=0.6\linewidth]{./figures/eulerian/lambOseen_eulerian_wRelEvolution_compressed.pdf}
-	\caption{Evolution of the maximum relative errors from $t=0$ to $t=1$ using the parameters in table \ref{tab:eulerianLambOseenParams}. The figure depicts maximum relative error in velocity [{\color{plotBlue}{---}}, solid {\color{plotBlue}{\textbf{blue}}}] and the maximum relative error in vorticity [---, solid \textbf{black}]. }
+	\caption{Evolution of the maximum relative errors from $t=0$ to $t=1$ using the parameters in Table \ref{tab:eulerianLambOseenParams}. The figure depicts maximum relative error in velocity [{\color{plotBlue}{---}}, solid {\color{plotBlue}{\textbf{blue}}}] and the maximum relative error in vorticity [---, solid \textbf{black}]. }
 	\label{fig:lambOseen_eulerian_wRelEvolution}
 	\end{figure}
 
@@ -612,7 +612,7 @@ The Eulerian method is time marched using the time integration parameters tabula
                 \caption{Temporal convergence}
                 \label{fig:lambOseen_eulerianConvergence_dt}
         \end{subfigure}
-        \caption{Convergence in space and time. The figure depicts \textbf{(a)} convergence in space of $\mathcal{O}(\Delta h^2)$ and \textbf{(b)} convergence in time of $\mathcal{O}(\Delta t)$. The control parameters are tabulated in table \ref{tab:eulerianLambOseenParams}.}
+        \caption{Convergence in space and time. The figure depicts \textbf{(a)} convergence in space of $\mathcal{O}(\Delta h^2)$ and \textbf{(b)} convergence in time of $\mathcal{O}(\Delta t)$. The control parameters are tabulated in Table \ref{tab:eulerianLambOseenParams}.}
         \label{fig:lambOseen_eulerianConvergence}
 	\end{figure}		
 	
@@ -687,7 +687,7 @@ where $u$ and $v$ are the velocities in the $x$ and $y$ direction, respectively.
 
 The Eulerian domain was discretized using an unstructured meshing method in GMSH (section \ref{subsec:mgugmsh}), as shown in Figure \ref{fig:clercxBruneauDomainDefinition}. The velocity distribution, equation \ref{eq:clercxBruneauVel0}, shows that the maximum velocity in the fluid will be along the $y$-axis (i.e $x=0$). Therefore, to satisfy the $CFL$ condition, we need the minimum cell size at the location of the maximum velocity. The resolution of the mesh in the region where the dipole and the wall interacts (i.e $-0.5\le{x}\le0.5$ and $0.5\le{\left|y\right|}\le1$) was also increased. Furthermore, in the region where there is no vorticity, we do not need high resolution (i.e $0.5\le{\left|x\right|}\le1$ and $-0.5\le{y}\le0.5$). 
 
-After initializing the velocity field in the discretized domain, the problem was evolved from $t=0$ to $t=2$. The time integration parameters are tabulated in table \ref{tab:clercxBruneauParameters}.
+After initializing the velocity field in the discretized domain, the problem was evolved from $t=0$ to $t=2$. The time integration parameters are tabulated in Table \ref{tab:clercxBruneauParameters}.
 
 	\ctable[
 		caption = {Summary of the parameters for the Clercx-Bruneau dipole collision with a no-slip wall \cite{Clercx2006a}.},
@@ -908,7 +908,7 @@ Figure \ref{fig:VorticityAtBoundary} compares the vorticity along the boundary o
 %     \label{fig:dipole_comparison}
 %	\end{figure}
 
-\subsection{Impulsively started cylinder at $Re=550$}
+\subsection{Impulsively Started Cylinder at $Re=550$}
 \label{subsec:eul_isc}
 Finally, we an impulsively started cylinder at $Re=550$. This validation test ensured that we are able to determine correct forces acting on the body. 
 
@@ -995,7 +995,7 @@ and is a function of the freestream velocity $U$, the diameter of the cylinder $
 	\end{equation}	
 where $R$ is the radius of the cylinder. 
 
-The domain discretized with the highest mesh resolutions near the surface of the body, and in the near-wake region of the body, as shown in Figure \ref{fig:ISC_mesh} and Figure \ref{fig:ISC_mesh_surface}. The discretization parameters are tabulated in table \ref{tab:ISCParameters}.
+The domain discretized with the highest mesh resolutions near the surface of the body, and in the near-wake region of the body, as shown in Figure \ref{fig:ISC_mesh} and Figure \ref{fig:ISC_mesh_surface}. The discretization parameters are tabulated in Table \ref{tab:ISCParameters}.
 
 The simulation was started with an impulsively started free-stream boundary condition at the Dirichlet boundary $\Sigma_{d}$. The problem was evolved from $T=0$ to $T=40$ for $N_{t}=40,000$ time steps. To validate the method against the reference data of Koumoutsakos and Leonard \cite{Koumoutsakos1995a}, we investigated the evolution of the vorticity field and the evolution of the forces acting on the body.
 

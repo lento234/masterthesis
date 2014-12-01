@@ -998,7 +998,7 @@ body $b$ on body $a$ and body $a$ on body $b$, respectively. The final two rows 
 %\subsection{Parallel computation in GPU}
 
 
-\section{Evolution of the Lagrangian method}
+\section{Evolution of the Lagrangian Method}
 \label{sec:la-eolm}
 The algorithm for evolving the full Lagrangian method is summarized in this section. The full Lagrangian method is the coupled vortex blobs and the vortex panels. Note that for our hybrid scheme, the panel does not act as the source of the vorticity in the Lagrangian method (which is done by the Eulerian method), but instead simply enforces the \emph{no-slip} boundary condition for the vortex blobs.
 	
@@ -1029,7 +1029,7 @@ The flowchart of one time step of the Lagrangian method is given by Figure \ref{
 The generation of the vorticity is dealt with in the Eulerian subdomain, which is explained in chapter \ref{ch:eulerian}. The vorticity is then transfered into the Lagrangian domain using the Hybrid coupling scheme, which was summarized in the introduction, chapter \ref{ch:introduction}, and fully elaborated in chapter \ref{ch:coupling}.
 
 %
-\section{Validation of Lagrangian method}
+\section{Validation of Lagrangian Method}
 \label{sec:volm}
 In this chapter, we have investigated the Lagrangian component of the Hybrid method. The Lagrangian method is used to just evolve the vorticity field, where as the Eulerian method is used to properly formulate the vorticity generation at the boundary. The resolved boundary solution of the Eulerian method is then transfered onto our Lagrangian method. Therefore, the Lagrangian method that is implemented here does not require the generation of the vorticity from the boundary. 
 
@@ -1051,7 +1051,7 @@ Note that to investigate the coupling of the vortex blobs and the vortex panels,
 	$N_{\mathrm{panels}}$	& 100				& Number of panels\LL}	
 
 The vortex panels was verified and validated on the test case of the potential flow around a cylinder. To test the 
-convergence of the solution of the vortex panels, a comparison was made with the analytical solution for the parameters in table \ref{tab:panelParams}.
+convergence of the solution of the vortex panels, a comparison was made with the analytical solution for the parameters in Table \ref{tab:panelParams}.
 
 An example of the numerical solution is shown in Figure \ref{fig:panelCylinder_velocityField}. The figure shows the magnitude of the velocity $\lVert\mathbf{u}\rVert|$, and it shows the velocity field of the potential flow solution, with an infinitely thin boundary layer, stagnating to zero velocity inside the body.
 
@@ -1203,7 +1203,7 @@ where $u_{\theta}$ is the circumferential velocity, and $u_r$, the radial veloci
 		$ f_{pc}$		& $1$  & -							& Population control frequency\\	        	        
 		$ (\Gamma_{loc},\Gamma_{glob})$ & $(\num{1e-14},\num{1e-14})$ &\si{m^2.s^{-1}} & Population control thresholds\LL}	
 
-The Lagrangian method was applied to the Lamb-Oseen vortex test case with parameters tabulated in table \ref{tab:lambOseenParams}. The vorticity field was discretized over the domain $[x,y]$ - domain $\left[-0.5,0.5\right]\times\left[-0.5,0.5\right]$. This was adequate as the circulation outside this domain was less that the threshold $\Gamma_{loc}\le\num{e-14}$. The spatial discretization was performed according to the standard initialization method of vortex blobs, described in section \ref{subsec:vortexBlobInitialization}.
+The Lagrangian method was applied to the Lamb-Oseen vortex test case with parameters tabulated in Table \ref{tab:lambOseenParams}. The vorticity field was discretized over the domain $[x,y]$ - domain $\left[-0.5,0.5\right]\times\left[-0.5,0.5\right]$. This was adequate as the circulation outside this domain was less that the threshold $\Gamma_{loc}\le\num{e-14}$. The spatial discretization was performed according to the standard initialization method of vortex blobs, described in section \ref{subsec:vortexBlobInitialization}.
 
 However as explained in section \ref{subsec:vortexBlobInitialization}, we have to take in account of the Gaussian blurring of the original vorticity field due to the initialization process. This poses a problem when evaluating the error between the numerical and the analytical solution. This problem has also been encountered by Barba \cite{Barba2004c}, when investigating the Lamb-Oseen vortex. The solution to the problem was to apply a ``time-shift correction", to compensate for the Gaussian blurring, solving the problem of this very particular discretization of the Navier-Stokes equation. Therefore, this is a special method and this approach can only be used for the Lamb-Oseen vortex problem.
 
@@ -1238,12 +1238,12 @@ This method was used to investigate the error evolution of the vortex blob metho
 	          \label{fig:lambOseen_convection_vorticityErrorContours_final}
 	  \end{subfigure}
 	  
-	  \caption{Relative error growth of Lamb-Oseen vorticity during the evolution (in logarithmic scale) using the parameters tabulated in table \ref{tab:lambOseenParams}. The figure shows \textbf{(a)}, the initial relative error at $t=0$, and \textbf{(b)} the final relative error in vorticity at $t=1$.}
+	  \caption{Relative error growth of Lamb-Oseen vorticity during the evolution (in logarithmic scale) using the parameters tabulated in Table \ref{tab:lambOseenParams}. The figure shows \textbf{(a)}, the initial relative error at $t=0$, and \textbf{(b)} the final relative error in vorticity at $t=1$.}
 	  \label{fig:lambOseen_convection_vorticityErrorContours}
 		\end{figure}
 
 
-The convection and diffusion was performed according to the time integration parameters tabulated in table \ref{tab:lambOseenParams}. The vortex blobs where convected using a $4^{\mathrm{th}}$-order Runge-Kutta method ($\mathrm{RK4}$) for a high order time integration. After the convection substeps, the Lagrangian distortion was treated using the remeshing scheme discussed in section \ref{subsec:remeshing}. Generally, the remeshing is typically done every 10 iterations \cite{Barba2004c}. However, as our diffusion scheme and hybrid method requires structured lattice of vortex blobs for efficient calculations, we will remesh after every step, $f_{\mathrm{redist}}=1$.  
+The convection and diffusion was performed according to the time integration parameters tabulated in Table \ref{tab:lambOseenParams}. The vortex blobs where convected using a $4^{\mathrm{th}}$-order Runge-Kutta method ($\mathrm{RK4}$) for a high order time integration. After the convection substeps, the Lagrangian distortion was treated using the remeshing scheme discussed in section \ref{subsec:remeshing}. Generally, the remeshing is typically done every 10 iterations \cite{Barba2004c}. However, as our diffusion scheme and hybrid method requires structured lattice of vortex blobs for efficient calculations, we will remesh after every step, $f_{\mathrm{redist}}=1$.  
 
 
 In addition to the evolution of the vortex blobs, we performed a population control to minimized the number of vortex blobs, as described by Barba \cite{Barba2004c}. The \indexAcron{Population Control}{PC} removes vortex blobs that have very small circulation strengths. After the diffusion and remeshing, we will be left with vortex blobs with strengths close to the numerical precision, as they have minimal impact on the accuracy of the vorticity field, we can removed them. When performing population control, we need to ensure that the loss of total circulation is below the acceptable global threshold, $\Gamma_{glob}$. We used $\Gamma_{glob}=\num{e-14}$ as used by Barba \cite{Barba2004c} for the similar investigation. 
@@ -1269,7 +1269,7 @@ and the error in velocity is calculated using the same principle. Investigating 
 	\begin{figure}[!t]
 	\centering
 	\includegraphics[width=0.6\textwidth]{figures/lagrangian/lambOseen_errorEvolution_TRS_dt0p01.pdf}
-	\caption{Relative error growth of Lamb-Oseen vortex during the evolution from $t=0$ to $t=1$ using the parameters in table \ref{tab:lambOseenParams}. This figure depicts the error in vorticity: maximum relative error [ ---, solid \textbf{black}], and the error in $L^2-\mathrm{norm}$ [ - -, dashed \textbf{black}]; and error in velocity: maximum relative error [ {\color{plotBlue}{---}}, solid {\color{plotBlue}{\textbf{blue}}}], and error in $L^2-\mathrm{norm}$ [ {\color{plotBlue}{- -}}, dashed {\color{plotBlue}{\textbf{blue}}}].}
+	\caption{Relative error growth of Lamb-Oseen vortex during the evolution from $t=0$ to $t=1$ using the parameters in Table \ref{tab:lambOseenParams}. This figure depicts the error in vorticity: maximum relative error [ ---, solid \textbf{black}], and the error in $L^2-\mathrm{norm}$ [ - -, dashed \textbf{black}]; and error in velocity: maximum relative error [ {\color{plotBlue}{---}}, solid {\color{plotBlue}{\textbf{blue}}}], and error in $L^2-\mathrm{norm}$ [ {\color{plotBlue}{- -}}, dashed {\color{plotBlue}{\textbf{blue}}}].}
 	\label{fig:lambOseen_convection_errorGrowth_compressed}
 	\end{figure}
 	

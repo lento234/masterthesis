@@ -2,6 +2,8 @@
 
  \nomgroup{Y}
 
+  \item [{\textbf {2D}}]\begingroup Two Dimensional\nomeqref {1.0}
+		\nompageref{2}
   \item [{\textbf {AD}}]\begingroup Actuator Disk\nomeqref {1.0}
 		\nompageref{3}
   \item [{\textbf {BEM}}]\begingroup Blade Element Momentum\nomeqref {1.0}
@@ -18,8 +20,6 @@
 		\nompageref{50}
   \item [{\textbf {FEM}}]\begingroup Finite Element Method\nomeqref {4.0}
 		\nompageref{50}
-  \item [{\textbf {FE}}]\begingroup Forward Euler\nomeqref {4.34}
-		\nompageref{62}
   \item [{\textbf {FMM}}]\begingroup Fast Multipole Method\nomeqref {1.0}
 		\nompageref{3}
   \item [{\textbf {FVM}}]\begingroup Finite Volume Method \nomeqref {4.0}
@@ -50,12 +50,24 @@
 		\nompageref{2}
   \item [{\textbf {PSE}}]\begingroup Particle Strength Exchange\nomeqref {3.26}
 		\nompageref{25}
+  \item [{\textbf {RHS}}]\begingroup Right-Hand Side\nomeqref {4.16}
+		\nompageref{54}
   \item [{\textbf {RWM}}]\begingroup Random Walk Method\nomeqref {3.26}
 		\nompageref{25}
+  \item [{\textbf {SG}}]\begingroup Eulerian grid\nomeqref {5.19}
+		\nompageref{90}
+  \item [{\textbf {SG}}]\begingroup structured grid\nomeqref {5.19}
+		\nompageref{90}
+  \item [{\textbf {SOR}}]\begingroup successive over-relaxation\nomeqref {5.5}
+		\nompageref{85}
+  \item [{\textbf {TRS}}]\begingroup Tutty Remeshing Scheme\nomeqref {3.31}
+		\nompageref{27}
   \item [{\textbf {VAWT}}]\begingroup Vertical-Axis Wind Turbine\nomeqref {1.0}
 		\nompageref{1}
   \item [{\textbf {VPM}}]\begingroup Vortex Particle Method\nomeqref {3.0}
 		\nompageref{15}
+  \item [{\textbf {VRM}}]\begingroup Vortex Redistribution Method\nomeqref {3.26}
+		\nompageref{25}
   \item [{\textbf {WRS}}]\begingroup Wee Remeshing Scheme\nomeqref {3.27}
 		\nompageref{26}
 
