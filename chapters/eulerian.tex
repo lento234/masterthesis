@@ -188,7 +188,7 @@ This is an algebraic system of equations:
 	\mathbf{A}U = b,
 	\label{eq:linearSysOfEq}
 	\end{equation}	
-where $\mathbf{A}_{ij} = a(\phi_j,\hat{\phi}_i)$ and the \printAcron{Right-Hand Side}{RHS} $b_i$ is given by $b_i=L(\hat{\phi}_i)$.
+where $\mathbf{A}_{ij} = a(\phi_j,\hat{\phi}_i)$ and the \indexAcron{Right-Hand Side}{RHS} $b_i$ is given by $b_i=L(\hat{\phi}_i)$.
  	
 \section{Solving the Finite Element Problem}
 \label{sec:e-stfep}
@@ -400,7 +400,7 @@ This algorithm to solve the NS problem was first demonstrated by Chorin in 1968 
 
 	\end{enumerate}
 	
-The algebraic system of equations resulting form this algorithm have been solved with \textsc{Dolfin}'s Krylov \textsc{Gmres} solver with an absolute and a relative error tolerance of \num{e-25} and \num{e-12} respectively. The program structure was based on the collection of benchmark solvers provided by the \fenics \cite{nsbench}. In the  algorithm described above an explicit time marching scheme, \indexAcron{Forward Euler}{FE} has been used. Therefore, for the time marching scheme to be stable, we require the CFL number to satisfy the following condition:
+The algebraic system of equations resulting form this algorithm have been solved with \textsc{Dolfin}'s Krylov \textsc{Gmres} solver with an absolute and a relative error tolerance of \num{e-25} and \num{e-12} respectively. The program structure was based on the collection of benchmark solvers provided by the \fenics \cite{nsbench}. In the  algorithm described above an explicit time marching scheme, \printAcron{Forward Euler}{FE} has been used. Therefore, for the time marching scheme to be stable, we require the CFL number to satisfy the following condition:
 	\begin{equation}
 	\mathrm{CFL} = \Delta t_{E,\mathrm{max}} \frac{\lVert\mathbf{u}\rVert_{\mathrm{max}}(\nu +  \Delta h_{\mathrm{min}}\lVert\mathbf{u}\rVert_{\mathrm{max}})}{\Delta h_{\mathrm{min}}^2} \leqslant 1.
 	\label{eq:cfl}

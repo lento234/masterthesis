@@ -456,7 +456,7 @@ The results showed that with a matching spatial discretization, the hybrid metho
 \item a higher Reynolds number,
 \item a stronger vortex core,
 \item a large dipole convection velocity,
-\item a single monopole.
+\item or a single monopole convection problem.
 \end{itemize}
 
 Therefore to have a better understanding, it is recommended that we perform further investigation related to this test case. These additional investigations should provide a stronger validation on whether the hybrid method is capable of simulation the passage of a vortex core. Though, in the context of the present study, as we are currently only concerned with laminar flow simulation with weak vortex cores, the observations we made for the present test case should be valid.
@@ -514,7 +514,7 @@ As we are dealing with the wall-bounded problem, we require the vortex panel met
 
 \subsection{Results}
 
-The first step of the investigation was to compare the vorticity plots with the FE only simulation. Figure \ref{fig:hybrid_doubleMonolope_contourfComparison} shows the state of the dipole at $t=[0,0.2,0.4,0.6,0.8,1]$. The figure compares the hybrid simulation (left half) with the FE only simulation (right half). Onces the dipole enters the Eulerian domain, at $t=0.4$, we observe that difference in the solution stars to exist. The vorticity contours of $-10\leqslant \omega\leqslant-1$ (gray contours) and  $1\leqslant \omega\leqslant10$ (pink contours) shows that the near the core of the dipole there is a difference between the FE only simulation and the hybrid simulation. At $t=0.6$, we see there exists less vorticity in between $-1\leqslant1$ (white regions). The possible explanation of this behavior is the existence of the artificial vorticity. These artificial vorticity, which has a maximum absolute magnitude less than 5, has an effect on the vorticity profile of the same magnitude.
+The first step of the investigation was to compare the vorticity plots with the FE only simulation. Figure \ref{fig:hybrid_doubleMonolope_contourfComparison} shows the state of the dipole at $t=[0,0.2,0.4,0.6,0.8,1]$. The figure compares the hybrid simulation (left half) with the FE only simulation (right half). Onces the dipole enters the Eulerian domain, at $t=0.4$, we observe that difference in the solution starts to exist. The vorticity contours of $-10\leqslant \omega\leqslant-1$ (gray contours) and  $1\leqslant \omega\leqslant10$ (pink contours) shows that the near the core of the dipole there is a difference between the FE only simulation and the hybrid simulation. At $t=0.6$, we see there exists less vorticity in between $-1\leqslant\omega\leqslant1$ (white regions). The possible explanation of this behavior is the existence of the artificial vorticity. These artificial vorticity, which has a maximum absolute magnitude less than 5, has an effect on the vorticity profile of the same magnitude.
 %However, as the maximum absolute magnitude of the vorticity is $\max\{\omega\}=300$, the artificial vorticity is only $2\%$ of the maximum vorticity. Therefore, their effects can 
 
 % We observe a slight artificial vorticity emanating from the Eulerian boundary $\Sigma_d$, corrupting the vorticity field. The corruption of the vorticity field is apparent when observing the hybrid plot at $t=0.4$, at the location $x=-0.2$ and $y=-0.8$. The artificial vorticity is in order of $<\pm5$. Note that with the maximum vorticity in the fluid near $\max\{\omega\}=300$ is near $2\%$ of the maximum vorticity.
@@ -607,7 +607,7 @@ We investigated further with a higher resolved Lagrangian method, with a smaller
 In conclusion, the results of the dipole collision simulation showed that:
 \begin{itemize}
 \item The hybrid method is capable of dealing with the no-slip boundary.
-\item The results of the simulation are in good agreement upto $t=0.5$.
+\item The results of the simulation are in good agreement up to $t=0.5$.
 \item After $t=0.5$, when the dipole re-enters, the hybrid simulation starts to deviate due to the presence of artificial vorticity.
 \item At $t=1$, due to the higher kinetic energy $E$ in flow, the location of the vortex core at $t=1$ is different.
 \end{itemize}
@@ -620,7 +620,7 @@ The present results were obtained with a boundary offset of $d_{bdry}=2\cdot{h}$
 
 The limitation of the present test case is that it was not able to provide a full understanding of the collision of the dipole with the wall boundary. Therefore, for a more detailed understanding, a further investigation in regards to the varying $d_{bdry}$ should be performed in future. 
 
-However, as the main purpose of this test case was to determine whether the hybrid method was capable of dealing with the wall boundary, the present test case provided the necessary confirmation. Furthermore the study gave us an understanding of the potential inaccuracies when dealing with wall bounded problems. %Thus, this test case provided the initial
+However, as the main purpose of this test case was to determine whether the hybrid method was capable of dealing with the wall boundary, the present test case provided this necessary confirmation. Furthermore the study gave us an understanding of the potential inaccuracies when dealing with the wall bounded problems. %Thus, this test case provided the initial
 
 
 
@@ -703,7 +703,7 @@ Figure \ref{fig:hisc_dd} shows the domain decomposition of the hybrid simulation
 
 We investigated two aspects of the impulsively started cylinder problem. The first study focused on the impact of coupling parameters on the accuracy of the lift and the drag forces. The parameters of interest are the number of vortex panels $N_{panels}$, nominal blob spacing $h$, and time step size of the Lagrangian method $\Delta t_L$. The second study focused on the long run performance of the forces acting of the cylinder. Artificial perturbation was induced, as described in section \ref{subsec:eul_isc}, to induced vortex shedding at a smaller simulation time $t$.
 
-Figure \ref{fig:hybrid_cylinder_contourComparison_tStarting} shows the vorticity contour at $t = [1,3,5,7]$. The plot compares the hybrid simulation (top halves) with the FE only simulation (bottom halves). The hybrid halves of the plot depicts the Eulerian sub-domain $\Omega_E$ in pink. After studying the figure, we observer that the vorticity contours of the hybrid simulation matches with the FE only simulation. The only difference between both simulation is the artificial vorticity at the Dirichlet boundary $\Sigma_d$. However, we must note that the magnitude of the artificial vorticity is in the range $|\omega|\leqslant0.2$, and with the maximum vorticity in the domain $\max\{\omega\}=32$, we have that the strength of the artificial vorticity is less than $1\%$ of the maximum vorticity in the fluid. Therefore, we have ensured that the Lagrangian method and the Eulerian method has similar discretization at the region of overlap. In section \ref{sec:vvhm-love}, we determined that this is required to ensure an accurate coupling scheme.
+Figure \ref{fig:hybrid_cylinder_contourComparison_tStarting} shows the vorticity contour at $t = [1,3,5,7]$. The plot compares the hybrid simulation (top halves) with the FE only simulation (bottom halves). The hybrid halves of the plot depicts the Eulerian sub-domain $\Omega_E$ in pink. After studying the figure, we observe that the vorticity contours of the hybrid simulation matches with the FE only simulation. The only difference between both simulation is the artificial vorticity at the Dirichlet boundary $\Sigma_d$. However, we must note that the magnitude of the artificial vorticity is in the range $|\omega|\leqslant0.2$, and with the maximum vorticity in the domain $\max\{\omega\}=32$, we have that the strength of the artificial vorticity is less than $1\%$ of the maximum vorticity in the fluid. Therefore, we have ensured that the Lagrangian method and the Eulerian method has similar discretization at the region of overlap. In section \ref{sec:vvhm-love}, we determined that this is required to ensure an accurate coupling scheme.
 
 
 
@@ -861,8 +861,9 @@ As the present study was limited with computational resource and time, a detaile
 
 Due to the limited computation resources and time, the long run simulation was also performed for a shorter period. However, the results showed that even with less resolved method, the hybrid method is capable of observing similar oscillations as the well-resolved FE only simulation. In addition to this, when observing the starting vortex at $t=40$, it became apparent that the hybrid method provides a well-resolved solution even at $D=13$. This highlights the advantage of the auto-adaptive nature of the hybrid method and the ease of resolves an unsteady vortex core evolution.
 
-If the hybrid method can provide additional accuracy without sacrificing its efficiency, for example with $d_{bdry}=0.2R$, the hybrid method has the potential to substantially outperform the convectional grid methods for unsteady flow problems of a VAWT.
+If the hybrid method can provide additional accuracy without sacrificing its efficiency, for example with $d_{bdry}=0.2R$, the hybrid method has the potential to substantially outperform the convectional grid methods for unsteady flow problems of a VAWT.  
 
+An alternate approach of dealing with the artificial vorticity is directly modify the outer solution of the Eulerian domain such that the artificial vorticity is negated. This could remove the need of increasing the $d_{bdry}$ and therefore the accuracy of the coupling is not sacrificed.
 
 %We were also able to observe the auto-adaptive nature of our hybrid scheme. The first vortex shed from the cylinder, was still well-resolved at $t=40$ in the hybrid scheme, whereas the FE only simulation failed to sustain the structure and the strength of the vortex. 
 
@@ -870,16 +871,16 @@ If the hybrid method can provide additional accuracy without sacrificing its eff
 \section{Stalled Elliptic Airfoil at $Re=5000$}
 \label{sec:vvhm-ea}
 
-The purpose of investigating the stalled elliptical airfoil at $Re=5000$ is to demonstrate the feasibility of using the hybrid method to simulate a complex problem, such as a flow around a thin stalled airfoil. The FE only simulation is as a benchmark for the current study.
+The purpose of investigating the stalled elliptical airfoil at $Re=5000$ is to demonstrate the feasibility of using the hybrid method to simulate a complex problem, such as the flow around a thin stalled airfoil. The FE only simulation serves as a benchmark for the current study.
 
 \subsection{Problem Definition}
 
-The study of the stalled elliptical airfoil at $RE=5000$, is performed similarly to the study of the impulsively started cylinder at $Re=550$, see section \ref{sec:vvhm-isc}. The main difference now is the mesh geometry (now representing a thin stalled airfoil), and a higher Reynolds number.
+The study of the stalled elliptical airfoil at $Re=5000$, is performed similarly to the study of the impulsively started cylinder at $Re=550$, see section \ref{sec:vvhm-isc}. The main difference now is the mesh geometry (now representing a thin stalled airfoil), and a higher Reynolds number.
 
 Figure \ref{fig:hellipticAirfoil_dd-crop} depicts the configuration of the hybrid simulation. We studied the flow around a thin airfoil with thickness to chord ratio $t/c$ of $12\%$, having a chord length $L=1$, and a maximum thickness $W=0.12$. As we have a elliptical airfoil, the maximum thickness is located at $0.5L$. Furthermore, the airfoil is pitched to $20^{\circ}$ about center of rotation $0.25L$, to create a stalled flow. The parameters of the simulation are summarized in table \ref{tab:h_ea_Parameters}. 
 
 
-	\begin{figure}[!t]
+	\begin{figure}[H]
 	\centering
 	%\includegraphics[trim=0cm 2.5cm 0cm 2.5cm, clip, width=\linewidth]
 	\includegraphics[width=0.6\linewidth]{./figures/validation/ellipse/hellipticAirfoil_dd-crop.pdf}
@@ -912,7 +913,7 @@ Figure \ref{fig:hellipticAirfoil_dd-crop} depicts the configuration of the hybri
 
 \subsection{Results}
 
-The results shows the hybrid method is capable of simulating the flow past a lifting body. Figure \ref{fig:hybrid_ellipseForce} shows the evolution of the lift and the drag coefficient. We see that the lift and the drag coefficient are in good agreement upto $t=2$. However, as time progress we see the results of the simulation deviate from each other. A possible explanation is the higher Reynolds number. When we deal with higher Reynolds number, we see that coupling procedure is more sensitive.
+The results shows that the hybrid method is capable of simulating the flow past a lifting body. Figure \ref{fig:hybrid_ellipseForce} shows the evolution of the lift and the drag coefficient. We see that the lift and the drag coefficient are in good agreement up to $t=2$. However, as time progress we see the results of the simulation deviate from each other. A possible explanation is the higher Reynolds number. When we deal with higher Reynolds number, we see that coupling procedure is more sensitive.
 
 % The lift and the drag forces determined by the hybrid method matches upto $t=2$. The oscillation of the lift after $t=3$ is fundamentally different, which peaks occuring at different time instances. Similarly, the peak drag occurs at different time instances, however we can see that the maximum and minimum drag coefficient during is similar. 
 
@@ -936,17 +937,17 @@ Figure \ref{fig:hybrid_ellipse_Hybrid_contours} shows the plot of vorticity fiel
      \centering
      \begin{subfigure}[t]{0.49\textwidth}
              \includegraphics[width=\textwidth]{./figures/validation/ellipse/hybrid_ellipseForce_CL.pdf}
-             \caption{Hybrid}
+             \caption{Lift Coefficient}
              \label{fig:hybrid_ellipseForce_CL}
      \end{subfigure}%
      ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
        %(or a blank line to force the subfigure onto a new line)
      \begin{subfigure}[t]{0.49\textwidth}
              \includegraphics[width=\textwidth]{./figures/validation/ellipse/hybrid_ellipseForce_CD.pdf}
-             \caption{FE only}
+             \caption{Drag Coefficient}
              \label{fig:hybrid_ellipseForce_CD}
      \end{subfigure}
-     \caption{Forces}
+     \caption{Evolution of the lift and drag coefficient from $t=0$ up to $t=10$. The figure compares the hybrid results with FE only simulation.}
      \label{fig:hybrid_ellipseForce}
 	\end{figure}	
 
@@ -962,14 +963,14 @@ Figure \ref{fig:hybrid_ellipse_Hybrid_contours} shows the plot of vorticity fiel
 The results of the stalled elliptical airfoil at $Re=5000$ showed that:
 \begin{itemize}
 \item The hybrid method is able to simulate the unsteady flow separation.
-\item A higher Reynolds number flow problem is still a challenge and accuracy has only achieved upto $t=2$.
+\item A higher Reynolds number flow problem is still a challenge and accuracy was only achieved up to $t=2$.
 \end{itemize}
 
-The simulation showed that the present hybrid method is capable of simulating the flow past an airfoil that undergoes a unsteady flow separation. This is a key aspect of the VAWT simulation and through this test case we have demonstrated the capability of simulating such problems.
+The simulation showed that the present hybrid method is capable of simulating the flow past an airfoil that undergoes an unsteady flow separation. This is a key aspect of the VAWT simulation and through this test case we have demonstrated the capability of simulating such problems.
 
 However, we were only able to simulate up to $Re=5000$ as we did not implemented any turbulence scheme. For Reynolds number regimes of the VAWTs, turbulence models such as URANS and LES are fundamental requirement for efficient and accurate computation of the flow. 
 
-Furthermore, an interesting extension of the present test case is to investigate the flow around a presently used VAWT airfoil such as a NACA0018 airfoil. This could enable us to perform a direct comparison with the competing numerical method used in simulating the VAWT. However, a fundamental challenge of a full VAWT simulation is the multi-body moving problem. In section \ref{sec:vvhm-mb}, we were able to shows that the present scheme is capable of dealing with multiple bodies. However, the implementation of the moving body require future research and can be achieved by the implementation of Arbitrary Lagrangian-Eulerian ALE scheme.
+Furthermore, an interesting extension of the present test case is to investigate the flow around a presently used VAWT airfoil such as a NACA0018 airfoil. This could enable us to perform a direct comparison with the competing numerical method used in simulating the VAWT. However, a fundamental challenge of a full VAWT simulation is the multi-body moving problem. In section \ref{sec:vvhm-mb}, we were able to shows that the present scheme is capable of dealing with multiple bodies. However, the implementation of the moving body requires further research in future, and should be able to be achieved by the implementation of an Arbitrary Lagrangian-Eulerian (ALE) scheme.
 
 %However, due the large number of parameters that have an influence on the accuracy of the simulation, such as the number of panels, nominal particle spacing, overlap ration, particle core size, the diffusion scheme.
 
@@ -993,9 +994,9 @@ The parameters of the simulation are shown in table \ref{tab:h_ISCParameters}. T
 
 \subsection{Results}
 
-The simulation of multi-body problem was ran upto $t=22$, reaching the limit of the computational resource. Figure \ref{fig:hybrid_multipleCylinder_contours_compressed-crop} shows the plot of the vorticity at various time instances, at $t=[1,4,7,10,13,16,19,22]$. The plot shows the transfer of vorticity from cylinder $A$ to cylinder $B$ with the help of the Lagrangian method. The Lagrangian method serves as the global communication tool for transferring the information between various Eulerian sub-domains. 
+The simulation of multi-body problem was ran up to $t=22$, reaching the limit of the computational resource. Figure \ref{fig:hybrid_multipleCylinder_contours_compressed-crop} shows the plot of the vorticity at various time instances, at $t=[1,4,7,10,13,16,19,22]$. The plot shows the transfer of vorticity from cylinder $A$ to cylinder $B$ with the help of the Lagrangian method. The Lagrangian method serves as the global communication tool for transferring the information between various Eulerian sub-domains. 
 
-	\begin{figure}[!p]
+	\begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{./figures/validation/multipleCylinder/hybrid_multipleCylinder_contours_compressed-crop.png}
 	\caption{Plot of the vorticity contours at $t=[1,4,7,10,13,16,19,22]$ at $Re=550$.}
@@ -1005,6 +1006,8 @@ The simulation of multi-body problem was ran upto $t=22$, reaching the limit of 
 \subsection{Discussion of results}
 
 The simulation shows the feasibility of simulating a multi-body problem. The advantage of the hybrid method for such problems is that, in future when the moving body problem is implemented, the two bodies can move independently. In a convectional grid method, where the two methods have to share a single Eulerian domain, the determination of efficient mesh becomes a non-trival aspect.
+
+A recommendation to the multi+body simulation is to investigate a flow past a cylinder and an airfoil. This type of configuration matches more with the configuration of a VAWT. However, due to limiting research time, this configuration was not able to be explored. 
 
 In conclusion, we see that the hybrid method is capable of simulating a multi-body VAWT problem with greater ease than the convectional grid based method.
 

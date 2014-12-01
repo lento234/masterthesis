@@ -586,7 +586,7 @@ requirements for the degree of \textbf{Master of Science}.
 % daily supervisor (second reader)
 \parbox[t][\vsp][s]{\textwidth}{%
     \ifthenelse{ \equal{\mscreadertwo}{} }{}{%
-        Academic Supervisor:                 \hfill \underline{ \hspace{7cm} }\\%
+        Supervisor:                 \hfill \underline{ \hspace{7cm} }\\%
         \makebox[\textwidth][r]{\mscreadertwo}%
         \vfill%
     }
@@ -595,7 +595,7 @@ requirements for the degree of \textbf{Master of Science}.
 % guest, someone from outside the department/university (third reader)
 \parbox[t][\vsp][s]{\textwidth}{%
     \ifthenelse{ \equal{\mscreaderthree}{} }{}{%
-        Academic Supervisor:                 \hfill \underline{ \hspace{7cm} }\\%
+        Supervisor:                 \hfill \underline{ \hspace{7cm} }\\%
         \makebox[\textwidth][r]{\mscreaderthree}%
         \vfill%
     }
@@ -604,7 +604,7 @@ requirements for the degree of \textbf{Master of Science}.
 % person picked from a random room (fourth reader)
 \parbox[t][\vsp][s]{\textwidth}{%
     \ifthenelse{ \equal{\mscreaderfour}{} }{}{%
-        Industrial Supervisor:                  \hfill \underline{ \hspace{7cm} }\\%
+        Reader:                  \hfill \underline{ \hspace{7cm} }\\%
         \makebox[\textwidth][r]{\mscreaderfour}%
         \vfill%
     }

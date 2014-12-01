@@ -10,7 +10,7 @@
 \mscDepartment{Aerodynamics and Wind Energy}%
 \mscFaculty{Aerospace Engineering}%
 \mscName{L. Manickathan B.Sc.}%
-\mscDate{Date TBD}%s
+\mscDate{December 17, 2014}%s
 \mscTitle{Hybrid Eulerian-Lagrangian Vortex Particle Method}%
 \mscSubTitle{A fast and accurate numerical method for 2D Vertical-Axis Wind Turbine}% can be left empty
 \mscKeyWords{Hybrid Vortex Method, Eulerian, Lagrangian, Python, FEniCS, GMSH, Navier-Stokes, CFD, Coupling, Finite Element, Vortex Blobs}%
@@ -18,14 +18,17 @@
 % background picture for the first page, make sure it is in the correct format (eps or something else)
 %\ifpdfma
 %	\mscBackPicture{./figures/style/cylinder.pdf}   % eps of 21 * 29.7 cm
-%\else
-\mscBackPicture{./figures/style/cylinder.png}    % pdf version of the cover background
+%\else 
+%\mscBackPicture{./figures/style/cylinder.png}    % pdf version of the cover background
+\mscBackPicture{./figures/style/ellipse2LR.png}    % pdf version of the cover background
 %\fi
 %
 % readers page (un)comment as necessary
 \mscReaderOne{prof.dr.ir. G.J.W. van Bussel}
 \mscReaderTwo{dr.ir. C.J. Simao Ferreira}
 \mscReaderThree{dr.ir. A. Palha da Silva Clerigo}
+\mscReaderFour{dr.ir. A.H van Zuijlen}
+
 %\mscReaderFour{prof.dr.ir. I. Bennett}
 % \mscReaderFive{ir. Reader Five}
 % \mscReaderSix{ir. Reader Six}
@@ -306,7 +309,7 @@
 
     % Example Chapter
 	
-    % Chapter 1: Introduction
+	% Chapter 1: Introduction
     \include{chapters/introduction}%
 
 	% Chapter 2: Hybrid Eulerian-Lagrangian Vortex Particle Method
@@ -320,34 +323,32 @@
 
     % Chapter 5: Coupling Eulerian and Lagrangian Method
   	\include{chapters/coupling}  	
-%  	\include{chapters/hybridOld}
-%
-%	% Chapter 6: Introduction to the Hybrid Solver: pHyFlow
- 	\include{chapters/phyflow}
+  	%\include{chapters/hybridOld}
 
-%  	% Chapter 7: Verification and Validation of the Hybrid Method
-	\include{chapters/validation}   
+	% Chapter 6: Introduction to the Hybrid Solver: pHyFlow
+	\include{chapters/phyflow}
 
-%   	% Chapter 8: Conclusion and Recommendations
-   \include{chapters/conclusion}
+	% Chapter 7: Verification and Validation of the Hybrid Method
+    \include{chapters/validation}   
 
-   \include{chapters/afterword} 
+	% Chapter 8: Conclusion and Recommendations
+	\include{chapters/conclusion}
 
-    % Bibliography
+	\include{chapters/afterword} 
 
+	% Bibliography
+	\printbib{bibliography/library,bibliography/others}
 	
-	 \printbib{bibliography/library,bibliography/others}
-	 
-	 % and some appendices here
-	 %\addcontentsline{toc}{chapter}{Appendix}
-	 \appendix 
+	% and some appendices here
+	%\addcontentsline{toc}{chapter}{Appendix}
+	\appendix 
 	\include{appendix/coordinateSystem}%
-	 \include{appendix/pHyFlow_codeStructure}%
+	\include{appendix/pHyFlow_codeStructure}%
 
     	
-%    \appendix  
-%    \addcontentsline{toc}{chapter}{Appendix}
-%   	\include{appendix/pHyFlow_codeStructure}%
+%   \appendix  
+%   \addcontentsline{toc}{chapter}{Appendix}
+%   \include{appendix/pHyFlow_codeStructure}%
     %\addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
     %\include{appendix/cascade}
 	%\appendixpage
