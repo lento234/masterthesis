@@ -88,7 +88,7 @@ The \texttt{pHyFlow} library extends \python computing environment, where one ca
 \item \texttt{panels}: This module contains all the vortex panel functions and is wrapped in the class \texttt{Panels}. The algorithms of the vortex panel defined in chapter \ref{ch:lagrangian} are implemented in this module
 \item \texttt{lagrangian}: This module contains all the vortex blob and vortex panel coupling functions. The vortex panel, vortex blob coupling algorithm described in chapter \ref{ch:lagrangian} is implemented in this module.
 \item \texttt{eulerian}: This module contains all the Navier-Stokes grid operations. The algorithms explained in chapter \ref{ch:eulerian} are implemented in this module.
-\item \texttt{hybrid}: This module contains all the functions related to coupling of the Lagrangian and the Eulerian solver, summarized in section \ref{sec:coupling-mlca}, \ref{sec:la-eolm}, and \ref{sec:eu-eotem}. The functions are wrapped in the \texttt{HybridSolver} class and manage the global coupling process.
+\item \texttt{hybrid}: This module contains all the functions related to coupling of the Lagrangian and the Eulerian solver, summarized in sections \ref{sec:la-eolm}, \ref{sec:eu-eotem} and \ref{sec:coupling-mlca}. The functions are wrapped in the \texttt{HybridSolver} class and manage the global coupling process.
 
 \end{itemize}
 
@@ -96,7 +96,7 @@ Figure \ref{fig:tikz_pHyFlowStructure} shows the structure of the \texttt{pHyFlo
 
 \section{Hybrid Class Hierarchy}
 
-However, the hybrid module relies on the functions of the Lagrangian module and the Eulerian module. Moreover, the Lagrangian module requires the function of vortex blob module and the vortex panel module. Therefore, the hierarchy of the hybrid class is defined in a different manner, as shown in figure \ref{fig:tikz_hybridStructure}. 
+However, the hybrid module relies on the functions of the Lagrangian module and the Eulerian module. Moreover, the Lagrangian module requires the function of vortex blob module and the vortex panel module. Therefore, the hierarchy of the hybrid class is defined in a different manner, as shown in Figure \ref{fig:tikz_hybridStructure}. 
 
 \begin{figure}[h]
 \centering

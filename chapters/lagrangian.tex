@@ -394,7 +394,7 @@ After several steps of the convection of the vortex blobs, the overlap ratio $\l
 
 The distortion of the Lagrangian grid is due to the clustering and dispersion of the vortex blobs. This clustering and dispersing effect of the blobs is due to the high strains in the flow. Figure \ref{fig:distortion} depicts the distortion of the Lagrangian grid after 100 convection steps. The final distribution shows gaps in vortex blob distribution and will result in an inaccurate representation of the vorticity field. 
 
-	\begin{figure}[!h]
+	\begin{figure}[!b]
 	\centering
 	\includegraphics[width=0.9\textwidth]{figures/lagrangian/distortion-crop.pdf}
     \caption{Lagrangian distortion of the vortex blobs after 100 time steps. The initial vorticity field is $\omega\left(\mathbf{x},0\right) = \exp\left(-12\left|\mathbf{x}\right|\right)$ with $\Delta t = 0.1$, $\sigma=0.02$, and $\mathrm{overlap} = 1.0$. Figure depicts $\textbf{(a)}$ the initial distribution of the vortex blobs, and $\textbf{(b)}$ the final distribution of the vortex blobs after 100 time steps.}
@@ -408,7 +408,7 @@ A remeshing (or regridding) of this field is therefore required to retain proper
 	\end{equation}
 where the strengths of the blobs $\tilde{\alpha}_q$ of the distorted Lagrangian grid $\tilde{x}_q$ are transfered to the regular Lagrangian grid $x_p$ using the interpolation kernel $W$. Figure \ref{fig:interpolationGrid} shows an example of the remeshing of one vortex blob of the distorted grid on to the structured uniform grid with a kernel $W$ with a $3\times3$ stencil. During this transfer, we must ensure that the properties of the fluid are conserved. The interpolation kernel is constructed by ensuring that the total circulation, the linear impulse, and the angular impulse of the fluid are conserved. 
 
-	\begin{figure}[H]
+	\begin{figure}[!t]
 	\centering
 	\includegraphics[width=0.4\textwidth]{figures/lagrangian/interpolationGrid.pdf}
 	\caption{Remeshing of a single vortex blob [{\color{plotGreen}{$\bullet$}}, {\color{plotGreen}{\textbf{green}}} dot] onto a uniform grid defined by the $\left(3\times3\right)$ 2-D stencil.}
@@ -676,7 +676,7 @@ where $\mathbf{u}_s$ is the velocity at the surface point $\mathbf{x}_s$. Howeve
 \end{equation}
 and is referred to as the \emph{no-slip} boundary condition. The paper of Koumoutsakos, Leonard and Pepin \cite{Koumoutsakos1994b} stated that, by satisfying no-slip boundary condition directly satisfies the no-through boundary conditions, as these boundary conditions are linked (\emph{Linked boundary condition}). This was also stated by Shiels \cite{Shiels1998} and have been further employed by Cooper, Mar and Barba in 2009 \cite{Cooper2009a}.
 
-	\begin{figure}[!h]
+	\begin{figure}[!t]
 	\centering
 	\includegraphics[width=0.6\textwidth]{figures/lagrangian/noSlipVorticityField.pdf}
 	\caption{Extended vorticity field separated into vorticity in the fluid and the vortex sheet distribution confined to the body.}
@@ -887,7 +887,7 @@ The Constant-Strength vortex panel ({\color{darkblue}CSVP}) is based on the flat
 	\end{equation}
 which represents the tangential influence coefficient of the $j^{\mathrm{th}}$ panel on the $i^{\textrm{th}}$ panel. The influence coefficient is determined by prescribing the strengths of the vortex panels $\hat{\gamma}_i = 1$, resulting in an induced velocity $\mathbf{\hat{u}}_{ij} = \left(\hat{u},\hat{v}\right)_{ij}$ for a unit strength panel.
 
-	\begin{figure}[!h]
+	\begin{figure}[!b]
         \centering
         \begin{subfigure}[b]{0.45\textwidth}
                 \includegraphics[width=\textwidth]{figures/lagrangian/panelCoordinateDefinition.pdf}
@@ -1281,7 +1281,7 @@ Figure \ref{fig:lambOseen_diffusionMethod_comparison} shows the evolution of max
 
 The Wee's diffusion scheme WRS, however is constraint by equation \ref{eq:c2stability} and equation \ref{eq:la_dtcts}. Therefore the diffusion time step $\Delta t_d$ for the given convective time step $\Delta t_c = 0.01$ is $\Delta t_d = k_d \cdot \Delta t_c = 0.07$, where the diffusion frequency $k_d=7$. We observe from the figure that performing diffusion at every other instant creates an oscillatory behavior. This behavior is not ideal when coupling with the Eulerian method as the oscillatory diffusion of the VPM will add additional error in coupling.
 
-\begin{figure}[!h]
+\begin{figure}[!t]
   \centering
   \begin{subfigure}[b]{0.45\textwidth}
           \includegraphics[width=\textwidth]{figures/lagrangian/lambOseen_errorEvolution_WRSvsTRS_dt0p01.pdf}
