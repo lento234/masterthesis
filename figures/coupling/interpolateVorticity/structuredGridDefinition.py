@@ -463,6 +463,7 @@ py.axis('scaled')
 py.axis([-3,3,-2.6,2.6])
 py.axis('off')
 py.savefig('structuredGrid_globCoor.pdf')
+py.savefig('structuredGrid_globCoor.png')
 
 
 #-----------------------------------------------------------

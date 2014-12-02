@@ -8,8 +8,6 @@ Plot the interpolation algorithm
 import numpy as np
 import pylab as py
 import matplotlib as mpl
-#mpl.use('PDF')
-
 from matplotlib import pyplot as plt
 
 #from matplotlib.patches import Polygon
@@ -311,8 +309,6 @@ py.axis('off')
 
 
 py.savefig('./interpolationDomainExpanded.pdf')
-
-
 # ----------------------------------------------------------
 
 

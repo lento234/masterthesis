@@ -840,7 +840,7 @@ Varying the Lagrangian time step $\Delta t_L$, shown in Figure \ref{fig:hybrid_I
 
 	\begin{figure}[!p]
 	\centering
-	\includegraphics[width=\linewidth]{./figures/validation/isc/hybrid_cylinder_LongRun_contourfComparison-crop_fixed.png}
+	\includegraphics[width=\linewidth]{./figures/validation/isc/hybrid_cylinder_LongRun_contourfComparison-crop_fixed2.png}
 	\caption{Plot of the vorticity field at $t=[10,20,30,40]$, comparing the hybrid simulation (left) with the FE only simulation (right).}
 	\label{fig:hybrid_cylinder_LongRun_contourfComparison}
 	\end{figure}
@@ -855,7 +855,7 @@ Varying the Lagrangian time step $\Delta t_L$, shown in Figure \ref{fig:hybrid_I
      ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
        %(or a blank line to force the subfigure onto a new line)
      \begin{subfigure}[t]{0.49\textwidth}
-             \includegraphics[width=\textwidth]{./figures/validation/isc/FE_ISC_mesh-crop.png}
+             \includegraphics[width=\textwidth]{./figures/validation/isc/FE_ISC_mesh-crop-LR.png}
              \caption{FE only}
              \label{fig:FE_ISC_mesh-crop}
      \end{subfigure}
@@ -945,18 +945,9 @@ Due to the limited computation resources and time, the long run simulation was a
 
 
 %We were also able to observe the auto-adaptive nature of our hybrid scheme. The first vortex shed from the cylinder, was still well-resolved at $t=40$ in the hybrid scheme, whereas the FE only simulation failed to sustain the structure and the strength of the vortex. 
-
 %In conclusion, we 
 \section{Stalled Elliptic Airfoil at $Re=5000$}
 \label{sec:vvhm-ea}
-
-	\begin{figure}[!b]
-	\centering
-	%\includegraphics[trim=0cm 2.5cm 0cm 2.5cm, clip, width=\linewidth]
-	\includegraphics[width=0.6\linewidth]{./figures/validation/ellipse/hellipticAirfoil_dd-crop.pdf}
-	\caption{(\textit{Not to scale}) The domain decomposition for the stalled elliptical airfoil. The parameters of the domain are tabulated in Table \ref{tab:h_ea_Parameters}.}
-	\label{fig:hellipticAirfoil_dd-crop}
-	\end{figure}
 
 The purpose of investigating the stalled elliptical airfoil at $Re=5000$ is to demonstrate the feasibility of using the hybrid method to simulate a complex problem, similar to the flow condition in VAWT. To perform a validation, the extensively validated FE only method serves as the benchmark for the current study.
 
@@ -964,12 +955,19 @@ The purpose of investigating the stalled elliptical airfoil at $Re=5000$ is to d
 
 The study of the stalled elliptical airfoil at $Re=5000$, is performed similarly to the study of the impulsively started cylinder at $Re=550$, see section \ref{sec:vvhm-isc}. The main difference now is the mesh geometry (now representing a thin airfoil at high angle of attack), and a higher Reynolds number flow condition.
 
-Figure \ref{fig:hellipticAirfoil_dd-crop} depicts the configuration of the hybrid simulation. We studied the flow around a thin airfoil with thickness to chord ratio $t/c$ of $12\%$, having a chord length $L=1$, and a maximum thickness $W=0.12$. As we have an elliptical airfoil, the maximum thickness is located at $0.5L$. Furthermore, the airfoil is pitched to $20^{\circ}$ about center of rotation at $0.25L$, to create a stalled configuration. The parameters of the simulation are summarized in Table \ref{tab:h_ea_Parameters}. 
+
+	\begin{figure}[H]
+	\centering
+	%\includegraphics[trim=0cm 2.5cm 0cm 2.5cm, clip, width=\linewidth]
+	\includegraphics[width=0.6\linewidth]{./figures/validation/ellipse/hellipticAirfoil_dd-crop.pdf}
+	\caption{(\textit{Not to scale}) The domain decomposition for the stalled elliptical airfoil. The parameters of the domain are tabulated in Table \ref{tab:h_ea_Parameters}.}
+	\label{fig:hellipticAirfoil_dd-crop}
+	\end{figure}
 
 	\ctable[
 		caption = {Summary of the parameters of the hybrid simulation for the stalled elliptical airfoil test case.},
 		label   = {tab:h_ea_Parameters},
-		pos = H,]{lcll}{}{\FL
+		pos = !p,]{lcll}{}{\FL
 		Parameters					& Value 				& Unit		& Description \ML
 		$Re$  			       		& $5000$ 				&-			& Reynolds number \\ 
 		$\mathbf{u}_{\infty}$		& $[1,0]$ 				&\si{m.s^{-1}}& Freestream velocity\\		
@@ -988,6 +986,11 @@ Figure \ref{fig:hellipticAirfoil_dd-crop} depicts the configuration of the hybri
 		$t$							& 0 to 10 & - & Simulation time\\
 		$d_{bdry}$					& $0.1\cdot{L}$ & \si{m} & Interpolation domain offset from boundary $\Sigma_d$\\
 		$d_{surf}$					& $3\cdot{h}$ & \si{m} & Interpolation domain offset from boundary $\Sigma_{wall}$\LL}
+
+
+Figure \ref{fig:hellipticAirfoil_dd-crop} depicts the configuration of the hybrid simulation. We studied the flow around a thin airfoil with thickness to chord ratio $t/c$ of $12\%$, having a chord length $L=1$, and a maximum thickness $W=0.12$. As we have an elliptical airfoil, the maximum thickness is located at $0.5L$. Furthermore, the airfoil is pitched to $20^{\circ}$ about center of rotation at $0.25L$, to create a stalled configuration. The parameters of the simulation are summarized in Table \ref{tab:h_ea_Parameters}. 
+
+
 
 
 
@@ -1013,12 +1016,7 @@ The results shows that the hybrid method is capable of simulating the flow past 
      \label{fig:hybrid_ellipseForce}
 	\end{figure}	
 
-	\begin{figure}[!p]
-	\centering
-	\includegraphics[width=\linewidth]{./figures/validation/ellipse/hybrid_ellipse_Hybrid_contours_compressed-crop.png}
-	\caption{Plot of the vorticity contours at $t=[1,2,3,4,5,6,7,8,9,10]$.}
-	\label{fig:hybrid_ellipse_Hybrid_contours}
-	\end{figure}
+
 
 % The lift and the drag forces determined by the hybrid method matches upto $t=2$. The oscillation of the lift after $t=3$ is fundamentally different, which peaks occuring at different time instances. Similarly, the peak drag occurs at different time instances, however we can see that the maximum and minimum drag coefficient during is similar. 
 
@@ -1038,7 +1036,12 @@ The results shows that the hybrid method is capable of simulating the flow past 
 
 Figure \ref{fig:hybrid_ellipse_Hybrid_contours} shows the plot of vorticity field at $t=[1,2,3,...,10]$. We see that thanks to the adaptive nature of the scheme, the shed vortices are well-defined. Furthermore, in the near-wall region, the Eulerian region is able to capture the complex stalled structure vorticity field behind the airfoil.
 	
-
+	\begin{figure}[!t]
+	\centering
+	\includegraphics[width=\linewidth]{./figures/validation/ellipse/hybrid_ellipse_Hybrid_contours_compressed-crop.png}
+	\caption{Plot of the vorticity contours at $t=[1,2,3,4,5,6,7,8,9,10]$.}
+	\label{fig:hybrid_ellipse_Hybrid_contours}
+	\end{figure}
 	
 \subsection{Discussion of results}	
 
@@ -1077,7 +1080,7 @@ The parameters of the simulation are shown in Table \ref{tab:h_ISCParameters}. T
 
 The simulation of multi-body problem was ran up to $t=22$, reaching the limit of the computational resource of desktop computer (3.47GHz Intel Xeon processor, NVIDIA Quadro 2000, 12GB RAM). Figure \ref{fig:hybrid_multipleCylinder_contours_compressed-crop} shows the plot of the vorticity at various time instances, at $t=[1,4,7,10,13,16,19,22]$. The plot shows the transfer of vorticity from cylinder $A$ to cylinder $B$ with the help of the Lagrangian method. The Lagrangian method serves as the global communication tool for transferring the information between various Eulerian sub-domains. 
 
-	\begin{figure}[!p]
+	\begin{figure}[!b]
 	\centering
 	\includegraphics[width=\linewidth]{./figures/validation/multipleCylinder/hybrid_multipleCylinder_contours_compressed-crop.png}
 	\caption{Plot of the vorticity contours at $t=[1,4,7,10,13,16,19,22]$ at $Re=550$.}

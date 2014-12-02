@@ -5,9 +5,12 @@ Plot the interpolation algorithm
 
 
 # Import packages
+import matplotlib as mpl
+#mpl.use('PDF')
+
 import numpy as np
 import pylab as py
-import matplotlib as mpl
+
 #from matplotlib.patches import Polygon
 import scipy.interpolate as spinterp
 import scipy.io as sio
@@ -312,6 +315,7 @@ py.axis('off')
 
 
 py.savefig('./interpolationDomainCloseup.pdf')
+py.savefig('./interpolationDomainCloseup.png')
 
 # ----------------------------------------------------------
 

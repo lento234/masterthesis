@@ -6,9 +6,10 @@ Plot the interpolation algorithm
 
 # Import packages
 import numpy as np
-#import pylab as py
+
+import pylab as py
 import matplotlib as mpl
-mpl.use('PDF')
+#mpl.use('PDF')
 
 from matplotlib import pyplot as plt
 
@@ -941,53 +942,55 @@ py.axis('off')
 #py.plot([-2,2,2,-2,-2],[-2,-2,2,2,-2],'k--')
 
 py.savefig('./localOrientation2.pdf')
+py.savefig('./localOrientation2.png')
 
 ax.arrow(-0.7,0.5,0,0.15,head_width=0.025,head_length=0.05,fc='k',ec='k',zorder=10)
 ax.arrow(0.7,1.5,0,-1+0.05,head_width=0.025,head_length=0.05,fc='k',ec='k',zorder=3)
 
-'''
 # ----------------------------------------------------------
 
 
 # ----------------------------------------------------------
 # Plot the local orientation
 
-#fig = py.figure()
-#ax  = fig.add_subplot(111)
-#
-#py.plot(xyEllipse[0]+2,xyEllipse[1]+2,color='0.5',lw=1.5)
-#py.plot([2., 3.],[2.,2.],'k--',lw=0.5)
-## Draw arrow
-#ax.arrow(2.,2.,rotate([0.,1.])[0],rotate([0.,1.])[1],head_width=0.05,head_length=0.05,fc='k',ec='k',zorder=10,lw='0.5')
-#ax.arrow(2.,2.,rotate([1.2,0.])[0],rotate([1.2,0.])[1],head_width=0.05,head_length=0.05,fc='k',ec='k',zorder=10,lw='0.5')
-#
-#ax.arrow(0.,-0.5,0.,3.5,head_width=0.1,head_length=0.1,fc='k',ec='k',zorder=10,lw='0.5')
-#ax.arrow(-0.5,0.,3.5,0.,head_width=0.1,head_length=0.1,fc='k',ec='k',zorder=10,lw='0.5')
-#
-#ax.arrow(0.,0.,1.9,1.9,head_width=0.075,head_length=0.075,fc='k',ec='k',zorder=10)
-#
-#py.plot(2.,2.,'ko')
-#ax.annotate(r'$(x_o,y_o)$', xy=(2.1, 1.6),fontsize=12,zorder=20)
-#ax.annotate(r'$\theta_{\mathrm{loc}}$', xy=(3.1, 2.2),fontsize=12,zorder=20)
-#ax.annotate(r"$y'$", xy=rotate([-0.25, 0.9])+2.,fontsize=13,zorder=20)
-#ax.annotate(r"$x'$", xy=rotate([1., 0.15])+2.,fontsize=13,zorder=20)
-#ax.annotate(r"$x$", xy=(2.8, -0.2),fontsize=17,zorder=20)
-#ax.annotate(r"$y$", xy=(-0.2, 2.8),fontsize=17,zorder=20)
-#
-#py.axis('scaled')
-#py.axis([-1,4,-1,4])
-#py.axis('off')
-#
-#
-#ax.annotate("", xy=(3., 2.), xycoords='data',xytext=(2.9, 2.5), textcoords='data',
-#            arrowprops=dict(arrowstyle="<|-|>", color="k", shrinkA=5, shrinkB=5,
-#                            patchA=None, patchB=None,
-#                            connectionstyle="arc3,rad=-0.2",),)
-#
-##py.plot([-.5,3.5,3.5,-.5,-.5],[-.5,-.5,3.5,3.5,-.5],'k--')
-#py.savefig('./globalOrientation.pdf')
+fig = py.figure()
+ax  = fig.add_subplot(111)
+
+py.plot(xyEllipse[0]+2,xyEllipse[1]+2,color='0.5',lw=1.5)
+py.plot([2., 3.],[2.,2.],'k--',lw=0.5)
+# Draw arrow
+ax.arrow(2.,2.,rotate([0.,1.])[0],rotate([0.,1.])[1],head_width=0.05,head_length=0.05,fc='k',ec='k',zorder=10,lw='0.5')
+ax.arrow(2.,2.,rotate([1.2,0.])[0],rotate([1.2,0.])[1],head_width=0.05,head_length=0.05,fc='k',ec='k',zorder=10,lw='0.5')
+
+ax.arrow(0.,-0.5,0.,3.5,head_width=0.1,head_length=0.1,fc='k',ec='k',zorder=10,lw='0.5')
+ax.arrow(-0.5,0.,3.5,0.,head_width=0.1,head_length=0.1,fc='k',ec='k',zorder=10,lw='0.5')
+
+ax.arrow(0.,0.,1.9,1.9,head_width=0.075,head_length=0.075,fc='k',ec='k',zorder=10)
+
+py.plot(2.,2.,'ko')
+ax.annotate(r'$(x_o,y_o)$', xy=(2.1, 1.6),fontsize=12,zorder=20)
+ax.annotate(r'$\theta_{\mathrm{loc}}$', xy=(3.1, 2.2),fontsize=12,zorder=20)
+ax.annotate(r"$y'$", xy=rotate([-0.25, 0.9])+2.,fontsize=13,zorder=20)
+ax.annotate(r"$x'$", xy=rotate([1., 0.15])+2.,fontsize=13,zorder=20)
+ax.annotate(r"$x$", xy=(2.8, -0.2),fontsize=17,zorder=20)
+ax.annotate(r"$y$", xy=(-0.2, 2.8),fontsize=17,zorder=20)
+
+py.axis('scaled')
+py.axis([-1,4,-1,4])
+py.axis('off')
 
 
+ax.annotate("", xy=(3., 2.), xycoords='data',xytext=(2.9, 2.5), textcoords='data',
+            arrowprops=dict(arrowstyle="<|-|>", color="k", shrinkA=5, shrinkB=5,
+                            patchA=None, patchB=None,
+                            connectionstyle="arc3,rad=-0.2",),)
+
+py.draw()
+#py.plot([-.5,3.5,3.5,-.5,-.5],[-.5,-.5,3.5,3.5,-.5],'k--')
+py.savefig('./globalOrientation.pdf')
+py.savefig('./globalOrientation.png')
+
+'''
 # ----------------------------------------------------------
 
 
